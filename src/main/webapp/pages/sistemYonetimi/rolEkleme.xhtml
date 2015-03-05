@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="rolEkleme">
+        <p:dialog header="#{lbl.rol_ekleme}" widgetVar="rolEklePopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="rol_konu" value="#{lbl.rol_ad} (*)" style="font-weight:bold"/>
+                    <p:inputTextarea rows="3" cols="40" value="#{rolController.yeniRol.ad}"
+                                 id="rol_konu" required="true" label="#{lbl.rol_ad}"/>
+
+                    <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold"/>
+                    <p:selectOneMenu id="rolTipi" value="#{rolController.yeniRol.sistemYoneticisiMi}"
+                                     style="font-weight:bold">
+                        <f:selectItems value="#{rolController.rolTipiList}" var="rolTipi" itemValue="#{rolTipi}"
+                                       itemLabel="#{rolTipi.aciklama}"/>
+                        <f:converter binding="#{evetHayirConverter}"/>
+                    </p:selectOneMenu>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="rol_kaydet" value="#{lbl.kaydet}" update="@([id$=main_form])"
+                                         actionListener="#{rolController.yeniRolEkleme}" icon="ui-icon-disk" />
+                    </f:facet>
+                </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

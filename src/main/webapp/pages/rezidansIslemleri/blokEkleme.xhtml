@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="blokEkleme">
+        <p:dialog header="#{lbl.blok_ekleme}" widgetVar="blokEklePopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="rol_konu" value="#{lbl.blok_ad} (*)" style="font-weight:bold"/>
+                    <p:inputText rows="1" cols="20" value="#{blokMB.yeniBlok.aciklama}"
+                                     id="rol_konu" required="true" label="#{lbl.blok_ad}"/>
+
+
+                    <f:facet name="footer">
+                        <p:commandButton id="blok_kaydet" value="#{lbl.kaydet}" update="@([id$=blokEkleme]) :main_form"
+                                         actionListener="#{blokMB.yeniBlokEkleme}" icon="ui-icon-disk">
+                        <p:confirm header="Onay" message="#{msg.islemi_onayliyormusunuz}"/></p:commandButton>
+                    </f:facet>
+                </h:panelGrid>
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

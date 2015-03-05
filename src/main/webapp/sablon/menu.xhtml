@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<f:view contentType="text/html">
+
+    <tr>
+        <td><a href="#{request.contextPath}/" style="border:0px;">
+            <img alt="Park Oran - Rezidans Yönetim Sistemi"
+                 src="#{request.contextPath}/images/remasis-beyaz-yan-esit.png"
+                 id="projeLogo" class="mainProjeLogo"/></a>
+            <p:separator/>
+        </td>
+    </tr>
+
+    <p:separator/>
+
+    <p:outputPanel id="kullaniciMenuPanel">
+        <center>
+            <img alt="Profil"
+                 src="#{request.contextPath}/images/profile-pic-300px.jpg"
+                 class="profilLogo"/>
+            <p:separator/>
+
+
+            <h:outputLabel
+                    style="font-weight: bold; color: #ffffff;"
+                    value="#{sessionInfo.kullanici.ad} #{sessionInfo.kullanici.soyad}"
+                    />
+
+
+        </center>
+
+        <p:overlayPanel for="kullaniciMenuPanel" showEvent="mouseenter"
+                        hideEvent="mouseleave"
+                        style="height:initial !important;line-height: 10px;text-align:left;"
+                        appendToBody="1" my="center top" at="center bottom">
+            <table>
+                <tr>
+                    <td>
+                        <p:graphicImage value="/images/key-icon.png"/>
+                    </td>
+                    <td valign="middle">
+
+                        <p:commandLink style="font-weight: bold; color: black;" update="@([id$=sifreDegistirme])"
+                                       value="#{lbl.sifre_degistirme}"
+                                       oncomplete="PF('sifreDegistirmePopup').show();">
+                        </p:commandLink>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p:graphicImage value="/images/rol-icon.png"/>
+                    </td>
+                    <td valign="middle">
+
+                        <p:commandLink style="font-weight: bold; color: black;"
+                                       update="@([id$=profilGuncelleme])" value="#{lbl.label_profil_ayarlari}"
+                                       action="#{kullaniciController.getDaireListByKullanici}"
+                                       oncomplete="PF('kullaniciGuncellemePopup').show();">
+                            <f:setPropertyActionListener value="#{sessionInfo.kullanici}"
+                                                         target="#{profilMB.selected}"/>
+                        </p:commandLink>
+                    </td>
+                </tr>
+            </table>
+
+        </p:overlayPanel>
+    </p:outputPanel>
+
+    <p:separator/>
+
+    <p:panelMenu autoDisplay="true" styleClass="myMenuStyleClass">
+        <p:submenu label="#{lbl.sistem_yonetimi}" icon="ui-icon ui-icon-signal"
+                   rendered="#{sessionInfo.isYetkili('sistem_yonetimi')}">
+            <p:menuitem value="#{lbl.sistem_ayarlari}" url="/pages/yonetim/sistemAyarlari.jsf"
+                        rendered="#{sessionInfo.isYetkili('sistem_ayarlari')}"/>
+            <p:menuitem value="#{lbl.kullanici_yonetimi}" url="/pages/sistemYonetimi/kullaniciSorgula.jsf"
+                        rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}"/>
+            <p:menuitem value="#{lbl.kullanici_ekleme_islemleri}" url="/pages/sistemYonetimi/kullaniciEkle.jsf"
+                        rendered="#{sessionInfo.isYetkili('kullanici_ekleme')}"/>
+            <p:menuitem value="#{lbl.rol_yonetimi}" url="/pages/sistemYonetimi/rolSorgula.jsf"
+                        rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
+            <p:menuitem value="#{lbl.menu_bildirim_tipi_islemleri}" url="/pages/sistemYonetimi/bildirimTipiSorgula.jsf"
+                        rendered="#{sessionInfo.isYetkili('yetki_bildirim_tipi_islemleri')}"/>
+            <p:menuitem value="#{lbl.odeme_plani_aktarma}" url="/pages/sistemYonetimi/kutuktenBorcAktarmaIslemleri.jsf"
+                        rendered="false"/>
+        </p:submenu>
+
+        <p:submenu label="#{lbl.residence_islemleri}" icon="ui-icon ui-icon-gear"
+                   rendered="#{sessionInfo.isYetkili('rezidans_yonetimi')}">
+            <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf"
+                        rendered="#{sessionInfo.isYetkili('blok_islemleri')}"/>
+            <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf" rendered="#{sessionInfo.isYetkili('daire_sorgula')}"
+                        value="#{lbl.hizli_menu_daireme_git}"/>
+
+        </p:submenu>
+
+        <p:submenu label="#{lbl.finans_islemleri}" icon="ui-icon ui-icon-transferthick-e-w"
+                   rendered="#{sessionInfo.isYetkili('finans_islemleri')}">
+            <p:submenu label="#{lbl.aidat_islemleri}">
+                <p:menuitem value="#{lbl.aidat_sorgulama}"
+                            url="/pages/finansIslemleri/aidatSorgula.jsf"
+                            rendered="#{sessionInfo.isYetkili('aidat_sorgulama')}"/>
+                <p:menuitem value="#{lbl.aidat_ekleme}"
+                            url="/pages/finansIslemleri/aidatEkle.jsf"
+                            rendered="#{sessionInfo.isYetkili('aidat_ekleme')}"/>
+                <p:menuitem value="#{lbl.odeme_ekleme}"
+                            url="/pages/finansIslemleri/odemeEkle.jsf"
+                            rendered="#{sessionInfo.isYetkili('odeme_ekleme')}"/>
+            </p:submenu>
+        </p:submenu>
+
+        <p:submenu label="#{lbl.label_site_ici_paylasim_islem}" icon="ui-icon ui-icon-transferthick-e-w"
+                   rendered="#{sessionInfo.isYetkili('site_ici_paylasim_islemleri')}">
+            <p:menuitem value="#{lbl.label_anket_sorgulama}"
+                        url="/pages/sitePaylasimIslemleri/anketSorgulama.jsf"
+                        rendered="#{sessionInfo.isYetkili('anket_islemleri')}"/>
+            <p:menuitem value="#{lbl.label_belge_sorgulama}"
+                        url="/pages/sitePaylasimIslemleri/belgeSorgulama.jsf"
+                        rendered="#{sessionInfo.isYetkili('belge_islemleri')}"/>
+            <p:menuitem value="#{lbl.label_duyuru_islem}"
+                        url="/pages/sitePaylasimIslemleri/duyuruSorgulama.jsf"
+                        rendered="#{sessionInfo.isYetkili('duyuru_islemleri')}"/>
+            <p:menuitem value="#{lbl.label_ilan_sorgulama}"
+                        url="/pages/sitePaylasimIslemleri/ilanSorgulama.jsf"
+                        rendered="#{sessionInfo.isYetkili('ilan_islemleri')}"/>
+        </p:submenu>
+
+        <p:submenu label="#{lbl.talep_islemleri}" icon="ui-icon ui-icon-transferthick-e-w"
+                   rendered="#{sessionInfo.isYetkili('talep_islemleri')}">
+            <p:menuitem value="#{lbl.talep_sorgulama}" icon="ui-icon ui-icon-image"
+                        url="/pages/talepIslemleri/talepSorgula.jsf"
+                        rendered="#{sessionInfo.isYetkili('talep_sorgulama')}"/>
+        </p:submenu>
+
+        <p:submenu label="#{lbl.menu_envanter_islemleri}" icon="ui-icon ui-icon-gear"
+                   rendered="#{sessionInfo.isYetkili('envanter_yonetimi')}">
+            <p:menuitem value="#{lbl.menu_envanter_sorgulama}" url="/pages/envanterIslemleri/envanterSorgulama.jsf"
+                        rendered="#{sessionInfo.isYetkili('envanter_sorgulama')}"/>
+            <p:menuitem value="#{lbl.menu_envanter_ekle}" url="/pages/envanterIslemleri/envanterGirisi.jsf"
+                        rendered="#{sessionInfo.isYetkili('envanter_girisi')}"/>
+
+            <p:menuitem value="#{lbl.menu_envanter_kategori_sorgulama}" url="/pages/envanterIslemleri/kategoriIslemleri.jsf"
+                        rendered="true"/>
+        </p:submenu>
+
+        <p:submenu label="#{lbl.raporlama_islemleri}" icon="ui-icon ui-icon-transferthick-e-w"
+                   rendered="#{sessionInfo.isYetkili('rapor_islemleri')}">
+            <p:menuitem value="#{lbl.menu_aida_botcu_olan_daireler_listesi}"
+                        url="/pages/raporIslemleri/R101.jsf" rendered="#{sessionInfo.isYetkili('yetki_r101')}"/>
+            <p:menuitem value="#{lbl.menu_odenmeyen_aidatlar_listesi}"
+                        url="/pages/raporIslemleri/R201.jsf" rendered="#{sessionInfo.isYetkili('yetki_r201')}"/>
+        </p:submenu>
+
+
+    </p:panelMenu>
+
+    <p:separator/>
+
+    <table width="50%" align="center">
+        <tr>
+            <td align="left">
+                <img alt="menuyu kullaniniz"
+                     src="#{request.contextPath}/images/ok1.png"
+                     id="ok"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p:outputLabel style="font-weight: bold; color: #ffffff;" value="#{lbl.label_menu_bilgi}"/>
+            </td>
+        </tr>
+    </table>
+
+</f:view>
+</html>

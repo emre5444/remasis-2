@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE facelet-taglib PUBLIC
+  "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+  "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+<facelet-taglib>
+	<namespace>http://aym.com/facelets</namespace>
+	<tag>
+		<tag-name>onayButon</tag-name>
+		<source>tags/com/components/onayButton.xhtml</source>
+	</tag>
+
+	<tag>
+		<tag-name>inputText</tag-name>
+		<source>tags/com/components/inputText.xhtml</source>
+	</tag>
+
+	<tag>
+		<tag-name>form</tag-name>
+		<source>tags/com/components/form.xhtml</source>
+	</tag>
+
+	<tag>
+		<tag-name>dataTable</tag-name>
+		<source>tags/com/components/dataTable.xhtml</source>
+	</tag>
+
+	<tag>
+		<tag-name>column</tag-name>
+		<source>tags/com/components/column1.xhtml</source>
+	</tag>
+</facelet-taglib>

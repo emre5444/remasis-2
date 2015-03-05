@@ -1,0 +1,64 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="aidatDetayGoruntuleme">
+        <p:dialog header="#{lbl.daire_aidat_detayi_goruntule}" widgetVar="aidatDetayGoruntulePopup" closeOnEscape="true" height="auto" width="auto">
+
+                <p:panel header="#{lbl.daire_aidat_detay_bilgileri}">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="donem" value="#{lbl.daire_borc_detay_donem}" style="font-weight:bold"  rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                        <p:outputLabel id="donem" value="#{daireGoruntuleMB.selectedBorc.borc.islemTarihi}"  rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </p:outputLabel>
+
+                        <h:outputLabel for="toplam_borc" value="#{lbl.borc_tutari}" style="font-weight:bold"  rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                        <p:outputLabel id="toplam_borc" value="#{daireGoruntuleMB.selectedBorc.borc.borc}"  rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                        <h:outputLabel for="aciklama" value="#{lbl.ortak_aciklama}" style="font-weight:bold"  rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                        <p:outputLabel id="aciklama" value="#{daireGoruntuleMB.selectedBorc.borc.aciklama}"  rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                        <h:outputLabel for="odenen_borc" value="#{lbl.odenen_tutar}" style="font-weight:bold" rendered="#{not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                        <p:outputLabel id="odenen_borc" value="#{daireGoruntuleMB.selectedBorc.borc.odenenTutar}" rendered="#{ not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                        <h:outputLabel for="odeme_aciklama" value="#{lbl.daire_borc_odeme_aciklama}" style="font-weight:bold" rendered="#{ not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                        <p:outputLabel id="odeme_aciklama" value="#{daireGoruntuleMB.selectedBorc.borc.odemeAciklama}" rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                        <h:outputLabel for="banka" value="#{lbl.banka}" style="font-weight:bold" rendered="#{ not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                        <p:outputLabel id="banka" value="#{daireGoruntuleMB.selectedBorc.borc.banka.aciklama}"  rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                        <h:outputLabel for="odeme_tipi" value="#{lbl.odeme_tipi}" style="font-weight:bold" rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                        <p:outputLabel id="odeme_tipi" value="#{daireGoruntuleMB.selectedBorc.borc.odemeTipi.aciklama}" rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                    </h:panelGrid>
+                </p:panel>
+
+                <div style="height:10px"></div>
+
+                <p:panel header="#{lbl.daire_aidat_detay_listesi}" style="width:100%" rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}" >
+                    <h:panelGrid id="aidatDetayDetailPanel" columns="1" cellpadding="5">
+
+                        <p:dataTable id="borcKalemListesiOfDaire" value="#{daireGoruntuleMB.selectedBorc.daireBorcKalems}" var="varBorcKalem"
+                                     emptyMessage="#{msg.no_record_found}"
+                                     paginatorPosition="bottom"
+                                     style="width:100%" rows="30">
+                            <p:column headerText="#{lbl.daire_aidat_kalem}">
+                                <h:outputText value="#{varBorcKalem.borcKalem.aciklama}"/>
+                            </p:column>
+                            <p:column headerText="#{lbl.daire_aidat_kalem_tutar}">
+                                <h:outputText value="#{varBorcKalem.tutar}"/>
+                            </p:column>
+                        </p:dataTable>
+
+
+                    </h:panelGrid>
+                </p:panel>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

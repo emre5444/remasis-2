@@ -1,0 +1,59 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="daireEkleme">
+        <p:dialog header="#{lbl.daire_ekleme}" widgetVar="daireEklePopup" height="auto" width="auto" closeOnEscape="true">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="blok" value="#{lbl.blok_ad} (*)" style="font-weight:bold" />
+                    <p:selectOneMenu id="blok" value="#{daireMB.yeniDaire.blok}" style="font-weight:bold" required="true" label="#{lbl.blok_ad}">
+                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                        <f:selectItems value="#{daireMB.blokList}" var="blok" itemValue="#{blok}" itemLabel="#{blok.aciklama}" />
+                        <f:converter binding="#{blokConverter}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="daireNo" value="#{lbl.daire_no} (*)" style="font-weight:bold"/>
+                    <p:inputText id="daireNo" value="#{daireMB.yeniDaire.daireNo}" required="true"
+                                 label="#{lbl.daire_no}"/>
+
+                    <h:outputLabel for="daireKodu" value="#{lbl.daire_kodu} (*)" style="font-weight:bold"/>
+                    <p:inputText id="daireKodu" value="#{daireMB.yeniDaire.daireKodu}" required="true"
+                                 label="#{lbl.daire_kodu}"/>
+
+                    <h:outputLabel for="alan" value="#{lbl.daire_alani}" style="font-weight:bold"/>
+                    <p:inputText id="alan" value="#{daireMB.yeniDaire.alan}"
+                                 label="#{lbl.daire_alani}"/>
+
+                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
+                    <p:inputText id="kat" value="#{daireMB.yeniDaire.kat}"
+                                 label="#{lbl.daire_kat}"/>
+
+                    <h:outputLabel for="daireTipi" value="#{lbl.daire_tipi} (*)" style="font-weight:bold" />
+                    <p:selectOneMenu id="daireTipi" value="#{daireMB.yeniDaire.daireTipi}" style="font-weight:bold" required="true" label="#{lbl.daire_tipi}">
+                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                        <f:selectItems value="#{daireMB.daireTipiList}" var="daireTipi" itemValue="#{daireTipi}" itemLabel="#{daireTipi.aciklama}" />
+                        <f:converter binding="#{daireTipiConverter}"/>
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="durum" value="#{lbl.durum} (*)" style="font-weight:bold" />
+                    <p:selectOneMenu id="durum" value="#{daireMB.yeniDaire.durum}" style="font-weight:bold" required="true" label="#{lbl.durum}">
+                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                        <f:selectItems value="#{daireMB.durumList}" var="drm" itemValue="#{drm}" itemLabel="#{drm.aciklama}" />
+                        <f:converter binding="#{durumConverter}"/>
+                    </p:selectOneMenu>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="daire_kaydet" value="#{lbl.kaydet}" update="@([id$=daireEkleme]) :main_form"
+                                         actionListener="#{daireMB.yeniDaireEkleme}" icon="ui-icon-disk" />
+                    </f:facet>
+                </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+                        http://java.sun.com/xml/ns/javaee/web-facesconfig_2_2.xsd"
+    version="2.2">
+  	
+    <!-- JSF and Spring are integrated -->
+    <application>
+        <el-resolver>
+            org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>
+        <locale-config>
+            <default-locale>tr</default-locale>
+            <supported-locale>en</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>bundles.messages</base-name>
+            <var>msg</var>
+        </resource-bundle> 
+        <resource-bundle>
+            <base-name>bundles.labels</base-name>
+            <var>lbl</var>
+        </resource-bundle>
+        <message-bundle>
+            properties.project
+        </message-bundle>
+        <el-resolver>
+            org.primefaces.application.exceptionhandler.PrimeExceptionHandlerELResolver
+        </el-resolver>
+    </application>
+
+    <!-- configuration of navigation rules -->
+    <navigation-rule id="daireSorgulama">
+        <from-view-id>/pages/rezidansIslemleri/daireSorgula.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>daireGoruntule</from-outcome>
+            <to-view-id>/pages/rezidansIslemleri/daireGoruntuleme.xhtml</to-view-id>
+        </navigation-case>
+
+    </navigation-rule>
+
+    <navigation-rule id="talepSorgulama">
+        <from-view-id>/pages/talepIslemleri/talepSorgula.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>talepGoruntuleme</from-outcome>
+            <to-view-id>/pages/talepIslemleri/talepGoruntuleme.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>talepOnaylama</from-outcome>
+            <to-view-id>/pages/talepIslemleri/talepOnaylama.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>talepReddetme</from-outcome>
+            <to-view-id>/pages/talepIslemleri/talepReddetme.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule id="talepOnaylama">
+        <from-view-id>/pages/talepIslemleri/talepOnaylama.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>talepSorgulama</from-outcome>
+            <to-view-id>/pages/talepIslemleri/talepSorgula.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule id="talepReddetme">
+        <from-view-id>/pages/talepIslemleri/talepReddetme.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>talepSorgulama</from-outcome>
+            <to-view-id>/pages/talepIslemleri/talepSorgula.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <navigation-rule id="talepGoruntuleme">
+        <from-view-id>/pages/talepIslemleri/talepGoruntuleme.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>talepSorgulama</from-outcome>
+            <to-view-id>/pages/talepIslemleri/talepSorgula.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
+    <factory>
+        <exception-handler-factory>
+            org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory
+        </exception-handler-factory>
+    </factory>
+
+</faces-config>

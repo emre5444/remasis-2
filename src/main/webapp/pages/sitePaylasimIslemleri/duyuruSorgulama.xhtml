@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/sablon/sablon.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        <h:outputText value="#{lbl.label_duyuru_islem}"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="main_form">
+
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+            <p:panel header="#{lbl.label_duyuru_sorgulama}">
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <h:outputLabel for="ad" value="#{lbl.label_duyuru_konusu}" style="font-weight:bold"/>
+                    <p:inputText id="ad" value="#{duyuruMB.sorguKriteri.konu}"/>
+
+                    <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
+                                   style="font-weight:bold"/>
+                    <p:calendar id="baslangic_tarihi" value="#{duyuruMB.sorguKriteri.sorguBaslangicTarihi}"
+                                pattern="dd/MM/yyyy" mask="true"/>
+
+                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                    <p:calendar id="bitis_tarihi" value="#{duyuruMB.sorguKriteri.sorguBitisTarihi}"
+                                pattern="dd/MM/yyyy"
+                                mask="true"/>
+
+                    <p:commandButton value="#{lbl.ortak_sorgula}" action="#{duyuruMB.getDuyuruListBySorguKriteri()}"
+                                     update=":main_form"/>
+
+                </h:panelGrid>
+
+            </p:panel>
+
+            <div style="height:10px"></div>
+
+            <p:panel header="#{lbl.sorgu_sonucu}" rendered="#{not empty duyuruMB.dataModel.wrappedData}">
+
+                <p:dataTable value="#{duyuruMB.dataModel}" var="varDuyuru" paginatorPosition="bottom"
+                             paginator="true" rows="20" emptyMessage="#{msg.no_record_found}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+
+                    <p:column sortBy="adSoyad" style="width:10%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                        </f:facet>
+                        <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
+                    </p:column>
+                    <p:column sortBy="kisaAciklama" style="width:70%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.duyuru_konusu}"/>
+                        </f:facet>
+                        <h:outputText value="#{varDuyuru.kisaAciklama}"/>
+                    </p:column>
+                    <ui:remove>
+                        <p:column sortBy="aciklama" style="width:7%">
+                            <f:facet name="header">
+                                <h:outputText value="#{lbl.duyuru_aciklama}"/>
+                            </f:facet>
+                            <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
+
+                        </p:column>
+                    </ui:remove>
+                    <p:column sortBy="tanitimZamani" style="width:14%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.duyuru_zamani}"/>
+                        </f:facet>
+                        <h:outputText value="#{varDuyuru.tanitimZamani}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column exportable="false" style="width:5%">
+                        <h:panelGrid columns="2">
+                            <p:commandLink id="viewButton1" icon="ui-icon-search"
+                                           update="@([id$=showAdminDuyuru])"
+                                           oncomplete="PF('duyuruGoruntulePopup').show();"
+                                    >
+                                <p:graphicImage value="/images/show_icon.png"/>
+                                <f:setPropertyActionListener value="#{varDuyuru}" target="#{duyuruMB.selected}"/>
+                            </p:commandLink>
+
+
+                            <p:commandButton id="deleteButton1" icon="ui-icon-trash" immediate="true"
+                                             rendered="#{sessionInfo.adminMi}"
+                                             action="#{duyuruMB.deleteDuyuru}" update="@([id$=main_form])"
+                                    >
+                                <f:setPropertyActionListener value="#{varDuyuru}"
+                                                             target="#{duyuruMB.selected}"/>
+                                <p:confirm header="#{lbl.ilan_iptali}"
+                                           message="#{msg.islemi_onayliyormusunuz}"/>
+                            </p:commandButton>
+                        </h:panelGrid>
+                    </p:column>
+
+
+                </p:dataTable>
+
+            </p:panel>
+        </h:form>
+
+        <ui:include src="../sistemYonetimi/adminDuyuruEkleme.xhtml">
+            <ui:param name="entityMB" value="#{duyuruMB}"/>
+            <ui:param name="formName" value="main_form"/>
+        </ui:include>
+        <ui:include src="../sitePaylasimIslemleri/duyuruGoruntuleme.xhtml">
+            <ui:param name="entityMB" value="#{duyuruMB}"/>
+        </ui:include>
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

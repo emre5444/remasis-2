@@ -1,0 +1,22 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<p:panel header="#{lbl.label_rapor_format_islemleri}">
+    <h:panelGrid id="formatIslemleri" columns="2" cellpadding="5">
+            <h:outputLabel for="rapor_format" value="#{lbl.label_format}" style="font-weight:bold"/>
+            <p:selectOneMenu id="rapor_format" value="#{entityMB.islem}" style="width:200px;">
+                <f:selectItem itemLabel="PDF" itemValue="PDF"/>
+                <f:selectItem itemLabel="Docx" itemValue="Docx"/>
+                <f:selectItem itemLabel="Xlsx" itemValue="Xlsx"/>
+                <f:selectItem itemLabel="Odt" itemValue="Odt"/>
+                <f:selectItem itemLabel="Ppt" itemValue="Ppt"/>
+            </p:selectOneMenu>
+
+    </h:panelGrid>
+    <h:outputText value="(*) #{msg.message_rapor_islem}" style="font-weight:bold; color:#FF4000;"/>
+</p:panel>
+
+</html>

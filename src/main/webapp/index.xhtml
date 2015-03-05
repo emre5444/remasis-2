@@ -1,0 +1,593 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/sablon/sablon.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<ui:define name="title">
+    <h:outputText value="#{lbl.anasayfa}"/>
+</ui:define>
+<ui:define name="content">
+
+
+<h:form id="anasayfa_form">
+<p:remoteCommand global="false" name="onload3" action="#{anasayfaMB.prepareIletisimBilgi()}" autoRun="true"
+                 update="@([id$=anasayfa_iletisim]) , anasayfa_bilgi"/>
+<p:remoteCommand global="false" name="onload2" action="#{anasayfaMB.getDuyuruData()}" autoRun="true"
+                 update="@([id$=anasayfa_duyurular1])"/>
+<p:remoteCommand global="false" name="onload5" action="#{anasayfaMB.getIlanData()}" autoRun="true"
+                 update="@([id$=anasayfa_ilanlar])"/>
+<p:remoteCommand global="false" name="onload4" action="#{anasayfaMB.getAnketListBySorguKriteri()}" autoRun="true"
+                 update="@([id$=anasayfa_anket])"/>
+<p:remoteCommand global="false" name="onload7" autoRun="true"
+                 update="@([id$=AnketeKatilimEkleme])"/>
+<p:remoteCommand global="false" name="onload1" action="#{anasayfaMB.getBelgeData()}" autoRun="true"
+                 update="anasayfa_belgeler"/>
+<p:remoteCommand global="false" name="onload6" action="#{anasayfaMB.createPieModels()}" autoRun="true"
+                 rendered="#{sessionInfo.adminMi}"
+                 update="anasayfa_borc_alacak_durum1 , anasayfa_borc_alacak_durum"/>
+
+
+<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+<h:panelGroup id="mainContent">
+<table width="100%" class="myTableClass">
+
+<tr>
+    <td width="50%" class="myTdClass">
+        <p:panel id="anasayfa_bilgi" style="box-shadow: none;"
+                 scrollable="true" scrollHeight="160"
+                 header="#{lbl.label_uygulama_kullanim_yardimcisi}">
+            <ul>
+                <li><h:outputText value="#{msg.tanitim_madde_1}"/></li>
+                <li><h:outputText value="#{msg.tanitim_madde_2}"/></li>
+                <li><h:outputText value="#{msg.tanitim_madde_3}"/>
+                    <ul>
+                        <li><h:outputText value="#{msg.tanitim_madde_4}"/></li>
+                        <li><h:outputText value="#{msg.tanitim_madde_5}"/></li>
+                        <li><h:outputText value="#{msg.tanitim_madde_6}"/></li>
+                        <li><h:outputText value="#{msg.tanitim_madde_7}"/></li>
+                        <li><h:outputText value="#{msg.tanitim_madde_8}"/></li>
+                    </ul>
+                </li>
+            </ul>
+        </p:panel>
+    </td>
+
+    <td width="50%" class="myTdClass">
+        <p:panel id="anasayfa_iletisim" style="box-shadow: none;"
+                 header="#{lbl.label_iletisim_bilgileri}" scrollHeight="160"
+                >
+            <h:panelGroup rendered="#{not anasayfaMB.iletisimLoaded}">
+                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                     style="display:block;margin: 0 auto;" alt=""/>
+            </h:panelGroup>
+
+            <p:dataTable id="iletisimBilgi" var="iletisim" value="#{anasayfaMB.iletisimBilgiList}"
+                         scrollable="true" scrollHeight="140" editable="#{sessionInfo.adminMi}"
+                         rendered="#{anasayfaMB.iletisimLoaded}">
+
+                <p:ajax event="rowEdit" listener="#{anasayfaMB.onIletisimBilgileriRowEdit}"/>
+                <p:ajax event="rowEditCancel" listener="#{anasayfaMB.onIletisimBilgileriRowCancel}"/>
+
+                <p:column style="width:35%" headerText="#{lbl.label_gorevli_ismi}">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{iletisim.bilgiTipi}"/></f:facet>
+                        <f:facet name="input"><p:inputText id="bilgiTipi" value="#{iletisim.bilgiTipi}"
+                                                           style="width:100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column style="width:35%" headerText="#{lbl.label_gorevli_unvan}">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{iletisim.bilgiTipiAck}"/></f:facet>
+                        <f:facet name="input"><p:inputText id="bilgiTipiAck" value="#{iletisim.bilgiTipiAck}"
+                                                           style="width:100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column style="width:35%" headerText="#{lbl.label_iletisim_bilgisi}">
+                    <p:cellEditor>
+                        <f:facet name="output"><h:outputText value="#{iletisim.iletisimBilgisi}"/></f:facet>
+                        <f:facet name="input"><p:inputText id="iletisim_aciklama" value="#{iletisim.iletisimBilgisi}"
+                                                           style="width:100%"/></f:facet>
+                    </p:cellEditor>
+                </p:column>
+                <p:column style="width:32px" rendered="#{sessionInfo.adminMi}">
+                    <p:rowEditor/>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="yeniIletisimEkleme" value="#{lbl.label_iletisim_bilgisi_ekleme}"
+                                     icon="ui-icon-plus" rendered="#{sessionInfo.adminMi}"
+                                     update="@([id$=iletisimBilgisiEkleme])"
+                                     oncomplete="PF('iletisimBilgisiEklePopup').show()"/>
+                </f:facet>
+            </p:dataTable>
+
+        </p:panel>
+
+    </td>
+
+</tr>
+
+<tr>
+    <td width="50%" class="myTdClass">
+
+        <p:panel id="anasayfa_belgeler" header="#{lbl.label_belge_list}">
+            <h:panelGroup rendered="#{not anasayfaMB.belgeLoaded}">
+                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                     style="display:block;margin: 0 auto;" alt=""/>
+            </h:panelGroup>
+            <p:dataTable value="#{anasayfaMB.belgeDataModel}" var="varBelge"
+                         selection="#{anasayfaMB.selectedBelge}" scrollable="true" scrollHeight="250"
+                         emptyMessage="#{msg.no_record_found}"
+                         rendered="#{anasayfaMB.belgeLoaded}">
+
+                <p:column headerText="#{lbl.belge_talebi_konusu}" sortBy="belgeTipi.aciklama">
+                    <h:outputText value="#{varBelge.belgeTipi.aciklama}"/>
+                </p:column>
+
+                <p:column headerText="#{lbl.label_belge_adi}" sortBy="dataName">
+                    <h:outputText value="#{varBelge.dataName}"/>
+                </p:column>
+                <p:column headerText="#{lbl.label_belge_tarihi}" sortBy="islemTarihi">
+                    <h:outputText value="#{varBelge.islemTarihi}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{lbl.ortak_aciklama}" sortBy="aciklama">
+                    <h:outputText value="#{varBelge.aciklama}"/>
+                </p:column>
+
+                <p:column style="width:8%">
+                    <h:panelGrid columns="2">
+                        <p:commandLink ajax="false" update="@([id$=anasayfa_form])"
+                                       id="downloadLink"
+                                >
+                            <p:graphicImage value="/images/download_icon.png"/>
+                            <f:setPropertyActionListener value="#{varBelge}"
+                                                         target="#{anasayfaMB.selectedBelge}"/>
+                            <p:fileDownload value="#{anasayfaMB.download}"/>
+                        </p:commandLink>
+
+
+                        <p:commandLink id="deleteBelge1" immediate="true"
+                                       rendered="#{sessionInfo.adminMi}"
+                                       action="#{anasayfaMB.deleteBelge}"
+                                       update="@([id$=anasayfa_belgeler])"
+                                >
+                            <p:graphicImage value="/images/delete_icon.png"/>
+
+                            <f:setPropertyActionListener value="#{varBelge}"
+                                                         target="#{anasayfaMB.selectedBelge}"/>
+                            <p:confirm header="#{lbl.label_belge_silme}"
+                                       message="#{msg.islemi_onayliyormusunuz}"/>
+                        </p:commandLink>
+                    </h:panelGrid>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton id="yeniBelgeEkleme" value="#{lbl.label_belge_ekle}"
+                                     icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
+                                     update="@([id$=belgeEkleme])"
+                                     action="#{anasayfaMB.clearBelgeYuklemeObject}"
+                                     oncomplete="PF('belgeEklePopup').show()"/>
+                </f:facet>
+            </p:dataTable>
+        </p:panel>
+
+    </td>
+
+    <td width="50%" class="myTdClass">
+        <p:panel id="anasayfa_duyurular1" header="#{lbl.daire_duyurular}">
+            <h:panelGroup rendered="#{not anasayfaMB.duyuruLoaded}">
+                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                     style="display:block;margin: 0 auto;" alt=""/>
+            </h:panelGroup>
+            <p:dataTable id="anasayfaDuyuruListesi" value="#{anasayfaMB.duyuruDataModel}"
+                         var="varDuyuru"
+                         scrollable="true" scrollHeight="250"
+                         selection="#{anasayfaMB.selected}"
+                         emptyMessage="#{msg.no_record_found}"
+                         rendered="#{anasayfaMB.duyuruLoaded}"
+                    >
+
+                <p:column sortBy="adSoyad" style="width:15%">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                    </f:facet>
+                    <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
+                </p:column>
+                <p:column sortBy="kisaAciklama" style="width:55%">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_konusu}"/>
+                    </f:facet>
+                    <h:outputText value="#{varDuyuru.mantiksalKisaAciklama}"/>
+                </p:column>
+                <ui:remove>
+                    <p:column sortBy="aciklama" style="width:30%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.duyuru_aciklama}"/>
+                        </f:facet>
+                        <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
+                    </p:column>
+                </ui:remove>
+                <p:column sortBy="tanitimZamani" style="width:15%">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_zamani}"/>
+                    </f:facet>
+                    <h:outputText value="#{varDuyuru.tanitimZamani}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column exportable="false" style="width:8%">
+                    <h:panelGrid columns="2">
+                        <p:commandLink id="viewButton1" icon="ui-icon-search"
+                                       update="@([id$=showAdminDuyuru])"
+                                       oncomplete="PF('duyuruGoruntulePopup').show();"
+                                >
+                            <p:graphicImage value="/images/show_icon.png"/>
+                            <f:setPropertyActionListener value="#{varDuyuru}"
+                                                         target="#{anasayfaMB.selected}"/>
+                        </p:commandLink>
+
+
+                        <p:commandLink id="deleteButton1" icon="ui-icon-trash" immediate="true"
+                                       rendered="#{sessionInfo.adminMi}"
+                                       action="#{anasayfaMB.deleteDuyuru}"
+                                       update="@([id$=anasayfa_duyurular1])"
+                                >
+                            <f:setPropertyActionListener value="#{varDuyuru}"
+                                                         target="#{anasayfaMB.selected}"/>
+                            <p:confirm header="#{lbl.ilan_iptali}"
+                                       message="#{msg.islemi_onayliyormusunuz}"/>
+                            <p:graphicImage value="/images/delete_icon.png"/>
+                        </p:commandLink>
+                    </h:panelGrid>
+                </p:column>
+
+                <f:facet name="footer">
+                    <p:commandButton id="yeniDuyuruEkleme" value="#{lbl.duyuru_ekleme}"
+                                     icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
+                                     update="@([id$=duyuruEkleme])"
+                                     oncomplete="PF('duyuruEklePopup').show()"/>
+                </f:facet>
+
+            </p:dataTable>
+        </p:panel>
+    </td>
+</tr>
+
+<tr>
+    <td width="50%" class="myTdClass">
+
+        <p:panel id="anasayfa_anket" header="#{lbl.label_anket_sorgulama}">
+            <h:panelGroup rendered="#{not anasayfaMB.anketLoaded}">
+                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                     style="display:block;margin: 0 auto;" alt=""/>
+            </h:panelGroup>
+            <p:dataTable value="#{anasayfaMB.anketDataModel}" var="varAnket"
+                         emptyMessage="#{msg.no_record_found}"
+                         scrollable="true" scrollHeight="250"
+                         rendered="#{anasayfaMB.anketLoaded}">
+
+                <p:column sortBy="tanitimZamani">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_zamani}"/>
+                    </f:facet>
+                    <h:outputText value="#{varAnket.tanitimZamani}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column sortBy="adSoyad">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                    </f:facet>
+                    <h:outputText value="#{varAnket.kullanici.adSoyad}"/>
+                </p:column>
+
+                <p:column sortBy="kisaAciklama">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.label_anket_konusu}"/>
+                    </f:facet>
+                    <h:outputText value="#{varAnket.anketKonusu}"/>
+                </p:column>
+                <p:column sortBy="aciklama">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.label_anket_aktif_mi}"/>
+                    </f:facet>
+                    <h:outputText value="#{varAnket.aktifMi.aciklama}"/>
+
+                </p:column>
+
+                <p:column sortBy="aciklama">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.label_anket_katinildimi}"/>
+                    </f:facet>
+                    <h:outputText value="#{anasayfaMB.isAnketeKtinildiMi(varAnket).aciklama}"/>
+                </p:column>
+
+                <p:column exportable="false" width="10%">
+                    <h:panelGrid columns="2">
+                        <p:commandLink id="ankgrntl"
+                                       update="@([id$=anketGoruntuleme])"
+                                       action="#{anasayfaMB.prepareAnketDetailInfo}"
+                                       oncomplete="PF('anketGoruntulemePopup').show();"
+                                >
+                            <p:graphicImage value="/images/show_icon.png"/>
+                            <f:setPropertyActionListener value="#{varAnket}"
+                                                         target="#{anasayfaMB.selectedAnket}"/>
+                        </p:commandLink>
+
+                        <p:commandLink id="ankktl"
+                                       rendered="#{varAnket.anketeKatinildiMi.hayirMi}"
+                                       update="@([id$=AnketeKatilimEkleme])"
+                                       action="#{anasayfaMB.prepareAnketDetailForKatilim}"
+                                       oncomplete="PF('anketeKatilimEklemePopup').show();"
+                                >
+                            <p:graphicImage value="/images/rate_icon2.png"/>
+                            <f:setPropertyActionListener value="#{varAnket}"
+                                                         target="#{anasayfaMB.selectedAnket}"/>
+                        </p:commandLink>
+
+                    </h:panelGrid>
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+    </td>
+
+    <td width="50%" class="myTdClass">
+        <p:panel id="anasayfa_ilanlar" header="#{lbl.daire_ilanlar}">
+            <h:panelGroup rendered="#{not anasayfaMB.ilanLoaded}">
+                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                     style="display:block;margin: 0 auto;" alt=""/>
+            </h:panelGroup>
+            <p:dataTable id="anasayfaIlanListesi" value="#{anasayfaMB.ilanDataModel}" var="varDuyuru"
+                         scrollable="true" scrollHeight="250"
+                         selection="#{anasayfaMB.selected}"
+                         emptyMessage="#{msg.no_record_found}"
+                         rendered="#{anasayfaMB.ilanLoaded}"
+                    >
+
+                <p:column sortBy="adSoyad">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                    </f:facet>
+                    <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
+                </p:column>
+                <p:column sortBy="daireBlokAd">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_yayinlanan_daire}"/>
+                    </f:facet>
+                    <h:outputText value="#{varDuyuru.daire.daireBlokAd}"/>
+                </p:column>
+                <p:column sortBy="kisaAciklama">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_konusu}"/>
+                    </f:facet>
+                    <h:outputText value="#{varDuyuru.mantiksalKisaAciklama}"/>
+                </p:column>
+                <ui:remove>
+                    <p:column sortBy="aciklama">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.duyuru_aciklama}"/>
+                        </f:facet>
+                        <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
+                    </p:column>
+                </ui:remove>
+                <p:column sortBy="tanitimZamani">
+                    <f:facet name="header">
+                        <h:outputText value="#{lbl.duyuru_zamani}"/>
+                    </f:facet>
+                    <h:outputText value="#{varDuyuru.tanitimZamani}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column exportable="false" style="width:8%">
+                    <h:panelGrid columns="2">
+                        <p:commandLink icon="ui-icon-search"
+                                       update="@([id$=showAdminDuyuru])"
+                                       oncomplete="PF('duyuruGoruntulePopup').show();"
+                                >
+                            <p:graphicImage value="/images/show_icon.png"/>
+                            <f:setPropertyActionListener value="#{varDuyuru}"
+                                                         target="#{anasayfaMB.selected}"/>
+                        </p:commandLink>
+
+                        <p:commandLink id="deleteButton1" icon="ui-icon-trash" immediate="true"
+                                       rendered="#{sessionInfo.adminMi}"
+                                       action="#{anasayfaMB.deleteDuyuru}"
+                                       update="@([id$=anasayfa_ilanlar])"
+                                >
+                            <p:graphicImage value="/images/delete_icon.png"/>
+                            <f:setPropertyActionListener value="#{varDuyuru}"
+                                                         target="#{anasayfaMB.selected}"/>
+                            <p:confirm header="#{lbl.ilan_iptali}"
+                                       message="#{msg.islemi_onayliyormusunuz}"/>
+                        </p:commandLink>
+                    </h:panelGrid>
+                </p:column>
+
+            </p:dataTable>
+        </p:panel>
+
+    </td>
+</tr>
+
+<c:if test="#{sessionInfo.adminMi}">
+    <tr>
+        <td width="50%" class="myTdClass">
+
+            <p:panel id="anasayfa_borc_alacak_durum1" header="#{lbl.label_borc_alacak_ozet_detay}"
+                    >
+                <h:panelGroup rendered="#{not anasayfaMB.finansLoaded}">
+                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                         style="display:block;margin: 0 auto;" alt=""/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{anasayfaMB.finansLoaded}">
+                    <table width="100%">
+                        <tr>
+                            <td width="50%">
+                                <p:chart type="pie" legendPosition="e" model="#{anasayfaMB.pieModel2}"
+                                            showDataLabels="true"
+                                            seriesColors="ebc875, 2eb9b4"
+                                            shadow="true"
+                                            style="width:250px;height:150px"/>
+
+                            </td>
+                            <td width="50%" style="padding-top: 10px;">
+
+                                <p:dataTable id="borc_alacak_table1" var="ba"
+                                             value="#{anasayfaMB.sonDonemborcAlacakViewBeanList}">
+
+                                    <p:column style="width:25%" headerText="#{lbl.daire_kodu}"
+                                              rendered="#{not sessionInfo.adminMi}">
+                                        <h:outputText value="#{ba.daire.daireKodu}"/>
+                                    </p:column>
+                                    <p:column style="width:25%" headerText="#{lbl.lbl_tutar}">
+                                        <h:outputText value="#{ba.tutar}">
+                                            <f:convertNumber pattern="#,###,##0.00"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="width:25%" headerText="#{lbl.lbl_alacak_borc_oran}">
+                                        <h:outputText value="#{anasayfaMB.doubleFormatter(ba.rate)}"/>
+                                    </p:column>
+                                    <p:column style="width:25%" headerText="#{lbl.ortak_aciklama}">
+                                        <h:outputText value="#{ba.aciklama}"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                                <br/>
+                                <h:outputText value="#{anasayfaMB.getBorcTutariForCurrent()}"
+                                              style="font-weight:bold; color: red;"
+                                              rendered="#{anasayfaMB.getBorcTutariForCurrent() gt 0.0}">
+                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                </h:outputText>
+                                <h:outputText value="#{' TL'} #{msg.msg_borc_var}"
+                                              style="font-weight:bold; color: red;"
+                                              rendered="#{anasayfaMB.getBorcTutariForCurrent() gt 0.0}"/>
+                                <h:outputText value="#{-anasayfaMB.getBorcTutariForCurrent()}"
+                                              style="font-weight:bold; color: green;"
+                                              rendered="#{anasayfaMB.getBorcTutariForCurrent() lt 0.0}">
+                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                </h:outputText>
+                                <h:outputText value="#{' TL'} #{msg.msg_alacak_var}"
+                                              style="font-weight:bold; color: green;"
+                                              rendered="#{anasayfaMB.getBorcTutariForCurrent() lt 0.0}"/>
+                            </td>
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </p:panel>
+
+        </td>
+
+        <td width="50%" class="myTdClass">
+            <p:panel id="anasayfa_borc_alacak_durum" header="#{lbl.label_borc_alacak_ozet_genel}"
+                     >
+                <h:panelGroup rendered="#{not anasayfaMB.finansLoaded}">
+                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                         style="display:block;margin: 0 auto;" alt=""/>
+                </h:panelGroup>
+                <h:panelGroup rendered="#{anasayfaMB.finansLoaded}">
+                    <table width="100%">
+                        <tr>
+                            <td width="50%">
+                                <p:chart type="pie" legendPosition="e" model="#{anasayfaMB.pieModel1}"
+                                            showDataLabels="true"
+                                            seriesColors="ebc875, 2eb9b4"
+                                            shadow="true"
+                                            style="width:250px;height:150px"/>
+                            </td>
+                            <td width="50%" style="padding-top: 10px;">
+
+
+                                <p:dataTable id="borc_alacak_table" var="ba"
+                                             value="#{anasayfaMB.borcAlacakViewBeanList}">
+
+                                    <p:column style="width:25%" headerText="#{lbl.daire_kodu}"
+                                              rendered="#{not sessionInfo.adminMi}">
+                                        <h:outputText value="#{ba.daire.daireKodu}"/>
+                                    </p:column>
+                                    <p:column style="width:25%" headerText="#{lbl.lbl_tutar}">
+                                        <h:outputText value="#{ba.tutar}">
+                                            <f:convertNumber pattern="#,###,##0.00"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column style="width:25%" headerText="#{lbl.lbl_alacak_borc_oran}">
+                                        <h:outputText value="#{anasayfaMB.doubleFormatter(ba.rate)}"/>
+                                    </p:column>
+                                    <p:column style="width:25%" headerText="#{lbl.ortak_aciklama}">
+                                        <h:outputText value="#{ba.aciklama}"/>
+                                    </p:column>
+                                </p:dataTable>
+
+                                <br/>
+                                <h:outputText value="#{anasayfaMB.getBorcTutariForGenel()}"
+                                              style="font-weight:bold; color: red;"
+                                              rendered="#{anasayfaMB.getBorcTutariForGenel() gt 0.0}">
+                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                </h:outputText>
+                                <h:outputText value="#{' TL'} #{msg.msg_borc_var}"
+                                              style="font-weight:bold; color: red;"
+                                              rendered="#{anasayfaMB.getBorcTutariForGenel() gt 0.0}"/>
+                                <h:outputText value="#{-anasayfaMB.getBorcTutariForGenel()}"
+                                              style="font-weight:bold; color: green;"
+                                              rendered="#{anasayfaMB.getBorcTutariForGenel() lt 0.0}">
+                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                </h:outputText>
+                                <h:outputText value="#{' TL'} #{msg.msg_alacak_var}"
+                                              style="font-weight:bold; color: green;"
+                                              rendered="#{anasayfaMB.getBorcTutariForGenel() lt 0.0}"/>
+                            </td>
+
+                        </tr>
+                    </table>
+                </h:panelGroup>
+            </p:panel>
+        </td>
+    </tr>
+</c:if>
+
+</table>
+</h:panelGroup>
+
+<div class="footerTablo">
+    <ui:insert name="footer">
+        <ui:include src="sablon/footer.xhtml"/>
+    </ui:insert>
+</div>
+
+</h:form>
+
+<ui:include src="pages/sistemYonetimi/iletisimEkleme.xhtml">
+    <ui:param name="entityMB" value="#{anasayfaMB}"/>
+    <ui:param name="formName" value="anasayfa_iletisim"/>
+</ui:include>
+<ui:include src="pages/sistemYonetimi/adminDuyuruEkleme.xhtml">
+    <ui:param name="entityMB" value="#{anasayfaMB}"/>
+    <ui:param name="formName" value="anasayfa_duyurular1"/>
+</ui:include>
+<ui:include src="pages/sistemYonetimi/adminBelgeEkleme.xhtml"/>
+<ui:include src="pages/sitePaylasimIslemleri/duyuruGoruntuleme.xhtml">
+    <ui:param name="entityMB" value="#{anasayfaMB}"/>
+</ui:include>
+<ui:include src="pages/sitePaylasimIslemleri/anketOyKullanma.xhtml">
+    <ui:param name="openDialog" value="#{anasayfaMB.openDialog}"/>
+    <ui:param name="entityMB" value="#{anasayfaMB}"/>
+    <ui:param name="formName" value="anasayfa_anket"/>
+</ui:include>
+
+<ui:include src="pages/sitePaylasimIslemleri/anketGoruntuleme.xhtml">
+    <ui:param name="entityMB" value="#{anasayfaMB}"/>
+</ui:include>
+
+</ui:define>
+
+</ui:composition>

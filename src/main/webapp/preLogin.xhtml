@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+
+<f:view contentType="text/html" locale="#{misafirKullaniciOzellikleri.kullaniciLocale}">
+    <h:head>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/sablon/css/stil2.css"/>
+    </h:head>
+    <h:body>
+        <div id="preLoginColor">
+            <div class="center">
+                <h:form id="main_form">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+                    <p:panel header="#{lbl.kullanici_bilgileri}">
+                        <h:panelGrid columns="4" cellpadding="5">
+
+                            <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                            <p:outputLabel id="ad" value="#{preLoginMB.sessionInfo.kullanici.ad}"/>
+
+                            <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                            <p:outputLabel id="soyad" value="#{preLoginMB.sessionInfo.kullanici.soyad}"/>
+
+                            <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"/>
+                            <p:outputLabel id="username" value="#{preLoginMB.sessionInfo.kullanici.username}"/>
+
+                            <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                            <p:outputLabel id="email" value="#{preLoginMB.sessionInfo.kullanici.email}"/>
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                    <p:dataTable id="kullaniciSirketTable" value="#{preLoginMB.dataModel}" var="varSirket"
+                                 paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
+                                 selection="#{preLoginMB.selected}"
+                                 paginator="true" rows="10"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
+
+                        <p:column selectionMode="single"/>
+
+                        <f:facet name="header">
+                            Expand rows to see detailed information
+                        </f:facet>
+                        <p:column style="width:16px">
+                            <p:rowToggler/>
+                        </p:column>
+                        <p:column headerText="Şirket Adı">
+                            <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
+                        </p:column>
+                        <p:column headerText="Logo">
+                            <p:graphicImage value="/images/sirket/#{varSirket.sirket.sirketLogo}.png"/>
+                        </p:column>
+
+                        <p:rowExpansion>
+                            <h:panelGrid columns="2" columnClasses="label,value" style="width:300px">
+
+                                <h:outputText value="Id:"/>
+                                <h:outputText value="#{varSirket.sirket.id}"/>
+
+                                <h:outputText value="Adı"/>
+                                <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
+
+                            </h:panelGrid>
+                        </p:rowExpansion>
+
+                    </p:dataTable>
+                    <p:commandButton id="cont_button" action="#{preLoginMB.continueToIndex}" value="Devam"/>
+                </h:form>
+            </div>
+        </div>
+
+    </h:body>
+</f:view>
+</html>

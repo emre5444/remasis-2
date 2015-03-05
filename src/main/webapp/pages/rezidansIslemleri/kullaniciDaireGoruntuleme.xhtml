@@ -1,0 +1,37 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="kullaniciDaireGoruntuleme">
+
+        <p:dialog header="#{lbl.kullanici_goruntuleme}" widgetVar="kullaniciGoruntulePopup" closeOnEscape="true" height="auto" width="auto">
+
+                <h:panelGrid id="showDuyuruDetailForKullanici" columns="2" cellpadding="5">
+                    <h:outputLabel for="malik_ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                    <h:outputText value="#{daireGoruntuleMB.selectedKullaniciDaire.kullanici.ad}"
+                                  id="malik_ad"/>
+
+                    <h:outputLabel for="malik_soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                    <h:outputText rows="6" cols="33" value="#{daireGoruntuleMB.selectedKullaniciDaire.kullanici.soyad}"
+                                  id="malik_soyad"
+                            />
+
+                    <h:outputLabel for="malik_kullanici_adi" value="#{lbl.kullanici_adi}" style="font-weight:bold"/>
+                    <h:outputText rows="6" cols="33" value="#{daireGoruntuleMB.selectedKullaniciDaire.kullanici.username}"
+                                  id="malik_kullanici_adi"
+                            />
+
+                    <h:outputLabel for="malik_kullanici_tipi" value="#{lbl.kullanici_tipi}" style="font-weight:bold"/>
+                    <h:outputText rows="6" cols="33" value="#{daireGoruntuleMB.selectedKullaniciDaire.kullaniciTipi.aciklama}"
+                                  id="malik_kullanici_tipi"
+                            />
+
+                </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

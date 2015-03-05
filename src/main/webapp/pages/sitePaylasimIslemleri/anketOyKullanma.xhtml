@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <c:if test="empty openDialog">
+        <c:set target="openDialog" value="false"/>
+    </c:if>
+
+    <p:dialog header="#{lbl.label_anket_katilim}" visible="#{openDialog}"
+              widgetVar="anketeKatilimEklemePopup" closeOnEscape="true" height="auto" width="auto">
+
+        <p:messages id="messages12" showDetail="false" autoUpdate="true" closable="true"/>
+        <h:form id="AnketeKatilimEkleme">
+
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_konusu}"
+                                       style="font-weight:bold"/>
+                        <h:outputText  value="#{entityMB.selectedAnket.anketKonusu}"
+                                         id="anket_konu_v"/>
+
+                        <h:outputLabel for="anket_aciklama_v" value="#{lbl.label_anket_sorusu}"
+                                       style="font-weight:bold"/>
+                        <h:outputText value="#{entityMB.selectedAnket.aciklama}"
+                                         id="anket_aciklama_v"
+                                />
+
+                        <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_secenekler} (*)"
+                                       style="font-weight:bold"/>
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                            <p:selectOneRadio id="anket_secim" value="#{entityMB.yeniAnket.selectedAnketSecim}"  layout="grid" columns="1" required="true" label="#{lbl.label_anket_secenekler}">
+                                <f:selectItems value="#{entityMB.anketSecimList}" var="anketSecim" itemLabel="#{anketSecim.secim}" itemValue="#{anketSecim}"/>
+                                <f:converter binding="#{anketSecimConverter}"/>
+                            </p:selectOneRadio>
+                        </h:panelGrid>
+
+                        <h:outputLabel for="anket_aciklama_v1" value="#{lbl.ortak_aciklama}"
+                                       style="font-weight:bold"/>
+                        <p:inputTextarea rows="4" cols="40" value="#{entityMB.yeniAnket.oyAciklama}"
+                                         label="#{lbl.label_anket_sorusu}"
+                                         id="anket_aciklama_v1"
+                                />
+
+                    </h:panelGrid>
+
+                <div style="height:10px"></div>
+
+                <p:commandButton id="btn_anket_ekle_guncelle" value="#{lbl.label_btn_gonder}" update="@([id$=#{formName}]) :AnketeKatilimEkleme"
+                                 actionListener="#{entityMB.anketeKatilimEkle}">
+                    <p:confirm header="#{lbl.label_ankete_katilma}"
+                               message="#{msg.islemi_onayliyormusunuz}"/>
+                </p:commandButton>
+
+        </h:form>
+    </p:dialog>
+
+</h:body>
+</html>
