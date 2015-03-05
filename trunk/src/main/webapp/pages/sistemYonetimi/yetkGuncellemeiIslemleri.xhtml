@@ -1,0 +1,28 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="yetkiGuncellemeIslemleri">
+        <p:dialog header="#{lbl.yetki_guncelleme_islemleri}" widgetVar="yetkiGuncellemeIslemPopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <p:tree value="#{rolController.yetkiList}" var="node"
+                        selectionMode="checkbox"
+                        selection="#{rolController.selectedyetkiList}">
+
+                    <p:treeNode >
+                        <h:outputText value="#{node.ad}"/>
+                    </p:treeNode>
+
+                </p:tree>
+
+            <f:facet name="footer">
+                <p:commandButton id="yetki_kaydet" value="#{lbl.kaydet}" update=":main_form"
+                                 actionListener="#{rolController.updateYetkiListByRole}"/>
+            </f:facet>
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>

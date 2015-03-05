@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:aym="http://aym.com/facelets">
+
+
+	<c:if test="#{empty required}">
+		<c:set var="required" value="#{false}" />
+	</c:if>
+
+	<h:form>
+		<p:ajaxStatus onstart="PF('statusDialog').show();"
+			onsuccess="PF('statusDialog').hide();"></p:ajaxStatus>
+
+		<p:dialog modal="true" widgetVar="statusDialog"
+			header="Lütfen Bekleyiniz..." draggable="false" closable="false">
+			<p:graphicImage value="#{request.contextPath}/images/ajaxLoaderBigbar.gif" />
+		</p:dialog>
+
+		<p:messages />
+		<ui:insert />
+
+	</h:form>
+</ui:composition>

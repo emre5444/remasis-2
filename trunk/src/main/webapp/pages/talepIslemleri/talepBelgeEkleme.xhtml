@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="belgeEkleme" enctype="multipart/form-data">
+        <p:dialog header="#{lbl.label_belge_ekle}" widgetVar="belgeEklePopup" closeOnEscape="true" height="auto" width="auto">
+
+                <p:wizard flowListener="#{talepIslemMB.onFlowProcess}" widgetVar="belge_yukle" nextLabel="#{lbl.nextLabel}" backLabel="#{lbl.backLabel}">
+                    <p:tab id="personal" title="#{lbl.belge_talebi_konusu}">
+                        <p:panel header="#{lbl.belge_bilgileri}">
+                            <p:messages/>
+                            <h:panelGrid columns="2" columnClasses="label, value">
+
+                                <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu} (*)" style="font-weight:bold" />
+                                <p:selectOneMenu id="belge_tipi" value="#{talepIslemMB.yeniBelge.belgeTipi}" style="font-weight:bold" required="true" label="#{lbl.belge_talebi_konusu}" >
+                                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                    <f:selectItems value="#{talepIslemMB.belgeTipiList}" var="bt" itemValue="#{bt}" itemLabel="#{bt.aciklama}" />
+                                    <f:converter binding="#{belgeTipiConverter}" />
+                                </p:selectOneMenu>
+
+                                <h:outputText value="#{lbl.label_belge_adi} (*)"/>
+                                <p:inputText value="#{talepIslemMB.yeniBelge.dataName}" size="100" required="true" label="#{lbl.label_belge_adi} *"/>
+
+                                <h:outputText value="#{lbl.ortak_aciklama}"/>
+                                <p:inputTextarea value="#{talepIslemMB.yeniBelge.aciklama}" cols="100" rows="7" label="#{lbl.ortak_aciklama}"/>
+
+                            </h:panelGrid>
+                        </p:panel>
+                    </p:tab>
+
+                    <p:tab id="confirm" title="#{lbl.belge_icerik_bilgileri}">
+                        <p:panel header="#{lbl.belge_icerik_bilgileri}">
+                            <h:panelGrid columns="1" cellpadding="5">
+                                <h:panelGrid columns="2" columnClasses="label, value">
+                                    <h:outputText value="#{lbl.belge_talebi_konusu}" style="font-weight:bold"/>
+                                    <h:outputText value="#{talepIslemMB.yeniBelge.belgeTipi.aciklama}" styleClass="outputLabel"/>
+
+                                    <h:outputText value="#{lbl.label_belge_adi}" style="font-weight:bold"/>
+                                    <h:outputText value="#{talepIslemMB.yeniBelge.dataName}" styleClass="outputLabel"/>
+
+                                    <h:outputText value="#{lbl.belge_ekleyen_kullanici}" style="font-weight:bold"/>
+                                    <h:outputText value="#{sessionInfo.kullanici.adSoyad}" styleClass="outputLabel"/>
+
+                                    <h:outputText value="#{lbl.ortak_aciklama}" style="font-weight:bold" />
+                                    <h:outputText value="#{talepIslemMB.yeniBelge.aciklama}" styleClass="outputLabel"/>
+                                </h:panelGrid>
+
+                                <div style="height:10px"></div>
+
+                                <p:fileUpload label="#{lbl.dosya_sec}" fileUploadListener="#{talepIslemMB.daireTalepBelgeYukleme}"
+                                              mode="advanced" dragDropSupport="true" style="width:100%"
+                                              uploadLabel="#{lbl.yukle}" cancelLabel="#{lbl.iptal}" multiple="true"
+                                              sizeLimit="10000000" fileLimit="10"/>
+                            </h:panelGrid>
+
+                            <p:commandButton id="belge_kaydet" ajax="false" value="#{lbl.label_tamam}"
+                                             update="@([id$=talepOnaylama])" process="@this"
+                                             oncomplete="PF('belgeEklePopup').hide();"/>
+
+                        </p:panel>
+                    </p:tab>
+                </p:wizard>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

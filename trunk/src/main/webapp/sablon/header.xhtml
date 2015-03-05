@@ -1,0 +1,53 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0"
+       id="headerTablo">
+    <tr>
+        <td>  <h:outputLabel
+                style="color: white;"
+                value="Versiyon 1.1"
+                />
+        </td>
+        <td style="text-align: right; padding-right: 10px; padding-top: 0px; text-shadow: white 0.05em 0.05em 0.2em">
+            <h:outputLabel
+                    style="font-weight: bold; color: white;"
+                    value="Hoşgeldiniz, #{sessionInfo.kullanici.ad} #{sessionInfo.kullanici.soyad}"
+                    />
+            <h:outputText value=" "/>
+            <p:commandLink update="@([id$=sifreDegistirme])"
+                           oncomplete="PF('sifreDegistirmePopup').show();">
+                <p:graphicImage value="/images/change_password.png"/>
+            </p:commandLink>
+        </td>
+    </tr>
+</table>
+
+<table style="width: 100%;" border="0" cellpadding="0" cellspacing="0"
+       id="headerTablo2">
+    <tr>
+        <td><a href="#{request.contextPath}/" style="border:0px;">
+            <img alt="Park Oran - Rezidans Yönetim Sistemi"
+                 src="#{request.contextPath}/images/remasis-beyaz-yan-esit.png"
+                 id="projeLogo" class="mainProjeLogo"/></a>
+        </td>
+        <td><h:form>
+            <p:themeSwitcher value="#{themeSwitcherBean.theme}" style="width:165px" >
+                effect="fade">
+                <f:selectItem itemLabel="Tema Seç" itemValue=""/>
+                <f:selectItems value="#{themeSwitcherBean.themes}"/>
+                <p:ajax listener="#{themeSwitcherBean.saveTheme}"/>
+            </p:themeSwitcher>
+        </h:form></td>
+        <td style="text-align: right; padding-right: 10px; padding-top: 0px; text-shadow: white 0.05em 0.05em 0.2em">
+            <a href="http://www.parkoran.com/"  target="_blank">
+                <img alt="#{sessionInfo.sirket.sirketAdi} Rezidans Yönetim Sistemi"
+                     src="#{request.contextPath}/images/sirket/#{sessionInfo.sirket.sirketLogo}.png"
+                     class="projeLogo"/></a>
+        </td>
+    </tr>
+</table>
+</html>

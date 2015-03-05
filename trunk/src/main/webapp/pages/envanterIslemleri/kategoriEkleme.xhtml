@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="kategoriEkleme">
+        <p:dialog header="#{lbl.label_yeni_kategori_ekleme}" widgetVar="kategoriEklePopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="kategori_adi" value="#{lbl.label_kategori_adi} (*)" style="font-weight:bold"/>
+                    <p:inputTextarea rows="3" cols="40" value="#{kategoriMB.yeniKategori.aciklama}"
+                                 id="kategori_adi" required="true" label="#{lbl.label_kategori_adi}"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="rol_kaydet" value="#{lbl.kaydet}" update="@([id$=main_form]) , kategoriEkleme"  oncomplete="PF('kategoriEklePopup').hide();"
+                                         actionListener="#{kategoriMB.yeniKategoriEkleme}" icon="ui-icon-disk" />
+                    </f:facet>
+                </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <h:form id="itirazTalepGirisForm">
+        <p:dialog header="#{lbl.itiraz_talebi_giris}" widgetVar="itirazTalepEklePopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <h:panelGrid id="showTalepDetailTalepEkleme" columns="2" cellpadding="5">
+
+                    <h:outputLabel for="aidat_donem" value="#{lbl.islem_tarihi}" style="font-weight:bold"/>
+                    <h:outputText id="aidat_donem" value="#{daireGoruntuleMB.selectedBorc.borc.islemTarihi}">
+                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                    </h:outputText>
+
+                    <h:outputLabel for="aidat_borc_tutari" value="#{lbl.borc_tutari}" style="font-weight:bold"/>
+                    <h:outputText id="aidat_borc_tutari" value="#{daireGoruntuleMB.selectedBorc.borc.borc}"/>
+
+                    <h:outputLabel for="aidat_alacak_tutari" value="#{lbl.odenen_tutar}" style="font-weight:bold"/>
+                    <h:outputText id="aidat_alacak_tutari" value="#{daireGoruntuleMB.selectedBorc.borc.odenenTutar}"/>
+
+                    <h:outputLabel for="talep_aciklama_v" value="#{lbl.talep_aciklama} (*)" style="font-weight:bold"/>
+                    <p:inputTextarea rows="6" cols="50" value="#{daireGoruntuleMB.yeniItiraz.aciklama}" required="true" label="#{lbl.talep_aciklama}"
+                                 id="talep_aciklama_v"
+                            />
+
+                    <f:facet name="footer">
+                        <p:commandButton id="talep_kaydet" value="#{lbl.kaydet}" update="@([id$=sorguSonucuPanel])"
+                                         actionListener="#{daireGoruntuleMB.yeniItirazTalebiEkleme}" />
+                    </f:facet>
+
+                </h:panelGrid>
+
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>

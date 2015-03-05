@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+
+    <h:form id="sistemHata">
+
+        <p:dialog header="#{lbl.label_hata}" widgetVar="sistemHataPopup" closeOnEscape="false" closable="false"
+                  height="auto" width="auto">
+            <h:panelGrid columns="1">
+
+                <img src="#{request.contextPath}/images/error-img.png"
+                     style="display:block;margin: 0 auto;" alt="#{lbl.label_hata}"/>
+                <p:spacer height="10px"/>
+                <h:outputText value="#{msg.error_sistemde_hata_meydana_geldi_detay}"
+                              style="color: #006400;font-size: 20px"/>
+
+                <f:facet name="footer">
+                    <p:commandButton value="#{lbl.label_hata_bildir}"
+                                     actionListener="#{ortakIslemlerMB.createHataLog(pfExceptionHandler.message,pfExceptionHandler.formattedStackTrace)}"
+                            />
+                </f:facet>
+            </h:panelGrid>
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>

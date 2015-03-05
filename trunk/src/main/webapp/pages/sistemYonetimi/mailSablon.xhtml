@@ -1,0 +1,29 @@
+<html
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:p="http://primefaces.org/ui">
+
+<p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+
+<p:dialog modal="true" widgetVar="statusDialog" header="#{lbl.mesaj_lutfen_bekleyiniz}"
+          draggable="false" closable="false">
+    <img src="#{request.contextPath}/images/ajaxloadingbar.gif" style="border:0px;" alt=""/>
+</p:dialog>
+<h:panelGrid columns="2" layout="grid">
+    <h:form id="editor">
+        <p:editor widgetVar="editorWidget" value="#{mailIslemleriMB.text}" width="600"/>
+
+        <h:panelGrid columns="2" style="margin-top: 10px">
+            <p:commandButton value="Kaydet" icon="ui-icon-disk"/>
+
+        </h:panelGrid>
+
+    </h:form>
+
+    <p:commandLink id="ajax" update="editor" action="#{mailIslemleriMB.buttonAction('#Ad Soyad')}">
+        <h:outputText value="Ad Soyad"/>
+    </p:commandLink>
+
+</h:panelGrid>
+
+</html>

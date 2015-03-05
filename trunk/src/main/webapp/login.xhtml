@@ -1,0 +1,58 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+        >
+
+    <f:view contentType="text/html" locale="#{misafirKullaniciOzellikleri.kullaniciLocale}">
+        <h:head>
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+            <title>Remasis - Site Yönetim Sistemi</title>
+            <link type="text/css" rel="stylesheet" href="#{request.contextPath}/sablon/css/stil-login.css"/>
+
+
+        </h:head>
+        <h:body>
+                    <div class="login-card">
+                        <center>
+                            <img alt="aidatlarim"
+                                 src="#{request.contextPath}/images/remasis-login-logo.png"
+                                 id="taleplerim" style="width: 230px;"/><br/><br/>
+                        </center>
+                        <form name="f" action="#{request.contextPath}/j_spring_security_check" method="POST">
+                            <center>
+                                <h:outputText style="color: red" value="#{SPRING_SECURITY_LAST_EXCEPTION.message}"/>
+                            </center>
+                            <input type="text" name="j_username" placeholder="#{lbl.kullanici_adi}"/>
+                            <input type="password" name="j_password" placeholder="#{lbl.sifre}"/>
+                            <input type="submit" name="login" class="login login-submit" value="Giriş"/>
+                        </form>
+                        <center>
+                        <h:form id="sifremiUnuttumForm" prependId="false" style="border: none !important;">
+                            <p:commandLink id="sifreUnuttumLink" value="#{lbl.sifremi_unuttum}" process="@this" update="sifreHatirlatMsg" style="color: cadetblue"/>
+                            <p:overlayPanel id="sifreUnuttumPanel" for="sifreUnuttumLink" my="center top" at="center bottom"
+                                            hideEffect="fade" style="margin-top: 150px;padding: 0px 0px !important;">
+                                <p:panel  style="border: none !important;">
+                                    <p:messages id="sifreHatirlatMsg" closable="true" showIcon="false"/>
+                                    <p:panel style="background: none !important;border: none !important;">
+                                        <p:inputText size="28" required="true" value="#{loginMB.email}" requiredMessage="#{msg.login_email_required}" placeholder="#{lbl.kullanici_email}"/>
+                                        <f:verbatim/>
+                                        <p:commandButton update="sifreHatirlatMsg"  value="#{lbl.label_btn_gonder}" actionListener="#{loginMB.sifreHatirlatmaIstekGonder()}"/>
+                                    </p:panel>
+                                    <br/>
+
+                                          <h:outputText value="#{msg.login_sifremi_unuttum_info}" style="font-weight:bold; color: #006400;"/>
+
+                                </p:panel>
+                            </p:overlayPanel>
+                        </h:form>
+                        </center>
+                    </div>
+
+        </h:body>
+    </f:view>
+</ui:composition>

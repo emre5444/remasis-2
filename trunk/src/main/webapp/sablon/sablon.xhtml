@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<f:view contentType="text/html" locale="#{misafirKullaniciOzellikleri.kullaniciLocale}">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Remasis <ui:insert name="title"/>
+        </title>
+        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/sablon/css/stil2.css"/>
+        <script type="text/javascript" src="#{request.contextPath}/scripts/javaScripts.js"></script>
+        <script type="text/javascript" src="#{request.contextPath}/scripts/translations.js"></script>
+        <ui:insert name="primejs">
+        </ui:insert>
+    </h:head>
+
+    <h:body>
+        <p:ajaxExceptionHandler update="sistemHata" onexception="PF('sistemHataPopup').show();" />
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" closeOnEscape="true">
+            <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+            <p:commandButton value="Hayir" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+        </p:confirmDialog>
+
+        <p:layout fullPage="true">
+
+            <p:layoutUnit position="west" resizable="false" closable="false" minSize="200" maxSize="210">
+
+                <ui:insert name="menu">
+                    <ui:include src="menu.xhtml"/>
+                </ui:insert>
+
+            </p:layoutUnit>
+
+
+            <p:layoutUnit position="center">
+                <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+
+                <p:dialog modal="true" appendTo="@(body)" widgetVar="statusDialog"
+                          header="#{lbl.mesaj_lutfen_bekleyiniz}"
+                          draggable="false" closable="false">
+                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                         style="display:block;margin: 0 auto;" alt=""/>
+                </p:dialog>
+
+                <ui:insert name="hizliMenu">
+                    <ui:include src="hizliMenu.xhtml"/>
+                </ui:insert>
+
+
+                <div id="content">
+                    <ui:insert name="content"/>
+                    <ui:insert name="body"/>
+                </div>
+
+
+            </p:layoutUnit>
+
+
+        </p:layout>
+
+
+    </h:body>
+</f:view>
+<ui:include src="../pages/sistemYonetimi/sifreDegistirme.xhtml"/>
+<ui:include src="../pages/sistemYonetimi/kullaniciGuncelleme.xhtml">
+    <ui:param name="formName" value="anasayfa_form"/>
+    <ui:param name="entityMB" value="#{profilMB}"/>
+    <ui:param name="panelFormId" value="profilGuncelleme"/>
+</ui:include>
+<ui:include src="../pages/sistemYonetimi/showEerrorMessage.xhtml"/>
+</html>

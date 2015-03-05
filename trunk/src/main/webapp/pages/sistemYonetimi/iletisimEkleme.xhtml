@@ -1,0 +1,38 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui" xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+
+    <c:if test="empty formName">
+        <c:set target="formName" value="anasayfa_form"/>
+    </c:if>
+
+    <h:form id="iletisimBilgisiEkleme">
+        <p:dialog header="#{lbl.yeni_iletisim_ekleme}" widgetVar="iletisimBilgisiEklePopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+                <h:panelGrid columns="2" cellpadding="5">
+
+                    <h:outputLabel for="iletisim_ad_soyad" value="#{lbl.label_gorevli_ismi} (*)" style="font-weight:bold"/>
+                    <p:inputText  size="30" value="#{entityMB.yeniIletisimBilgisi.bilgiTipi}"
+                                     id="iletisim_ad_soyad" required="true" label="#{lbl.label_gorevli_ismi}"/>
+
+                    <h:outputLabel for="iletisim_unvan" value="#{lbl.label_gorevli_unvan} (*)" style="font-weight:bold"/>
+                    <p:inputText  size="40" value="#{entityMB.yeniIletisimBilgisi.bilgiTipiAck}"
+                                  id="iletisim_unvan" required="true" label="#{lbl.label_gorevli_unvan}"/>
+
+                    <h:outputLabel for="iletisim_aciklama" value="#{lbl.label_iletisim_bilgisi} (*)" style="font-weight:bold"/>
+                    <p:inputText  size="40" value="#{entityMB.yeniIletisimBilgisi.iletisimBilgisi}"
+                                  id="iletisim_aciklama" required="true" label="#{lbl.label_iletisim_bilgisi}"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="iletisim_kaydet" value="#{lbl.kaydet}" update="@([id$=#{formName}])"
+                                         actionListener="#{entityMB.iletisimBilgisiEkle()}" />
+                    </f:facet>
+                </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

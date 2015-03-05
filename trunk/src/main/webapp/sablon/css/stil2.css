@@ -1,0 +1,603 @@
+body {
+    padding: 0px;
+    margin: 0px;
+    padding-right: 3px;
+    background-color: #efefef;
+
+}
+
+.center {
+    width: 500px;
+    height: 140px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    margin-left: -250px;
+    margin-top: -130px;
+}
+
+.ui-widget-content {
+    border: none;
+    color: #333333;
+    background: transparent;
+    border-radius: 0!important;
+}
+
+.cikisMenuIcon
+{
+    background:url("../../images/icon-set/cikis.png") no-repeat !important;
+    height:30px;
+    width:30px;
+
+
+}
+
+.AnasayfaMenuIcon
+  {
+    background:url("../../images/icon-set/anasayfa-buton.png") no-repeat !important;
+    height:30px;
+    width:30px;
+
+     }
+
+
+.DairemeGitMenuIcon
+{
+    background:url("../../images/icon-set/daire-git-y.png") no-repeat !important;
+    height:30px;
+    width:30px;
+
+}
+
+
+.SistemMenuIcon
+{
+    background:url("../../images/icon-set/finans-islemleri.png") no-repeat !important;
+    height:30px;
+    width:30px;
+
+}
+
+.daireIslemleriMenuIcon
+ {
+     background:url("../../images/icon-set/duyurular.png") no-repeat !important;
+     height:30px;
+     width:30px;
+
+ }
+
+.ilanlarimMenuIcon
+{
+    background:url("../../images/icon-set/ilanlarim-ps.png") no-repeat !important;
+    height:30px;
+    width:30px;
+
+}
+
+.finansIslemleriMenuIcon
+{
+    background:url("../../images/icon-set/belgeler.png") no-repeat !important;
+    height:30px;
+    width:30px;
+
+}
+
+.SitePaylasimMenuIcon
+{
+    background:url("../../images/icon-set/talepler.png") no-repeat !important;
+    height:30px;
+    width:30px;
+
+}
+
+
+
+#preLoginColor {
+    position: fixed;
+    z-index: 150;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#content-div {
+    padding-left: 5px;
+    padding-top: 5px;
+}
+
+.MainContent {
+    background-image: url(../../images/parkOranGece.png);
+    background-repeat: no-repeat;
+
+}
+
+
+.ui-panel .ui-panel-content {
+    border: 0;
+    background: none;
+    padding: 0.5em 1em;
+
+}
+
+.ui-panel {
+    padding: 0em;
+    background-color: #ffffff;
+    box-shadow: 3px 3px 2px #888888;
+
+}
+
+.myTableClass {
+    font-family: sans-serif;
+    border-spacing: 8px;
+}
+
+
+.ui-button-text-only .ui-button-text {
+    padding: .4em 1em;
+    background: white;
+    color: white;
+
+
+}
+.ui-button .ui-button-text {
+    color: white;
+    font-size: 11px;
+    background: #D33544;
+    padding: 8px 22px 8px 22px;
+    text-decoration: none;
+}
+
+.ui-button .ui-button-text:hover {
+    background: red;
+    text-decoration: none;
+}
+
+#projeLogoKucuk {
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    width: 86px;
+    height: 34px;
+}
+
+.projeLogo {
+    position: relative;
+    margin-right: 10px;
+    width: 130px;
+    top:3px;
+    height: 55px;
+}
+
+.dgIslem {
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.projeLogoLogin {
+    position: relative;
+    margin-right: 10px;
+    width: 120px;
+    height: 50px;
+}
+
+.mainProjeLogo {
+    position: relative;
+    margin-right: 10px;
+    width: 185px;
+    height: 45px;
+}
+
+.socialWrapper{
+    float:right;
+    margin-top: 7px;
+}
+
+.socialWrapper span{
+    float: left;
+    position: relative;
+    color: #FFF;
+    margin-right: 5px;
+    line-height: 20px;
+    font-size: 14px;
+    font-family: "Times New Roman",Georgia,Serif;
+    font-style: italic;
+}
+
+.socialButtons {
+    background-image: url('../../images/social-icons.png');
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    position: relative;
+    float: left;
+    top: 0;
+    margin: 0px 8px 0px 0px;
+}
+.socialButtons.facebook {
+    background-position: top left;
+}
+.socialButtons.twitter {
+    background-position: top right;
+}
+.socialButtons.linkedin {
+    background-position: bottom left;
+}
+.socialButtons.g-art {
+    background-position: bottom right;
+}
+
+#innovaLogo {
+    width: 100px;
+    height: 19px;
+    padding-top: 3px;
+}
+
+.ui-menuitem-text {
+    padding-right: 3px;
+}
+
+.login {
+    background-image: url(../../images/parkOranGece.jpg);
+    background-repeat: repeat-y;
+    margin: 0;
+    padding: 0;
+}
+
+.login-div {
+    margin: 0;
+    padding: 0;
+    background-repeat: no-repeat;
+}
+
+#headerTablo2 {
+    background-image: url(../../images/header2.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100%;
+}
+
+#headerTablo {
+    background-image: url(../../images/header1.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100%;
+    height: 30px;
+}
+
+html,
+body {
+    margin:0;
+    padding:0;
+    height:100%;
+}
+
+#content {
+    padding:10px;
+    padding-left: 5px;
+    padding-top: 10px;
+
+}
+
+.footerTablo {
+    background-color: #0d8aaa;
+    position: relative;
+    border-top: 1px solid #cccdce;
+    border-bottom: 1px solid #cccdce;
+}
+
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 11px !important;
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 0 !important;
+}
+
+tr {
+    vertical-align: top;
+    text-align: left;
+}
+
+.public-event, .public-event .fc-event-skin, .public-event a {
+    font-size: 20px;
+
+}
+
+.ui-datatable thead th, .ui-datatable tbody td, .ui-datatable tfoot td {
+    padding: 0px 0px 2px 0px;
+    border: none;
+    font-size: 11px;
+}
+
+.ui-datatable-odd {
+    background: #F5F5F5 ;
+}
+
+table {
+    font-family: Verdana;
+    font-size: 11px;
+    color: #000000;
+    border: none;
+}
+
+.noBorders tr, .noBorders td {
+    background: none !important;
+    border: none !important;
+}
+
+.className td {
+
+    vertical-align: center;
+    text-align: right;
+    border: none;
+}
+
+.column1 {
+    width: 100px;
+    height: auto
+}
+
+.column2 {
+    width: 500px;
+    height: auto
+}
+
+.column3 {
+    width: 20px;
+    height: auto
+}
+
+.nothing {
+    border-collapse: collapse;
+}
+
+.nothing td {
+    border: none;
+    outline: none;
+}
+
+.ui-growl {
+    position: absolute;
+    top: 20px;
+    left: 40%;
+}
+
+.box-shadow {
+    box-shadow: 10px 10px 5px #888888;
+}
+
+.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+    border: none;
+    background: #F5F5F5;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.69);
+    webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+}
+
+.ui-widget-header {
+    background: white;
+    color: #5285E6;
+    font-size: 1.25em;
+    border: none;
+}
+
+.myTdClass{
+    border: 1px solid lightgray;
+    font: 200 16px/1.55 'Open Sans', sans-serif;
+    box-shadow: 3px 3px 2px #888888;
+    background-color: #ffffff;
+}
+
+.myTdClass:hover{
+    box-shadow: 6px 6px 4px #888888;
+}
+
+.ui-inputfield, .ui-widget-content .ui-inputfield, .ui-widget-header .ui-inputfield{
+    border: 1px black;
+    background: whitesmoke;
+    font-weight: bold;
+    color: #000000;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label{
+    background: #F5F5F5;
+    color: rgba(0, 0, 0, 0.69);
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list {
+    background-color: aliceblue;
+}
+
+.ui-panelmenu .ui-panelmenu-header a {
+    color: #000000;
+}
+
+.ui-panelmenu .ui-menuitem-text {
+    float: left;
+    color: black;
+}
+
+.ui-layout-west {
+    background-color: #414B56;
+}
+
+legend.ui-fieldset-legend.ui-corner-all.ui-state-default {
+    background-color: #efefef;
+}
+
+.ui-datatable-scrollable-body::-webkit-scrollbar-thumb {
+    border-radius: 0!important;
+    border: 1px solid #bebebe;
+    background-color: #d3d3d3;
+}
+
+.ui-corner-all{
+    border-radius: 0!important;
+}
+
+.ui-panelmenu .ui-menuitem-text {
+    color: #D7D7D7;
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.profilLogo{
+    width: 60px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    border-radius: 100%;
+    position: relative;
+}
+
+.ui-panelmenu .ui-menuitem-text:hover {
+    color: white;
+}
+
+
+.ui-panelmenu .ui-menuitem-link {
+    background: #414B56;
+}
+
+.alert {
+    padding: 10px 50px 0px 15px;
+    margin-bottom: 18px;
+    color: #c09853;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+    background-color: #fcf8e3;
+    border: 1px solid #fbeed5;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 0;
+}
+
+.alert-heading {
+    color: inherit;
+}
+
+.alert .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    line-height: 18px;
+}
+
+.alert-info {
+    color: red;
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+}
+
+.ui-autocomplete-panel .ui-autocomplete-list-item {
+    background-color: aliceblue;
+    margin: 0 0;
+}
+
+.ui-menu .ui-menuitem-text {
+    margin-top: 7px;
+    font-size: 13px;
+    font-family: helvetica;
+    font-weight: bold;
+}
+
+.ui-menuitem .ui-state-hover{
+     background-color: #D33544;
+
+ }
+
+.ui-menubar .ui-menuitem .ui-state-hover{
+    background-color: #D33544;
+
+}
+
+.ui-widget-overlay {
+    opacity: .50!important;
+}
+
+.ui-autocomplete-panel .ui-autocomplete-list {
+     padding: 0;
+}
+
+.iconSet:hover{
+    box-shadow: 3px 4px 2px #888888;
+}
+
+.ui-chkbox-box.ui-state-default{
+    background-color:  #D33544;
+}
+
+.ui-chkbox-icon.ui-icon {
+    background-color:  #D33544;
+}
+
+.ui-wizard-step-title.ui-state-default.ui-state-highlight{
+    background-color: #0081c2;
+    box-shadow: 3px 4px 2px #888888;
+}
+
+.ui-wizard-step-title.ui-state-default{
+    background-color: #00a4ff;
+    color:white;
+}
+
+.ui-overlaypanel-content {
+    background-color: #F7F7F7;
+    border: 1px solid #000000;
+}
+
+/*notification */
+.btn {
+    border-radius: 20%;
+    text-decoration: none;
+    background-color: #EEEEEE;
+    color: #333333;
+    padding: 2px 6px 2px 6px;
+    border-top: 1px solid #CCCCCC;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #CCCCCC;
+}
+
+.notification {
+    position:absolute;
+    right: 15px;
+    top:-1px;
+    background-color:red;
+    color:white;
+    line-height:20px;
+    width:20px;
+    height:20px;
+    border-radius:10px;
+}
+
+.notification-table-stil{
+    background-color: #d3d3d3;
+}
+
+.ui-datepicker {
+    background-color: aliceblue;
+}
+
+.ui-slider .ui-slider-handle {
+    background: white!important;
+}
+
+.ui-slider-horizontal {
+    background: lightgray!important;
+}
+
+.ui-selectcheckboxmenu-panel {
+    background: white!important;
+}
+
+.ui-selectcheckboxmenu-header {
+    background: lightgray!important;
+}
+
+.ui-editor iframe{
+    background-color: #F5F5F5;
+}

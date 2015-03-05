@@ -1,0 +1,34 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <h:form id="belgeTalepGirisForm">
+        <p:dialog header="#{lbl.daire_islemleri_belge_talebi_giris}" widgetVar="belgeTalebiPopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <h:panelGrid id="showTalepDetailSikayetTalepEkleme" columns="2" cellpadding="5">
+                    <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu} (*)" style="font-weight:bold" />
+                    <p:selectOneMenu id="belge_tipi" value="#{daireGoruntuleMB.yeniBelgeTalebi.belgeTipi}" style="font-weight:bold" label="#{lbl.belge_talebi_konusu}"
+                                     required="true" >
+                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                        <f:selectItems value="#{daireGoruntuleMB.belgeTipiList}" var="bt" itemValue="#{bt}" itemLabel="#{bt.aciklama}" />
+                        <f:converter binding="#{belgeTipiConverter}" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="talep_aciklama_v" value="#{lbl.ortak_aciklama} (*)" style="font-weight:bold"/>
+                    <p:inputTextarea rows="6" cols="60" value="#{daireGoruntuleMB.yeniBelgeTalebi.aciklama}" required="true" label="#{lbl.ortak_aciklama}"
+                                     id="talep_aciklama_v"
+                            />
+
+                    <f:facet name="footer">
+                        <p:commandButton id="belgeTalep_kaydet" value="#{lbl.kaydet}" update="@([id$=sorguSonucuPanel])"
+                                         actionListener="#{daireGoruntuleMB.yeniBelgeTalebiEkleme}"/>
+                    </f:facet>
+
+                </h:panelGrid>
+
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/sablon/sablon.xhtml"
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="title">
+        <h:outputText value="#{lbl.label_anket_sorgulama}"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+            <div style="height:10px"></div>
+
+            <h:form id="main_form">
+
+                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <p:panel header="#{lbl.label_anket_sorgulama}">
+                    <h:panelGrid columns="4" cellpadding="5">
+
+                        <h:outputLabel for="anket_konusu" value="#{lbl.label_anket_konusu}" style="font-weight:bold"/>
+                        <p:inputText id="anket_konusu" value="#{anketMB.sorguKriteri.anketKonusu}"/>
+
+                        <h:outputLabel for="rolTipi" value="#{lbl.label_anket_aktif_mi}" style="font-weight:bold"/>
+                        <p:selectOneMenu id="rolTipi" value="#{anketMB.sorguKriteri.anketAktifMi}"
+                                         style="font-weight:bold">
+                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                            <f:selectItems value="#{anketMB.anketAktifPasifList}" var="apTipi" itemValue="#{apTipi}"
+                                           itemLabel="#{apTipi.aciklama}"/>
+                            <f:converter binding="#{evetHayirConverter}"/>
+                        </p:selectOneMenu>
+
+
+                        <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
+                                       style="font-weight:bold"/>
+                        <p:calendar id="baslangic_tarihi" value="#{anketMB.sorguKriteri.sorguBaslangicTarihi}"
+                                    pattern="dd/MM/yyyy" mask="true"/>
+
+                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                        <p:calendar id="bitis_tarihi" value="#{anketMB.sorguKriteri.sorguBitisTarihi}"
+                                    pattern="dd/MM/yyyy"
+                                    mask="true"/>
+
+                        <p:commandButton value="#{lbl.ortak_sorgula}" action="#{anketMB.getAnketListBySorguKriteri()}"
+                                         update="@([id$=main_form])"/>
+                        <p:commandButton id="anket_ekleme" value="#{lbl.label_anket_ekle}"
+                                         icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
+                                         action="#{anketMB.clearAnketInfo}"
+                                         update="@([id$=AnketEkleme])"
+                                         oncomplete="PF('anketEklemePopup').show()"/>
+
+                    </h:panelGrid>
+
+                </p:panel>
+
+                <div style="height:10px"></div>
+
+                <p:panel header="#{lbl.sorgu_sonucu}" rendered="#{not empty anketMB.dataModel.wrappedData}">
+
+                    <p:dataTable value="#{anketMB.dataModel}" var="varAnket" paginatorPosition="bottom"
+                                 paginator="true" rows="20" emptyMessage="#{msg.no_record_found}"
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rowsPerPageTemplate="5,10,15">
+
+                        <p:column sortBy="tanitimZamani">
+                            <f:facet name="header">
+                                <h:outputText value="#{lbl.duyuru_zamani}"/>
+                            </f:facet>
+                            <h:outputText value="#{varAnket.tanitimZamani}">
+                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column sortBy="adSoyad">
+                            <f:facet name="header">
+                                <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                            </f:facet>
+                            <h:outputText value="#{varAnket.kullanici.adSoyad}"/>
+                        </p:column>
+
+                        <p:column sortBy="kisaAciklama">
+                            <f:facet name="header">
+                                <h:outputText value="#{lbl.label_anket_konusu}"/>
+                            </f:facet>
+                            <h:outputText value="#{varAnket.anketKonusu}"/>
+                        </p:column>
+                        <p:column sortBy="aciklama">
+                            <f:facet name="header">
+                                <h:outputText value="#{lbl.label_anket_aktif_mi}"/>
+                            </f:facet>
+                            <h:outputText value="#{varAnket.aktifMi.aciklama}"/>
+
+                        </p:column>
+
+                        <p:column sortBy="aciklama">
+                            <f:facet name="header">
+                                <h:outputText value="#{lbl.label_anket_katinildimi}"/>
+                            </f:facet>
+                            <h:outputText value="#{anketMB.isAnketeKtinildiMi(varAnket).aciklama}"/>
+                        </p:column>
+
+                        <p:column exportable="false" style="width:8%">
+                            <h:panelGrid columns="4">
+                                <p:commandLink icon="ui-icon-search"
+                                                 update="@([id$=anketGoruntuleme])"
+                                                 action="#{anketMB.prepareAnketDetailInfo}"
+                                                 oncomplete="PF('anketGoruntulemePopup').show();"
+                                        >
+                                    <p:graphicImage value="/images/show_icon.png"/>
+                                    <f:setPropertyActionListener value="#{varAnket}" target="#{anketMB.selectedAnket}"/>
+                                </p:commandLink>
+
+                                <p:commandLink icon="ui-icon-search" rendered="#{anketMB.isAnketeKtinildiMi(varAnket).hayirMi and varAnket.aktifMi.isEvetMi()}"
+                                                 update="@([id$=AnketeKatilimEkleme])"
+                                                 action="#{anketMB.prepareAnketDetailForKatilim}"
+                                                 oncomplete="PF('anketeKatilimEklemePopup').show();"
+                                        >
+                                    <p:graphicImage value="/images/rate_icon2.png"/>
+                                    <f:setPropertyActionListener value="#{varAnket}" target="#{anketMB.selectedAnket}"/>
+                                </p:commandLink>
+
+                                <p:commandLink id="viewButtonDaireGuncelle" icon="ui-icon-arrowrefresh-1-w"
+                                               update="@([id$=AnketEkleme])"
+                                               oncomplete="PF('anketEklemePopup').show();"
+                                               action="#{anketMB.prepareAnketDetailInfoForGuncelleme}"
+                                               immediate="true" rendered="#{sessionInfo.adminMi}"
+                                        >
+                                    <p:graphicImage value="/images/edit_icon.png"/>
+                                    <f:setPropertyActionListener value="#{varAnket}"
+                                                                 target="#{anketMB.selectedAnket}"/>
+                                </p:commandLink>
+
+                                <p:commandLink id="deleteButton1" icon="ui-icon-trash" immediate="true"
+                                                 rendered="#{sessionInfo.adminMi}"
+                                                 action="#{anketMB.deleteAnket}" update="@([id$=main_form])"
+                                        >
+                                    <f:setPropertyActionListener value="#{varAnket}"
+                                                                 target="#{anketMB.selectedAnket}"/>
+                                    <p:graphicImage value="/images/delete_icon.png"/>
+                                    <p:confirm header="#{lbl.label_anket_silme}"
+                                               message="#{msg.islemi_onayliyormusunuz}"/>
+                                </p:commandLink>
+                            </h:panelGrid>
+                        </p:column>
+
+                    </p:dataTable>
+
+                </p:panel>
+            </h:form>
+
+        <ui:include src="../sitePaylasimIslemleri/anketEklemeGuncelleme.xhtml">
+            <ui:param name="formName" value="main_form"/>
+            <ui:param name="entity" value="#{anketMB}"/>
+        </ui:include>
+        <ui:include src="../sitePaylasimIslemleri/anketOyKullanma.xhtml">
+            <ui:param name="formName" value="main_form"/>
+            <ui:param name="entityMB" value="#{anketMB}"/>
+        </ui:include>
+
+        <ui:include src="../sitePaylasimIslemleri/anketGoruntuleme.xhtml">
+            <ui:param name="entityMB" value="#{anketMB}"/>
+        </ui:include>
+
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

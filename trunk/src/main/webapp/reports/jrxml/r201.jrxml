@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="l101" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="48"/>
+	<field name="blokAdi" class="java.lang.String"/>
+	<field name="daireNo" class="java.lang.Integer"/>
+	<field name="malik" class="java.lang.String"/>
+	<field name="sakin" class="java.lang.String"/>
+	<field name="daireKodu" class="java.lang.String"/>
+	<field name="daireBakiye" class="java.lang.Double"/>
+	<field name="islemTarihi" class="java.util.Date"/>
+	<field name="borc" class="java.lang.Double"/>
+	<field name="odenenTutar" class="java.lang.Double"/>
+	<field name="aciklama" class="java.lang.String"/>
+	<field name="dekontNo" class="java.lang.String"/>
+	<variable name="borc_sum" class="java.lang.Double" resetType="Group" resetGroup="daireNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{borc}]]></variableExpression>
+	</variable>
+	<variable name="odeme_sum" class="java.lang.Double" resetType="Group" resetGroup="daireNo" calculation="Sum">
+		<variableExpression><![CDATA[$F{odenenTutar}]]></variableExpression>
+	</variable>
+	<variable name="borc_genel" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{borc}]]></variableExpression>
+	</variable>
+	<variable name="odeme_genel" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{odenenTutar}]]></variableExpression>
+	</variable>
+	<variable name="count_row" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{dekontNo}]]></variableExpression>
+	</variable>
+	<group name="daireNo" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{daireKodu}]]></groupExpression>
+		<groupHeader>
+			<band height="72">
+				<textField isBlankWhenNull="true">
+					<reportElement x="64" y="0" width="64" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{blokAdi}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="245" y="0" width="56" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$F{daireNo}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement x="428" y="0" width="64" height="20" forecolor="#009933"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{daireKodu}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="0" width="62" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Blok]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="189" y="0" width="56" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Daire]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="364" y="0" width="64" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Daire Kodu]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="113" y="51" width="84" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Dönem]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="197" y="51" width="76" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Borç Tutarı]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="273" y="51" width="78" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Ödenen Tutar]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="351" y="51" width="204" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Açıklama]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="189" y="20" width="56" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sakin]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="22" y="51" width="91" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Dekont No]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="51" width="22" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Sıra]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="245" y="20" width="119" height="20"/>
+					<textElement>
+						<font size="9"/>
+					</textElement>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{sakin}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="2" y="20" width="62" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Malik]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement x="64" y="20" width="125" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.String"><![CDATA[$F{malik}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="29">
+				<staticText>
+					<reportElement x="113" y="0" width="84" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[Toplam:]]></text>
+				</staticText>
+				<textField pattern=" #,##0.00">
+					<reportElement x="197" y="0" width="76" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{borc_sum}]]></textFieldExpression>
+				</textField>
+				<textField pattern=" #,##0.00">
+					<reportElement x="273" y="0" width="78" height="20"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression class="java.lang.Double"><![CDATA[$V{odeme_sum}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="0" width="22" height="20"/>
+					<textElement/>
+					<textFieldExpression class="java.lang.Integer"><![CDATA[$V{daireNo_COUNT}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="46" splitType="Stretch">
+			<staticText>
+				<reportElement x="113" y="13" width="342" height="27"/>
+				<textElement>
+					<font fontName="Candara" size="15" isBold="true"/>
+				</textElement>
+				<text><![CDATA[R201-Donem Bazında Aidat Listesi Raporu]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="10" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="18" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField pattern="dd/MM/yyy" isBlankWhenNull="true">
+				<reportElement x="113" y="0" width="84" height="20" forecolor="#FF0099"/>
+				<textElement/>
+				<textFieldExpression class="java.util.Date"><![CDATA[$F{islemTarihi}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="true">
+				<reportElement x="197" y="0" width="76" height="20" forecolor="#FF3333" backcolor="#FFCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{borc}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00" isBlankWhenNull="true">
+				<reportElement x="273" y="0" width="78" height="20" forecolor="#009933" backcolor="#FFCCCC"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{odenenTutar}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="351" y="0" width="204" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{aciklama}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="22" y="0" width="91" height="20" forecolor="#3300FF"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dekontNo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="22" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{daireNo_COUNT}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="19" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="34" splitType="Stretch">
+			<textField>
+				<reportElement x="216" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="428" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression class="java.lang.String"><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="516" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement x="113" y="0" width="84" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Genel Toplam:]]></text>
+			</staticText>
+			<textField pattern=" #,##0.00">
+				<reportElement x="197" y="0" width="76" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{borc_genel}]]></textFieldExpression>
+			</textField>
+			<textField pattern=" #,##0.00">
+				<reportElement x="273" y="0" width="78" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$V{odeme_genel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="35" height="20"/>
+				<textElement/>
+				<textFieldExpression class="java.lang.Integer"><![CDATA[$V{count_row}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

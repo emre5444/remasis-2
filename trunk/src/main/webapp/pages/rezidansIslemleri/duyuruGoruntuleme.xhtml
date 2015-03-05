@@ -1,0 +1,26 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="duyuruGoruntuleme">
+        <p:dialog header="#{lbl.ilan_goruntuleme}" widgetVar="duyuruGoruntulePopup" closeOnEscape="true" height="auto" width="50%">
+
+                <h:panelGrid id="showDuyuruDetail" columns="2" cellpadding="5">
+                    <h:outputLabel for="yorum_konu_v" value="#{lbl.duyuru_konusu}" style="font-weight:bold"/>
+                    <h:outputText value="#{daireGoruntuleMB.selectedDuyuru.kisaAciklama}"
+                                  id="yorum_konu_v"/>
+
+                    <h:outputLabel for="yorum_aciklama_v" value="#{lbl.duyuru_aciklama}" style="font-weight:bold"/>
+                    <h:outputText rows="6" cols="33" value="#{daireGoruntuleMB.selectedDuyuru.aciklama}"
+                                  id="yorum_aciklama_v" escape="false"
+                            />
+
+                </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <p:dialog header="#{lbl.label_anket_goruntuleme}" widgetVar="anketGoruntulemePopup" closeOnEscape="true" height="600px" width="50%">
+        <p:messages id="messagesforAnket" showDetail="false" autoUpdate="true" closable="true"/>
+        <h:form id="anketGoruntuleme">
+
+                <p:panel header="#{lbl.label_anket_bilgileri}">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_konusu}"
+                                       style="font-weight:bold"/>
+                        <h:outputText value="#{entityMB.selectedAnket.anketKonusu}"
+                                      id="anket_konu_v"/>
+
+                        <h:outputLabel for="anket_aciklama_v" value="#{lbl.label_anket_sorusu}"
+                                       style="font-weight:bold"/>
+                        <h:outputText value="#{entityMB.selectedAnket.aciklama}"
+                                      id="anket_aciklama_v"
+                                />
+
+                        <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_secenekler}"
+                                       style="font-weight:bold"/>
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                            <p:selectOneRadio id="anket_secim" value="#{entityMB.selectedAnketSecim}" layout="grid"
+                                              columns="1"  label="#{lbl.label_anket_secenekler}">
+                                <f:selectItems value="#{entityMB.anketSecimList}" var="anketSecim"
+                                               itemLabel="#{anketSecim.secim}" itemValue="#{anketSecim}"/>
+                                <f:converter binding="#{anketSecimConverter}"/>
+                            </p:selectOneRadio>
+                        </h:panelGrid>
+
+
+
+                    </h:panelGrid>
+
+                </p:panel>
+
+                <div style="height:10px"></div>
+
+            <p:panel header="#{lbl.label_anket_katilim_oranlari}">
+                <h:panelGrid columns="4" cellpadding="10">
+                    <p:chart type="pie" id="anketDetail" legendPosition="e" model="#{entityMB.pieModelAnket}"
+                                rendered="#{not empty entityMB.pieModelAnket}"
+                                showDataLabels="true"
+                                seriesColors="ebc875, 2eb9b4"
+                                shadow="true"
+                                style="width:300px;height:250px"/>
+
+                            <p:dataTable id="anket_sonuc_table1" var="ank" value="#{entityMB.anketSonucViewBeanList}">
+
+                                <p:column style="width:30%" headerText="#{lbl.lbl_toplam_katilim}">
+                                    <h:outputText value="#{ank.tutar}">
+                                        <f:convertNumber pattern="#,###,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="width:30%" headerText="#{lbl.lbl_alacak_borc_oran}">
+                                    <h:outputText value="#{ank.rate}">
+                                        <f:convertNumber pattern="#,###,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="width:40%" headerText="#{lbl.ortak_aciklama}">
+                                    <h:outputText value="#{ank.secim}"/>
+                                </p:column>
+
+                            </p:dataTable>
+
+                            <h:panelGroup/>
+
+                </h:panelGrid>
+            </p:panel>
+
+                <div style="height:10px"></div>
+
+                <p:panel id="ankete_katilan_kullanicilar11" header="#{lbl.label_anket_katilim_listesi}"  rendered="#{sessionInfo.adminMi}">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <p:dataTable id="katilimListesiOfAnket1" value="#{entityMB.anketKullaniciDataModel}"
+                                     var="varAnketKullanici"
+                                     emptyMessage="#{msg.no_record_found}"
+                                     paginatorPosition="bottom" paginator="true"
+                                     style="width:100%" rows="10">
+
+                            <f:facet name="header">
+                                <h:panelGrid columns="3" style="width:10%">
+                                    <h:outputText value="#{lbl.label_disa_aktar}"/>
+                                    <h:commandLink>
+                                        <p:graphicImage value="/images/excel_kucuk.png"/>
+                                        <p:dataExporter type="xls" target="katilimListesiOfAnket1"
+                                                        fileName="ankete_katilim_listesi"/>
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <p:graphicImage value="/images/pdf_kucuk.png"/>
+                                        <p:dataExporter type="pdf" target="katilimListesiOfAnket1"
+                                                        fileName="ankete_katilim_listesi"/>
+                                    </h:commandLink>
+                                </h:panelGrid>
+
+                            </f:facet>
+
+                            <p:column sortBy="tanitimZamani">
+                                <f:facet name="header">
+                                    <h:outputText value="#{lbl.duyuru_zamani}"/>
+                                </f:facet>
+                                <h:outputText value="#{varAnketKullanici.tanitimZamani}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+
+                            <p:column sortBy="adSoyad">
+                                <f:facet name="header">
+                                    <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                                </f:facet>
+                                <h:outputText value="#{varAnketKullanici.kullanici.adSoyad}"/>
+                            </p:column>
+
+                            <p:column sortBy="anketSecim.secim">
+                                <f:facet name="header">
+                                    <h:outputText value="#{lbl.label_anket_sorusu}"/>
+                                </f:facet>
+                                <h:outputText value="#{varAnketKullanici.anketSecim.secim}"/>
+                            </p:column>
+
+                            <p:column sortBy="aciklama">
+                                <f:facet name="header">
+                                    <h:outputText value="#{lbl.ortak_aciklama}"/>
+                                </f:facet>
+                                <h:outputText value="#{varAnketKullanici.aciklama}"/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </h:panelGrid>
+                </p:panel>
+
+        </h:form>
+    </p:dialog>
+
+</h:body>
+</html>

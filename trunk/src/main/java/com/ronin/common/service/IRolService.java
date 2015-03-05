@@ -1,0 +1,51 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.ronin.common.service;
+
+import com.ronin.commmon.beans.SessionInfo;
+import com.ronin.common.model.Kullanici;
+import com.ronin.common.model.Rol;
+import com.ronin.common.model.Yetki;
+import com.ronin.model.kriter.RolSorguKriteri;
+
+import java.util.List;
+
+/**
+ *
+ * @author msevim
+ */
+public interface IRolService {
+
+    Rol getSingle(Rol rol);
+
+    Rol getSingleById(Long id);
+
+    Rol getSingleOneByNamedQuery(String namedQuery, Object... parameters);
+    
+    List<Rol> getList(Rol rol);
+
+    List<Rol> getRolListByKullanici(Kullanici kullanici , SessionInfo sessionInfo);
+    
+    List<Rol> getListByNamedQuery(String namedQuery, Object... parameters);
+
+    List<Rol> getListCriteriaForPaging(int first, int pageSize, RolSorguKriteri sorguKriteri , SessionInfo sessionInfo);
+
+    List<Yetki> getAllYetkiList();
+
+    List<Rol> getAllRolList(SessionInfo sessionInfo);
+
+    void updateRolYetki(List<Yetki> yetkiList , Rol rol);
+
+    void updateKullaniciRol(List<Rol> rolList , Kullanici kullanici);
+
+    int getCount(Rol rol);
+
+    void add(Rol rol);
+
+    void update(Rol rol);
+
+    void delete(Rol rol);
+}

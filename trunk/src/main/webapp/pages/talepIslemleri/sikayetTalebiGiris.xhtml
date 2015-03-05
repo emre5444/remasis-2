@@ -1,0 +1,30 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+    <h:form id="sikayetTalepGirisForm">
+        <p:dialog header="#{lbl.talep_sikayet_giris}" widgetVar="sikayetTalebiPopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <h:panelGrid id="showTalepDetailSikayetTalepEkleme" columns="2" cellpadding="5">
+                    <h:outputLabel for="talep_konu_v" value="#{lbl.sikayet_konusu} (*)" style="font-weight:bold"/>
+                    <p:inputTextarea rows="3" cols="60" value="#{daireGoruntuleMB.yeniSikayetTalebi.aciklama}" required="true" label="#{lbl.sikayet_konusu}"
+                                 id="talep_konu_v"/>
+
+                    <h:outputLabel for="talep_aciklama_v" value="#{lbl.sikayet_aciklama} (*)" style="font-weight:bold"/>
+                    <p:inputTextarea rows="6" cols="60" value="#{daireGoruntuleMB.yeniSikayetTalebi.sikayetAciklama}" required="true" label="#{lbl.sikayet_aciklama}"
+                                 id="talep_aciklama_v"
+                            />
+
+                    <f:facet name="footer">
+                        <p:commandButton id="sikayetTalep_kaydet" value="#{lbl.kaydet}" update="@([id$=sorguSonucuPanel])"
+                                         actionListener="#{daireGoruntuleMB.yeniSikayetTalebiEkleme}"/>
+                    </f:facet>
+
+                </h:panelGrid>
+
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>

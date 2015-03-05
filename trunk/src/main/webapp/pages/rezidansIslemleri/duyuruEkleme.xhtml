@@ -1,0 +1,29 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="duyuruEkleme">
+        <p:dialog header="#{lbl.yeni_ilan_ekle}" widgetVar="duyuruEklePopup" closeOnEscape="true" height="auto" width="auto">
+
+                <h:panelGrid columns="2" cellpadding="5">
+                    <h:outputLabel for="yorum_konu" value="#{lbl.duyuru_konusu} (*)" style="font-weight:bold"/>
+                    <p:inputTextarea rows="3" cols="50" autoResize="false" value="#{daireGoruntuleMB.yeniDuyuru.kisaAciklama}"
+                                 id="yorum_konu" required="true" label="#{lbl.duyuru_konusu}"/>
+
+                    <h:outputLabel for="yorum_aciklama" value="#{lbl.duyuru_aciklama} (*)" style="font-weight:bold"/>
+                    <p:editor id="yorum_aciklama"
+                              value="#{daireGoruntuleMB.yeniDuyuru.aciklama}" required="true" width="450"/>
+
+                    <f:facet name="footer">
+                        <p:commandButton id="yorum_kaydet" value="#{lbl.kaydet}" update="@([id$=pnl_ilanlar])"
+                                         actionListener="#{daireGoruntuleMB.yeniDuyuruEkle}" />
+                    </f:facet>
+                </h:panelGrid>
+
+        </p:dialog>
+
+    </h:form>
+</h:body>
+</html>

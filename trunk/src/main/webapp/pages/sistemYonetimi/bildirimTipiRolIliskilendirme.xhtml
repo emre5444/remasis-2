@@ -1,0 +1,61 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="BildirimTipiRol">
+        <p:dialog header="#{lbl.bildirim_tipi_hk_belirleme}" widgetVar="bildirimTipiRolPopup" closeOnEscape="true" height="auto" width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                <p:panel header="#{lbl.label_bildirim_tipi_bilgileri}">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="kisa_aciklama" value="#{lbl.kisa_aciklama}" style="font-weight:bold"/>
+                        <p:outputLabel id="kisa_aciklama" value="#{bildirimMB.selectedBildirimTipi.kisaAciklama}"/>
+
+                        <h:outputLabel for="aciklama" value="#{lbl.ortak_aciklama}" style="font-weight:bold"/>
+                        <p:outputLabel id="aciklama" value="#{bildirimMB.selectedBildirimTipi.aciklama}"/>
+
+                    </h:panelGrid>
+                </p:panel>
+
+                <div style="height:10px"></div>
+
+
+                <p:panel header="#{lbl.rol_islemleri}">
+                    <h:panelGrid columns="2" cellpadding="5">
+
+
+                        <p:pickList id="pojoPickList" value="#{bildirimMB.selectedRolList}" var="rolVar"
+                                    itemValue="#{rolVar}" itemLabel="#{rolVar.ad}" converter="#{rolConverter}"
+                                    showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">
+
+                            <f:facet name="sourceCaption">
+                                <h:outputText value="#{lbl.kullanici_rolleri}"/>
+                            </f:facet>
+                            <f:facet name="targetCaption">
+                                <h:outputText value="#{lbl.rol_listesi}"/>
+                            </f:facet>
+
+                            <p:column style="width:75%;">
+                                #{rolVar.ad}
+                            </p:column>
+
+                        </p:pickList>
+
+
+                        <f:facet name="footer">
+                            <p:commandButton id="btn_bildirimTipi_rol_iliskilendir" value="#{lbl.ortak_guncelle}"
+                                             update=":main_form"
+                                             actionListener="#{bildirimMB.updateBildirimTipiRolList}"/>
+                        </f:facet>
+
+                    </h:panelGrid>
+                </p:panel>
+
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>

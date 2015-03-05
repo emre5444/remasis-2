@@ -1,0 +1,94 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:body>
+    <p:growl id="messages" showDetail="false"/>
+
+
+    <p:menubar style="height:38px;">
+
+        <p:menuitem url="/index.jsf" icon="AnasayfaMenuIcon" value="#{lbl.anasayfa}"/>
+        <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf" rendered="#{sessionInfo.isYetkili('daire_sorgula') and not sessionInfo.hasOneDaire()}"
+                    icon="DairemeGitMenuIcon" value="#{lbl.hizli_menu_daireme_git}"/>
+        <p:menuitem url="/pages/rezidansIslemleri/daireGoruntuleme.jsf" rendered="#{sessionInfo.isYetkili('daire_sorgula') and  sessionInfo.hasOneDaire()}"
+                    icon="DairemeGitMenuIcon" value="#{lbl.hizli_menu_daireme_git}"/>
+        <p:menuitem url="/pages/finansIslemleri/aidatSorgula.jsf" rendered="#{sessionInfo.isYetkili('aidat_sorgulama')}"
+                    icon="SistemMenuIcon" value="#{lbl.hizli_menu_aidat_goruntule}"/>
+        <p:menuitem url="/pages/sitePaylasimIslemleri/duyuruSorgulama.jsf"
+                    rendered="#{sessionInfo.isYetkili('duyuru_islemleri')}" icon="daireIslemleriMenuIcon"
+                    value="#{lbl.hizli_menu_aidat_duyurular}"/>
+        <p:menuitem url="/pages/sitePaylasimIslemleri/ilanSorgulama.jsf"
+                    rendered="#{sessionInfo.isYetkili('ilan_islemleri')}" icon="ilanlarimMenuIcon"
+                    value="#{lbl.hizli_menu_aidat_ilanlar}"/>
+        <p:menuitem url="/pages/sitePaylasimIslemleri/belgeSorgulama.jsf"
+                    rendered="#{sessionInfo.isYetkili('belge_islemleri')}" icon="finansIslemleriMenuIcon"
+                    value="#{lbl.hizli_menu_aidat_belgeler}"/>
+        <p:menuitem url="/pages/talepIslemleri/talepSorgula.jsf" rendered="#{sessionInfo.isYetkili('talep_sorgulama')}"
+                    icon="SitePaylasimMenuIcon" value="#{lbl.hizli_menu_aidat_talepler}"/>
+
+
+        <p:menuitem url="/logout" icon="cikisMenuIcon" value="#{lbl.hizli_menu_cikis}"/>
+
+
+        <f:facet name="options">
+            <h:form id="selectLanguage">
+                <h:panelGrid columns="4">
+
+                    <p:selectOneMenu style="margin-bottom: -8px;margin-right:5px"
+                                     value="#{sessionInfo.sirket}">
+                        <f:selectItems value="#{sessionInfo.kullanici.getSirketList()}" var="sirket"
+                                       itemValue="#{sirket}"
+                                       itemLabel="#{sirket.sirketAdi}"/>
+                        <p:ajax listener="#{sessionInfo.sirketChanged}"
+                                />
+                        <f:converter binding="#{sirketConverter}"/>
+                    </p:selectOneMenu>
+
+
+                    <p:selectOneMenu style="margin-bottom: -8px;margin-right:5px"
+                                     onchange="document.getElementById('selectLanguage').submit();"
+                                     value="#{misafirKullaniciOzellikleri.locale}"
+                                     valueChangeListener="#{misafirKullaniciOzellikleri.localeChanged}">
+                        <f:selectItems value="#{misafirKullaniciOzellikleri.countries}" var="country"
+                                       itemLabel="#{lbl[country.label]}" itemValue="#{country.value}"/>
+                    </p:selectOneMenu>
+
+                    <p:outputPanel id="notification_btn">
+                        <p:commandLink id="btn" styleClass="btn" action="#{notificationMB.updateStatus()}" global="false" update="btn">
+
+                            <p:graphicImage value="/images/notification.png"/>
+                            <c:if test="#{((notificationMB.aktifNotificationsCount()) gt 0)}">
+                                <div class="notification">
+                                    <center><h:outputText value="#{notificationMB.aktifNotificationsCount()}"/> </center>
+                                </div>
+                            </c:if>
+                        </p:commandLink>
+                    </p:outputPanel>
+
+                    <p:overlayPanel for="notification_btn"
+                                    appendToBody="1" my="left top" at="left bottom">
+                        <p:dataTable id="notification_list" var="notification" value="#{notificationMB.notificationDataModel}"
+                                     emptyMessage="#{msg.no_record_found}" style="width: 300px;"
+                                     selectionMode="single" selection="#{notificationMB.selected}" rowKey="#{notification.id}"
+                                     rowStyleClass="#{notification.isAktifMi() ? 'notification-table-stil' : null}">
+                            <p:ajax event="rowSelect" listener="#{notificationMB.onRowSelect}" />
+                            <p:column>
+                                <h:outputText value="#{notification.notification}"/>
+                                <hr/>
+                            </p:column>
+
+                        </p:dataTable>
+                    </p:overlayPanel>
+                </h:panelGrid>
+            </h:form>
+
+
+
+        </f:facet>
+
+    </p:menubar>
+
+</h:body>
+</html>
