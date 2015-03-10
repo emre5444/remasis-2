@@ -16,6 +16,13 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -43,32 +50,6 @@ public class LoginMB implements Serializable {
 
     private String userName = null;
     private String password = null;
-
-    @ManagedProperty(value="#{authenticationManager}")
-    private AuthenticationManager authenticationManager = null;
-
-    public String loginAction() {
-        try {
-            Authentication request = new UsernamePasswordAuthenticationToken(this.getUserName(), this.getPassword());
-            Authentication result = authenticationManager.authenticate(request);
-            SecurityContextHolder.getContext().setAuthentication(result);
-        } catch (AuthenticationException e) {
-            e.printStackTrace();
-            JsfUtil.addErrorMessage(message.getString("BindAuthenticator.badCredentials"));
-            return "incorrect";
-        }
-        return "correct";
-    }
-
-    public String cancel() {
-        return null;
-    }
-
-    public String logout(){
-        SecurityContextHolder.clearContext();
-        return "loggedout";
-    }
-
 
     private List<String> images;
 
@@ -151,14 +132,6 @@ public class LoginMB implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public AuthenticationManager getAuthenticationManager() {
-        return authenticationManager;
-    }
-
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
-        this.authenticationManager = authenticationManager;
     }
 
     public void sifreHatirlatmaIstekGonder() {

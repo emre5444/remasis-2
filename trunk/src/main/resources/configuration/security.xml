@@ -41,7 +41,9 @@
         <intercept-url pattern="/dashboard.jsf" access="authenticated"/>
         <!-- <intercept-url pattern="/pages/sistemYonetimi/**" access="hasRole('ROLE_ADMIN')"/>  -->
 
-          <form-login login-page="/loginPage.jsf" />
+          <form-login login-page="/loginPage.jsf"
+                      authentication-failure-url="/loginPage.jsf"
+                      default-target-url="/preLogin.jsf" always-use-default-target="true"/>
 
           <access-denied-handler error-page="/yetkisizGiris.jsf"/>
 
