@@ -8,70 +8,113 @@
 
 <f:view contentType="text/html" locale="#{misafirKullaniciOzellikleri.kullaniciLocale}">
     <h:head>
-        <link type="text/css" rel="stylesheet" href="#{request.contextPath}/sablon/css/stil2.css"/>
+        <h:outputScript name="js/layout.js" library="sentinel-layout"/>
+        <h:outputStylesheet name="css/font-icon-layout.css"
+                            library="sentinel-layout"/>
+        <h:outputStylesheet name="css/sentinel-layout.css"
+                            library="sentinel-layout"/>
+        <h:outputStylesheet name="css/core-layout.css"
+                            library="sentinel-layout"/>
     </h:head>
-    <h:body>
-        <div id="preLoginColor">
-            <div class="center">
-                <h:form id="main_form">
+
+    <h:body class="fontRegular login-back white-back">
+        <h:form id="main_form">
+
+            <div class="Container50 Fnone MarAuto PaddingTopPercent10 Responsive">
+                <div class="ContainerIndent">
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
-                    <p:panel header="#{lbl.kullanici_bilgileri}">
-                        <h:panelGrid columns="4" cellpadding="5">
+                    <h3>#{lbl.label_kullanici_kayitli_site}</h3>
+                    <p:panel styleClass="white-back">
+                        <span class="FontBold Fs18 hardblue Container100">#{lbl.label_uyarı}</span>
 
-                            <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
-                            <p:outputLabel id="ad" value="#{preLoginMB.sessionInfo.kullanici.ad}"/>
-
-                            <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
-                            <p:outputLabel id="soyad" value="#{preLoginMB.sessionInfo.kullanici.soyad}"/>
-
-                            <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"/>
-                            <p:outputLabel id="username" value="#{preLoginMB.sessionInfo.kullanici.username}"/>
-
-                            <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
-                            <p:outputLabel id="email" value="#{preLoginMB.sessionInfo.kullanici.email}"/>
-
-                        </h:panelGrid>
+                        <div class="fontRegular  Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <ol>
+                                    <li>
+                                        <h:outputText value="#{msg.info_daire_listesi_birini_seciniz}"
+                                                      style="font-size:16px; color: red;"/>
+                                    </li>
+                                    <li>
+                                        <h:outputText value="#{msg.info_daire_listesi_birini_seciniz_2}"
+                                                      style="font-size:16px; color: red;"/>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
                     </p:panel>
 
-                    <p:dataTable id="kullaniciSirketTable" value="#{preLoginMB.dataModel}" var="varSirket"
-                                 paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
-                                 selection="#{preLoginMB.selected}"
-                                 paginator="true" rows="10"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">
+                    <div class="EmptyBox20"></div>
 
-                        <p:column selectionMode="single"/>
+                    <p:panel styleClass="white-back">
+                        <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_bilgileri}</span>
 
-                        <f:facet name="header">
-                            Expand rows to see detailed information
-                        </f:facet>
-                        <p:column style="width:16px">
-                            <p:rowToggler/>
-                        </p:column>
-                        <p:column headerText="Şirket Adı">
-                            <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
-                        </p:column>
-                        <p:column headerText="Logo">
-                            <p:graphicImage value="/images/sirket/#{varSirket.sirket.sirketLogo}.png"/>
-                        </p:column>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <h:panelGrid columns="4" cellpadding="5">
+                                    <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bolder;"/>
+                                    <p:outputLabel id="ad" value="#{preLoginMB.sessionInfo.kullanici.ad}"/>
 
-                        <p:rowExpansion>
-                            <h:panelGrid columns="2" columnClasses="label,value" style="width:300px">
+                                    <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                                    <p:outputLabel id="soyad" value="#{preLoginMB.sessionInfo.kullanici.soyad}"/>
 
-                                <h:outputText value="Id:"/>
-                                <h:outputText value="#{varSirket.sirket.id}"/>
+                                    <h:outputLabel for="username" value="#{lbl.kullanici_adi}"
+                                                   style="font-weight:bold"/>
+                                    <p:outputLabel id="username" value="#{preLoginMB.sessionInfo.kullanici.username}"/>
 
-                                <h:outputText value="Adı"/>
-                                <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
+                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                    <p:outputLabel id="email" value="#{preLoginMB.sessionInfo.kullanici.email}"/>
 
-                            </h:panelGrid>
-                        </p:rowExpansion>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
 
-                    </p:dataTable>
+                    <div class="EmptyBox20"></div>
+
+                    <p:panel styleClass="white-back">
+                        <span class="FontBold Fs18 hardblue Container100">#{lbl.label_site_listesi}</span>
+
+                        <div class="fontRegular white-back Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <p:dataTable id="kullaniciSirketTable" value="#{preLoginMB.dataModel}" var="varSirket"
+                                             paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
+                                             selection="#{preLoginMB.selected}"
+                                             rows="10">
+
+                                    <p:column headerText="#{lbl.label_sec}" selectionMode="single" style="width:30px;"/>
+                                    <p:column headerText="#{lbl.label_detay}" style="width:30px;">
+                                        <p:rowToggler/>
+                                    </p:column>
+                                    <p:column headerText="Şirket Adı">
+                                        <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
+                                    </p:column>
+                                    <p:column headerText="Logo">
+                                        <p:graphicImage value="/images/sirket/#{varSirket.sirket.sirketLogo}.png"/>
+                                    </p:column>
+
+                                    <p:rowExpansion>
+                                        <h:panelGrid columns="2" columnClasses="label,value" style="width:300px">
+
+                                            <h:outputText value="Id:"/>
+                                            <h:outputText value="#{varSirket.sirket.id}"/>
+
+                                            <h:outputText value="Adı"/>
+                                            <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
+
+                                        </h:panelGrid>
+                                    </p:rowExpansion>
+
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </p:panel>
+
                     <p:commandButton id="cont_button" action="#{preLoginMB.continueToIndex}" value="Devam"/>
-                </h:form>
+
+                </div>
             </div>
-        </div>
+        </h:form>
+
 
     </h:body>
 </f:view>
