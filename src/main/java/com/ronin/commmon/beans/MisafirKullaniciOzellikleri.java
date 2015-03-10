@@ -25,7 +25,7 @@ public class MisafirKullaniciOzellikleri implements Serializable {
 
     public String locale;
     public SelectItem[] countries;
-    private String theme = "bootstrap";
+    private String theme = "sentinel";
 
     public Locale kullaniciLocale;
 
