@@ -3,6 +3,6 @@
     <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" logAbandoned="true" maxActive="20" maxIdle="10"
               maxWait="-1" name="jdbc/residenceDS" password="1234" removeAbandoned="true" removeAbandonedTimeout="90"
               minIdle="1" testOnBorrow="true" validationQuery="SELECT 1" validationInterval="30000"
-              type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/rmstest" username="root"/>
+              type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/residenceportaldb" username="root"/>
 
 </Context>
