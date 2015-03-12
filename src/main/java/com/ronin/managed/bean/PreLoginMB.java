@@ -47,7 +47,7 @@ public class PreLoginMB implements Serializable {
     @PostConstruct
     public void init() {
         if (sessionInfo.getSirket() != null) {
-            FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "index.xhtml?faces-redirect=true");
+            FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "dashboard.xhtml?faces-redirect=true");
         } else {
             kullaniciSirketList = sessionInfo.getKullanici().getKullaniciSirketList();
             dataModel = new KullaniciSirketDataModel(kullaniciSirketList);
@@ -55,7 +55,7 @@ public class PreLoginMB implements Serializable {
                 sessionInfo.setSirket(((KullaniciSirket) kullaniciSirketList.get(0)).getSirket());
                 //login log kaydi atilir.
                 ortakService.createErisimLog(sessionInfo, sessionInfo.getKullanici(), LogTipi.getLoginObject(), "");
-                FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "index.xhtml?faces-redirect=true");
+                FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "dashboard.xhtml?faces-redirect=true");
             }
         }
     }
@@ -110,7 +110,7 @@ public class PreLoginMB implements Serializable {
         } else {
             //login log kaydi atilir.
             ortakService.createErisimLog(sessionInfo, sessionInfo.getKullanici(), LogTipi.getLoginObject(), "");
-            return "index.xhtml?faces-redirect=true";
+            return "dashboard.xhtml?faces-redirect=true";
         }
     }
 
