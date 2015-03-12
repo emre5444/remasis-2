@@ -471,6 +471,10 @@ public class AnasayfaMB implements Serializable {
         return df.format(deger);
     }
 
+    public Date getCurrentDate(){
+        return DateUtils.getNow();
+    }
+
 
     public DuyuruDataModel getDuyuruDataModel() {
         return duyuruDataModel;
