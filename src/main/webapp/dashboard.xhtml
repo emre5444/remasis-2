@@ -331,19 +331,18 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column exportable="false" style="width:8%">
+                        <p:column exportable="false" style="width:15%">
                             <h:panelGrid columns="2">
-                                <p:commandLink id="viewButton1" icon="ui-icon-search"
-                                               update="@([id$=showAdminDuyuru])"
+                                <p:commandLink id="viewButton1"
+                                               update="@([id$=showAdminDuyuru])" styleClass="icon-search"
                                                oncomplete="PF('duyuruGoruntulePopup').show();"
                                         >
-                                    <p:graphicImage value="/images/show_icon.png"/>
                                     <f:setPropertyActionListener value="#{varDuyuru}"
                                                                  target="#{anasayfaMB.selected}"/>
                                 </p:commandLink>
 
 
-                                <p:commandLink id="deleteButton1" icon="ui-icon-trash" immediate="true"
+                                <p:commandLink id="deleteButton1" styleClass="icon-cancel" immediate="true"
                                                rendered="#{sessionInfo.adminMi}"
                                                action="#{anasayfaMB.deleteDuyuru}"
                                                update="@([id$=anasayfa_duyurular1])"
@@ -352,7 +351,6 @@
                                                                  target="#{anasayfaMB.selected}"/>
                                     <p:confirm header="#{lbl.ilan_iptali}"
                                                message="#{msg.islemi_onayliyormusunuz}"/>
-                                    <p:graphicImage value="/images/delete_icon.png"/>
                                 </p:commandLink>
                             </h:panelGrid>
                         </p:column>
