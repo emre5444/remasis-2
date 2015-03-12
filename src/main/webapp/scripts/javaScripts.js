@@ -48,3 +48,28 @@ $(document).ready(function() {
     });
 
 })
+
+function chartJS() {
+    this.cfg.grid = {
+        drawBorder: false,
+        drawGridlines: false,
+        background: '#ffffff',
+        shadow: false
+    };
+    this.cfg.seriesDefaults = {
+        renderer: $.jqplot.PieRenderer,
+        shadow: false,
+        rendererOptions: {
+            startAngle: 180,
+            sliceMargin: 3,
+            showDataLabels: true
+        }
+    };
+    this.cfg.legend = {
+        show: true,
+        rendererOptions: {
+            numberColumns: 1
+        },
+        location: 'e'
+    };
+}

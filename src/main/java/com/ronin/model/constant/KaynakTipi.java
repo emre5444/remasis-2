@@ -111,6 +111,10 @@ public class KaynakTipi implements IAbstractEntity {
         return this.getId().equals(ENUM.BORC_DEKONTU.getId());
     }
 
+    public boolean isOdeme(){
+        return this.getId().equals(ENUM.ODEME.getId());
+    }
+
     public static KaynakTipi getOdemeObject() {
         return new KaynakTipi(ENUM.ODEME);
     }

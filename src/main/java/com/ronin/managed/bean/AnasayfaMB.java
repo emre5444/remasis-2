@@ -15,6 +15,7 @@ import com.ronin.model.AnketSecim;
 import com.ronin.model.Duyuru;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.*;
+import com.ronin.model.helper.PieChartModelHelper;
 import com.ronin.model.kriter.AnketSorguKriteri;
 import com.ronin.model.sorguSonucu.AnketSonucViewBean;
 import com.ronin.model.sorguSonucu.BorcAlacakViewBean;
@@ -205,7 +206,7 @@ public class AnasayfaMB implements Serializable {
     }
 
     private void createPieModelForAnket() {
-        pieModelAnket = new PieChartModel();
+        pieModelAnket = new PieChartModelHelper();
         anketSonucViewBeanList = getOrtakService().getAnketSonucDurum(sessionInfo, selectedAnket);
         for (AnketSonucViewBean bav : anketSonucViewBeanList) {
             pieModelAnket.set(bav.getSecim(), bav.getTutar());
@@ -213,7 +214,7 @@ public class AnasayfaMB implements Serializable {
     }
 
     private void createPieModel1() {
-        pieModel1 = new PieChartModel();
+        pieModel1 = new PieChartModelHelper();
         borcAlacakViewBeanList = finansalIslemlerService.getBorcAlacakDurumu(sessionInfo, null);
         for (BorcAlacakViewBean bav : borcAlacakViewBeanList) {
             if (!sessionInfo.isAdminMi()) {
@@ -228,7 +229,7 @@ public class AnasayfaMB implements Serializable {
     }
 
     private void createPieModel2() {
-        pieModel2 = new PieChartModel();
+        pieModel2 = new PieChartModelHelper();
         sonDonemborcAlacakViewBeanList = finansalIslemlerService.getBorcAlacakDurumu(sessionInfo, DateUtils.getFirstDayOfTheMonthWithoutTime());
         for (BorcAlacakViewBean bav : sonDonemborcAlacakViewBeanList) {
             if (!sessionInfo.isAdminMi()) {

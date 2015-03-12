@@ -9,6 +9,7 @@ import com.ronin.managed.bean.lazydatamodel.*;
 import com.ronin.model.*;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.*;
+import com.ronin.model.helper.PieChartModelHelper;
 import com.ronin.model.kriter.DaireSorguKriteri;
 import com.ronin.model.kriter.TalepSorguKriteri;
 import com.ronin.model.sorguSonucu.BorcAlacakViewBean;
@@ -419,7 +420,7 @@ public class DaireGoruntuleMB implements Serializable {
     }
 
     private void createPieModel1() {
-        pieModel1 = new PieChartModel();
+        pieModel1 = new PieChartModelHelper();
         borcAlacakViewBeanList = finansalIslemlerService.getBorcAlacakDurumuForDaire(sessionInfo, selected, null);
         for (BorcAlacakViewBean bav : borcAlacakViewBeanList) {
             pieModel1.set((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")), bav.getTutar());
@@ -428,7 +429,7 @@ public class DaireGoruntuleMB implements Serializable {
     }
 
     private void createPieModel2() {
-        pieModel2 = new PieChartModel();
+        pieModel2 = new PieChartModelHelper();
         sonDonemborcAlacakViewBeanList = finansalIslemlerService.getBorcAlacakDurumuForDaire(sessionInfo, selected, DateUtils.getFirstDayOfTheMonthWithoutTime());
         for (BorcAlacakViewBean bav : sonDonemborcAlacakViewBeanList) {
             pieModel2.set((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")), bav.getTutar());

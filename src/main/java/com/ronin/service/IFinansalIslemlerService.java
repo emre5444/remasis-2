@@ -28,4 +28,7 @@ public interface IFinansalIslemlerService {
     void addDaireBorc(DaireBorc daireBorc);
 
     void addDaireBorcKalem(DaireBorcKalem daireBorcKalem);
+
+    void updateObject(Object object);
+
 }

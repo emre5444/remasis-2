@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:body>
+
+    <h:form id="aidatGuncelleme">
+        <p:dialog header="#{lbl.aidat_guncelleme}" widgetVar="aidatGuncellemePopup" closeOnEscape="true" height="auto"
+                  width="auto">
+            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+            <h:panelGrid columns="2" cellpadding="5"
+                         rendered="#{aidatIslemleriMB.selected.borc.islemTipi.borcDekontuMu}">
+
+                <h:outputLabel for="dekontNoBorc" value="#{lbl.borc_dekont_no} (*)" style="font-weight:bold"/>
+                <p:inputText id="dekontNoBorc" value="#{aidatIslemleriMB.selected.borc.dekontNo}" required="true" rendered="true"
+                             label="#{lbl.borc_dekont_no}"/>
+
+                <h:outputLabel for="islemTarihiBorc" value="#{lbl.islem_tarihi} (*)" style="font-weight:bold"/>
+                <p:calendar id="islemTarihiBorc" value="#{aidatIslemleriMB.selected.borc.islemTarihi}" required="true"
+                             label="#{lbl.islem_tarihi}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </p:calendar>
+
+                <h:outputLabel for="sonOdemeTarihiBorc" value="#{lbl.son_odeme_tarihi} (*)" style="font-weight:bold"/>
+                <p:calendar id="sonOdemeTarihiBorc" value="#{aidatIslemleriMB.selected.borc.sonOdemeTarihi}"
+                             required="true"
+                             label="#{lbl.son_odeme_tarihi}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </p:calendar>
+
+                <h:outputLabel for="borcBorc" value="#{lbl.borc_tutari} (*)" style="font-weight:bold"/>
+                <p:inputText id="borcBorc" value="#{aidatIslemleriMB.selected.borc.borc}" required="true"
+                             label="#{lbl.borc_tutari}"/>
+
+
+                <h:outputLabel for="aciklamaBorc" value="#{lbl.kisa_aciklama}" style="font-weight:bold"/>
+                <p:inputText id="aciklamaBorc" value="#{aidatIslemleriMB.selected.borc.aciklama}"
+                             label="#{lbl.kisa_aciklama}"/>
+
+                <f:facet name="footer">
+                    <p:commandButton id="aidat_guncelleBorc" value="#{lbl.ortak_guncelle}"
+                                     update=":aidatGuncelleme :main_form"
+                                     actionListener="#{aidatIslemleriMB.update(aidatIslemleriMB.selected)}"/>
+                </f:facet>
+
+            </h:panelGrid>
+
+
+            <h:panelGrid columns="2" cellpadding="5" rendered="#{aidatIslemleriMB.selected.borc.islemTipi.odeme}">
+
+                <h:outputLabel for="islemTarihiOdeme" value="#{lbl.islem_tarihi} (*)" style="font-weight:bold"/>
+                <p:calendar id="islemTarihiOdeme" value="#{aidatIslemleriMB.selected.borc.islemTarihi}" required="true"
+                             label="#{lbl.islem_tarihi}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </p:calendar>
+
+                <h:outputLabel for="odemeVadesiOdeme" value="#{lbl.odeme_tarihi} (*)" style="font-weight:bold"/>
+                <p:calendar id="odemeVadesiOdeme" value="#{aidatIslemleriMB.selected.borc.odemeVadesi}" required="true"
+                             label="#{lbl.islem_tarihi}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </p:calendar>
+
+                <h:outputLabel for="odenenTutarOdeme" value="#{lbl.odenen_tutar} (*)" style="font-weight:bold"/>
+                <p:inputText id="odenenTutarOdeme" value="#{aidatIslemleriMB.selected.borc.odenenTutar}" required="true"
+                             label="#{lbl.odenen_tutar}"/>
+
+
+                <h:outputLabel for="aciklamaOdeme" value="#{lbl.odeme_aciklama}" style="font-weight:bold"/>
+                <p:inputText id="aciklamaOdeme" value="#{aidatIslemleriMB.selected.borc.odemeAciklama}"
+                             label="#{lbl.odeme_aciklama}"/>
+
+                <f:facet name="footer">
+                    <p:commandButton id="aidat_guncelleOdeme" value="#{lbl.ortak_guncelle}"
+                                     update=":aidatGuncelleme :main_form"
+                                     actionListener="#{aidatIslemleriMB.update(aidatIslemleriMB.selected)}"/>
+                </f:facet>
+
+            </h:panelGrid>
+
+        </p:dialog>
+    </h:form>
+</h:body>
+</html>
