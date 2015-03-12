@@ -199,4 +199,8 @@ public class FinansalIslemlerDao implements IFinansalIslemlerDao {
     public void setiKullaniciDAO(IKullaniciDAO iKullaniciDAO) {
         this.iKullaniciDAO = iKullaniciDAO;
     }
+
+    public void updateObject(Object object) {
+        getSessionFactory().getCurrentSession().update(object);
+    }
 }

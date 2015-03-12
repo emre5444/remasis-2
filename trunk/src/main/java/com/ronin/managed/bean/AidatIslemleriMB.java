@@ -21,6 +21,7 @@ import com.ronin.model.sorguSonucu.DaireBorcKalemView;
 import com.ronin.service.IDaireService;
 import com.ronin.service.IFinansalIslemlerService;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.springframework.util.StringUtils;
 
@@ -241,6 +242,31 @@ public class AidatIslemleriMB implements Serializable {
         } catch (Exception e) {
             logger.error(e.getStackTrace());
             JsfUtil.addFatalMessage(e.toString());
+        }
+    }
+
+    public void update(Object object) {
+        try {
+            finansalIslemlerService.updateObject(object);
+            getAidatListBySorguKriteri();
+            JsfUtil.addSuccessMessage(message.getString("islem_basarili"));
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.execute("PF('aidatGuncellemePopup').hide()");
+        } catch (Exception e) {
+            logger.error(e.getStackTrace());
+            JsfUtil.addSuccessMessage("Hata!");
+        }
+    }
+
+    public void delete() {
+        try {
+            selected.getBorc().setDurum(Durum.getPasifObject());
+            finansalIslemlerService.updateObject(selected);
+            getAidatListBySorguKriteri();
+            JsfUtil.addSuccessMessage(message.getString("islem_basarili"));
+        } catch (Exception e) {
+            logger.error(e.getStackTrace());
+            JsfUtil.addSuccessMessage("Hata!");
         }
     }
 

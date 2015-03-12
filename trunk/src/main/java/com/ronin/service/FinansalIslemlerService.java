@@ -60,4 +60,9 @@ public class FinansalIslemlerService implements IFinansalIslemlerService {
         iFinansalIslemlerDao.addDaireBorcKalem(daireBorcKalem);
     }
 
+    @Transactional(readOnly = false)
+    public void updateObject(Object object) {
+        iFinansalIslemlerDao.updateObject(object);
+    }
+
 }

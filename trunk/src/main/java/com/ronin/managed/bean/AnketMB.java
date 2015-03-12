@@ -14,6 +14,7 @@ import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.BildirimTipi;
 import com.ronin.model.constant.BilgilendirmeTipi;
 import com.ronin.model.constant.EvetHayir;
+import com.ronin.model.helper.PieChartModelHelper;
 import com.ronin.model.kriter.AnketSorguKriteri;
 import com.ronin.model.sorguSonucu.AnketSonucViewBean;
 import com.ronin.model.sorguSonucu.BorcAlacakViewBean;
@@ -102,7 +103,7 @@ public class AnketMB implements Serializable {
     }
 
     private void createPieModelForAnket() {
-        pieModelAnket = new PieChartModel();
+        pieModelAnket = new PieChartModelHelper();
         anketSonucViewBeanList = ortakService.getAnketSonucDurum(sessionInfo, selectedAnket);
         for (AnketSonucViewBean bav : anketSonucViewBeanList) {
             pieModelAnket.set(bav.getSecim(), bav.getTutar());

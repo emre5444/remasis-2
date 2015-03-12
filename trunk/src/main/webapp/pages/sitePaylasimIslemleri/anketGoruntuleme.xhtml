@@ -43,11 +43,8 @@
 
             <p:panel header="#{lbl.label_anket_katilim_oranlari}">
                 <h:panelGrid columns="4" cellpadding="10">
-                    <p:chart type="pie" id="anketDetail" legendPosition="e" model="#{entityMB.pieModelAnket}"
+                    <p:chart type="pie" id="anketDetail"  model="#{entityMB.pieModelAnket}"
                                 rendered="#{not empty entityMB.pieModelAnket}"
-                                showDataLabels="true"
-                                seriesColors="ebc875, 2eb9b4"
-                                shadow="true"
                                 style="width:300px;height:250px"/>
 
                             <p:dataTable id="anket_sonuc_table1" var="ank" value="#{entityMB.anketSonucViewBeanList}">
