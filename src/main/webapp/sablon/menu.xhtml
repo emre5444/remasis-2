@@ -146,7 +146,7 @@
                         rendered="#{sessionInfo.isYetkili('envanter_girisi')}"/>
 
             <p:menuitem value="#{lbl.menu_envanter_kategori_sorgulama}" url="/pages/envanterIslemleri/kategoriIslemleri.jsf"
-                        rendered="true"/>
+                        rendered="#{sessionInfo.isYetkili('kategori_islemleri')}"/>
         </p:submenu>
 
         <p:submenu label="#{lbl.raporlama_islemleri}" icon="ui-icon ui-icon-transferthick-e-w"
