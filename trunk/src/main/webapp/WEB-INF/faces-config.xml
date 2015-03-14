@@ -81,6 +81,10 @@
         </navigation-case>
     </navigation-rule>
 
+    <lifecycle>
+        <phase-listener>com.ronin.middleware.LoginErrorPhaseListener</phase-listener>
+    </lifecycle>
+
     <factory>
         <exception-handler-factory>
             org.primefaces.application.exceptionhandler.PrimeExceptionHandlerFactory

@@ -51,37 +51,46 @@
                 </div>
 
                 <div class="Container90 Fnone MarAuto TexAlCenter TabContent" id="TAB1">
-                    <form name="f" action="#{request.contextPath}/j_spring_security_check" method="POST">
-                        <div class="EmptyBox20"></div>
-                        <center>
-                            <h:outputText style="color: red; font-size: large;" value="#{SPRING_SECURITY_LAST_EXCEPTION.message}"/>
-                        </center>
-                        <div class="EmptyBox20"></div>
-                        <input type="text" name="j_username" placeholder="#{lbl.kullanici_adi}"  class="Container80 Fnone MarAuto Fs18"/>
+                    <h:form
+                            id="loginForm"
+                            prependId="false">
+                        <div class="EmptyBox30"></div>
+                        <p:messages id="hataliDenemeMsg" closable="true" showIcon="false" globalOnly="true"/>
+                        <p:messages id="hataliDenemeMsgU" closable="true" showIcon="false" for="j_username"/>
+                        <p:messages id="hataliDenemeMsgP" closable="true" showIcon="false" for="j_password"/>
+                        <p:inputText
+                                id="j_username"
+                                required="true" styleClass="Container80 Fnone MarAuto Fs18"
+                                placeholder="#{lbl.kullanici_adi}"
+                                requiredMessage="#{msg.login_kullanciAdi_required}">
+                        </p:inputText>
 
                         <div class="EmptyBox10"></div>
-                        <input type="password" name="j_password" placeholder="#{lbl.sifre}" class="Container80 Fnone MarAuto Fs18"/>
+                        <p:password
+                                id="j_password"
+                                required="true" styleClass="Container80 Fnone MarAuto Fs18" feedback="false"
+                                placeholder="#{lbl.sifre}"
+                                requiredMessage="#{msg.login_sifre_required}">
+                        </p:password>
 
-                        <div class="EmptyBox20"></div>
-                        <ui:remove>
-                            <div class="Container85 Fnone MarAuto softgray">
-                                <p:selectBooleanCheckbox value="accept" styleClass="Fleft"
-                                                         itemLabel="I Accept Terms And Policies"/>
-                            </div>
-                            <div class="EmptyBox30"></div>
-                        </ui:remove>
-                        <input type="submit" name="login" style="height: 50px; font-weight: bold;" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left ui-corner-right Fs16" value="#{lbl.label_giris}"/>
+                        <div class="EmptyBox10"></div>
 
+                        <div class="EmptyBox30"></div>
+                        <p:commandButton
+                                id="login"
+                                action="#{loginMB.doLogin}"
+                                value="#{lbl.label_giris}" styleClass="Fs16"
+                                update="hataliDenemeMsg" ajax="false"/>
 
-                    </form>
-                    <div class="EmptyBox50"></div>
+                        <div class="EmptyBox50"></div>
+                    </h:form>
                 </div>
 
                 <div class="Container90 Fnone MarAuto DispNone TexAlCenter TabContent" id="TAB2">
                     <h:form id="sifremiUnuttumForm" prependId="false">
                         <div class="EmptyBox50"></div>
-                        <p:messages id="sifreHatirlatMsg" closable="true" showIcon="false"/>
-                        <p:inputText required="true" value="#{loginMB.email}" placeholder="#{lbl.label_mail_adres_gir}" requiredMessage="#{msg.login_email_required}"
+                        <p:messages id="sifreHatirlatMsg" closable="true" showIcon="false" for="sifreUnuttumEmail"/>
+                        <p:inputText id="sifreUnuttumEmail" required="true" value="#{loginMB.email}" placeholder="#{lbl.label_mail_adres_gir}" requiredMessage="#{msg.login_email_required}"
                                      styleClass="Container80 Fnone MarAuto Fs18"/>
 
                         <div class="EmptyBox20"></div>
