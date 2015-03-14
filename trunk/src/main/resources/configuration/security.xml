@@ -31,9 +31,8 @@
     <http pattern="/javax.faces.resource/**" security="none"/>			
     <http pattern="/sablon/**" security="none" />
     
-    <http auto-config="true"  use-expressions="true">
+    <http use-expressions="true">
         <intercept-url pattern="/loginPage" access="permitAll"/>
-        <intercept-url pattern="/loginPage.jsf" access="permitAll"/>
         <intercept-url pattern="/logout" access="permitAll"/>
         <!--<intercept-url pattern="/denied" access="hasRole('ROLE_USER')"/> -->
         <intercept-url pattern="/preLogin.jsf" access="authenticated"/>
@@ -48,7 +47,9 @@
           <access-denied-handler error-page="/yetkisizGiris.jsf"/>
 
           <logout invalidate-session="true" logout-success-url="/loginPage.jsf"
-                  logout-url="/logout"/>
+                  logout-url="/logout" delete-cookies="JSESSIONID"/>
+
+        <session-management invalid-session-url="/loginPage.jsf"/>
 
           <!-- <custom-filter ref="captchaCaptureFilter" before="FORM_LOGIN_FILTER"/>
       <custom-filter ref="captchaVerifierFilter" after="FORM_LOGIN_FILTER"/>  -->
