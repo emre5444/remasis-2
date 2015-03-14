@@ -6,11 +6,6 @@ import com.ronin.common.service.IKullaniciService;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.model.SifreHatirlatma;
 import org.apache.log4j.Logger;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -132,6 +127,20 @@ public class LoginMB implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    // This is the action method called when the user clicks the "login" button
+    public String doLogin() throws IOException, ServletException {
+        ExternalContext context = FacesContext.getCurrentInstance()
+                .getExternalContext();
+
+        RequestDispatcher dispatcher = ((ServletRequest) context.getRequest()).getRequestDispatcher("/j_spring_security_check");
+
+        dispatcher.forward((ServletRequest) context.getRequest(),
+                (ServletResponse) context.getResponse());
+
+        FacesContext.getCurrentInstance().responseComplete();
+        return null;
     }
 
     public void sifreHatirlatmaIstekGonder() {
