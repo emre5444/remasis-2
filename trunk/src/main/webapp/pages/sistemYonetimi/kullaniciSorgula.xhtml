@@ -28,13 +28,13 @@
                                 <h:outputText value="#{lbl.kullanici_islemleri}"
                                               styleClass="FontBold Fs18 hardblue"></h:outputText>
 
-                                <p:inputSwitch value="#{kullaniciController.tumKriterlerMi}" styleClass="Fright"
-                                               style="margin-right: 5px;" onLabel="#{lbl.label_evet}"
-                                               offLabel="#{lbl.label_hayir}">
-                                    <p:ajax update="main_form"/>
-                                </p:inputSwitch>
-                                <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
 
+                                <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
+                                <p:selectBooleanCheckbox value="#{kullaniciController.tumKriterlerMi}" styleClass="Fright"
+                                                         style="margin-right: 5px;" onLabel="#{lbl.label_evet}"
+                                                         offLabel="#{lbl.label_hayir}">
+                                    <p:ajax update="main_form"/>
+                                </p:selectBooleanCheckbox>
                             </div>
                         </div>
 
