@@ -85,6 +85,7 @@ public class KullaniciMB implements Serializable {
     List<Rol> sourceRol = new ArrayList<Rol>();
     List<Rol> targetRol = new ArrayList<Rol>();
 
+    private boolean tumKriterlerMi;
     //combos
     private List<IAbstractEntity> blokList;
 
@@ -463,4 +464,11 @@ public class KullaniciMB implements Serializable {
         this.blokList = blokList;
     }
 
+    public boolean isTumKriterlerMi() {
+        return tumKriterlerMi;
+    }
+
+    public void setTumKriterlerMi(boolean tumKriterlerMi) {
+        this.tumKriterlerMi = tumKriterlerMi;
+    }
 }

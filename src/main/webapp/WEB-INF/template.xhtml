@@ -30,21 +30,23 @@
     </h:head>
 
     <h:body>
+
+            <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+
+            <p:dialog modal="true" appendTo="@(body)" widgetVar="statusDialog"
+                      header="#{lbl.mesaj_lutfen_bekleyiniz}"
+                      draggable="false" closable="false">
+                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                     style="display:block;margin: 0 auto;" alt=""/>
+            </p:dialog>
+
+
         <ui:include src="topbar.xhtml"/>
 
         <ui:include src="leftmenu.xhtml"/>
 
         <div id="layout-portlets-cover" class="fontRegular">
             <ui:insert name="content">
-                <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
-
-                <p:dialog modal="true" appendTo="@(body)" widgetVar="statusDialog"
-                          header="#{lbl.mesaj_lutfen_bekleyiniz}"
-                          draggable="false" closable="false">
-                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                         style="display:block;margin: 0 auto;" alt=""/>
-                </p:dialog>
-
 
             </ui:insert>
         </div>

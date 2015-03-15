@@ -5,62 +5,76 @@
 <h:body>
 
     <h:form id="kullaniciGoruntuleme">
-        <p:dialog header="#{lbl.kullanici_goruntule}" widgetVar="kullaniciGoruntulemePopup" closeOnEscape="true" height="auto" width="auto">
+        <div class="Container100 Responsive">
+            <div class="ContainerIndent">
+                <p:dialog header="#{lbl.kullanici_goruntule}" widgetVar="kullaniciGoruntulemePopup" closeOnEscape="true"
+                          maximizable="true" modal="true"  height="400" width="auto">
 
-                <p:panel header="#{lbl.kullanici_goruntule}">
-                    <h:panelGrid columns="2" cellpadding="5">
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_goruntule}</span>
+                                <h:panelGrid columns="2" cellpadding="5">
 
-                        <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
-                        <p:outputLabel id="ad" value="#{kullaniciController.selected.ad}"/>
+                                    <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                                    <p:outputLabel id="ad" value="#{kullaniciController.selected.ad}"/>
 
-                        <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
-                        <p:outputLabel id="soyad" value="#{kullaniciController.selected.soyad}"/>
+                                    <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                                    <p:outputLabel id="soyad" value="#{kullaniciController.selected.soyad}"/>
 
-                        <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"/>
-                        <p:outputLabel id="username" value="#{kullaniciController.selected.username}"/>
+                                    <h:outputLabel for="username" value="#{lbl.kullanici_adi}"
+                                                   style="font-weight:bold"/>
+                                    <p:outputLabel id="username" value="#{kullaniciController.selected.username}"/>
 
-                        <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
-                        <p:outputLabel id="email" value="#{kullaniciController.selected.email}"/>
+                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                    <p:outputLabel id="email" value="#{kullaniciController.selected.email}"/>
 
-                        <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}" style="font-weight:bold"/>
-                        <p:outputLabel id="telefon" value="#{kullaniciController.selected.gsm}"/>
+                                    <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}"
+                                                   style="font-weight:bold"/>
+                                    <p:outputLabel id="telefon" value="#{kullaniciController.selected.gsm}"/>
 
-                        <h:outputLabel for="tcid" value="#{lbl.kullanici_tcid}" style="font-weight:bold"/>
-                        <p:outputLabel id="tcid" value="#{kullaniciController.selected.tckimlik}"/>
+                                    <h:outputLabel for="tcid" value="#{lbl.kullanici_tcid}" style="font-weight:bold"/>
+                                    <p:outputLabel id="tcid" value="#{kullaniciController.selected.tckimlik}"/>
 
-                        <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold"/>
-                        <p:outputLabel id="adres" value="#{kullaniciController.selected.adres}"/>
+                                    <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold"/>
+                                    <p:outputLabel id="adres" value="#{kullaniciController.selected.adres}"/>
 
-                        <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"/>
-                        <p:outputLabel id="durum" value="#{kullaniciController.selected.durum.aciklama}"/>
+                                    <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"/>
+                                    <p:outputLabel id="durum" value="#{kullaniciController.selected.durum.aciklama}"/>
 
-                    </h:panelGrid>
-                </p:panel>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
 
-                <div style="height:10px"></div>
+                    <div style="height:10px"></div>
 
-                <p:panel header="#{lbl.daire_bilgileri}">
-                    <h:panelGrid columns="1" cellpadding="5">
+                    <p:panel header="#{lbl.daire_bilgileri}">
+                        <h:panelGrid columns="1" cellpadding="5">
 
-                        <p:dataTable id="kullaniciListesiOfDaire" value="#{kullaniciController.selected.kullaniciDaireList}" var="varkullaniciDaire"
-                                     emptyMessage="#{msg.no_record_found}"
-                                     paginatorPosition="bottom"
-                                     style="width:100%" rows="3">
-                            <p:column headerText="#{lbl.daire_kodu}">
-                                <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
-                            </p:column>
-                            <p:column headerText="#{lbl.daire_blokAdi}">
-                                <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
-                            </p:column>
-                            <p:column headerText="#{lbl.daire_no}">
-                                <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
-                            </p:column>
-                        </p:dataTable>
+                            <p:dataTable id="kullaniciListesiOfDaire"
+                                         value="#{kullaniciController.selected.kullaniciDaireList}"
+                                         var="varkullaniciDaire"
+                                         emptyMessage="#{msg.no_record_found}"
+                                         paginatorPosition="bottom"
+                                         style="width:100%" rows="3">
+                                <p:column headerText="#{lbl.daire_kodu}">
+                                    <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
+                                </p:column>
+                                <p:column headerText="#{lbl.daire_blokAdi}">
+                                    <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
+                                </p:column>
+                                <p:column headerText="#{lbl.daire_no}">
+                                    <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
+                                </p:column>
+                            </p:dataTable>
 
-                    </h:panelGrid>
-                </p:panel>
+                        </h:panelGrid>
+                    </p:panel>
 
-        </p:dialog>
+                </p:dialog>
+            </div>
+        </div>
     </h:form>
 </h:body>
 </html>

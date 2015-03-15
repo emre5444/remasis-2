@@ -10,47 +10,61 @@
     </c:if>
 
     <h:form id="#{panelFormId}">
-        <p:dialog header="#{lbl.kullanici_guncelleme}" widgetVar="kullaniciGuncellemePopup" closeOnEscape="true" height="auto" width="auto">
+        <div class="Container100 Responsive">
+            <div class="ContainerIndent">
+                <p:dialog header="#{lbl.kullanici_guncelleme}" widgetVar="kullaniciGuncellemePopup" closeOnEscape="true"  maximizable="true" modal="true"
+                          height="400" width="auto">
+                    <p:messages showDetail="false" autoUpdate="true" closable="true"/>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
 
-                    <h:panelGrid columns="2" cellpadding="5">
+                            <h:panelGrid columns="2" cellpadding="5">
 
-                        <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold"/>
-                        <p:inputText id="ad" value="#{entityMB.selected.ad}" required="true" label="#{lbl.ad}"/>
+                                <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold"/>
+                                <p:inputText id="ad" value="#{entityMB.selected.ad}" required="true" label="#{lbl.ad}"/>
 
-                        <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold"/>
-                        <p:inputText id="soyad" value="#{entityMB.selected.soyad}" required="true" label="#{lbl.soyad}"/>
+                                <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold"/>
+                                <p:inputText id="soyad" value="#{entityMB.selected.soyad}" required="true"
+                                             label="#{lbl.soyad}"/>
 
-                        <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"/>
-                        <p:inputText id="username" value="#{entityMB.selected.username}" disabled="true" label="#{lbl.kullanici_adi}"/>
+                                <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"/>
+                                <p:inputText id="username" value="#{entityMB.selected.username}" disabled="true"
+                                             label="#{lbl.kullanici_adi}"/>
 
-                        <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
-                        <p:inputText id="email" value="#{entityMB.selected.email}" label="#{lbl.kullanici_email}"/>
+                                <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                <p:inputText id="email" value="#{entityMB.selected.email}"
+                                             label="#{lbl.kullanici_email}"/>
 
-                        <h:outputLabel for="phone" value="#{lbl.kullanici_tlefon}" style="font-weight:bold"/>
-                        <p:inputMask id="phone" value="#{entityMB.selected.gsm}"  mask="(999) 999-99-99"/>
+                                <h:outputLabel for="phone" value="#{lbl.kullanici_tlefon}" style="font-weight:bold"/>
+                                <p:inputMask id="phone" value="#{entityMB.selected.gsm}" mask="(999) 999-99-99"/>
 
-                        <h:outputLabel for="tcidkimlik" value="#{lbl.kullanici_tcid}" style="font-weight:bold"/>
-                        <p:inputText id="tcidkimlik" value="#{entityMB.selected.tckimlik}"/>
+                                <h:outputLabel for="tcidkimlik" value="#{lbl.kullanici_tcid}" style="font-weight:bold"/>
+                                <p:inputText id="tcidkimlik" value="#{entityMB.selected.tckimlik}"/>
 
-                        <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold"/>
-                        <p:inputTextarea rows="6" cols="50" value="#{entityMB.selected.adres}"
-                                         id="adres" />
+                                <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold"/>
+                                <p:inputTextarea rows="6" cols="50" value="#{entityMB.selected.adres}"
+                                                 id="adres"/>
 
-                        <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold" />
-                        <p:selectOneMenu id="durum" value="#{entityMB.selected.durum}" style="font-weight:bold" >
-                            <f:selectItems value="#{entityMB.durumList}" var="drm" itemValue="#{drm}" itemLabel="#{drm.aciklama}" />
-                            <f:converter binding="#{durumConverter}"/>
-                        </p:selectOneMenu>
+                                <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"/>
+                                <p:selectOneMenu id="durum" value="#{entityMB.selected.durum}" style="font-weight:bold">
+                                    <f:selectItems value="#{entityMB.durumList}" var="drm" itemValue="#{drm}"
+                                                   itemLabel="#{drm.aciklama}"/>
+                                    <f:converter binding="#{durumConverter}"/>
+                                </p:selectOneMenu>
 
-                        <f:facet name="footer">
-                            <p:commandButton id="btn_kullanici_guncelle" value="#{lbl.ortak_guncelle}" update="@([id$=#{formName}])"
-                                             actionListener="#{entityMB.update}"
-                                             />
-                        </f:facet>
+                                <f:facet name="footer">
+                                    <p:commandButton id="btn_kullanici_guncelle" value="#{lbl.ortak_guncelle}"
+                                                     update="@([id$=#{formName}])"
+                                                     actionListener="#{entityMB.update}"
+                                            />
+                                </f:facet>
 
-                    </h:panelGrid>
-
-        </p:dialog>
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                </p:dialog>
+            </div>
+        </div>
     </h:form>
 </h:body>
 </html>
