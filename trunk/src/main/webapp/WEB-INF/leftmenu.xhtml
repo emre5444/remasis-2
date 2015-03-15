@@ -1,14 +1,15 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ps="http://primefaces.org/sentinel"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
-    
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:f="http://java.sun.com/jsf/core"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:ps="http://primefaces.org/sentinel"
+        xmlns:ui="http://java.sun.com/jsf/facelets"
+        xmlns:p="http://primefaces.org/ui">
+
     <div id="layout-menubar" class="Unselectable fontRegular">
         <div class="layout-menubarinner-box" id="buttonArea">
-            <a href="#" id="layout-menubar-resize" class="BordRad3" title="Menu Resize"><i class="icon-th-list-2"></i></a>
+            <a href="#" id="layout-menubar-resize" class="BordRad3" title="Menu Resize"><i
+                    class="icon-th-list-2"></i></a>
             <a href="#" id="layout-menubar-resize2" class="BordRad3" title="Open Menu"><i class="icon-menu"></i></a>
         </div>
 
@@ -18,43 +19,95 @@
         </div>
 
         <ps:menu id="sm_leftmenu">
-            <p:menuitem id="sm_dashboard" value="Dashboard" icon="icon-home-outline" outcome="dashboard" containerStyleClass="layout-menubar-active"/>
-            <p:submenu id="sm_sentineltheme" label="Sentinel Theme" icon="icon-gauge" >
-                <p:menuitem id="sm_forms" value="Forms" icon="icon-doc-text-1" outcome="forms"/>
-                <p:menuitem id="sm_datacomponents" value="Data Components" icon="icon-th" outcome="data"/>
-                <p:menuitem id="sm_datatable" value="DataTable" icon="icon-table" outcome="datatable"/>
-                <p:menuitem id="sm_panels" value="Panels" icon="icon-magic" outcome="panel"/>
-                <p:menuitem id="sm_overlays" value="Overlays" icon="icon-newspaper" outcome="overlay"/>
-                <p:menuitem id="sm_menus" value="Menus" icon="icon-menu" outcome="menu"/>
-                <p:menuitem id="sm_messages" value="Messages" icon="icon-bell" outcome="messages"/>
-                <p:menuitem id="sm_fu" value="FileUpload" icon="icon-docs" outcome="file"/>
-                <p:menuitem id="sm_misc" value="Misc" icon="icon-beaker" outcome="misc"/>
+            <p:menuitem id="sm_dashboard" value="#{lbl.anasayfa}" icon="icon-home-outline" url="/dashboard.xhtml"
+                        containerStyleClass="layout-menubar-active"/>
+            <p:submenu label="#{lbl.sistem_yonetimi}" icon="icon-wrench-outline"
+                       rendered="#{sessionInfo.isYetkili('sistem_yonetimi')}">
+                <p:menuitem value="#{lbl.sistem_ayarlari}" url="/pages/yonetim/sistemAyarlari.jsf"
+                            rendered="#{sessionInfo.isYetkili('sistem_ayarlari')}"/>
+                <p:menuitem value="#{lbl.kullanici_yonetimi}" url="/pages/sistemYonetimi/kullaniciSorgula.jsf"
+                            rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}"/>
+                <p:menuitem value="#{lbl.kullanici_ekleme_islemleri}" url="/pages/sistemYonetimi/kullaniciEkle.jsf"
+                            rendered="#{sessionInfo.isYetkili('kullanici_ekleme')}"/>
+                <p:menuitem value="#{lbl.rol_yonetimi}" url="/pages/sistemYonetimi/rolSorgula.jsf"
+                            rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
+                <p:menuitem value="#{lbl.menu_bildirim_tipi_islemleri}"
+                            url="/pages/sistemYonetimi/bildirimTipiSorgula.jsf"
+                            rendered="#{sessionInfo.isYetkili('yetki_bildirim_tipi_islemleri')}"/>
+                <p:menuitem value="#{lbl.odeme_plani_aktarma}"
+                            url="/pages/sistemYonetimi/kutuktenBorcAktarmaIslemleri.jsf"
+                            rendered="false"/>
             </p:submenu>
-            <p:submenu id="sm_dp" label="Default Pages" icon="icon-pin-outline">
-                <p:menuitem id="sm_empty" value="Empty Page" icon="icon-plus-squared-alt" outcome="empty-page"/>
-                <p:menuitem id="sm_login" value="Login Page" icon="icon-login" outcome="login"/>
-                <p:menuitem id="sm_error" value="Error Page" icon="icon-warning-empty" outcome="error" />
-                <p:menuitem id="sm_404" value="404 Page" icon="icon-warning-empty" outcome="404"/>
-                <p:menuitem id="sm_access" value="Access Denied Page" icon="icon-warning-empty" outcome="access-denied"/>
+
+            <p:submenu label="#{lbl.residence_islemleri}" icon="icon-home"
+                       rendered="#{sessionInfo.isYetkili('rezidans_yonetimi')}">
+                <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf"
+                            rendered="#{sessionInfo.isYetkili('blok_islemleri')}"/>
+                <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf"
+                            rendered="#{sessionInfo.isYetkili('daire_sorgula')}"
+                            value="#{lbl.hizli_menu_daireme_git}"/>
+
             </p:submenu>
-            <p:submenu id="sm_menu" label="Menu Hierarchy" icon="icon-sitemap">
-                <p:submenu id="sm_sub1" label="Submenu 1" icon="icon-folder-empty">
-                    <p:submenu id="sm_sub2" label="Submenu 2" icon="icon-folder-empty">
-                        <p:submenu id="sm_sub3" label="Submenu 3" icon="icon-folder-empty">
-                            <p:menuitem id="sm_lnk1" value="Link 1" icon="icon-link" outcome="empty-page.xhtml"/>
-                            <p:menuitem id="sm_lnk2" value="Link 2" icon="icon-link" outcome="empty-page.xhtml" />
-                            <p:menuitem id="sm_lnk3" value="Link 3" icon="icon-link" outcome="empty-page.xhtml" />
-                        </p:submenu>
-                    </p:submenu>
+
+            <p:submenu label="#{lbl.finans_islemleri}" icon="icon-try"
+                       rendered="#{sessionInfo.isYetkili('finans_islemleri')}">
+                <p:submenu label="#{lbl.aidat_islemleri}">
+                    <p:menuitem value="#{lbl.aidat_sorgulama}"
+                                url="/pages/finansIslemleri/aidatSorgula.jsf"
+                                rendered="#{sessionInfo.isYetkili('aidat_sorgulama')}"/>
+                    <p:menuitem value="#{lbl.aidat_ekleme}"
+                                url="/pages/finansIslemleri/aidatEkle.jsf"
+                                rendered="#{sessionInfo.isYetkili('aidat_ekleme')}"/>
+                    <p:menuitem value="#{lbl.odeme_ekleme}"
+                                url="/pages/finansIslemleri/odemeEkle.jsf"
+                                rendered="#{sessionInfo.isYetkili('odeme_ekleme')}"/>
                 </p:submenu>
             </p:submenu>
-            <p:menuitem id="sm_fonts" value="Font Icons" icon="icon-book" outcome="font-icons.xhtml" />
-            <p:menuitem id="sm_user" value="User Profile" icon="icon-vcard" outcome="empty-page" />
-            <p:menuitem id="sm_tasks" value="Tasks" icon="icon-tasks" outcome="empty-page" />
-            <p:menuitem id="sm_contact" value="Contact" icon="icon-phone" outcome="empty-page" />
-            <p:menuitem id="sm_doc" value="Documentation" icon="icon-graduation-cap" outcome="documentation" />
+
+            <p:submenu label="#{lbl.label_site_ici_paylasim_islem}" icon="icon-share-squared"
+                       rendered="#{sessionInfo.isYetkili('site_ici_paylasim_islemleri')}">
+                <p:menuitem value="#{lbl.label_anket_sorgulama}"
+                            url="/pages/sitePaylasimIslemleri/anketSorgulama.jsf"
+                            rendered="#{sessionInfo.isYetkili('anket_islemleri')}"/>
+                <p:menuitem value="#{lbl.label_belge_sorgulama}"
+                            url="/pages/sitePaylasimIslemleri/belgeSorgulama.jsf"
+                            rendered="#{sessionInfo.isYetkili('belge_islemleri')}"/>
+                <p:menuitem value="#{lbl.label_duyuru_islem}"
+                            url="/pages/sitePaylasimIslemleri/duyuruSorgulama.jsf"
+                            rendered="#{sessionInfo.isYetkili('duyuru_islemleri')}"/>
+                <p:menuitem value="#{lbl.label_ilan_sorgulama}"
+                            url="/pages/sitePaylasimIslemleri/ilanSorgulama.jsf"
+                            rendered="#{sessionInfo.isYetkili('ilan_islemleri')}"/>
+            </p:submenu>
+
+            <p:submenu label="#{lbl.talep_islemleri}" icon="icon-news"
+                       rendered="#{sessionInfo.isYetkili('talep_islemleri')}">
+                <p:menuitem value="#{lbl.talep_sorgulama}"
+                            url="/pages/talepIslemleri/talepSorgula.jsf"
+                            rendered="#{sessionInfo.isYetkili('talep_sorgulama')}"/>
+            </p:submenu>
+
+            <p:submenu label="#{lbl.menu_envanter_islemleri}" icon="icon-th-1"
+                       rendered="#{sessionInfo.isYetkili('envanter_yonetimi')}">
+                <p:menuitem value="#{lbl.menu_envanter_sorgulama}" url="/pages/envanterIslemleri/envanterSorgulama.jsf"
+                            rendered="#{sessionInfo.isYetkili('envanter_sorgulama')}"/>
+                <p:menuitem value="#{lbl.menu_envanter_ekle}" url="/pages/envanterIslemleri/envanterGirisi.jsf"
+                            rendered="#{sessionInfo.isYetkili('envanter_girisi')}"/>
+
+                <p:menuitem value="#{lbl.menu_envanter_kategori_sorgulama}"
+                            url="/pages/envanterIslemleri/kategoriIslemleri.jsf"
+                            rendered="#{sessionInfo.isYetkili('kategori_islemleri')}"/>
+            </p:submenu>
+
+            <p:submenu label="#{lbl.raporlama_islemleri}" icon="icon-file-pdf"
+                       rendered="#{sessionInfo.isYetkili('rapor_islemleri')}">
+                <p:menuitem value="#{lbl.menu_aida_botcu_olan_daireler_listesi}"
+                            url="/pages/raporIslemleri/R101.jsf" rendered="#{sessionInfo.isYetkili('yetki_r101')}"/>
+                <p:menuitem value="#{lbl.menu_odenmeyen_aidatlar_listesi}"
+                            url="/pages/raporIslemleri/R201.jsf" rendered="#{sessionInfo.isYetkili('yetki_r201')}"/>
+            </p:submenu>
         </ps:menu>
-        
+
     </div>
 
 </ui:composition>
