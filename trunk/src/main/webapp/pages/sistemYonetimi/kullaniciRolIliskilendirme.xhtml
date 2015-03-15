@@ -5,63 +5,84 @@
 <h:body>
 
     <h:form id="kullaniciRol">
-        <p:dialog header="#{lbl.kullanici_rol_iliskilendirme}" widgetVar="kullaniciRolPopup" closeOnEscape="true" height="auto" width="auto">
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+        <div class="Container100 Responsive">
+            <div class="ContainerIndent">
+                <p:dialog header="#{lbl.kullanici_rol_iliskilendirme}" widgetVar="kullaniciRolPopup"
+                          maximizable="true" modal="true" closeOnEscape="true" height="400" width="auto">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                <p:panel header="#{lbl.kullanici_kilgileri}">
-                    <h:panelGrid columns="2" cellpadding="5">
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_kilgileri}</span>
+                                <h:panelGrid columns="2" cellpadding="5">
 
-                        <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
-                        <p:outputLabel id="ad" value="#{kullaniciController.selected.ad}"/>
+                                    <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                                    <p:outputLabel id="ad" value="#{kullaniciController.selected.ad}"/>
 
-                        <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
-                        <p:outputLabel id="soyad" value="#{kullaniciController.selected.soyad}"/>
+                                    <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                                    <p:outputLabel id="soyad" value="#{kullaniciController.selected.soyad}"/>
 
-                        <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
-                        <p:outputLabel id="email" value="#{kullaniciController.selected.email}"/>
+                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                    <p:outputLabel id="email" value="#{kullaniciController.selected.email}"/>
 
-                        <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}" style="font-weight:bold"/>
-                        <p:outputLabel id="telefon" value="#{kullaniciController.selected.gsm}"/>
+                                    <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}"
+                                                   style="font-weight:bold"/>
+                                    <p:outputLabel id="telefon" value="#{kullaniciController.selected.gsm}"/>
 
-                    </h:panelGrid>
-                </p:panel>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
 
-                <div style="height:10px"></div>
-
-
-                <p:panel header="#{lbl.rol_islemleri}">
-                    <h:panelGrid columns="2" cellpadding="5">
-
-
-                        <p:pickList id="pojoPickList" value="#{kullaniciController.selectedRolList}" var="rolVar"
-                                    itemValue="#{rolVar}" itemLabel="#{rolVar.ad}" converter="#{rolConverter}"
-                                    showSourceControls="true" showTargetControls="true" showCheckbox="true"
-                                    showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains">
-
-                            <f:facet name="sourceCaption">
-                                <h:outputText value="#{lbl.kullanici_rolleri}"/>
-                            </f:facet>
-                            <f:facet name="targetCaption">
-                                <h:outputText value="#{lbl.rol_listesi}"/>
-                            </f:facet>
-
-                            <p:column style="width:75%;">
-                                #{rolVar.ad}
-                            </p:column>
-
-                        </p:pickList>
+                    <div style="height:10px"></div>
 
 
-                        <f:facet name="footer">
-                            <p:commandButton id="btn_kullanici_rol_iliskilendir" value="#{lbl.ortak_guncelle}"
-                                             update=":main_form"
-                                             actionListener="#{kullaniciController.updateKullaniciRolList}" />
-                        </f:facet>
+                    <p:panel header="#{lbl.rol_islemleri}">
 
-                    </h:panelGrid>
-                </p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <span class="FontBold Fs18 hardblue Container100">#{lbl.rol_islemleri}</span>
+                                <h:panelGrid columns="2" cellpadding="5">
 
-        </p:dialog>
+
+                                    <p:pickList id="pojoPickList" value="#{kullaniciController.selectedRolList}"
+                                                var="rolVar"
+                                                itemValue="#{rolVar}" itemLabel="#{rolVar.ad}"
+                                                converter="#{rolConverter}"
+                                                showSourceControls="true" showTargetControls="true" showCheckbox="true"
+                                                showSourceFilter="true" showTargetFilter="true"
+                                                filterMatchMode="contains">
+
+                                        <f:facet name="sourceCaption">
+                                            <h:outputText value="#{lbl.kullanici_rolleri}"/>
+                                        </f:facet>
+                                        <f:facet name="targetCaption">
+                                            <h:outputText value="#{lbl.rol_listesi}"/>
+                                        </f:facet>
+
+                                        <p:column style="width:75%;">
+                                            #{rolVar.ad}
+                                        </p:column>
+
+                                    </p:pickList>
+
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btn_kullanici_rol_iliskilendir"
+                                                         value="#{lbl.ortak_guncelle}"
+                                                         update=":main_form"
+                                                         actionListener="#{kullaniciController.updateKullaniciRolList}"/>
+                                    </f:facet>
+
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
+
+                </p:dialog>
+            </div>
+        </div>
     </h:form>
 </h:body>
 </html>

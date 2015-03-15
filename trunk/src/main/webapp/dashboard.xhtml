@@ -232,7 +232,7 @@
 
                         <p:column>
                             <p:menuButton value="islemler">
-                                <p:menuitem id="downloadLink" value="indir" icon="icon-download-outline" update="@([id$=anasayfa_form])">
+                                <p:menuitem id="downloadLink" value="indir" icon="icon-download-outline" ajax="false" update="@([id$=anasayfa_form])">
 
                                     <f:setPropertyActionListener value="#{varBelge}"
                                                                  target="#{anasayfaMB.selectedBelge}"/>

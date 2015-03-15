@@ -123,7 +123,7 @@ public class TalepIslemMB implements Serializable {
     public String talepOnayla() {
         talepOnaylaAction();
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sk);
-        return "talepSorgula.xhtml?faces-redirect=true";
+        return "talepSorgula.xhtml";
     }
 
     public void talepOnaylaAction() {
@@ -140,7 +140,7 @@ public class TalepIslemMB implements Serializable {
     public String talepReddet() {
         talepReddetAction();
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sk);
-        return "talepSorgula.xhtml?faces-redirect=true";
+        return "talepSorgula.xhtml";
     }
 
     public void talepReddetAction() {
@@ -253,7 +253,7 @@ public class TalepIslemMB implements Serializable {
 
     public String geriDon() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sk);
-        return "talepSorgula.xhtml?faces-redirect=true";
+        return "talepSorgula.xhtml";
     }
 
     //getter and setters

@@ -186,7 +186,7 @@ public class TalepMB implements Serializable {
     public String talepGoruntuleme() {
         if (chectSelectedItem()) {
             storeFlashObjects();
-            return "talepGoruntuleme.xhtml?faces-redirect=true";
+            return "talepGoruntuleme.xhtml";
         }
         return "";
     }
@@ -195,7 +195,7 @@ public class TalepMB implements Serializable {
         if (chectSelectedItem()) {
             if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
                 storeFlashObjects();
-                return "talepOnaylama.xhtml?faces-redirect=true";
+                return "talepOnaylama.xhtml";
             } else {
                 JsfUtil.addErrorMessage(message.getString("talep_onay_red_gormus_onay"));
             }
@@ -207,7 +207,7 @@ public class TalepMB implements Serializable {
         if (chectSelectedItem()) {
             if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
                 storeFlashObjects();
-                return "talepReddetme.xhtml?faces-redirect=true";
+                return "talepReddetme.xhtml";
             } else {
                 JsfUtil.addErrorMessage(message.getString("talep_onay_red_gormus_onay"));
             }
