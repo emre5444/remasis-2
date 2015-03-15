@@ -139,12 +139,9 @@ public class AnasayfaMB implements Serializable {
     }
 
     public void createPieModels() {
-        if (sessionInfo.isAdminMi()) {
-            createPieModel1();
-            createPieModel2();
-            finansLoaded = true;
-
-        }
+        createPieModel1();
+        //createPieModel2();
+        finansLoaded = true;
     }
 
     public void prepareAnketDetailInfo() {

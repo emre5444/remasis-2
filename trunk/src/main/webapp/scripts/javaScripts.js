@@ -50,11 +50,13 @@ $(document).ready(function() {
 })
 
 function chartJS() {
+    this.cfg.seriesColors = ['#dae8ef','#27aae1','#33ccff','#9fadb5'];
     this.cfg.grid = {
         drawBorder: false,
         drawGridlines: false,
         background: '#ffffff',
-        shadow: false
+        shadow: false,
+        borderWidth: 0
     };
     this.cfg.seriesDefaults = {
         renderer: $.jqplot.PieRenderer,
@@ -66,10 +68,10 @@ function chartJS() {
         }
     };
     this.cfg.legend = {
-        show: true,
+        show: false,
         rendererOptions: {
             numberColumns: 1
         },
-        location: 'e'
+        location: 's'
     };
 }

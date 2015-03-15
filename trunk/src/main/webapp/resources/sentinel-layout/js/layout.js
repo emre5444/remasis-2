@@ -1,16 +1,12 @@
 var Sentinel = {
     
     init: function() {
-        this.menubar = $('#layout-menubar');
+        this.menubar = this.menubar||$('#layout-menubar');
+        this.menubarElement = this.menubar.get(0);
+        this.menubarContainer = this.menubarContainer||this.menubar.children('ul.layout-menubar-container');
         this.content = $('#layout-portlets-cover');
-        this.initTopMenu();
-        this.activeMenubarsArr = [];        
-        this.restoreSentinelMenuState();
-        this.menu_state = 'open';
-        this.headMenuState = 'close';
-        this.leftMenuState = 'close';
+        
         this.bindEvents();
-        Sentinel.WindowResized();
     },
             
     initTopMenu: function() {
@@ -33,7 +29,7 @@ var Sentinel = {
             }
 
             $this.activeTopMenuItem = item;
-            item.children('.layout-header-widgets-submenu').show();
+            item.children('ul').show();
         })
         .on('mouseleave', function() {
             if($(window).width() < 640) {
@@ -43,194 +39,148 @@ var Sentinel = {
             var item = $(this);
             $this.topMenuHideTimeout = setTimeout(function() {
                 $this.hideTopMenuItem(item);
+                $this.activeTopMenuItem = null;
             }, 1000);
         })
         .on('click', function() {
-            if($(window).width() < 640) {
-                $(this).height('auto').siblings().height(47).children('ul').hide();
-                $(this).children('ul').show();
+            var item = $(this);
+            if($(window).width() <= 640) {
+                if(item.hasClass('active-topmenuitem') && item.children('ul').is(':visible')) {
+                    item.removeClass('active-topmenuitem').children('ul').css('display', 'none');
+                }
+                else {
+                    item.addClass('active-topmenuitem').siblings('.active-topmenuitem').removeClass('active-topmenuitem').children('ul').hide();
+                    item.children('ul').css('display', 'block');
+                }
             }
             else {
-                $(this).children('ul').toggle();
+                item.children('ul').toggle();
             }
         });
     },
     
     hideTopMenuItem: function(item) {
-        item.children('.layout-header-widgets-submenu').hide();
+        item.children('ul').hide();
     },
             
     toggleLeftMenu: function() {
-        var winW = $(window).width();
-
-        if(this.menu_state === 'open') {
-            this.content.width(winW - 50);
-            this.menubar.addClass('slimmenu').removeClass('bigmenu');
-            $('#searchArea').addClass('slimsearch');
-            this.menu_state = 'close';
-        } 
-        else {
-            this.content.width(winW - 261);
-            this.menubar.removeClass('slimmenu').addClass('bigmenu');
+        if(this.menubar.hasClass('slimmenu')) {
+            this.menubar.removeClass('slimmenu');
             $('#searchArea').removeClass('slimsearch');
-            this.menu_state = 'open';
+            PrimeFaces.setCookie('sentinel_menumode', 'large');
         }
+        else {
+            this.menubar.addClass('slimmenu').removeClass('layout-menubar-open-fullscr');
+            $('#searchArea').addClass('slimsearch');
+            PrimeFaces.setCookie('sentinel_menumode', 'slim');
+        }
+        
+        this.menubar.addClass('OvHidden').scrollTop(0).removeClass('OvHidden');
+        $('body').removeClass('OvHidden'); 
     },
     
     bindEvents: function() {
-        var win = $(window),
-        $this = this;
-
-        win.on("resize.sentinel load.sentinel", function() {
-            Sentinel.WindowResized();
-        });
+        this.initTopMenu(); 
+        
+        var $this = this;
         
         //menubar resize btn binding
-        $('#layout-menubar-resize').on('click', function() {
+        $('#layout-menubar-resize').on('click', function(e) {
             Sentinel.toggleLeftMenu();
+            e.preventDefault();
         });
 
         // responsive mode menubar open button
-        $('#layout-menubar-resize2').on('click', function() {
-            if($this.leftMenuState === 'close') {
-                $this.menubar.addClass('layout-menubar-open-fullscr').removeClass('slimmenu');
-                $('body').addClass('OvHidden');
-                $this.leftMenuState = 'open';
-            } 
-            else {
+        $('#layout-menubar-resize2').on('click', function(e) {
+            if($this.menubar.hasClass('layout-menubar-open-fullscr')) {
                 $this.menubar.removeClass('layout-menubar-open-fullscr');
-                $this.leftMenuState = 'close';
                 $('body').removeClass('OvHidden');
             }
-
+            else {
+                $this.menubar.addClass('layout-menubar-open-fullscr').removeClass('slimmenu');
+                $('#searchArea').removeClass('slimsearch');
+                $('body').addClass('OvHidden');
+            }
+            
+            e.preventDefault();
         });
 
         // responsive mode header bar open menus binding
-        $('#ResponsiveModeOneMenu').on('click', function() {
-            if($this.headMenuState == 'close') {
-                $('.MustResponsive').addClass('layout-header-widgets-mobile');
-                $this.headMenuState = 'open';
-                $('body').addClass('OvHidden');
+        $('#sm-mobiletopmenu').on('click', function() {
+            if($('#sm-topmenu').is(':visible')) {
+                $('#sm-topmenu').removeClass('DispBlock');
             }
             else {
-                $('.MustResponsive').removeClass('layout-header-widgets-mobile');
-                $this.headMenuState = 'close';
-                $('body').removeClass('OvHidden');
-            }
-
-        });
-
-        $('.TabBtn').bind('click', function() {
-            $('.TabBtn').removeClass('TabBtnActiveLeft').removeClass('TabBtnActiveRight');
-            $('.TabContent').addClass('DispNone');
-
-            if($(this).hasClass('left')) {
-                $(this).addClass('TabBtnActiveLeft');
-                $('#TAB' + $(this).attr('role')).removeClass('DispNone');
-            } else {
-                $(this).addClass('TabBtnActiveRight');
-                $('#TAB' + $(this).attr('role')).removeClass('DispNone');
+                $('#sm-topmenu').addClass('DispBlock');              
             }
         });
+
+        // login
+        this.loginBox = $('#login-box');
+        if(this.loginBox.length) {
+            this.tabHeaders = this.loginBox.find('.TabBtn');
+            this.tabContents = this.loginBox.find('.TabContent');
+            this.tabHeaders.on('click', function(e) {
+                $this.tabHeaders.removeClass('TabBtnActiveLeft TabBtnActiveRight');
+                $this.tabContents.addClass('DispNone');
+
+                if($(this).hasClass('left')) {
+                    $(this).addClass('TabBtnActiveLeft');
+                    $('#TAB' + $(this).attr('role')).removeClass('DispNone');
+                } else {
+                    $(this).addClass('TabBtnActiveRight');
+                    $('#TAB' + $(this).attr('role')).removeClass('DispNone');
+                }
+                
+                e.preventDefault();
+            });
+        }      
+        
+        //remove transitions on IOS
+        if(this.isIOS()) {
+            this.menubar.find('a').addClass('notransition');
+        }
+        
+        //workaround for firefox bug of not resetting scrolltop
+        if(navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+            $(window).on('resize', function() {
+                $this.menubarElement.scrollTop = 0;
+            });
+        }
     },
     
-    WindowResized: function() {
-        var $this = this,
-        win = $(window),
-        winW = win.width(),
-        winH = win.height(),
-        menuWid = this.menubar.width();
-
-        this.content.width(winW - (menuWid + 1));
-        this.menubar.css({'min-height': winH});
-        this.content.css('min-height', winH + 'px');
-
-        if(winW > 640) {
-            $('#sm-topmenu > li').height('34px');
-            this.menubar.removeClass('ThisIsSmallMenu layout-menubar-open-fullscr').addClass('bigmenu');
-            $('body').removeClass('OvHidden');
-            $this.leftMenuState = 'close';
-            $this.menu_state = 'open';
-        }
-        else if(winW < 640) {
-            $('#sm-topmenu > li').height('47px');
-            this.menubar.addClass('ThisIsSmallMenu');
-            this.content.width('100%');
-        }
-
-        if(winW > 640 && winW < 1200) {
-            this.menubar.addClass('slimmenu');
-            $this.menu_state = 'close';
-            this.content.width(winW - (menuWid + 1));
-            $('#searchArea').addClass('slimsearch');
-            $('#buttonArea').hide();
-        } else if(winW < 640 || winW > 1200) {
-            this.menubar.removeClass('slimmenu');
-            $this.menu_state = 'open';
-            $('#searchArea').removeClass('slimsearch');
-            $('#buttonArea').show();
-        }
-
+    //backward compatibilitys
+    openSubMenu: function(element) {
+        this.toggleSubMenu(element);
     },
             
-    openSubMenu: function(whichBtn) {
-        var btn = $(whichBtn),
-                $this = this,
-                parentOfBtn = btn.closest('li'),
-                subMenuContainer = parentOfBtn.children('ul.layout-menubar-submenu-container'),
-                activeMenubars = $.cookie('sentinel_menustate');
+    toggleSubMenu: function(element) {
+        var link = $(element),
+        menuitem = link.closest('li'),
+        subMenuContainer = menuitem.children('ul.layout-menubar-submenu-container');
 
-        if(activeMenubars) {
-            $this.activeMenubarsArr = activeMenubars.split(',');
+        if(menuitem.parent().is(this.menubarContainer)) {
+            this.menubarContainer.find('> li.layout-menubar-active').removeClass('layout-menubar-active');
+            menuitem.addClass('layout-menubar-active');
         }
 
-        if(subMenuContainer.length && subMenuContainer.css('display') !== 'none') {            
-            subMenuContainer.css('display', 'none');
-            var parentMenu = parentOfBtn.closest('ul').closest('li');
-            if(parentMenu) {
-                parentOfBtn.removeClass('layout-menubar-active');
-                parentMenu.addClass('layout-menubar-active');
-                $this.activeMenubarsArr = $.grep($this.activeMenubarsArr, function(value) {
-                    return value !== parentMenu.attr('id');
-                });
-                $this.activeMenubarsArr.push(parentMenu.attr('id'));
+        if(subMenuContainer.length) {
+            if(subMenuContainer.is(':visible')) {
+                subMenuContainer.hide();
+                menuitem.removeClass('layout-menubar-active');
+                this.clearMenuState();
             }
             else {
-                parentOfBtn.addClass('layout-menubar-active');
+                subMenuContainer.slideDown(300);
+                menuitem.siblings().find('ul').slideUp(300);
+                this.activeMenuitemId = menuitem.attr('id');
+                this.saveMenuState();
             }
-            $this.refreshCookie(parentOfBtn.attr('id'));
         }
         else {
-            if($(whichBtn).parent().hasClass('firstnode')) {
-                $.removeCookie('sentinel_menustate', {path: '/'});
-                $this.activeMenubarsArr = [];
-                $('.firstnode ul').slideUp(300);
-                $(".layout-menubar-active").removeClass('layout-menubar-active');
-                parentOfBtn.addClass("layout-menubar-active");
-
-                if(subMenuContainer.length) {
-                    subMenuContainer.each(function() {
-                        $(this).slideDown(300);
-                        $this.activeMenubarsArr.push(parentOfBtn.attr('id'));
-                        $.cookie('sentinel_menustate', $this.activeMenubarsArr, {path: '/'});
-                        return false;
-                    });
-                } else {
-                    $this.activeMenubarsArr.push(parentOfBtn.attr('id'));
-                    $.cookie('sentinel_menustate', $this.activeMenubarsArr, {path: '/'});
-                }
-            } else {
-                $(".layout-menubar-active").removeClass('layout-menubar-active');
-                parentOfBtn.addClass("layout-menubar-active");
-                subMenuContainer.each(function() {
-                    $(this).slideDown(300);
-                    $this.activeMenubarsArr.push(parentOfBtn.attr('id'));
-                    $.cookie('sentinel_menustate', $this.activeMenubarsArr, {path: '/'});
-                    return false;
-                });
-            }
+            this.activeMenuitemId = menuitem.attr('id');
+            this.saveMenuState();
         }
-
     },
 
     toggleCodes: function(on) {
@@ -243,165 +193,51 @@ var Sentinel = {
         }
     },
             
-    restoreSentinelMenuState: function() {
-        $(".layout-menubar-submenu-container").hide();
-        var activeMenubars = $.cookie('sentinel_menustate');
+    restoreMenuState: function() {
+        this.activeMenuitemId = PrimeFaces.getCookie('sentinel_activemenuitem');
+        this.menubar = $('#layout-menubar');
+        this.menubarContainer = this.menubar.children('ul.layout-menubar-container');
+        
+        if(PrimeFaces.getCookie('sentinel_menumode') === 'slim') {
+            this.menubar.addClass('slimmenu');
+            $('#searchArea').addClass('slimsearch');
+        }
 
-        if(activeMenubars) {
-            var activeIndexes = activeMenubars.split(',');
-            $(".layout-menubar-active").removeClass('layout-menubar-active');
-
-            for(var i = 0; i < activeIndexes.length; i++) {
-                var activeIndex = activeIndexes[i],
-                        menubar = document.getElementById(activeIndex);
-
-                if(i === (activeIndexes.length - 1)) {
-                    $(menubar).addClass('layout-menubar-active');
-                }
-                $(menubar).children('ul').css("display", "block");
-            }
+        if(this.activeMenuitemId) {
+            this.menubarContainer.find('> li.layout-menubar-active').removeClass('layout-menubar-active');
+            this.restoreMenuitem($(document.getElementById(this.activeMenuitemId)));
         }
     },
-            
-    refreshCookie: function(id) {
-        $.removeCookie('sentinel_menustate', {path: '/'});
-        this.activeMenubarsArr = $.grep(this.activeMenubarsArr, function(value) {
-            if (value) {
-                var menubar = document.getElementById(value);
-                if(value.indexOf(id) === -1) {
-                    return true;
-                }
-                else {
-                    $(menubar).children('ul').css('display', 'none');
-                    return false;
-                }
-            }
-            else {
-                return false;
-            }
-        });
-        $.cookie('sentinel_menustate', this.activeMenubarsArr, {path: '/'});
+    
+    restoreMenuitem: function(menuitem) {
+        var subMenuContainer = menuitem.children('ul.layout-menubar-submenu-container');
+    
+        subMenuContainer.show();
+        
+        if(menuitem.parent().hasClass('layout-menubar-submenu-container')) {
+            this.restoreMenuitem(menuitem.parent().parent());
+        }
+        else {
+            menuitem.addClass('layout-menubar-active')
+        }
+    },
+    
+    saveMenuState: function() {
+        PrimeFaces.setCookie('sentinel_activemenuitem', this.activeMenuitemId);
+        PrimeFaces.setCookie('sentinel_menumode', this.menubar.hasClass('slimmenu') ? 'slim' : 'large');
+    },
+    
+    clearMenuState: function() {
+        PrimeFaces.setCookie('sentinel_activemenuitem', null);
+        PrimeFaces.setCookie('sentinel_menumode', null);
+    },
+    
+    isIOS: function() {
+        return ( navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false );
     }
+         
 };
 
 $(function() {
     Sentinel.init();
 });
-
-/*!
- * jQuery Cookie Plugin v1.4.1
- * https://github.com/carhartl/jquery-cookie
- *
- * Copyright 2013 Klaus Hartl
- * Released under the MIT license
- */
-(function (factory) {
-	if (typeof define === 'function' && define.amd) {
-		// AMD
-		define(['jquery'], factory);
-	} else if (typeof exports === 'object') {
-		// CommonJS
-		factory(require('jquery'));
-	} else {
-		// Browser globals
-		factory(jQuery);
-	}
-}(function ($) {
-
-	var pluses = /\+/g;
-
-	function encode(s) {
-		return config.raw ? s : encodeURIComponent(s);
-	}
-
-	function decode(s) {
-		return config.raw ? s : decodeURIComponent(s);
-	}
-
-	function stringifyCookieValue(value) {
-		return encode(config.json ? JSON.stringify(value) : String(value));
-	}
-
-	function parseCookieValue(s) {
-		if (s.indexOf('"') === 0) {
-			// This is a quoted cookie as according to RFC2068, unescape...
-			s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
-		}
-
-		try {
-			// Replace server-side written pluses with spaces.
-			// If we can't decode the cookie, ignore it, it's unusable.
-			// If we can't parse the cookie, ignore it, it's unusable.
-			s = decodeURIComponent(s.replace(pluses, ' '));
-			return config.json ? JSON.parse(s) : s;
-		} catch(e) {}
-	}
-
-	function read(s, converter) {
-		var value = config.raw ? s : parseCookieValue(s);
-		return $.isFunction(converter) ? converter(value) : value;
-	}
-
-	var config = $.cookie = function (key, value, options) {
-
-		// Write
-
-		if (value !== undefined && !$.isFunction(value)) {
-			options = $.extend({}, config.defaults, options);
-
-			if (typeof options.expires === 'number') {
-				var days = options.expires, t = options.expires = new Date();
-				t.setTime(+t + days * 864e+5);
-			}
-
-			return (document.cookie = [
-				encode(key), '=', stringifyCookieValue(value),
-				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
-				options.path    ? '; path=' + options.path : '',
-				options.domain  ? '; domain=' + options.domain : '',
-				options.secure  ? '; secure' : ''
-			].join(''));
-		}
-
-		// Read
-
-		var result = key ? undefined : {};
-
-		// To prevent the for loop in the first place assign an empty array
-		// in case there are no cookies at all. Also prevents odd result when
-		// calling $.cookie().
-		var cookies = document.cookie ? document.cookie.split('; ') : [];
-
-		for (var i = 0, l = cookies.length; i < l; i++) {
-			var parts = cookies[i].split('=');
-			var name = decode(parts.shift());
-			var cookie = parts.join('=');
-
-			if (key && key === name) {
-				// If second argument (value) is a function it's a converter...
-				result = read(cookie, value);
-				break;
-			}
-
-			// Prevent storing a cookie that we couldn't decode.
-			if (!key && (cookie = read(cookie)) !== undefined) {
-				result[name] = cookie;
-			}
-		}
-
-		return result;
-	};
-
-	config.defaults = {};
-
-	$.removeCookie = function (key, options) {
-		if ($.cookie(key) === undefined) {
-			return false;
-		}
-
-		// Must not alter options, thus extending a fresh object...
-		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
-		return !$.cookie(key);
-	};
-
-}));
