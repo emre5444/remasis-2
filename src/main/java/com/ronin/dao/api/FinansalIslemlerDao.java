@@ -164,8 +164,10 @@ public class FinansalIslemlerDao implements IFinansalIslemlerDao {
                 }
 
                 for (DaireBorc db : (List<DaireBorc>) list) {
-                    borc += db.getBorc().getBorc();
-                    alacak += db.getBorc().getOdenenTutar();
+                    if (db!=null && db.getBorc() != null) {
+                        borc += db.getBorc().getBorc();
+                        alacak += db.getBorc().getOdenenTutar();
+                    }
                 }
                 Double toplam = borc + alacak;
                 Double borcRate = (borc / toplam) * 100;

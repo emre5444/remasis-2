@@ -112,13 +112,12 @@ body{background-color: #F6F8F8; margin:0px;}
                     #layout-logo img{height:16px;}
                     
 		.layout-header-widgets{margin:0px; padding:0px; position:absolute; right:10px; top:6px;}
-		.layout-header-widgets-mobile{right:10px !important;}
 			.layout-header-widgets li{background-color:#0f446c; width:34px; height:34px; margin-left:10px; /*for background transition overflow problem of safari*/-webkit-backface-visibility: hidden;}
 			.layout-header-widgets li:hover{background-color:#165686;}
 				.layout-header-widgets li i{margin-top:7px; display:block;cursor:pointer}
 				.alertBubble{background-color:#e90c45; color:#ffffff; overflow:hidden; padding:3px 4px; display:inline-block; position:absolute; margin-top:-5px;}
 				
-				.layout-header-widgets-submenu{width:200px; padding:14px; margin:0px; position:relative; margin-top:8px; margin-left:-180px; overflow:hidden; display:none; 
+				.layout-header-widgets-submenu{width:200px; padding:14px; margin:0px; position:relative; margin-top:8px; margin-left:-180px; overflow:auto; display:none; max-height: 300px;
 											   background-image:url("#{resource['sentinel-layout:images/popupBlueArrow.png']}"); background-repeat:no-repeat; background-position:top right;}
 					.layout-header-widgets-submenu li{padding:0px; margin:0px; margin-left:0px !important; border-bottom:solid 1px #083359; width:100% !important; height:auto !important; 
 													display:block; background-color:#0b4170;}
@@ -128,33 +127,33 @@ body{background-color: #F6F8F8; margin:0px;}
 	/* MENU BAR */
 	#layout-menubar{float:left; padding-top:55px; background-color: #3D3D3D; position:relative; z-index: 998;}
 	.bigmenu{width:260px; border-right: solid 1px #272727;}
-		.layout-menubarinner-box{width:230px; display:table; padding:10px 15px;}
+		.layout-menubarinner-box{width:230px; display:table; padding:10px 15px; overflow: hidden;}
 			#layout-menubar-resize{display:inline-block; padding:5px; background-color:#2B2B2B; color:#FFD100; float:right;}
 			#layout-menubar-resize2{display:none; padding:5px; background-color:#2B2B2B; color:#FFD100; float:right;}
 			.layout-menubar-search{width:200px; padding:0px 0px 3px 0px; border:0px; border:none; background-color:transparent; outline:none; border-bottom:solid 1px #5A5A5A;
 								   color:#5A5A5A !important; font-size:14px;}
 			.layout-menubar-search:focus{color:#939393 !important;}
 		.layout-menubar-container{width:260px; padding:0px; margin-bottom:60px;}
-			.layout-menubar-default{width:100%; padding:0px; color:#D9D9D9; font-size:14px; cursor:pointer;}
-			.layout-menubar-default:hover{background-color:#303030;}
+			#layout-menubar li {width:100%; padding:0px; color:#D9D9D9; font-size:14px; cursor:pointer;}
+			#layout-menubar li:hover{background-color:#303030;}
 			.layout-menubar-active{background-color:#303030; text-shadow: 0 1px 0 #000000;}
 				.layout-menubar-active i{}
-				.layout-menubar-default a{color:#D9D9D9; padding:15px; display:block; border-bottom:solid 1px #4D4D4D; -webkit-transition: all 0.5s ease;
+				#layout-menubar li a{color:#D9D9D9; padding:15px; display:block; border-bottom:solid 1px #4D4D4D; -webkit-transition: all 0.5s ease;
                                                           -moz-transition: all 0.5s ease; -ms-transition: all 0.5s ease; -o-transition: all 0.5s ease; transition: all 0.5s ease;}
-                                .layout-menubar-default a:hover{color:#FFD100; padding-left:20px;}
-			.layout-menubar-submenu-container{padding:0px; overflow:hidden;}
+                                #layout-menubar li a:hover{color:#FFD100; padding-left:20px;}
+			.layout-menubar-submenu-container{padding:0px; overflow:hidden;display: none;}
 			.layout-menubar-submenu-open{background-color:#353333;}
 			
-			.layout-menubar-open-fullscr{height:100% !important; overflow-y:scroll !important; max-height:100% !important;}
-				.layout-menubar-open-fullscr li{width:100% !important;}
+			#layout-menubar.layout-menubar-open-fullscr{height:100%; overflow-y:scroll; max-height:100%;}
+				#layout-menubar.layout-menubar-open-fullscr li{width:100%;}
 			
 	/* SEARCH AREA */
-	.slimsearch{width:280px;}
+
 	.slimsearch:hover{position:relative; background-color: #303030; width:280px !important;}
             .slimsearch:hover input{display:inline-block !important;}
 	.slimsearch i{margin-left: 6px; margin-right:13px;}
 	.slimsearch:hover i{color:#FFD100;}
-	.slimsearch:hover input{border-bottom:0px;}
+	.slimsearch:hover input{border-bottom:0px !important; margin-bottom: -1px;}
 			
 	/* MENUBAR SLIM */
 	.slimmenu{width:50px; z-index: 99999999 !important;}
@@ -163,16 +162,19 @@ body{background-color: #F6F8F8; margin:0px;}
                         .slimmenu .layout-menubar-container{width:48px;}
                         .slimmenu .layout-menubarinner-box{width:48px;}
                             .slimmenu .layout-menubarinner-box input{display:none;}
-			.slimmenu .layout-menubar-container .layout-menubar-default{height:50px; overflow:hidden;}
-			.slimmenu .layout-menubar-container .layout-menubar-default:hover{position:relative; width:330px; min-height:50px !important; height:auto;}
-                            .slimmenu .layout-menubar-default a{width:300px; border-bottom: 1px solid #4D4D4D;}
-                            .slimmenu .layout-menubar-default a:hover{color:#FFD100; padding-left:25px;}
-                            .slimmenu .layout-menubar-default:hover a{display:block; width:auto;}
-                                .slimmenu .layout-menubar-container .layout-menubar-default a .i{ margin-right:20px;}
+			.slimmenu .layout-menubar-container li{height:50px; overflow:hidden;}
+			#layout-menubar.slimmenu .layout-menubar-container li:hover{position:relative; width:330px; min-height:50px !important; height:auto;}
+                            .slimmenu li a{width:300px; border-bottom: 1px solid #4D4D4D;}
+                            .slimmenu li a:hover{color:#FFD100; padding-left:25px;}
+                            .slimmenu li:hover a{display:block; width:auto;}
+                                .slimmenu .layout-menubar-container li a .i{ margin-right:20px;}
 	
 	/* PORTLETS COVER */
-	#layout-portlets-cover{background-color: #ffffff; width:auto; float:left; padding-top:53px; overflow-y:hidden; color:#9FADB5; overflow-x: hidden;}
+	#layout-portlets-cover{background-color: #ffffff; overflow-y:hidden; padding-top: 55px; color:#9FADB5; overflow-x: hidden;}
 
+    #sm-mobiletopmenu {
+        display: none;
+    }
 
 /* OTHERS -----------------------------------------------------------------*/
 a{text-decoration:none; outline:none;}
@@ -402,4 +404,139 @@ small {
 }
 .i-code {
   display: none;
+}
+
+#buttonArea {
+    display: block;
+}
+
+/* MEDIA QUERIES **************************************************************************************************************** */
+@media (min-width: 1201px) {
+    #layout-menubar {
+        width:260px; 
+        border-right: solid 1px #272727;
+    }
+    
+    #layout-menubar.slimmenu {
+        width:50px;
+    }
+}
+
+@media (min-width: 641px) {
+    #sm-topmenu li,
+    #sm-topmenu li.active-topmenuitem{
+        height: 34px;
+    }
+        
+    #layout-menubar.layout-menubar-open-fullscr{height:auto; overflow-y:visible; max-height:auto;}
+        #layout-menubar.layout-menubar-open-fullscr li{width:100%;}
+        
+    body.OvHidden {
+        overflow: visible;
+    }
+}
+
+@media (min-width: 641px) and (max-width: 1200px) {
+    #buttonArea {
+        display: none;
+    }
+    
+    /* Slim Search */
+    #searchArea{width:48px}
+	#searchArea:hover{position:relative; background-color: #303030; width:280px !important; }
+            #searchArea:hover input{display:inline-block !important;}
+	#searchArea i{margin-left: 6px; margin-right:13px;}
+	#searchArea:hover i{color:#FFD100;}
+	#searchArea:hover input{border-bottom:0px; margin-bottom: -1px;}
+    
+    /* Slim Menu */
+    #layout-menubar{width:50px; z-index: 99999999 !important;}
+		#layout-menubar .layout-menubarinner-box{padding:10px 9px;}
+			#layout-menubar #layout-menubar-resize{float:left;}
+                        #layout-menubar .layout-menubar-container{width:48px;}
+                        #layout-menubar .layout-menubarinner-box{width:48px;}
+                            #layout-menubar .layout-menubarinner-box input{display:none;}
+			#layout-menubar .layout-menubar-container li{height:50px; overflow:hidden;}
+			#layout-menubar .layout-menubar-container li:hover{position:relative; width:330px; min-height:50px !important; height:auto;}
+                            #layout-menubar li a{width:300px; border-bottom: 1px solid #4D4D4D;}
+                            #layout-menubar li a:hover{color:#FFD100; padding-left:25px;}
+                            #layout-menubar li:hover a{display:block; width:auto;}
+                                #layout-menubar .layout-menubar-container li a .i{ margin-right:20px;}
+}
+  
+/* Landscape phone to portrait tablet */
+@media (max-width: 640px) {
+	#layout-logo{margin:15px 2%;}
+	#layout-menubar, .slimmenu{position:fixed; background-color: #3D3D3D; width:100%; min-height:50px !important; max-height:50px; overflow:hidden; z-index:99999999;}
+		.layout-menubar-container{width:100%;}
+		#layout-menubar-resize{display:none;}
+		#layout-menubar-resize2{display:inline-block;}
+		#buttonArea{width:auto; padding:1% 2%; float:right;}
+		.layout-menubar-container{margin-top: 55px;}
+		.layout-menubar-search{border-bottom:none;}
+
+		#sm-topmenu{padding:0px; width:50%; max-height:80%; position:fixed; top:50px; padding:14px; display: none;
+						-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5); -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5); box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
+						border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px;
+						background-image:url("#{resource['sentinel-layout:images/popupBlueArrow.png']}"); background-repeat:no-repeat; background-position:right top;}
+			#sm-topmenu>li{width:100%; border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; margin:0px; border-bottom:solid 1px #083359; min-height:47px; height:47px; font-size:11px; overflow:hidden;}
+				#sm-topmenu>li>i{font-size:20px; overflow:hidden; margin:10px 0px; display:block;}
+				#sm-topmenu>li .alertBubble{ margin:-20px 0px 0px 10px; right: 52%;}
+				
+				#sm-topmenu>li ul{width:auto; position: static; display: block; height: auto; margin: 0px; padding: 0px; webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; top:0; right:0;
+									  border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px;}
+                #sm-topmenu.DispBlock {
+                    display: block;
+                    overflow-y: auto;
+                }
+                
+                #sm-topmenu li.active-topmenuitem {
+                    height: auto;
+                }  
+                
+	#layout-portlets-cover{padding-top:110px;}
+        
+        /* LOGIN */
+        .login-back{ background-size: 100%; background-position: -200px;}
+        #login-logo{ line-height: 26px;}
+        #login-logo span{font-size: 26px !important;}
+        #login-logo img{ height:26px;}
+        .TabBtn{ font-size: 16px;}
+        #login-box input[type="text"]{border: solid 1px #D1D3D4; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 16px;}
+        #login-box .ui-button{border:none !important; box-shadow: none; width:90%;}
+            #login-box .ui-button .ui-button-text{padding:12px !important; font-size: 16px !important;}
+            
+    #sm-mobiletopmenu {
+        display: block;
+    }	
+    
+    #searchArea{width:auto !important; padding:2% !important; float:left !important;}
+    .slimmenu #searchArea.layout-menubarinner-box input{display:inline-block;}
+    #searchArea.slimsearch:hover{position:relative; background-color: transparent; width: auto;}
+            #searchArea.slimsearch:hover input{display:inline-block !important;}
+	#searchArea.slimsearch i{margin-left: 0px; margin-right:0px;}
+	#searchArea.slimsearch:hover i{color:#5A5A5A;}
+}
+ 
+/* Portrait phones and down */
+@media (min-width:320px) and (max-width: 480px) {
+	#layout-logo{margin:15px 2%;}
+	#layout-menubar, .slimmenu{position:fixed; background-color: #3D3D3D; width:100%; min-height:50px !important; max-height:50px; overflow:hidden; z-index:99999999;}
+		.layout-menubar-container{width:100%;}
+		#layout-menubar-resize{display:none;}
+		#layout-menubar-resize2{display:inline-block;}
+		#buttonArea{width:auto; padding:1.5% 2%; float:right;}
+		#searchArea{width:auto; padding:2.5% 2% 2.5% 2%; float:right;}
+		.layout-menubar-container{margin-top: 55px;}
+		.layout-menubar-search{border-bottom:none;}
+		        
+        /* LOGIN */
+        .login-back{ background-size: 300%; background-position: -300px;}
+        #login-logo{ line-height: 20px;}
+        #login-logo span{font-size: 20px !important;}
+        #login-logo img{ height:20px;}
+        .TabBtn{ font-size: 12px;}
+        #login-box input[type="text"]{border: solid 1px #D1D3D4 !important; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 14px !important;}
+        #login-box .ui-button{border:none !important; box-shadow: none; width:90%;}
+            #login-box .ui-button .ui-button-text{padding:12px !important; font-size: 14px !important;}
 }

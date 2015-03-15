@@ -243,95 +243,40 @@ img{ border:none; border:0px;}
 
 
 .changecolor:hover{background-color:yellowgreen; padding: 20px;}
+
+.notransition {
+  -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -o-transition: none !important;
+  -ms-transition: none !important;
+  transition: none !important;
+}
 /******************************************************************************************************************************** */
 
 /* MEDIA QUERIES **************************************************************************************************************** */
 
-
 /* Large desktop */
 @media (min-width: 960px){
-	#layout-portlets-cover{padding-top:55px;}
 	.ContainerIndent{margin:8px 10px;}
-    body{overflow: visible !important}
 }
  
 /* Portrait tablet to landscape and desktop */
-@media (min-width: 640px) and (max-width: 960px) {
-	#layout-portlets-cover{padding-top:60px;}
-	
+@media (min-width: 640px) and (max-width: 960px) {	
 	.span3 {width: 45%;}
 	.ContainerIndent{margin:6px 8px;}
 	.Responsive{width:50%}
-    body{overflow: visible !important}
 }
  
 /* Landscape phone to portrait tablet */
-@media (max-width: 640px) {
-	#layout-logo{margin:15px 2%;}
-	#layout-menubar, .slimmenu{position:fixed; background-color: #3D3D3D; width:100%; min-height:50px !important; max-height:50px; overflow:hidden; z-index:99999999;}
-		.layout-menubar-container{width:100%;}
-		#layout-menubar-resize{display:none;}
-		#layout-menubar-resize2{display:inline-block;}
-		#buttonArea{width:16%; padding:1% 2%; float:right;}
-		#searchArea{width:76%; padding:2%; float:left;}
-		.layout-menubar-container{margin-top: 55px;}
-		.layout-menubar-search{border-bottom:none;}
-		.span3 {width: 45%;}
-		
-		.DisplayOnResponsive{display:block; float:right;}
-		.MustResponsive{padding:0px; width:50%; max-height:80%; position:fixed; overflow-y:scroll; right:-100%; top:50px; padding:14px;
-						-webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5); -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5); box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.5);
-						border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px;
-						background-image:url("#{resource['sentinel-layout:images/popupBlueArrow.png']}"); background-repeat:no-repeat; background-position:right top;}
-			.MustResponsive>li{width:100%; border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px; margin:0px; border-bottom:solid 1px #083359; min-height:47px; height:47px; font-size:11px; overflow:hidden;}
-				.MustResponsive>li>i{font-size:20px; overflow:hidden; margin:10px 0px; display:block;}
-				.MustResponsive>li .alertBubble{ margin:-20px 0px 0px 10px; right: 52%;}
-				
-				.MustResponsive>li ul{width:auto; position: static; display: block; height: auto; margin: 0px; padding: 0px; webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; top:0; right:0;
-									  border-radius:0px; -webkit-border-radius:0px; -moz-border-radius:0px;}
-									  
-	#layout-portlets-cover{padding-top:110px;}
-        
-        /* LOGIN */
-        .login-back{ background-size: 100%; background-position: -200px;}
-        #login-logo{ line-height: 26px;}
-        #login-logo span{font-size: 26px !important;}
-        #login-logo img{ height:26px;}
-        .TabBtn{ font-size: 16px;}
-        #login-box input[type="text"]{border: solid 1px #D1D3D4; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 16px;}
-        #login-box .ui-button{border:none !important; box-shadow: none; width:90%;}
-            #login-box .ui-button .ui-button-text{padding:12px !important; font-size: 16px !important;}
-									  
+@media (max-width: 640px) {									  
 	.ContainerIndent{margin:6px 8px;}
-	.Responsive{width:100%}
-								  
+	.Responsive{width:100%}	
+    .DisplayOnResponsive{display:block; float:right;}
 }
  
 /* Portrait phones and down */
 @media (min-width:320px) and (max-width: 480px) {
-	#layout-logo{margin:15px 2%;}
-	#layout-menubar, .slimmenu{position:fixed; background-color: #3D3D3D; width:100%; min-height:50px !important; max-height:50px; overflow:hidden; z-index:99999999;}
-		.layout-menubar-container{width:100%;}
-		#layout-menubar-resize{display:none;}
-		#layout-menubar-resize2{display:inline-block;}
-		#buttonArea{width:16%; padding:1.5% 2%; float:right;}
-		#searchArea{width:76%; padding:2.5% 2% 2.5% 2%; float:right;}
-		.layout-menubar-container{margin-top: 55px;}
-		.layout-menubar-search{border-bottom:none;}
-		.span3 {width: 90%;}
-		
-	#layout-portlets-cover{padding-top:100px;}
-        
-        /* LOGIN */
-        .login-back{ background-size: 300%; background-position: -300px;}
-        #login-logo{ line-height: 20px;}
-        #login-logo span{font-size: 20px !important;}
-        #login-logo img{ height:20px;}
-        .TabBtn{ font-size: 12px;}
-        #login-box input[type="text"]{border: solid 1px #D1D3D4 !important; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 14px !important;}
-        #login-box .ui-button{border:none !important; box-shadow: none; width:90%;}
-            #login-box .ui-button .ui-button-text{padding:12px !important; font-size: 14px !important;}
-		
+    .span3 {width: 90%;}	
 	.ContainerIndent{margin:16px 8px 0px 8px;}
 	.Responsive{width:100%}
 }

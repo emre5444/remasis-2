@@ -3,65 +3,25 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://java.sun.com/jsp/jstl/core"
                 template="/WEB-INF/template.xhtml">
-
-<ui:define name="head">
-    <script type="text/javascript">
-        function skinChart() {
-            this.cfg.shadow = false;
-            this.cfg.seriesColors = ['#dae8ef', '#27aae1'];
-            this.cfg.grid = {
-                background:'#f3f5f7',
-                borderColor:'#e5ebf0',
-                gridLineColor:'#e5ebf0',
-                shadow:false
-            };
-            this.cfg.axesDefaults = {
-                rendererOptions:{
-                    textColor:'#9fadb5'
-                }
-            };
-            this.cfg.seriesDefaults = {
-                shadow:false,
-                markerOptions:{
-                    shadow:false
-                }
-            }
-        }
-
-        function skinPie() {
-            this.cfg.seriesColors = ['#dae8ef', '#27aae1', '#33ccff', '#9fadb5'];
-            this.cfg.grid = {
-                background:'#ffffff',
-                borderColor:'#eaeaea',
-                gridLineColor:'#e5ebf0',
-                shadow:false,
-                borderWidth:0
-            };
-            this.cfg.seriesDefaults.shadow = false;
-        }
-    </script>
-    <style type="text/css">
-        .jqplot-target, .jqplot-axis {
-            color: #9fadb5;
-        }
-    </style>
-</ui:define>
 
 <ui:define name="content">
 <h:form id="anasayfa_form">
-<p:remoteCommand global="false" name="onload3" action="#{anasayfaMB.prepareIletisimBilgi()}" autoRun="true"
-                 update="@([id$=anasayfa_iletisim])"/>
-<p:remoteCommand global="false" name="onload2" action="#{anasayfaMB.getDuyuruData()}" autoRun="true"
-                 update="@([id$=anasayfa_duyurular1])"/>
-<p:remoteCommand global="false" name="onload5" action="#{anasayfaMB.getIlanData()}" autoRun="true"
-                 update="@([id$=anasayfa_ilanlar])"/>
-<p:remoteCommand global="false" name="onload4" action="#{anasayfaMB.getAnketListBySorguKriteri()}" autoRun="true"
-                 update="@([id$=anasayfa_anket])"/>
-<p:remoteCommand global="false" name="onload7" autoRun="true"
-                 update="@([id$=AnketeKatilimEkleme])"/>
-<p:remoteCommand global="false" name="onload1" action="#{anasayfaMB.getBelgeData()}" autoRun="true"
-                 update="anasayfa_belgeler"/>
+    <p:remoteCommand global="false" name="onload3" action="#{anasayfaMB.prepareIletisimBilgi()}" autoRun="true"
+                     update="@([id$=anasayfa_iletisim])"/>
+    <p:remoteCommand global="false" name="onload2" action="#{anasayfaMB.getDuyuruData()}" autoRun="true"
+                     update="@([id$=anasayfa_duyurular1])"/>
+    <p:remoteCommand global="false" name="onload5" action="#{anasayfaMB.getIlanData()}" autoRun="true"
+                     update="@([id$=anasayfa_ilanlar])"/>
+    <p:remoteCommand global="false" name="onload4" action="#{anasayfaMB.getAnketListBySorguKriteri()}" autoRun="true"
+                     update="@([id$=anasayfa_anket])"/>
+    <p:remoteCommand global="false" name="onload7" autoRun="true"
+                     update="@([id$=AnketeKatilimEkleme])"/>
+    <p:remoteCommand global="false" name="onload1" action="#{anasayfaMB.getBelgeData()}" autoRun="true"
+                     update="anasayfa_belgeler"/>
+    <p:remoteCommand global="false" name="onload6" action="#{anasayfaMB.createPieModels()}" autoRun="true"
+                     update="anasayfa_borc_alacak_durum , anasayfa_borc_alacak_durum_pie"/>
 
 <!-- SECTION 1 -->
 
@@ -74,7 +34,7 @@
                 <p:panel style="min-height: 260px;">
                     <i class="icon-user-2 Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
 
-                    <div class="Fs20 Fright MarTop10 leaden Wid70"><span class="hardblue"><h:outputText
+                    <div class="Fs24 Fright MarTop10 leaden Wid70"><span class="hardblue"><h:outputText
                             value="#{sessionInfo.kullanici.ad} #{sessionInfo.kullanici.soyad}"/> </span>,
                         <h:outputText
                                 value="#{lbl.label_hosgeldiniz}"/></div>
@@ -149,59 +109,78 @@
             </div>
         </div>
 
-        <div class="Container25 Responsive">
-            <div class="ContainerIndent">
-                <p:panel style="min-height: 260px;">
-                    <i class="icon-rocket Fs50 Fleft Wid25 red TexAlCenter"></i>
 
-                    <div class="Fs24 Fright MarTop10 leaden Wid70">Sales Report</div>
-                    <div class="Fs18 Fright leaden Wid70">Totally <span class="red">$ 132.875,45</span></div>
-                    <div class="EmptyBox10"></div>
-                    <p:separator styleClass="Wid100"></p:separator>
+            <div class="Container30 Responsive">
+                <div class="ContainerIndent">
+                    <h:panelGroup id="anasayfa_borc_alacak_durum">
+                        <h:panelGroup rendered="#{not anasayfaMB.finansLoaded}">
+                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                 style="display:block;margin: 0 auto;" alt=""/>
+                        </h:panelGroup>
+                        <p:panel rendered="#{anasayfaMB.finansLoaded}">
 
-                    <div class="EmptyBox10"></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">4th Quarter<br/><span
-                            class="Fs20 orange">--</span></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">3rd Quarter<br/><span
-                            class="Fs20 orange">$13.760</span></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">2nd Quarter<br/><span
-                            class="Fs20 red">$23.567</span></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">1st Quarter<br/><span
-                            class="Fs20 hardblue">$2.370</span></div>
-                    <div class="EmptyBox10"></div>
-                    <p:separator styleClass="Wid100"></p:separator>
-                    <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i
-                            class="icon-doc-1 orange"> Get Full Report</i></a>
-                </p:panel>
+                            <i class="icon-try Fs50 Fleft Wid25 red TexAlCenter"></i>
+
+                            <div class="Fs24 Fright MarTop10 leaden Wid70">#{lbl.lbl_finans_durumu}</div>
+                            <div class="Fs18 Fright leaden Wid70">#{lbl.lbl_bakiye_bilgisi}
+                                <h:outputText value="#{anasayfaMB.getBorcTutariForGenel()}"
+                                              style="font-weight:bold; color: red;"
+                                              rendered="#{anasayfaMB.getBorcTutariForGenel() gt 0.0}">
+                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                </h:outputText>
+                                <h:outputText value="#{-anasayfaMB.getBorcTutariForGenel()}"
+                                              style="font-weight:bold; color: green;"
+                                              rendered="#{anasayfaMB.getBorcTutariForGenel() lt 0.0}">
+                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                </h:outputText>
+                            </div>
+                            <div class="EmptyBox10"></div>
+                            <p:separator styleClass="Wid100"></p:separator>
+
+                            <ui:repeat value="#{anasayfaMB.borcAlacakViewBeanList}" var="ba">
+
+                                <div class="EmptyBox10"></div>
+                                <div class="Fs12 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.lbl_tutar}
+                                    <br/><span
+                                            class="Fs20 orange"><h:outputText value="#{ba.tutar}">
+                                        <f:convertNumber pattern="#,###,##0.00"/>
+                                    </h:outputText></span></div>
+                                <div class="Fs12 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.lbl_alacak_borc_oran}
+                                    <br/><span
+                                            class="Fs20 orange">#{anasayfaMB.doubleFormatter(ba.rate)}</span>
+                                </div>
+                                <div class="Fs12 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.ortak_aciklama}
+                                    <br/><span
+                                            class="Fs20 orange">#{ba.aciklama}</span></div>
+                                <div class="EmptyBox10"></div>
+                            </ui:repeat>
+
+                            <p:separator styleClass="Wid100"></p:separator>
+                            <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i
+                                    class="icon-doc-1 orange"> Get Full Report</i></a>
+
+                        </p:panel>
+                    </h:panelGroup>
+                </div>
             </div>
-        </div>
 
-        <div class="Container25 Responsive">
-            <div class="ContainerIndent">
-                <p:panel style="min-height: 260px;">
-                    <i class="icon-rocket Fs50 Fleft Wid25 red TexAlCenter"></i>
 
-                    <div class="Fs24 Fright MarTop10 leaden Wid70">Sales Report</div>
-                    <div class="Fs18 Fright leaden Wid70">Totally <span class="red">$ 132.875,45</span></div>
-                    <div class="EmptyBox10"></div>
-                    <p:separator styleClass="Wid100"></p:separator>
-
-                    <div class="EmptyBox10"></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">4th Quarter<br/><span
-                            class="Fs20 orange">--</span></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">3rd Quarter<br/><span
-                            class="Fs20 orange">$13.760</span></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">2nd Quarter<br/><span
-                            class="Fs20 red">$23.567</span></div>
-                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">1st Quarter<br/><span
-                            class="Fs20 hardblue">$2.370</span></div>
-                    <div class="EmptyBox10"></div>
-                    <p:separator styleClass="Wid100"></p:separator>
-                    <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i
-                            class="icon-doc-1 orange"> Get Full Report</i></a>
-                </p:panel>
+            <div class="Container20 Responsive">
+                <div class="ContainerIndent">
+                    <h:panelGroup id="anasayfa_borc_alacak_durum_pie">
+                        <h:panelGroup rendered="#{not anasayfaMB.finansLoaded}">
+                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                 style="display:block;margin: 0 auto;" alt=""/>
+                        </h:panelGroup>
+                        <p:panel style="min-height: 260px;" rendered="#{anasayfaMB.finansLoaded}">
+                            <div class="Fs24 MarTop10 leaden Wid100 TexAlCenter">Customer Report</div>
+                            <p:separator styleClass="Wid100"></p:separator>
+                            <p:chart type="pie" model="#{anasayfaMB.pieModel1}" style="height:300px" responsive="true"/>
+                        </p:panel>
+                    </h:panelGroup>
+                </div>
             </div>
-        </div>
+
 
         <div class="EmptyBox10"></div>
     </div>
@@ -217,14 +196,21 @@
             <div class="ContainerIndent">
 
 
-                <p:panel id="anasayfa_belgeler">
-                    <span class="FontBold Fs18 hardblue Container100">#{lbl.label_belge_list}</span>
+                <p:panel id="anasayfa_belgeler" style="min-height:400px;">
+                    <div class="Container100 Responsive Fs20 hardblue">
+                        <i class="icon-doc-text orange"></i> #{lbl.label_belge_list}
+                    </div>
+
+                    <div class="EmptyBox10"></div>
+
                     <h:panelGroup rendered="#{not anasayfaMB.belgeLoaded}">
                         <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
                              style="display:block;margin: 0 auto;" alt=""/>
                     </h:panelGroup>
+                    <div class="Container100">
+                    <h:panelGroup rendered="#{anasayfaMB.belgeLoaded}">
                     <p:dataTable value="#{anasayfaMB.belgeDataModel}" var="varBelge"
-                                 selection="#{anasayfaMB.selectedBelge}" scrollable="true" scrollHeight="250"
+                                 selection="#{anasayfaMB.selectedBelge}"
                                  emptyMessage="#{msg.no_record_found}"
                                  rendered="#{anasayfaMB.belgeLoaded}">
 
@@ -244,40 +230,42 @@
                             <h:outputText value="#{varBelge.aciklama}"/>
                         </p:column>
 
-                        <p:column style="width:8%">
-                            <h:panelGrid columns="2">
-                                <p:commandLink ajax="false" update="@([id$=anasayfa_form])" styleClass="icon-download"
-                                               id="downloadLink"
-                                        >
+                        <p:column>
+                            <p:menuButton value="islemler">
+                                <p:menuitem id="downloadLink" value="indir" icon="icon-download-outline" update="@([id$=anasayfa_form])">
 
                                     <f:setPropertyActionListener value="#{varBelge}"
                                                                  target="#{anasayfaMB.selectedBelge}"/>
                                     <p:fileDownload value="#{anasayfaMB.download}"/>
-                                </p:commandLink>
-
-
-                                <p:commandLink id="deleteBelge1" immediate="true"
-                                               rendered="#{sessionInfo.adminMi}"
-                                               action="#{anasayfaMB.deleteBelge}"
-                                               update="@([id$=anasayfa_belgeler])"
-                                        >
-                                    <p:graphicImage value="/images/delete_icon.png"/>
+                                        </p:menuitem>
+                                <p:menuitem value="Update" icon="ui-icon-arrowrefresh-1-w fa fa-repeat Fs14"/>
+                                <p:menuitem id="deleteBelge1" rendered="#{sessionInfo.adminMi}" action="#{anasayfaMB.deleteBelge}" value="Delete" icon="ui-icon-close"
+                                            update="@([id$=anasayfa_belgeler])">
 
                                     <f:setPropertyActionListener value="#{varBelge}"
                                                                  target="#{anasayfaMB.selectedBelge}"/>
+                                    <ui:remove>
                                     <p:confirm header="#{lbl.label_belge_silme}"
                                                message="#{msg.islemi_onayliyormusunuz}"/>
-                                </p:commandLink>
-                            </h:panelGrid>
+                                </ui:remove>
+
+                                </p:menuitem>
+                            </p:menuButton>
+
                         </p:column>
-                        <f:facet name="footer">
+                    </p:dataTable>
+                        <div class="EmptyBox10"></div>
+                        <div class="Container100 TexAlCenter Responsive">
+
                             <p:commandButton id="yeniBelgeEkleme" value="#{lbl.label_belge_ekle}"
                                              icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
                                              update="@([id$=belgeEkleme])"
                                              action="#{anasayfaMB.clearBelgeYuklemeObject}"
                                              oncomplete="PF('belgeEklePopup').show()"/>
-                        </f:facet>
-                    </p:dataTable>
+                        </div>
+                    </h:panelGroup>
+
+                    </div>
                 </p:panel>
 
 
@@ -288,41 +276,46 @@
             <div class="ContainerIndent">
 
 
-                <p:panel id="anasayfa_duyurular1">
-                    <span class="FontBold Fs18 hardblue Container100">#{lbl.daire_duyurular}</span>
+                <p:panel id="anasayfa_duyurular1" style="min-height:400px;">
+                    <div class="Container100 Responsive Fs20 hardblue">
+                        <i class="icon-bell-alt orange"></i> #{lbl.daire_duyurular}
+                    </div>
+
+                    <div class="EmptyBox10"></div>
+
                     <h:panelGroup rendered="#{not anasayfaMB.duyuruLoaded}">
                         <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
                              style="display:block;margin: 0 auto;" alt=""/>
                     </h:panelGroup>
+                    <div class="Container100">
+                        <h:panelGroup rendered="#{anasayfaMB.duyuruLoaded}">
                     <p:dataTable id="anasayfaDuyuruListesi" value="#{anasayfaMB.duyuruDataModel}"
                                  var="varDuyuru"
-                                 scrollable="true" scrollHeight="250"
                                  selection="#{anasayfaMB.selected}"
                                  emptyMessage="#{msg.no_record_found}"
-                                 rendered="#{anasayfaMB.duyuruLoaded}"
                             >
 
-                        <p:column sortBy="adSoyad" style="width:15%">
+                        <p:column sortBy="adSoyad">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
                             </f:facet>
                             <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
                         </p:column>
-                        <p:column sortBy="kisaAciklama" style="width:55%">
+                        <p:column sortBy="kisaAciklama">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_konusu}"/>
                             </f:facet>
                             <h:outputText value="#{varDuyuru.mantiksalKisaAciklama}"/>
                         </p:column>
                         <ui:remove>
-                            <p:column sortBy="aciklama" style="width:30%">
+                            <p:column sortBy="aciklama">
                                 <f:facet name="header">
                                     <h:outputText value="#{lbl.duyuru_aciklama}"/>
                                 </f:facet>
                                 <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
                             </p:column>
                         </ui:remove>
-                        <p:column sortBy="tanitimZamani" style="width:15%">
+                        <p:column sortBy="tanitimZamani">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_zamani}"/>
                             </f:facet>
@@ -331,38 +324,41 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column exportable="false" style="width:15%">
-                            <h:panelGrid columns="2">
-                                <p:commandLink id="viewButton1"
-                                               update="@([id$=showAdminDuyuru])" styleClass="icon-search"
-                                               oncomplete="PF('duyuruGoruntulePopup').show();"
-                                        >
+                        <p:column exportable="false">
+
+                            <p:menuButton value="islemler" styleClass="OrangeButton">
+                                <p:menuitem id="viewButton1" value="show" icon="icon-search"  update="@([id$=showAdminDuyuru])">
                                     <f:setPropertyActionListener value="#{varDuyuru}"
                                                                  target="#{anasayfaMB.selected}"/>
-                                </p:commandLink>
+                                </p:menuitem>
+                                <p:menuitem id="deleteButton" rendered="#{sessionInfo.adminMi}" action="#{anasayfaMB.deleteDuyuru}" value="Delete" icon="ui-icon-close"
+                                            update="@([id$=anasayfa_duyurular1])">
 
-
-                                <p:commandLink id="deleteButton1" styleClass="icon-cancel" immediate="true"
-                                               rendered="#{sessionInfo.adminMi}"
-                                               action="#{anasayfaMB.deleteDuyuru}"
-                                               update="@([id$=anasayfa_duyurular1])"
-                                        >
                                     <f:setPropertyActionListener value="#{varDuyuru}"
                                                                  target="#{anasayfaMB.selected}"/>
-                                    <p:confirm header="#{lbl.ilan_iptali}"
-                                               message="#{msg.islemi_onayliyormusunuz}"/>
-                                </p:commandLink>
-                            </h:panelGrid>
+                                    <ui:remove>
+                                        <p:confirm header="#{lbl.ilan_iptali}"
+                                                   message="#{msg.islemi_onayliyormusunuz}"/>
+                                    </ui:remove>
+
+                                </p:menuitem>
+                            </p:menuButton>
+
                         </p:column>
 
-                        <f:facet name="footer">
+                    </p:dataTable>
+
+                        <div class="EmptyBox10"></div>
+                    <div class="Container100 TexAlCenter Responsive">
+
                             <p:commandButton id="yeniDuyuruEkleme" value="#{lbl.duyuru_ekleme}"
                                              icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
                                              update="@([id$=duyuruEkleme])"
                                              oncomplete="PF('duyuruEklePopup').show()"/>
-                        </f:facet>
+                    </div>
+                        </h:panelGroup>
 
-                    </p:dataTable>
+                    </div>
                 </p:panel>
 
 
