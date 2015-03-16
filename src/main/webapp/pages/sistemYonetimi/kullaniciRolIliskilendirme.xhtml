@@ -1,15 +1,25 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
+    <ui:define name="title">
+        <h:outputText value="#{lbl.kullanici_rol_iliskilendirme}"/>
+    </ui:define>
+
+    <ui:define name="content">
     <h:form id="kullaniciRol">
-        <div class="Container100 Responsive">
+        <div class="Container100">
             <div class="ContainerIndent">
-                <p:dialog header="#{lbl.kullanici_rol_iliskilendirme}" widgetVar="kullaniciRolPopup"
-                          maximizable="true" modal="true" closeOnEscape="true" height="400" width="auto">
-                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                    <p:messages showDetail="false" autoUpdate="true" closable="true"/>
+
+                    <h3>#{lbl.kullanici_rol_iliskilendirme}</h3>
 
                     <p:panel>
                         <div class="Container100 Responsive">
@@ -18,35 +28,32 @@
                                 <h:panelGrid columns="2" cellpadding="5">
 
                                     <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
-                                    <p:outputLabel id="ad" value="#{kullaniciController.selected.ad}"/>
+                                    <p:outputLabel id="ad" value="#{kullaniciIslemleri.selected.ad}"/>
 
                                     <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
-                                    <p:outputLabel id="soyad" value="#{kullaniciController.selected.soyad}"/>
+                                    <p:outputLabel id="soyad" value="#{kullaniciIslemleri.selected.soyad}"/>
 
                                     <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
-                                    <p:outputLabel id="email" value="#{kullaniciController.selected.email}"/>
+                                    <p:outputLabel id="email" value="#{kullaniciIslemleri.selected.email}"/>
 
                                     <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}"
                                                    style="font-weight:bold"/>
-                                    <p:outputLabel id="telefon" value="#{kullaniciController.selected.gsm}"/>
+                                    <p:outputLabel id="telefon" value="#{kullaniciIslemleri.selected.gsm}"/>
 
                                 </h:panelGrid>
                             </div>
                         </div>
                     </p:panel>
 
-                    <div style="height:10px"></div>
+                <div class="EmptyBox10"></div>
 
 
-                    <p:panel header="#{lbl.rol_islemleri}">
-
+                    <p:panel>
                         <div class="Container100 Responsive">
                             <div class="ContainerIndent">
                                 <span class="FontBold Fs18 hardblue Container100">#{lbl.rol_islemleri}</span>
-                                <h:panelGrid columns="2" cellpadding="5">
-
-
-                                    <p:pickList id="pojoPickList" value="#{kullaniciController.selectedRolList}"
+                                <div class="EmptyBox5"></div>
+                                    <p:pickList id="pojoPickList" value="#{kullaniciIslemleri.selectedRolList}"
                                                 var="rolVar"
                                                 itemValue="#{rolVar}" itemLabel="#{rolVar.ad}"
                                                 converter="#{rolConverter}"
@@ -66,23 +73,26 @@
                                         </p:column>
 
                                     </p:pickList>
-
-
-                                    <f:facet name="footer">
-                                        <p:commandButton id="btn_kullanici_rol_iliskilendir"
-                                                         value="#{lbl.ortak_guncelle}"
-                                                         update=":main_form"
-                                                         actionListener="#{kullaniciController.updateKullaniciRolList}"/>
-                                    </f:facet>
-
-                                </h:panelGrid>
                             </div>
                         </div>
                     </p:panel>
 
-                </p:dialog>
+                <h:panelGrid columns="3">
+                    <p:commandButton id="btn_kullanici_rol_iliskilendir" value="#{lbl.ortak_guncelle}"
+                                     action="#{kullaniciIslemleri.updateKullaniciRolList}">
+                        <p:confirm header="#{lbl.kullanici_rol_iliskilendirme}" message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                     action="#{kullaniciIslemleri.geriDon}"/>
+                </h:panelGrid>
+
             </div>
         </div>
     </h:form>
-</h:body>
-</html>
+    </ui:define>
+
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

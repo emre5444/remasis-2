@@ -1,183 +1,204 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
-    <div class="Container100 Responsive">
+<ui:define name="title">
+    <h:outputText value="#{lbl.kullanici_daire_islemleri}"/>
+</ui:define>
+
+<ui:define name="content">
+    <div class="Container100">
         <div class="ContainerIndent">
-            <p:dialog header="#{lbl.kullanici_daire_islemleri}" widgetVar="kullaniciDairePopup" closeOnEscape="true" maximizable="true" modal="true"
-                      height="400" width="auto">
-                <p:messages showDetail="false" autoUpdate="true" closable="true"/>
-                <h:form id="kullaniciDaire">
 
-                    <p:panel>
-                        <div class="Container100 Responsive">
-                            <div class="ContainerIndent">
-                                <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_kilgileri}</span>
-                                <h:panelGrid columns="2" cellpadding="5">
+            <p:messages showDetail="false" autoUpdate="true" closable="true"/>
 
-                                    <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
-                                    <p:outputLabel id="ad" value="#{kullaniciController.selected.ad}"/>
+            <h3>#{lbl.kullanici_daire_islemleri}</h3>
 
-                                    <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
-                                    <p:outputLabel id="soyad" value="#{kullaniciController.selected.soyad}"/>
+            <h:form id="kullaniciDaire">
 
-                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
-                                    <p:outputLabel id="email" value="#{kullaniciController.selected.email}"/>
+                <p:panel>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_kilgileri}</span>
+                            <h:panelGrid columns="2" cellpadding="5">
 
-                                </h:panelGrid>
-                            </div>
+                                <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                                <p:outputLabel id="ad" value="#{kullaniciIslemleri.selected.ad}"/>
+
+                                <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                                <p:outputLabel id="soyad" value="#{kullaniciIslemleri.selected.soyad}"/>
+
+                                <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                <p:outputLabel id="email" value="#{kullaniciIslemleri.selected.email}"/>
+
+                            </h:panelGrid>
                         </div>
-                    </p:panel>
+                    </div>
+                </p:panel>
 
-                    <div style="height:10px"></div>
-
-
-                    <p:panel>
-                        <div class="Container100 Responsive">
-                            <div class="ContainerIndent">
-                                <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_daire_islemleri}</span>
-                                <h:panelGrid columns="6" cellpadding="5">
-
-                                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
-                                    <p:selectOneMenu id="blok_adi" value="#{kullaniciController.daireSorguKriteri.blok}"
-                                                     style="font-weight:bold"
-                                                     label="#{lbl.blok_ad}">
-                                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                                        <f:selectItems value="#{kullaniciController.blokList}" var="blokList"
-                                                       itemValue="#{blokList}"
-                                                       itemLabel="#{blokList.aciklama}"/>
-                                        <f:converter binding="#{blokConverter}"/>
-                                    </p:selectOneMenu>
-
-                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
-                                    <p:inputText id="daire_no"
-                                                 value="#{kullaniciController.daireSorguKriteri.daireNo}"/>
-                                    <p:message for="daire_no"/>
-
-                                    <f:facet name="footer">
-                                        <p:commandButton id="btn_kullanici_daire_bul" value="#{lbl.label_daireyi_bul}"
-                                                         update="@([id$=kullaniciDaire])"
-                                                         actionListener="#{kullaniciController.getDaireListBySorguKriteri}"/>
-                                    </f:facet>
-
-                                </h:panelGrid>
-
-                                <div style="height:4px"></div>
-
-                                <h:panelGrid id="giridDaireList" columns="1" cellpadding="5"
-                                             rendered="#{not empty kullaniciController.daireDataModel.wrappedData}">
-
-                                    <p:dataTable id="daireSorguSonucuForKullanici"
-                                                 value="#{kullaniciController.daireDataModel}" var="varDaire"
-                                                 paginatorPosition="bottom"
-                                                 selection="#{kullaniciController.selectedDaire}"
-                                                 paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                                 rowsPerPageTemplate="5,10,15">
-
-                                        <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
-                                            <h:outputText value="#{varDaire.daireKodu}"/>
-                                        </p:column>
-
-                                        <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
-                                            <h:outputText value="#{varDaire.blok.aciklama}"/>
-                                        </p:column>
-
-                                        <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
-                                            <h:outputText value="#{varDaire.daireNo}"/>
-                                        </p:column>
-
-                                        <p:column style="width:4%">
-                                            <p:commandLink update="@([id$=kullaniciDaire])"
-                                                           id="kullaniciDaireIliskilendir"
-                                                           action="#{kullaniciController.addTempDaireToKullanici}"
-                                                    >
-                                                <p:graphicImage value="/images/add-user-icon.png"/>
-                                                <f:setPropertyActionListener value="#{varDaire}"
-                                                                             target="#{kullaniciController.selectedDaire}"/>
-                                            </p:commandLink>
-                                        </p:column>
-
-                                    </p:dataTable>
+                <div style="height:10px"></div>
 
 
-                                </h:panelGrid>
-                            </div>
+                <p:panel>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_daire_islemleri}</span>
+                            <h:panelGrid columns="6" cellpadding="5">
+
+                                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                                <p:selectOneMenu id="blok_adi" value="#{kullaniciIslemleri.daireSorguKriteri.blok}"
+                                                 style="font-weight:bold"
+                                                 label="#{lbl.blok_ad}">
+                                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                    <f:selectItems value="#{kullaniciIslemleri.blokList}" var="blokList"
+                                                   itemValue="#{blokList}"
+                                                   itemLabel="#{blokList.aciklama}"/>
+                                    <f:converter binding="#{blokConverter}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                <p:inputText id="daire_no"
+                                             value="#{kullaniciIslemleri.daireSorguKriteri.daireNo}"/>
+                                <p:message for="daire_no"/>
+
+                                <f:facet name="footer">
+                                    <p:commandButton id="btn_kullanici_daire_bul" value="#{lbl.label_daireyi_bul}"
+                                                     update="@([id$=kullaniciDaire])" styleClass="GreenButton"
+                                                     actionListener="#{kullaniciIslemleri.getDaireListBySorguKriteri}"/>
+                                </f:facet>
+
+                            </h:panelGrid>
+
+                            <div style="height:4px"></div>
+
+                            <h:panelGrid id="giridDaireList" columns="1" cellpadding="5"
+                                         rendered="#{not empty kullaniciIslemleri.daireDataModel.wrappedData}">
+
+                                <p:dataTable id="daireSorguSonucuForKullanici"
+                                             value="#{kullaniciIslemleri.daireDataModel}" var="varDaire"
+                                             paginatorPosition="bottom"
+                                             selection="#{kullaniciIslemleri.selectedDaire}"
+                                             paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15">
+
+                                    <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
+                                        <h:outputText value="#{varDaire.daireKodu}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
+                                        <h:outputText value="#{varDaire.blok.aciklama}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
+                                        <h:outputText value="#{varDaire.daireNo}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.daire_tipi}">
+                                        <h:outputText value="#{varDaire.daireTipi.aciklama}"/>
+                                    </p:column>
+
+                                    <p:column style="width:10%">
+                                        <p:commandLink update="@([id$=kullaniciDaire])"
+                                                       id="kullaniciDaireIliskilendir"
+                                                       action="#{kullaniciIslemleri.addTempDaireToKullanici}"
+                                                       styleClass="icon-user-add-outline"
+                                                >
+                                            <f:setPropertyActionListener value="#{varDaire}"
+                                                                         target="#{kullaniciIslemleri.selectedDaire}"/>
+                                        </p:commandLink>
+                                    </p:column>
+
+                                </p:dataTable>
+
+
+                            </h:panelGrid>
                         </div>
-                    </p:panel>
+                    </div>
+                </p:panel>
 
-                    <div style="height:10px"></div>
+                <div style="height:10px"></div>
 
-                    <p:panel>
-                        <div class="Container100 Responsive">
-                            <div class="ContainerIndent">
-                                <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_daire_listesi}</span>
-                                <h:panelGrid columns="2" cellpadding="5">
+                <p:panel>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_daire_listesi}</span>
+                            <h:panelGrid columns="2" cellpadding="5">
 
-                                    <p:dataTable id="kullaniciListesiOfDaire"
-                                                 value="#{kullaniciController.kullaniciDaireDataModel}"
-                                                 var="varkullaniciDaire"
-                                                 emptyMessage="#{msg.no_record_found}"
-                                                 selection="#{kullaniciController.selectedKullaniciDaire}"
-                                                 paginatorPosition="bottom" paginator="true"
-                                                 style="width:100%" rows="3">
-                                        <p:column headerText="#{lbl.daire_kodu}">
-                                            <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.daire_blokAdi}">
-                                            <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.daire_no}">
-                                            <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.kullanici_tipi}">
-                                            <h:panelGrid id="pnl_kullanici_tipi" columns="1" cellpadding="0"
-                                                         cellspacing="0">
-                                                <p:selectOneMenu id="kt" value="#{varkullaniciDaire.kullaniciTipi}"
-                                                                 style="font-weight:bold">
-                                                    <f:selectItems value="#{kullaniciController.kullaniciTipiList}"
-                                                                   var="ktvar"
-                                                                   itemValue="#{ktvar}"
-                                                                   itemLabel="#{ktvar.aciklama}"/>
-                                                    <f:converter binding="#{kullaniciTipiConverter}"/>
-                                                </p:selectOneMenu>
-                                            </h:panelGrid>
-                                        </p:column>
+                                <p:dataTable id="kullaniciListesiOfDaire"
+                                             value="#{kullaniciIslemleri.kullaniciDaireDataModel}"
+                                             var="varkullaniciDaire"
+                                             emptyMessage="#{msg.no_record_found}"
+                                             selection="#{kullaniciIslemleri.selectedKullaniciDaire}"
+                                             paginatorPosition="bottom" paginator="true"
+                                             style="width:100%" rows="3">
+                                    <p:column headerText="#{lbl.daire_kodu}">
+                                        <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
+                                    </p:column>
+                                    <p:column headerText="#{lbl.daire_blokAdi}">
+                                        <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
+                                    </p:column>
+                                    <p:column headerText="#{lbl.daire_no}">
+                                        <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
+                                    </p:column>
+                                    <p:column headerText="#{lbl.daire_tipi}">
+                                        <h:outputText value="#{varkullaniciDaire.daire.daireTipi.aciklama}"/>
+                                    </p:column>
 
-                                        <p:column style="width:4%" exportable="false">
-                                            <h:panelGrid columns="4">
-                                                <p:commandButton id="deleteButton1" icon="ui-icon-trash"
-                                                                 immediate="true"
-                                                                 rendered="#{sessionInfo.adminMi}"
-                                                                 action="#{kullaniciController.deleteTempDaireToKullanici}"
-                                                                 update="@([id$=kullaniciDaire])"
-                                                        >
-                                                    <f:setPropertyActionListener value="#{varkullaniciDaire}"
-                                                                                 target="#{kullaniciController.selectedKullaniciDaire}"/>
-                                                    <p:confirm header="#{lbl.kullanici_daire_silem}"
-                                                               message="#{msg.islemi_onayliyormusunuz}"/>
-                                                </p:commandButton>
-                                            </h:panelGrid>
-                                        </p:column>
+                                    <p:column headerText="#{lbl.kullanici_tipi}">
+                                        <p:selectOneMenu id="kt" value="#{varkullaniciDaire.kullaniciTipi}"
+                                                         style="font-weight:bold">
+                                            <f:selectItems value="#{kullaniciIslemleri.kullaniciTipiList}"
+                                                           var="ktvar"
+                                                           itemValue="#{ktvar}"
+                                                           itemLabel="#{ktvar.aciklama}"/>
+                                            <f:converter binding="#{kullaniciTipiConverter}"/>
+                                        </p:selectOneMenu>
+                                    </p:column>
 
-                                    </p:dataTable>
-                                </h:panelGrid>
-                            </div>
+                                    <p:column style="width:20px;" exportable="false">
+                                        <p:commandLink id="deleteButton1" styleClass="icon-user-delete-outline"
+                                                       immediate="true"
+                                                       rendered="#{sessionInfo.adminMi}"
+                                                       action="#{kullaniciIslemleri.deleteTempDaireToKullanici}"
+                                                       update="@([id$=kullaniciDaire])"
+                                                >
+                                            <f:setPropertyActionListener value="#{varkullaniciDaire}"
+                                                                         target="#{kullaniciIslemleri.selectedKullaniciDaire}"/>
+                                            <p:confirm header="#{lbl.kullanici_daire_silem}" icon="ui-icon-alert"
+                                                       message="#{msg.islemi_onayliyormusunuz}"/>
+                                        </p:commandLink>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:panelGrid>
                         </div>
-                    </p:panel>
+                    </div>
+                </p:panel>
 
-
-                    <p:commandButton id="btn_kullanici_daire_guncelle" value="#{lbl.ortak_guncelle}" update=":main_form"
-                                     actionListener="#{kullaniciController.updateKullaniciDaireList}">
-                        <p:confirm header="#{lbl.kullanici_daire_islemleri}"
-                                   message="#{msg.islemi_onayliyormusunuz}"/>
+                <h:panelGrid columns="3">
+                    <p:commandButton id="btn_kullanici_daire_guncelle" value="#{lbl.ortak_guncelle}"
+                                     action="#{kullaniciIslemleri.updateKullaniciDaireList}">
+                        <p:confirm header="#{lbl.kullanici_daire_islemleri}" message="#{msg.islemi_onayliyormusunuz}"
+                                   icon="ui-icon-alert"/>
                     </p:commandButton>
+                    <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                     action="#{kullaniciIslemleri.geriDon}"/>
+                </h:panelGrid>
 
-                </h:form>
-            </p:dialog>
+            </h:form>
         </div>
     </div>
-</h:body>
-</html>
+</ui:define>
+
+
+<ui:define name="body">
+
+</ui:define>
+</ui:composition>
