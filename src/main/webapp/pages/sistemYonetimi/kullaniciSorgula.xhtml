@@ -18,204 +18,205 @@
 <p:messages id="messagess" showDetail="false" autoUpdate="true" closable="true"/>
 
 <h:form id="main_form">
-    <div class="Container100">
-        <div class="ContainerIndent">
-            <p:panel>
-                <div class="Container100 Responsive">
-                    <div class="ContainerIndent">
-                        <div class="Container100">
-                            <div class="ContainerIndent">
-                                <h:outputText value="#{lbl.kullanici_islemleri}"
-                                              styleClass="FontBold Fs18 hardblue"></h:outputText>
+<div class="Container100">
+    <div class="ContainerIndent">
+        <p:panel>
+            <div class="Container100 Responsive">
+                <div class="ContainerIndent">
+
+                    <div class="Container100">
+                        <div class="ContainerIndent">
+                            <h:outputText value="#{lbl.kullanici_islemleri}"
+                                          styleClass="FontBold Fs18 hardblue"></h:outputText>
 
 
-                                <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
-                                <p:selectBooleanCheckbox value="#{kullaniciController.tumKriterlerMi}" styleClass="Fright"
-                                                         style="margin-right: 5px;" onLabel="#{lbl.label_evet}"
-                                                         offLabel="#{lbl.label_hayir}">
-                                    <p:ajax update="main_form"/>
-                                </p:selectBooleanCheckbox>
-                            </div>
+                            <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
+                            <p:selectBooleanCheckbox value="#{kullaniciController.tumKriterlerMi}" styleClass="Fright"
+                                                     style="margin-right: 5px;" onLabel="#{lbl.label_evet}"
+                                                     offLabel="#{lbl.label_hayir}">
+                                <p:ajax update="main_form"/>
+                            </p:selectBooleanCheckbox>
                         </div>
-
-                        <h:panelGrid columns="2" cellpadding="5">
-
-                            <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
-                            <p:inputText id="ad" value="#{kullaniciController.sorguKriteri.ad}"
-                                         disabled="#{not sessionInfo.adminMi}"/>
-
-                            <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
-                            <p:inputText id="soyad" value="#{kullaniciController.sorguKriteri.soyad}"
-                                         disabled="#{not sessionInfo.adminMi}"/>
-
-                            <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"
-                                           rendered="#{kullaniciController.tumKriterlerMi}"/>
-                            <p:inputText id="username" value="#{kullaniciController.sorguKriteri.kullaniciAdi}"
-                                         rendered="#{kullaniciController.tumKriterlerMi}"/>
-
-                            <h:outputLabel for="rol" value="#{lbl.rol}" style="font-weight:bold"
-                                           rendered="#{kullaniciController.tumKriterlerMi}"/>
-                            <p:selectOneMenu id="rol" value="#{kullaniciController.sorguKriteri.rol}"
-                                             rendered="#{kullaniciController.tumKriterlerMi}"
-                                             style="font-weight:bold">
-                                <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                                <f:selectItems value="#{kullaniciController.rolList}" var="rolvar" itemValue="#{rolvar}"
-                                               itemLabel="#{rolvar.ad}"/>
-                                <f:converter binding="#{rolConverter}"/>
-                            </p:selectOneMenu>
-
-                            <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold"
-                                           rendered="#{kullaniciController.tumKriterlerMi}"/>
-                            <p:selectOneMenu id="rolTipi" value="#{kullaniciController.sorguKriteri.sistemYoneticisiMi}"
-                                             rendered="#{kullaniciController.tumKriterlerMi}"
-                                             style="font-weight:bold">
-                                <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                                <f:selectItems value="#{kullaniciController.rolTipiList}" var="rolTipi"
-                                               itemValue="#{rolTipi}"
-                                               itemLabel="#{rolTipi.aciklama}"/>
-                                <f:converter binding="#{evetHayirConverter}"/>
-                            </p:selectOneMenu>
-
-                            <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
-                            <p:selectOneMenu id="blok_adi" value="#{kullaniciController.sorguKriteri.blok}"
-                                             style="font-weight:bold">
-                                <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                                <f:selectItems value="#{kullaniciController.blokList}" var="blokList"
-                                               itemValue="#{blokList}"
-                                               itemLabel="#{blokList.aciklama}"/>
-                                <f:converter binding="#{blokConverter}"/>
-                            </p:selectOneMenu>
-
-                            <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
-                            <p:inputText id="daire_no" value="#{kullaniciController.sorguKriteri.daireNo}"/>
-
-                            <h:outputLabel for="e_mail" value="#{lbl.kullanici_email}" style="font-weight:bold"
-                                           rendered="#{kullaniciController.tumKriterlerMi}"/>
-                            <p:inputText id="e_mail" value="#{kullaniciController.sorguKriteri.email}"
-                                         rendered="#{kullaniciController.tumKriterlerMi}"/>
-
-                            <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"
-                                           rendered="#{kullaniciController.tumKriterlerMi}"/>
-                            <p:selectOneMenu id="durum" value="#{kullaniciController.sorguKriteri.durum}"
-                                             rendered="#{kullaniciController.tumKriterlerMi}"
-                                             style="font-weight:bold">
-                                <f:selectItems value="#{kullaniciController.durumList}" var="drm" itemValue="#{drm}"
-                                               itemLabel="#{drm.aciklama}"/>
-                                <f:converter binding="#{durumConverter}"/>
-                            </p:selectOneMenu>
-
-                            <h:panelGroup/><h:panelGroup/>
-
-                            <p:commandButton value="#{lbl.ortak_sorgula}"
-                                             action="#{kullaniciController.getKullaniciListBySorguKriteri()}"
-                                             update=":main_form"/>
-
-                        </h:panelGrid>
                     </div>
+
+                    <h:panelGrid columns="2" cellpadding="5">
+
+                        <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                        <p:inputText id="ad" value="#{kullaniciController.sorguKriteri.ad}"
+                                     disabled="#{not sessionInfo.adminMi}"/>
+
+                        <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                        <p:inputText id="soyad" value="#{kullaniciController.sorguKriteri.soyad}"
+                                     disabled="#{not sessionInfo.adminMi}"/>
+
+                        <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"
+                                       rendered="#{kullaniciController.tumKriterlerMi}"/>
+                        <p:inputText id="username" value="#{kullaniciController.sorguKriteri.kullaniciAdi}"
+                                     rendered="#{kullaniciController.tumKriterlerMi}"/>
+
+                        <h:outputLabel for="rol" value="#{lbl.rol}" style="font-weight:bold"
+                                       rendered="#{kullaniciController.tumKriterlerMi}"/>
+                        <p:selectOneMenu id="rol" value="#{kullaniciController.sorguKriteri.rol}"
+                                         rendered="#{kullaniciController.tumKriterlerMi}"
+                                         style="font-weight:bold">
+                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                            <f:selectItems value="#{kullaniciController.rolList}" var="rolvar" itemValue="#{rolvar}"
+                                           itemLabel="#{rolvar.ad}"/>
+                            <f:converter binding="#{rolConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold"
+                                       rendered="#{kullaniciController.tumKriterlerMi}"/>
+                        <p:selectOneMenu id="rolTipi" value="#{kullaniciController.sorguKriteri.sistemYoneticisiMi}"
+                                         rendered="#{kullaniciController.tumKriterlerMi}"
+                                         style="font-weight:bold">
+                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                            <f:selectItems value="#{kullaniciController.rolTipiList}" var="rolTipi"
+                                           itemValue="#{rolTipi}"
+                                           itemLabel="#{rolTipi.aciklama}"/>
+                            <f:converter binding="#{evetHayirConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                        <p:selectOneMenu id="blok_adi" value="#{kullaniciController.sorguKriteri.blok}"
+                                         style="font-weight:bold">
+                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                            <f:selectItems value="#{kullaniciController.blokList}" var="blokList"
+                                           itemValue="#{blokList}"
+                                           itemLabel="#{blokList.aciklama}"/>
+                            <f:converter binding="#{blokConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                        <p:inputText id="daire_no" value="#{kullaniciController.sorguKriteri.daireNo}"/>
+
+                        <h:outputLabel for="e_mail" value="#{lbl.kullanici_email}" style="font-weight:bold"
+                                       rendered="#{kullaniciController.tumKriterlerMi}"/>
+                        <p:inputText id="e_mail" value="#{kullaniciController.sorguKriteri.email}"
+                                     rendered="#{kullaniciController.tumKriterlerMi}"/>
+
+                        <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"
+                                       rendered="#{kullaniciController.tumKriterlerMi}"/>
+                        <p:selectOneMenu id="durum" value="#{kullaniciController.sorguKriteri.durum}"
+                                         rendered="#{kullaniciController.tumKriterlerMi}"
+                                         style="font-weight:bold">
+                            <f:selectItems value="#{kullaniciController.durumList}" var="drm" itemValue="#{drm}"
+                                           itemLabel="#{drm.aciklama}"/>
+                            <f:converter binding="#{durumConverter}"/>
+                        </p:selectOneMenu>
+
+                        <h:panelGroup/><h:panelGroup/>
+
+                        <p:commandButton value="#{lbl.ortak_sorgula}"
+                                         action="#{kullaniciController.getKullaniciListBySorguKriteri()}"
+                                         update=":main_form"/>
+
+                    </h:panelGrid>
                 </div>
-            </p:panel>
-        </div>
+            </div>
+        </p:panel>
     </div>
+</div>
 
-    <div class="EmptyBox10"></div>
-    <div class="Container100 Responsive">
-        <div class="ContainerIndent">
-            <p:panel rendered="#{not empty kullaniciController.dataModel.wrappedData}">
-                <span class="FontBold Fs18 hardblue Container100">#{lbl.sorgu_sonucu}</span>
+<div class="EmptyBox10"></div>
+<div class="Container100 Responsive">
+    <div class="ContainerIndent">
+        <p:panel rendered="#{not empty kullaniciController.dataModel.wrappedData}">
+            <span class="FontBold Fs18 hardblue Container100">#{lbl.sorgu_sonucu}</span>
 
-                <div class="EmptyBox5"></div>
-                <p:dataTable id="kullaniciList" value="#{kullaniciController.dataModel}" var="varKullanici"
-                             emptyMessage="#{msg.no_record_found}"
-                             paginatorPosition="bottom" sortMode="multiple"
-                             paginator="true" rows="20"
-                             selection="#{kullaniciController.selected}"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15">
-                    <p:column style="width:16px">
-                        <p:rowToggler />
-                    </p:column>
-                    <p:column headerText="#{lbl.ad}" sortBy="ad">
-                        <h:outputText value="#{varKullanici.ad}"/>
-                    </p:column>
-                    <p:column headerText="#{lbl.soyad}" sortBy="soyad">
-                        <h:outputText value="#{varKullanici.soyad}"/>
-                    </p:column>
-                    <p:column headerText="#{lbl.kullanici_adi}" sortBy="username">
-                        <h:outputText value="#{varKullanici.username}"/>
-                    </p:column>
-                    <p:column headerText="#{lbl.kullanici_tcid}" sortBy="tcid">
-                        <h:outputText value="#{varKullanici.tckimlik}"/>
-                    </p:column>
-                    <p:column headerText="#{lbl.durum}" sortBy="tcid">
-                        <h:outputText value="#{varKullanici.durum.aciklama}"/>
-                    </p:column>
+            <div class="EmptyBox5"></div>
+            <p:dataTable id="kullaniciList" value="#{kullaniciController.dataModel}" var="varKullanici"
+                         emptyMessage="#{msg.no_record_found}"
+                         paginatorPosition="bottom" sortMode="multiple"
+                         paginator="true" rows="20"
+                         selection="#{kullaniciController.selected}"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+                <p:column style="width:16px">
+                    <p:rowToggler/>
+                </p:column>
+                <p:column headerText="#{lbl.ad}" sortBy="ad">
+                    <h:outputText value="#{varKullanici.ad}"/>
+                </p:column>
+                <p:column headerText="#{lbl.soyad}" sortBy="soyad">
+                    <h:outputText value="#{varKullanici.soyad}"/>
+                </p:column>
+                <p:column headerText="#{lbl.kullanici_adi}" sortBy="username">
+                    <h:outputText value="#{varKullanici.username}"/>
+                </p:column>
+                <p:column headerText="#{lbl.kullanici_tcid}" sortBy="tcid">
+                    <h:outputText value="#{varKullanici.tckimlik}"/>
+                </p:column>
+                <p:column headerText="#{lbl.durum}" sortBy="tcid">
+                    <h:outputText value="#{varKullanici.durum.aciklama}"/>
+                </p:column>
 
-                    <p:rowExpansion>
-                        <p:panel styleClass="softGrayBack">
+                <p:rowExpansion>
+                    <p:panel styleClass="softGrayBack">
                         <span class="FontBold Fs18 hardblue Container100">#{lbl.daire_bilgileri}</span>
-                            <div class="EmptyBox5"></div>
-                            <p:dataTable id="kullaniciListesiOfDaire"
-                                         value="#{varKullanici.kullaniciDaireList}" var="varkullaniciDaire"
-                                         emptyMessage="#{msg.no_record_found}"
-                                         paginatorPosition="bottom"
-                                         rows="3">
-                                <p:column headerText="#{lbl.daire_kodu}">
-                                    <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.daire_blokAdi}">
-                                    <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.daire_no}">
-                                    <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.daire_tipi}">
-                                    <h:outputText value="#{varkullaniciDaire.daire.daireTipi.aciklama}"/>
-                                </p:column>
-                            </p:dataTable>
+
+                        <div class="EmptyBox5"></div>
+                        <p:dataTable id="kullaniciListesiOfDaire"
+                                     value="#{varKullanici.kullaniciDaireList}" var="varkullaniciDaire"
+                                     emptyMessage="#{msg.no_record_found}"
+                                     paginatorPosition="bottom"
+                                     rows="3">
+                            <p:column headerText="#{lbl.daire_kodu}">
+                                <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
+                            </p:column>
+                            <p:column headerText="#{lbl.daire_blokAdi}">
+                                <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
+                            </p:column>
+                            <p:column headerText="#{lbl.daire_no}">
+                                <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
+                            </p:column>
+                            <p:column headerText="#{lbl.daire_tipi}">
+                                <h:outputText value="#{varkullaniciDaire.daire.daireTipi.aciklama}"/>
+                            </p:column>
+                        </p:dataTable>
 
 
-                        </p:panel>
-                    </p:rowExpansion>
+                    </p:panel>
+                </p:rowExpansion>
 
-                    <p:column>
+                <p:column>
+                    <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                        <p:menuitem id="viewButtonKullaniciGoruntule" value="#{lbl.label_goruntule}"
+                                    icon="ui-icon-search"
+                                    action="#{kullaniciController.kullaniciGoruntuleme(varKullanici)}">
+                        </p:menuitem>
 
-                            <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
-                                <p:menuitem id="viewButtonKullaniciGoruntule" value="#{lbl.label_goruntule}"
-                                            icon="icon-search"
-                                            action="#{kullaniciController.kullaniciGoruntuleme(varKullanici)}">
-                                </p:menuitem>
+                        <p:menuitem id="viewButtonKullaniciGuncelle" value="#{lbl.ortak_guncelle}"
+                                    icon="ui-icon-wrench"
+                                    action="#{kullaniciController.kullaniciGuncelleme(varKullanici)}">
+                        </p:menuitem>
 
-                                <p:menuitem id="viewButtonKullaniciGuncelle" value="#{lbl.ortak_guncelle}"
-                                            icon="icon-edit-1"
-                                            action="#{kullaniciController.kullaniciGuncelleme(varKullanici)}">
-                                </p:menuitem>
+                        <p:menuitem id="viewButtonKullaniciRol" value="#{lbl.label_rol_ata}"
+                                    rendered="#{sessionInfo.adminMi}"
+                                    icon="ui-icon-locked"
+                                    action="#{kullaniciController.kullaniciRolIliskilendir(varKullanici)}">
+                        </p:menuitem>
 
-                                <p:menuitem id="viewButtonKullaniciRol" value="#{lbl.label_rol_ata}"
-                                            rendered="#{sessionInfo.adminMi}"
-                                            icon="icon-lock-open-alt"
-                                            action="#{kullaniciController.kullaniciRolIliskilendir(varKullanici)}">
-                                </p:menuitem>
+                        <p:menuitem id="viewButtonKullaniciDaire" value="#{lbl.label_daire_iliskilendir}"
+                                    rendered="#{sessionInfo.adminMi}"
+                                    icon="ui-icon-home"
+                                    action="#{kullaniciController.kullaniciDaireIliskilendir(varKullanici)}">
+                        </p:menuitem>
 
-                                <p:menuitem id="viewButtonKullaniciDaire" value="#{lbl.label_daire_iliskilendir}"
-                                            rendered="#{sessionInfo.adminMi}"
-                                            icon="icon-home"
-                                            action="#{kullaniciController.kullaniciDaireIliskilendir(varKullanici)}">
-                                </p:menuitem>
+                        <p:menuitem id="resetUserPassword" value="#{lbl.label_sifre_sifirla}"
+                                    rendered="#{sessionInfo.adminMi}"
+                                    icon="ui-icon-key"
+                                    action="#{kullaniciController.resetPassword(varKullanici)}">
+                        </p:menuitem>
 
-                                <p:menuitem id="resetUserPassword" value="#{lbl.label_sifre_sifirla}"
-                                            rendered="#{sessionInfo.adminMi}"
-                                            icon="icon-key-1"
-                                            action="#{kullaniciController.resetPassword(varKullanici)}">
-                                </p:menuitem>
+                    </p:menuButton>
 
-                            </p:menuButton>
+                </p:column>
+            </p:dataTable>
 
-                    </p:column>
-                </p:dataTable>
-
-            </p:panel>
-        </div>
+        </p:panel>
     </div>
+</div>
 </h:form>
 
 </ui:define>
