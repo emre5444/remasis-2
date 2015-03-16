@@ -32,11 +32,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@ManagedBean(name = "kullaniciController")
+@ManagedBean(name = "kullaniciIslemleri")
 @ViewScoped
-public class KullaniciMB extends AbstractMB implements Serializable {
+public class KullaniciIslemleriMB extends AbstractMB implements Serializable {
 
-    public static Logger logger = Logger.getLogger(KullaniciMB.class);
+    public static Logger logger = Logger.getLogger(KullaniciIslemleriMB.class);
 
     @ManagedProperty("#{kullaniciService}")
     private IKullaniciService kullaniciService;
@@ -77,7 +77,6 @@ public class KullaniciMB extends AbstractMB implements Serializable {
     private DaireSorguKriteri daireSorguKriteri = new DaireSorguKriteri();
     private List<KullaniciDaire> kullaniciDaireListesi;
 
-    public Boolean islemTamamlandiMi = false;
     private List<IAbstractEntity> rolTipiList;
     private List<IAbstractEntity> rolList;
     private List<IAbstractEntity> kullaniciTipiList;
@@ -93,50 +92,25 @@ public class KullaniciMB extends AbstractMB implements Serializable {
     @PostConstruct
     public void init() {
         getFlushObjects();
+        getDaireListByKullanici();
+        prepareRolList();
         selectedRolList = new DualListModel<Rol>(sourceRol, targetRol);
-        if (!sessionInfo.isAdminMi()) {
-            sorguKriteri.setAd(sessionInfo.getKullanici().getAd());
-            sorguKriteri.setSoyad(sessionInfo.getKullanici().getSoyad());
-        }
         prepareCombos();
     }
 
-    public void getFlushObjects() {
-        KullaniciSorguKriteri sk = (KullaniciSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
-        if (sk != null) {
-            sorguKriteri = sk;
-            getKullaniciListBySorguKriteri();
-        }
+    public String geriDon() {
+        storeFlashObjects();
+        return getBackPage();
     }
 
     public void storeFlashObjects() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedKullaniciObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "kullaniciSorgula.xhtml");
     }
 
-    public String kullaniciGoruntuleme(Kullanici selectedKullanici) {
-        setSelected(selectedKullanici);
-        storeFlashObjects();
-        return "kullaniciGoruntuleme.xhtml";
-    }
-
-    public String kullaniciGuncelleme(Kullanici selectedKullanici) {
-        setSelected(selectedKullanici);
-        storeFlashObjects();
-        return "kullaniciGuncelleme.xhtml";
-    }
-
-    public String kullaniciRolIliskilendir(Kullanici selectedKullanici) {
-        setSelected(selectedKullanici);
-        storeFlashObjects();
-        return "kullaniciRolIliskilendirme.xhtml";
-    }
-
-    public String kullaniciDaireIliskilendir(Kullanici selectedKullanici) {
-        setSelected(selectedKullanici);
-        storeFlashObjects();
-        return "kullaniciDaireIliskilendirme.xhtml";
+    public void getFlushObjects() {
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+        selected = (Kullanici) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedKullaniciObject");
+        sorguKriteri = (KullaniciSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
     }
 
     public void getDaireListByKullanici() {
@@ -172,11 +146,17 @@ public class KullaniciMB extends AbstractMB implements Serializable {
 
     }
 
-    public void updateKullaniciRolList() {
+    public void prepareKullaniciDaire() {
+        getDaireListByKullanici();
+        daireDataModel = null;
+        daireSorguKriteri = new DaireSorguKriteri();
+    }
+
+    public String updateKullaniciRolList() {
         rolService.updateKullaniciRol(selectedRolList.getTarget(), selected);
         JsfUtil.addSuccessMessage(message.getString("kullanici_rol_iliskilendirme_basarili"));
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('kullaniciRolPopup').hide()");
+        storeFlashObjects();
+        return getBackPage();
     }
 
     public void prepareCombos() {
@@ -187,12 +167,11 @@ public class KullaniciMB extends AbstractMB implements Serializable {
         kullaniciTipiList = ortakService.getListByNamedQuery("KullaniciTipi.findAll");
     }
 
-    public void updateKullaniciDaireList() {
+    public String updateKullaniciDaireList() {
         kullaniciService.updateKullaniciDaire((List<KullaniciDaire>) kullaniciDaireDataModel.getWrappedData(), selected);
-        getKullaniciListBySorguKriteri();
         JsfUtil.addSuccessMessage(message.getString("kullanici_daire_iliskilendirme_basarili"));
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('kullaniciDairePopup').hide()");
+        storeFlashObjects();
+        return getBackPage();
     }
 
     public List<Rol> getDifferenceOfRolLists(List<Rol> list1, List<Rol> list2) {
@@ -238,18 +217,14 @@ public class KullaniciMB extends AbstractMB implements Serializable {
         }
     }
 
-    public void update() {
+    public String update() {
         try {
             Kullanici k = null;
             if (k == null) {
                 kullaniciService.updateKullanici(selected);
-                getKullaniciListBySorguKriteri();
-                islemTamamlandiMi = true;
+                storeFlashObjects();
                 JsfUtil.addSuccessMessage(message.getString("kullanici_guncelleme_basarili"));
-
-                RequestContext requestContext = RequestContext.getCurrentInstance();
-                requestContext.execute("PF('kullaniciGuncellemePopup').hide()");
-
+                return getBackPage();
             } else {
                 JsfUtil.addErrorMessage(message.getString("kullanici_kodu_zaten_mevcut"));
             }
@@ -257,6 +232,7 @@ public class KullaniciMB extends AbstractMB implements Serializable {
             logger.error(e.getStackTrace());
             JsfUtil.addSuccessMessage(e.toString());
         }
+        return "";
     }
 
     public void delete() {
@@ -268,8 +244,7 @@ public class KullaniciMB extends AbstractMB implements Serializable {
         }
     }
 
-    public void resetPassword(Kullanici selectedKullanici) {
-        setSelected(selectedKullanici);
+    public void resetPassword() {
         selected.setPassword("123456");
         kullaniciService.updateKullaniciWithPasword(selected);
         JsfUtil.addSuccessMessage(message.getString("sifre_sifirlama_basarili"));
@@ -369,14 +344,6 @@ public class KullaniciMB extends AbstractMB implements Serializable {
 
     public void setYeniKullanici(Kullanici yeniKullanici) {
         this.yeniKullanici = yeniKullanici;
-    }
-
-    public Boolean getIslemTamamlandiMi() {
-        return islemTamamlandiMi;
-    }
-
-    public void setIslemTamamlandiMi(Boolean islemTamamlandiMi) {
-        this.islemTamamlandiMi = islemTamamlandiMi;
     }
 
     public SessionInfo getSessionInfo() {

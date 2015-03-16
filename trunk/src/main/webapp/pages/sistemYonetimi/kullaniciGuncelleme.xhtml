@@ -1,70 +1,90 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
-    <c:if test="empty formName">
-        <c:set target="formName" value="main_form"/>
-    </c:if>
+    <ui:define name="title">
+        <h:outputText value="#{lbl.kullanici_guncelleme}"/>
+    </ui:define>
 
-    <h:form id="#{panelFormId}">
-        <div class="Container100 Responsive">
-            <div class="ContainerIndent">
-                <p:dialog header="#{lbl.kullanici_guncelleme}" widgetVar="kullaniciGuncellemePopup" closeOnEscape="true"  maximizable="true" modal="true"
-                          height="400" width="auto">
+    <ui:define name="content">
+
+        <h:form id="kullaniciGuncelleme">
+            <div class="Container100">
+                <div class="ContainerIndent">
+
                     <p:messages showDetail="false" autoUpdate="true" closable="true"/>
-                    <div class="Container100 Responsive">
-                        <div class="ContainerIndent">
 
-                            <h:panelGrid columns="2" cellpadding="5">
+                    <h3>#{lbl.kullanici_guncelleme}</h3>
 
-                                <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold"/>
-                                <p:inputText id="ad" value="#{entityMB.selected.ad}" required="true" label="#{lbl.ad}"/>
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <span class="FontBold Fs18 hardblue Container100">#{lbl.label_kullanici_bilgileri}</span>
 
-                                <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold"/>
-                                <p:inputText id="soyad" value="#{entityMB.selected.soyad}" required="true"
-                                             label="#{lbl.soyad}"/>
+                                <h:panelGrid columns="2" cellpadding="5">
 
-                                <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"/>
-                                <p:inputText id="username" value="#{entityMB.selected.username}" disabled="true"
-                                             label="#{lbl.kullanici_adi}"/>
+                                    <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold"/>
+                                    <p:inputText id="ad" value="#{kullaniciIslemleri.selected.ad}" required="true"
+                                                 label="#{lbl.ad}"/>
 
-                                <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
-                                <p:inputText id="email" value="#{entityMB.selected.email}"
-                                             label="#{lbl.kullanici_email}"/>
+                                    <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold"/>
+                                    <p:inputText id="soyad" value="#{kullaniciIslemleri.selected.soyad}" required="true"
+                                                 label="#{lbl.soyad}"/>
 
-                                <h:outputLabel for="phone" value="#{lbl.kullanici_tlefon}" style="font-weight:bold"/>
-                                <p:inputMask id="phone" value="#{entityMB.selected.gsm}" mask="(999) 999-99-99"/>
+                                    <h:outputLabel for="username" value="#{lbl.kullanici_adi}"
+                                                   style="font-weight:bold"/>
+                                    <p:inputText id="username" value="#{kullaniciIslemleri.selected.username}" disabled="true"
+                                                 label="#{lbl.kullanici_adi}"/>
 
-                                <h:outputLabel for="tcidkimlik" value="#{lbl.kullanici_tcid}" style="font-weight:bold"/>
-                                <p:inputText id="tcidkimlik" value="#{entityMB.selected.tckimlik}"/>
+                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                    <p:inputText id="email" value="#{kullaniciIslemleri.selected.email}"
+                                                 label="#{lbl.kullanici_email}"/>
 
-                                <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold"/>
-                                <p:inputTextarea rows="6" cols="50" value="#{entityMB.selected.adres}"
-                                                 id="adres"/>
+                                    <h:outputLabel for="phone" value="#{lbl.kullanici_tlefon}"
+                                                   style="font-weight:bold"/>
+                                    <p:inputMask id="phone" value="#{kullaniciIslemleri.selected.gsm}" mask="(999) 999-99-99"/>
 
-                                <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"/>
-                                <p:selectOneMenu id="durum" value="#{entityMB.selected.durum}" style="font-weight:bold">
-                                    <f:selectItems value="#{entityMB.durumList}" var="drm" itemValue="#{drm}"
-                                                   itemLabel="#{drm.aciklama}"/>
-                                    <f:converter binding="#{durumConverter}"/>
-                                </p:selectOneMenu>
+                                    <h:outputLabel for="tcidkimlik" value="#{lbl.kullanici_tcid}"
+                                                   style="font-weight:bold"/>
+                                    <p:inputText id="tcidkimlik" value="#{kullaniciIslemleri.selected.tckimlik}"/>
 
-                                <f:facet name="footer">
-                                    <p:commandButton id="btn_kullanici_guncelle" value="#{lbl.ortak_guncelle}"
-                                                     update="@([id$=#{formName}])"
-                                                     actionListener="#{entityMB.update}"
-                                            />
-                                </f:facet>
+                                    <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold"/>
+                                    <p:inputTextarea rows="6" cols="50" value="#{kullaniciIslemleri.selected.adres}"
+                                                     id="adres"/>
 
-                            </h:panelGrid>
+                                    <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"/>
+                                    <p:selectOneMenu id="durum" value="#{kullaniciIslemleri.selected.durum}"
+                                                     style="font-weight:bold">
+                                        <f:selectItems value="#{kullaniciIslemleri.durumList}" var="drm" itemValue="#{drm}"
+                                                       itemLabel="#{drm.aciklama}"/>
+                                        <f:converter binding="#{durumConverter}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </div>
                         </div>
-                    </div>
-                </p:dialog>
+                    </p:panel>
+
+                    <h:panelGrid columns="3">
+                        <p:commandButton id="btn_kullanici_guncelle" value="#{lbl.ortak_guncelle}"
+                                         action="#{kullaniciIslemleri.update}">
+                            <p:confirm header="#{lbl.kullanici_guncelleme}" message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
+                         </p:commandButton>
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{kullaniciIslemleri.geriDon}"/>
+                    </h:panelGrid>
+                </div>
             </div>
-        </div>
-    </h:form>
-</h:body>
-</html>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

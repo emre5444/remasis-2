@@ -31,14 +31,19 @@
 
     <h:body>
 
-            <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+        <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
 
-            <p:dialog modal="true" appendTo="@(body)" widgetVar="statusDialog"
-                      header="#{lbl.mesaj_lutfen_bekleyiniz}"
-                      draggable="false" closable="false">
-                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                     style="display:block;margin: 0 auto;" alt=""/>
-            </p:dialog>
+        <p:dialog modal="true" appendTo="@(body)" widgetVar="statusDialog"
+                  header="#{lbl.mesaj_lutfen_bekleyiniz}"
+                  draggable="false" closable="false">
+            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                 style="display:block;margin: 0 auto;" alt=""/>
+        </p:dialog>
+
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode" closeOnEscape="true">
+            <p:commandButton value="Evet" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+            <p:commandButton value="Hayir" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+        </p:confirmDialog>
 
 
         <ui:include src="topbar.xhtml"/>

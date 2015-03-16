@@ -127,7 +127,8 @@
                 <p:dataTable id="kullaniciList" value="#{kullaniciController.dataModel}" var="varKullanici"
                              emptyMessage="#{msg.no_record_found}"
                              paginatorPosition="bottom" sortMode="multiple"
-                             paginator="true" rows="10"
+                             paginator="true" rows="20"
+                             selection="#{kullaniciController.selected}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                              rowsPerPageTemplate="5,10,15">
                     <p:column style="width:16px">
@@ -178,57 +179,33 @@
 
                     <p:column>
 
-                            <p:menuButton value="#{lbl.label_islemler}">
+                            <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
                                 <p:menuitem id="viewButtonKullaniciGoruntule" value="#{lbl.label_goruntule}"
-                                            icon="icon-search" immediate="true"
-                                            oncomplete="PF('kullaniciGoruntulemePopup').show();"
-                                            action="#{kullaniciController.getDaireListByKullanici}"
-                                            update="@([id$=kullaniciGoruntuleme])">
-
-                                    <f:setPropertyActionListener value="#{varKullanici}"
-                                                                 target="#{kullaniciController.selected}"/>
+                                            icon="icon-search"
+                                            action="#{kullaniciController.kullaniciGoruntuleme(varKullanici)}">
                                 </p:menuitem>
 
                                 <p:menuitem id="viewButtonKullaniciGuncelle" value="#{lbl.ortak_guncelle}"
-                                            icon="icon-edit-1" immediate="true"
-                                            oncomplete="PF('kullaniciGuncellemePopup').show();"
-                                            action="#{kullaniciController.getDaireListByKullanici}"
-                                            update="@([id$=kullaniciGuncelleme])">
-
-                                    <f:setPropertyActionListener value="#{varKullanici}"
-                                                                 target="#{kullaniciController.selected}"/>
+                                            icon="icon-edit-1"
+                                            action="#{kullaniciController.kullaniciGuncelleme(varKullanici)}">
                                 </p:menuitem>
 
                                 <p:menuitem id="viewButtonKullaniciRol" value="#{lbl.label_rol_ata}"
                                             rendered="#{sessionInfo.adminMi}"
-                                            icon="icon-lock-open-alt" immediate="true"
-                                            oncomplete="PF('kullaniciRolPopup').show();"
-                                            action="#{kullaniciController.prepareRolList}"
-                                            update="@([id$=kullaniciRol])">
-
-                                    <f:setPropertyActionListener value="#{varKullanici}"
-                                                                 target="#{kullaniciController.selected}"/>
+                                            icon="icon-lock-open-alt"
+                                            action="#{kullaniciController.kullaniciRolIliskilendir(varKullanici)}">
                                 </p:menuitem>
 
                                 <p:menuitem id="viewButtonKullaniciDaire" value="#{lbl.label_daire_iliskilendir}"
                                             rendered="#{sessionInfo.adminMi}"
-                                            icon="icon-home" immediate="true"
-                                            oncomplete="PF('kullaniciDairePopup').show();"
-                                            action="#{kullaniciController.prepareKullaniciDaire}"
-                                            update="@([id$=kullaniciDaire])">
-
-                                    <f:setPropertyActionListener value="#{varKullanici}"
-                                                                 target="#{kullaniciController.selected}"/>
+                                            icon="icon-home"
+                                            action="#{kullaniciController.kullaniciDaireIliskilendir(varKullanici)}">
                                 </p:menuitem>
 
                                 <p:menuitem id="resetUserPassword" value="#{lbl.label_sifre_sifirla}"
                                             rendered="#{sessionInfo.adminMi}"
-                                            icon="icon-key-1" immediate="true"
-                                            action="#{kullaniciController.resetPassword}">
-
-                                    <f:setPropertyActionListener value="#{varKullanici}"
-                                                                 target="#{kullaniciController.selected}"/>
-
+                                            icon="icon-key-1"
+                                            action="#{kullaniciController.resetPassword(varKullanici)}">
                                 </p:menuitem>
 
                             </p:menuButton>
@@ -240,15 +217,6 @@
         </div>
     </div>
 </h:form>
-
-<ui:include src="kullaniciGoruntuleme.xhtml"/>
-<ui:include src="kullaniciRolIliskilendirme.xhtml"/>
-<ui:include src="kullaniciDaireIliskilendirme.xhtml"/>
-<ui:include src="kullaniciGuncelleme.xhtml">
-    <ui:param name="formName" value="main_form"/>
-    <ui:param name="entityMB" value="#{kullaniciController}"/>
-    <ui:param name="panelFormId" value="kullaniciGuncelleme"/>
-</ui:include>
 
 </ui:define>
 
