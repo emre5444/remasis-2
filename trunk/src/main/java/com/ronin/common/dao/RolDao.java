@@ -160,8 +160,9 @@ public class RolDao implements IRolDao {
     }
 
     @Override
-    public void add(Rol rol) {
-        getSessionFactory().getCurrentSession().save(rol);
+    public Rol add(Rol rol) {
+          Long rolId = (Long) getSessionFactory().getCurrentSession().save(rol);
+        return  (Rol) sessionFactory.getCurrentSession().get(Rol.class, rolId);
     }
 
     @Override

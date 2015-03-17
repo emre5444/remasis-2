@@ -8,7 +8,6 @@ import com.ronin.common.model.Yetki;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.common.service.IRolService;
 import com.ronin.managed.bean.lazydatamodel.RolDataModel;
-import com.ronin.model.Duyuru;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.kriter.RolSorguKriteri;
@@ -25,9 +24,9 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.*;
 
-@ManagedBean(name = "rolController")
+@ManagedBean(name = "rolIslemleriMB")
 @ViewScoped
-public class RolMB extends AbstractMB implements Serializable {
+public class RolIslemleriMB extends AbstractMB implements Serializable {
 
     public static Logger logger = Logger.getLogger(DaireMB.class);
 
@@ -68,36 +67,51 @@ public class RolMB extends AbstractMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        getFlushObjects();
         rolTipiList = ortakService.getListByNamedQuery("EvetHayir.findAll");
         allYetkiList = rolService.getAllYetkiList();
+        getFlushObjects();
         getYetkiListByRole();
     }
 
     public void getFlushObjects() {
-        RolSorguKriteri sk = (RolSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
-        if (sk != null) {
-            sorguKriteri = sk;
-            getRolListBySorguKriteri();
-        }
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+        selected = (Rol) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedRolObject");
+        sorguKriteri = (RolSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+    }
+
+    public String geriDon() {
+        storeFlashObjects();
+        return getBackPage();
     }
 
     public void storeFlashObjects() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedRolObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "rolSorgula.xhtml");
     }
 
-    public String rolGoruntuleme(Rol selectedRol) {
-        setSelected(selectedRol);
-        storeFlashObjects();
-        return "yetkiIslemleri.xhtml";
+    public String updateYetkiListByRole() {
+        List<Yetki> selectedYetkiList = new ArrayList<>();
+        Collection<TreeNode> selectedyetkiListWithParent = getSelectedLisyByParent();
+        rolService.update(selected);
+        if (selectedyetkiListWithParent != null && selectedyetkiListWithParent.size() > 0) {
+            for (TreeNode node : selectedyetkiListWithParent) {
+                selectedYetkiList.add(((Yetki) node.getData()));
+            }
+            rolService.updateRolYetki(selectedYetkiList, selected);
+        }
+        JsfUtil.addSuccessMessage(message.getString("yetki_guncelleme_basarili"));
+        return getBackPage();
     }
 
-    public String rolGuncelleme(Rol selectedRol) {
-        setSelected(selectedRol);
-        storeFlashObjects();
-        return "yetkGuncellemeiIslemleri.xhtml";
+    public Collection<TreeNode> getSelectedLisyByParent() {
+        Collection<TreeNode> selectedNodes2 = new ArrayList<>();
+        for (TreeNode node : selectedyetkiList) {
+            selectedNodes2.add(node);
+            while (node.getParent() != null) {
+                selectedNodes2.add(node.getParent());
+                node = node.getParent();
+            }
+        }
+        return selectedNodes2;
     }
 
     public void getYetkiListByRole() {
@@ -110,11 +124,17 @@ public class RolMB extends AbstractMB implements Serializable {
         if (yetki.getBagliOlduguYetki() == null) {
             yetkiList = new CheckboxTreeNode(yetki, null);
             currentNodeMap.put(yetki.getId(), yetkiList);
-            expand(yetkiList);
+            if (isYetkili(yetki.getLink())) {
+                yetkiList.setSelected(true);
+                expand(yetkiList);
+            }
             List<Yetki> bagliYetkiler = findSubYetkiList(yetki);
             for (Yetki y : bagliYetkiler) {
                 TreeNode node0 = new CheckboxTreeNode(y, yetkiList);
-                expand(node0);
+                if (isYetkili(y.getLink())) {
+                    node0.setSelected(true);
+                    expand(node0);
+                }
                 currentNodeMap.put(y.getId(), node0);
                 getYetkiList(y);
             }
@@ -123,7 +143,10 @@ public class RolMB extends AbstractMB implements Serializable {
             for (Yetki y : bagliYetkiler) {
                 TreeNode node1 = new CheckboxTreeNode(y, currentNodeMap.get(yetki.getId()));
                 currentNodeMap.put(y.getId(), node1);
-                expand(node1);
+                if (isYetkili(y.getLink())) {
+                    node1.setSelected(true);
+                    expand(node1);
+                }
                 getYetkiList(y);
             }
         }
@@ -157,6 +180,28 @@ public class RolMB extends AbstractMB implements Serializable {
         return yetki;
     }
 
+    public List<Yetki> getSelectedYetkiList() {
+        List<Yetki> yetkiList = new ArrayList<Yetki>();
+        List<RolYetki> ry = selected.getRolYetkiList();
+        for (RolYetki rolYetki : ry) {
+            yetkiList.add(rolYetki.getYetki());
+        }
+        Set hashset = new HashSet(yetkiList);
+        yetkiList = new ArrayList(hashset);
+        return yetkiList;
+    }
+
+    public boolean isYetkili(String yetkiLink) {
+        List<Yetki> yetkiList = getSelectedYetkiList();
+        for (Yetki y : yetkiList) {
+            if (y.getLink().equals(yetkiLink)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public void getRolListBySorguKriteri() {
 
         List<Rol> dataList = rolService.getListCriteriaForPaging(0, 100, sorguKriteri, sessionInfo);
@@ -164,36 +209,29 @@ public class RolMB extends AbstractMB implements Serializable {
         dataModel = new RolDataModel(dataList);
     }
 
-    public String yeniRolEkleme() {
-        yeniRol.setDurum(Durum.getAktifObject());
-        yeniRol.setSirket(sessionInfo.getSirket());
-        Rol newRol = rolService.add(yeniRol);
-        updateYetkiListByRole(newRol);
-        JsfUtil.addSuccessMessage(message.getString("rol_ekleme_basarili"));
-        return "rolSorgula.xhtml";
-    }
-
-    public void updateYetkiListByRole(Rol newRol) {
-        List<Yetki> selectedYetkiList = new ArrayList<>();
-        Collection<TreeNode> selectedyetkiListWithParent = getSelectedLisyByParent();
-        if (selectedyetkiListWithParent != null && selectedyetkiListWithParent.size() > 0) {
-            for (TreeNode node : selectedyetkiListWithParent) {
-                selectedYetkiList.add(((Yetki) node.getData()));
-            }
-            rolService.updateRolYetki(selectedYetkiList, newRol);
+    public void yeniRolEkleme() {
+        try {
+            yeniRol.setDurum(Durum.getAktifObject());
+            yeniRol.setSirket(sessionInfo.getSirket());
+            rolService.add(yeniRol);
+            getRolListBySorguKriteri();
+            JsfUtil.addSuccessMessage(message.getString("rol_ekleme_basarili"));
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.execute("PF('rolEklePopup').hide()");
+        } catch (Exception e) {
+            logger.error(e.getStackTrace());
+            JsfUtil.addFatalMessage(e.toString());
         }
     }
 
-    public Collection<TreeNode> getSelectedLisyByParent() {
-        Collection<TreeNode> selectedNodes2 = new ArrayList<>();
-        for (TreeNode node : selectedyetkiList) {
-            selectedNodes2.add(node);
-            while (node.getParent() != null) {
-                selectedNodes2.add(node.getParent());
-                node = node.getParent();
-            }
+    public void update(Rol rol) {
+        try {
+            rolService.update(rol);
+        } catch (Exception e) {
+            logger.error(e.getStackTrace());
+            JsfUtil.addSuccessMessage("Hata!");
         }
-        return selectedNodes2;
+
     }
 
     public void delete(Rol rol) {

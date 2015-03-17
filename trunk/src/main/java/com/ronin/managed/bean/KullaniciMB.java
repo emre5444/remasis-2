@@ -216,25 +216,21 @@ public class KullaniciMB extends AbstractMB implements Serializable {
     }
 
     public void add() {
-        try {
-            yeniKullanici.setDurum(Durum.getAktifObject());
-            Kullanici k = kullaniciService.getKullaniciByUsername(yeniKullanici.getUsername());
+        yeniKullanici.setDurum(Durum.getAktifObject());
+        Kullanici k = kullaniciService.getKullaniciByUsername(yeniKullanici.getUsername());
 
-            KullaniciSirket kullaniciSirket = new KullaniciSirket();
-            kullaniciSirket.setSirket(sessionInfo.getSirket());
-            kullaniciSirket.setKullanici(yeniKullanici);
-            kullaniciSirket.setDurum(Durum.getAktifObject());
+        KullaniciSirket kullaniciSirket = new KullaniciSirket();
+        kullaniciSirket.setSirket(sessionInfo.getSirket());
+        kullaniciSirket.setKullanici(yeniKullanici);
+        kullaniciSirket.setDurum(Durum.getAktifObject());
 
-            if (k == null) {
-                kullaniciService.addKullanici(yeniKullanici);
-                kullaniciService.addKullaniciSirket(kullaniciSirket);
-                JsfUtil.addSuccessMessage(message.getString("kullanici_ekleme_basarili"));
-            } else {
-                JsfUtil.addErrorMessage(message.getString("kullanici_kodu_zaten_mevcut"));
-            }
-        } catch (Exception e) {
-            logger.error(e.getStackTrace());
-            JsfUtil.addSuccessMessage(e.toString());
+        if (k == null) {
+            kullaniciService.addKullanici(yeniKullanici);
+            kullaniciService.addKullaniciSirket(kullaniciSirket);
+            JsfUtil.addSuccessMessage(message.getString("kullanici_ekleme_basarili"));
+            yeniKullanici = new Kullanici();
+        } else {
+            JsfUtil.addErrorMessage(message.getString("kullanici_kodu_zaten_mevcut"));
         }
     }
 

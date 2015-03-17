@@ -1,28 +1,91 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
-    <h:form id="yetkiGuncellemeIslemleri">
-        <p:dialog header="#{lbl.yetki_guncelleme_islemleri}" widgetVar="yetkiGuncellemeIslemPopup" closeOnEscape="true" height="auto" width="auto">
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+    <ui:define name="title">
+        <h:outputText value="#{lbl.yetki_guncelle}"/>
+    </ui:define>
 
-                <p:tree value="#{rolController.yetkiList}" var="node"
-                        selectionMode="checkbox"
-                        selection="#{rolController.selectedyetkiList}">
+    <ui:define name="content">
 
-                    <p:treeNode >
-                        <h:outputText value="#{node.ad}"/>
-                    </p:treeNode>
+        <h:form id="yetkiGuncellemeIslemleri">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                </p:tree>
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-data-science-inv orange"></i> #{lbl.yetki_guncelle}
+                                </div>
+                                <div class="EmptyBox10"></div>
+                                <h:panelGrid columns="2">
+                                    <h:outputLabel for="rol_konu" value="#{lbl.rol_ad} (*)" style="font-weight:bold"/>
+                                    <p:inputText  value="#{rolIslemleriMB.selected.ad}" size="50"
+                                                     id="rol_konu" required="true" label="#{lbl.rol_ad}"/>
 
-            <f:facet name="footer">
-                <p:commandButton id="yetki_kaydet" value="#{lbl.kaydet}" update=":main_form"
-                                 actionListener="#{rolController.updateYetkiListByRole}"/>
-            </f:facet>
-        </p:dialog>
-    </h:form>
-</h:body>
-</html>
+                                    <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold"/>
+                                    <p:selectOneMenu id="rolTipi" value="#{rolIslemleriMB.selected.sistemYoneticisiMi}"
+                                                     style="font-weight:bold">
+                                        <f:selectItems value="#{rolIslemleriMB.rolTipiList}" var="rolTipi"
+                                                       itemValue="#{rolTipi}"
+                                                       itemLabel="#{rolTipi.aciklama}"/>
+                                        <f:converter binding="#{evetHayirConverter}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+
+                            </div>
+                        </div>
+                    </p:panel>
+
+                    <div class="EmptyBox10"></div>
+
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-lock-open-1 orange"></i> #{lbl.yetki_guncelleme_islemleri}
+                                </div>
+                                <div class="EmptyBox10"></div>
+
+                                <p:tree value="#{rolIslemleriMB.yetkiList}" var="node"
+                                        selectionMode="checkbox" style="width: auto;"
+                                        selection="#{rolIslemleriMB.selectedyetkiList}">
+
+                                    <p:treeNode>
+                                        <h:outputText value="#{node.ad}"/>
+                                    </p:treeNode>
+
+                                </p:tree>
+
+                            </div>
+                        </div>
+                    </p:panel>
+
+                    <h:panelGrid columns="3">
+                        <p:commandButton id="btn_kullanici_guncelle" value="#{lbl.ortak_guncelle}"
+                                         action="#{rolIslemleriMB.updateYetkiListByRole}">
+                            <p:confirm header="#{lbl.yetki_guncelle}" message="#{msg.islemi_onayliyormusunuz}"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{kullaniciIslemleri.geriDon}"/>
+                    </h:panelGrid>
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>
