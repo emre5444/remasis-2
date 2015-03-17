@@ -92,8 +92,8 @@ public class RolService implements IRolService {
 
     @Override
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void add(Rol rol) {
-        iRolDao.add(rol);
+    public Rol add(Rol rol) {
+        return iRolDao.add(rol);
     }
 
     @Override

@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
         <h:outputText value="#{lbl.rol_islemleri}"/>
@@ -13,79 +14,77 @@
 
     <ui:define name="content">
 
-            <h:form id="main_form">
+        <h:form id="main_form">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true" />
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-lock-open-1 orange"></i> #{lbl.rol_islemleri}
+                                </div>
+                                <div class="EmptyBox10"></div>
+                                <h:panelGrid columns="2" cellpadding="5">
 
-                <p:panel header="#{lbl.rol_islemleri}">
-                    <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputLabel for="ad" value="#{lbl.rol_ad}" style="font-weight:bold"/>
+                                    <p:inputText id="ad" value="#{rolController.sorguKriteri.ad}"/>
 
-                        <h:outputLabel for="ad" value="#{lbl.rol_ad}" style="font-weight:bold"/>
+                                    <p:commandButton value="#{lbl.ortak_sorgula}"
+                                                     action="#{rolController.getRolListBySorguKriteri()}"
+                                                     update=":main_form"/>
 
-                        <p:inputText id="ad" value="#{rolController.sorguKriteri.ad}"/>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
 
-                        <p:commandButton value="#{lbl.ortak_sorgula}"
-                                         action="#{rolController.getRolListBySorguKriteri()}"
-                                         update=":main_form"/>
+                    <div class="EmptyBox10"></div>
 
-                        <p:commandButton id="yeniRolEkleme" value="#{lbl.rol_ekleme}"
-                                         icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
-                                         update="@([id$=rolEkleme])"
-                                         oncomplete="PF('rolEklePopup').show()"/>
+                    <p:panel rendered="#{not empty rolController.dataModel.wrappedData}">
+                        <div class="Container100 Responsive Fs20 hardblue">
+                            <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
+                        </div>
+                        <div class="EmptyBox5"></div>
+                        <p:dataTable value="#{rolController.dataModel}" var="varRol" paginatorPosition="bottom"
+                                     paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
+                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="5,10,15">
 
-                    </h:panelGrid>
+                            <p:column headerText="#{lbl.rol_ad}" sortBy="ad">
+                                <h:outputText value="#{varRol.ad}"/>
+                            </p:column>
+                            <p:column headerText="#{lbl.durum}" sortBy="durum.aciklama">
+                                <h:outputText value="#{varRol.durum.aciklama}"/>
+                            </p:column>
+                            <p:column headerText="#{lbl.rol_tipi}" sortBy="sistemYoneticisiMi.aciklama">
+                                <h:outputText value="#{varRol.sistemYoneticisiMi.aciklama}"/>
+                            </p:column>
 
-                </p:panel>
+                            <p:column>
 
-                <div style="height:10px"></div>
+                                <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                                    <p:menuitem id="viewButtonYetkiGoruntule" value="#{lbl.yetki_goruntule}"
+                                                icon="ui-icon-search"
+                                                action="#{rolController.rolGoruntuleme(varRol)}">
+                                    </p:menuitem>
 
-                <p:panel header="#{lbl.sorgu_sonucu}" rendered="#{not empty rolController.dataModel.wrappedData}">
+                                    <p:menuitem id="viewButtonYetkiGuncelle" value="#{lbl.yetki_guncelle}"
+                                                icon="ui-icon-wrench"
+                                                action="#{rolController.rolGuncelleme(varRol)}">
+                                    </p:menuitem>
+                                </p:menuButton>
 
-                    <p:dataTable value="#{rolController.dataModel}" var="varRol" paginatorPosition="bottom"
-                                 paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">
+                            </p:column>
 
-                        <p:column headerText="#{lbl.rol_ad}" sortBy="ad">
-                            <h:outputText value="#{varRol.ad}"/>
-                        </p:column>
-                        <p:column headerText="#{lbl.durum}" sortBy="durum.aciklama">
-                            <h:outputText value="#{varRol.durum.aciklama}"/>
-                        </p:column>
-                        <p:column headerText="#{lbl.rol_tipi}" sortBy="sistemYoneticisiMi.aciklama">
-                            <h:outputText value="#{varRol.sistemYoneticisiMi.aciklama}"/>
-                        </p:column>
+                        </p:dataTable>
 
-                        <p:column style="width:10%">
-                            <p:commandButton id="viewButtonYetkiGoruntule" icon="ui-icon-search"
-                                             update="@([id$=yetkiIslemleri])"
-                                             action="#{rolController.getYetkiListByRole}"
-                                             oncomplete="PF('yetkiIslemPopup').show();"
-                                             immediate="true"
-                                    >
-                                <f:setPropertyActionListener value="#{varRol}"
-                                                             target="#{rolController.selected}"/>
-                            </p:commandButton>
+                    </p:panel>
+                </div>
+            </div>
+        </h:form>
 
-                            <p:commandButton id="viewButtonYetkiGuncelle" icon="ui-icon-arrowrefresh-1-w"
-                                             update="@([id$=yetkiGuncellemeIslemleri])"
-                                             action="#{rolController.getYetkiListByRole}"
-                                             oncomplete="PF('yetkiGuncellemeIslemPopup').show();"
-                                             immediate="true"
-                                    >
-                                <f:setPropertyActionListener value="#{varRol}"
-                                                             target="#{rolController.selected}"/>
-                            </p:commandButton>
-                        </p:column>
-
-                    </p:dataTable>
-
-                </p:panel>
-            </h:form>
-
-        <ui:include src="yetkiIslemleri.xhtml"/>
-        <ui:include src="yetkGuncellemeiIslemleri.xhtml"/>
-        <ui:include src="rolEkleme.xhtml"/>
     </ui:define>
 
     <ui:define name="body">

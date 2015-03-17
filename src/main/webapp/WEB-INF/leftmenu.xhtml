@@ -25,13 +25,25 @@
                        rendered="#{sessionInfo.isYetkili('sistem_yonetimi')}">
                 <p:menuitem value="#{lbl.sistem_ayarlari}" url="/pages/yonetim/sistemAyarlari.jsf"
                             rendered="#{sessionInfo.isYetkili('sistem_ayarlari')}"/>
-                <p:menuitem value="#{lbl.kullanici_yonetimi}" url="/pages/sistemYonetimi/kullaniciSorgula.jsf"
-                            rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}"/>
-                <p:menuitem value="#{lbl.kullanici_ekleme_islemleri}" url="/pages/sistemYonetimi/kullaniciEkle.jsf"
-                            rendered="#{sessionInfo.isYetkili('kullanici_ekleme')}"/>
-                <p:menuitem value="#{lbl.rol_yonetimi}" url="/pages/sistemYonetimi/rolSorgula.jsf"
-                            rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
-                <p:menuitem value="#{lbl.menu_bildirim_tipi_islemleri}"
+
+                <p:submenu label="#{lbl.kullanici_yonetimi}" icon="icon-users"
+                            rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}">
+                    <p:menuitem value="#{lbl.kullanici_islemleri}" url="/pages/sistemYonetimi/kullaniciSorgula.jsf" icon="icon-vcard"
+                                rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}"/>
+                    <p:menuitem value="#{lbl.kullanici_ekleme_islemleri}" url="/pages/sistemYonetimi/kullaniciEkle.jsf" icon="icon-user-add"
+                                rendered="#{sessionInfo.isYetkili('kullanici_ekleme')}"/>
+                </p:submenu>
+
+                <p:submenu label="#{lbl.rol_yonetimi}"  icon="icon-lock-2"
+                            rendered="#{sessionInfo.isYetkili('rol_sorgulama')}">
+                    <p:menuitem value="#{lbl.rol_islemleri}" url="/pages/sistemYonetimi/rolSorgula.jsf" icon="icon-building"
+                                rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
+                    <p:menuitem value="#{lbl.rol_ekleme}" url="/pages/sistemYonetimi/rolEkleme.jsf" icon="icon-plus"
+                                rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
+                </p:submenu>
+
+
+                <p:menuitem value="#{lbl.menu_bildirim_tipi_islemleri}" icon="icon-mail"
                             url="/pages/sistemYonetimi/bildirimTipiSorgula.jsf"
                             rendered="#{sessionInfo.isYetkili('yetki_bildirim_tipi_islemleri')}"/>
                 <p:menuitem value="#{lbl.odeme_plani_aktarma}"

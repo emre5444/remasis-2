@@ -43,7 +43,7 @@ public interface IRolService {
 
     int getCount(Rol rol);
 
-    void add(Rol rol);
+    Rol add(Rol rol);
 
     void update(Rol rol);
 
