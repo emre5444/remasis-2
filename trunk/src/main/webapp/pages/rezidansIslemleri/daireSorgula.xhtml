@@ -106,7 +106,9 @@
                          rendered="#{not empty daireMB.dataModel.wrappedData}">
                     <div class="Container100 Responsive">
                         <div class="ContainerIndent">
-                            <span class="FontBold Fs18 hardblue Container100">#{lbl.sorgu_sonucu}</span>
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
+                            </div>
 
                             <p:dataTable id="daireSorguSonucu" value="#{daireMB.dataModel}" var="varDaire"
                                          paginatorPosition="bottom"

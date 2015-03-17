@@ -25,7 +25,9 @@
                 <p:panel>
                     <div class="Container100 Responsive">
                         <div class="ContainerIndent">
-                            <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_kilgileri}</span>
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-user-outline orange"></i> #{lbl.label_kullanici_bilgileri}
+                            </div>
                             <h:panelGrid columns="2" cellpadding="5">
 
                                 <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
@@ -48,7 +50,9 @@
                 <p:panel>
                     <div class="Container100 Responsive">
                         <div class="ContainerIndent">
-                            <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_daire_islemleri}</span>
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-search-2 orange"></i> #{lbl.kullanici_daire_islemleri}
+                            </div>
                             <h:panelGrid columns="6" cellpadding="5">
 
                                 <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
@@ -128,7 +132,9 @@
                 <p:panel>
                     <div class="Container100 Responsive">
                         <div class="ContainerIndent">
-                            <span class="FontBold Fs18 hardblue Container100">#{lbl.kullanici_daire_listesi}</span>
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-home-outline orange"></i> #{lbl.kullanici_daire_listesi}
+                            </div>
                             <h:panelGrid columns="2" cellpadding="5">
 
                                 <p:dataTable id="kullaniciListesiOfDaire"

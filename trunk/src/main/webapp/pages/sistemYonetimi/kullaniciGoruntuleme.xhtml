@@ -17,11 +17,14 @@
             <div class="Container100">
                 <div class="ContainerIndent">
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
                     <h3>#{lbl.kullanici_goruntule}</h3>
                     <p:panel>
                         <div class="Container100 Responsive">
                             <div class="ContainerIndent">
-                                <span class="FontBold Fs18 hardblue Container100">#{lbl.label_kullanici_bilgileri}</span>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-user-outline orange"></i> #{lbl.label_kullanici_bilgileri}
+                                </div>
                                 <h:panelGrid columns="2" cellpadding="5">
 
                                     <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
@@ -62,27 +65,34 @@
 
                     <div style="height:10px"></div>
 
-                    <p:panel header="#{lbl.daire_bilgileri}">
-                        <h:panelGrid columns="1" cellpadding="5">
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
+                                </div>
+                                <h:panelGrid columns="1" cellpadding="5">
 
-                            <p:dataTable id="kullaniciListesiOfDaire"
-                                         value="#{kullaniciIslemleri.selected.kullaniciDaireList}"
-                                         var="varkullaniciDaire"
-                                         emptyMessage="#{msg.no_record_found}"
-                                         paginatorPosition="bottom"
-                                         style="width:100%" rows="3">
-                                <p:column headerText="#{lbl.daire_kodu}">
-                                    <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.daire_blokAdi}">
-                                    <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.daire_no}">
-                                    <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
-                                </p:column>
-                            </p:dataTable>
+                                    <p:dataTable id="kullaniciListesiOfDaire"
+                                                 value="#{kullaniciIslemleri.selected.kullaniciDaireList}"
+                                                 var="varkullaniciDaire"
+                                                 emptyMessage="#{msg.no_record_found}"
+                                                 paginatorPosition="bottom"
+                                                 style="width:100%" rows="3">
+                                        <p:column headerText="#{lbl.daire_kodu}">
+                                            <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.daire_blokAdi}">
+                                            <h:outputText value="#{varkullaniciDaire.daire.blok.aciklama}"/>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.daire_no}">
+                                            <h:outputText value="#{varkullaniciDaire.daire.daireNo}"/>
+                                        </p:column>
+                                    </p:dataTable>
 
-                        </h:panelGrid>
+                                </h:panelGrid>
+                            </div>
+                        </div>
                     </p:panel>
                     <h:panelGrid columns="3">
                         <p:commandButton value="#{lbl.ortak_geri_don}"
