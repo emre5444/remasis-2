@@ -26,16 +26,17 @@
 
                     <div class="Container100">
                         <div class="ContainerIndent">
-                            <h:outputText value="#{lbl.kullanici_islemleri}"
-                                          styleClass="FontBold Fs18 hardblue"></h:outputText>
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-user-1 orange"></i>  <h:outputText value="#{lbl.kullanici_islemleri}"
+                                                                                  styleClass="FontBold Fs18 hardblue"></h:outputText>
 
-
-                            <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
-                            <p:selectBooleanCheckbox value="#{kullaniciController.tumKriterlerMi}" styleClass="Fright"
-                                                     style="margin-right: 5px;" onLabel="#{lbl.label_evet}"
-                                                     offLabel="#{lbl.label_hayir}">
-                                <p:ajax update="main_form"/>
-                            </p:selectBooleanCheckbox>
+                                <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
+                                <p:selectBooleanCheckbox value="#{kullaniciController.tumKriterlerMi}" styleClass="Fright"
+                                                         style="margin-right: 5px;" onLabel="#{lbl.label_evet}"
+                                                         offLabel="#{lbl.label_hayir}">
+                                    <p:ajax update="main_form"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
                         </div>
                     </div>
 
@@ -118,12 +119,16 @@
     </div>
 </div>
 
+
+
+
 <div class="EmptyBox10"></div>
 <div class="Container100 Responsive">
     <div class="ContainerIndent">
         <p:panel rendered="#{not empty kullaniciController.dataModel.wrappedData}">
-            <span class="FontBold Fs18 hardblue Container100">#{lbl.sorgu_sonucu}</span>
-
+            <div class="Container100 Responsive Fs20 hardblue">
+                <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
+            </div>
             <div class="EmptyBox5"></div>
             <p:dataTable id="kullaniciList" value="#{kullaniciController.dataModel}" var="varKullanici"
                          emptyMessage="#{msg.no_record_found}"
@@ -153,8 +158,9 @@
 
                 <p:rowExpansion>
                     <p:panel styleClass="softGrayBack">
-                        <span class="FontBold Fs18 hardblue Container100">#{lbl.daire_bilgileri}</span>
-
+                        <div class="Container100 Responsive Fs20 hardblue">
+                            <i class="icon-home orange"></i> #{lbl.daire_bilgileri}
+                        </div>
                         <div class="EmptyBox5"></div>
                         <p:dataTable id="kullaniciListesiOfDaire"
                                      value="#{varKullanici.kullaniciDaireList}" var="varkullaniciDaire"
@@ -179,7 +185,7 @@
                     </p:panel>
                 </p:rowExpansion>
 
-                <p:column>
+                <p:column style="width:8%">
                     <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
                         <p:menuitem id="viewButtonKullaniciGoruntule" value="#{lbl.label_goruntule}"
                                     icon="ui-icon-search"
