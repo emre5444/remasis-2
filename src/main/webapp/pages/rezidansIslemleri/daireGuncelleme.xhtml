@@ -1,67 +1,103 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
-    <h:form id="daireGuncelleme">
-        <p:dialog header="#{lbl.daire_guncelleme}" widgetVar="daireGuncellemePopup" closeOnEscape="true" height="auto" width="auto">
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+    <ui:define name="title">
+        <h:outputText value="#{lbl.daire_islemleri}"/>
+    </ui:define>
 
-            <h:panelGrid columns="2" cellpadding="5">
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
 
-                <h:outputLabel for="blok" value="#{lbl.blok_ad} (*)" style="font-weight:bold"/>
-                <p:selectOneMenu id="blok" value="#{daireMB.selected.blok}" style="font-weight:bold" required="true"
-                                 label="#{lbl.blok_ad}">
-                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                    <f:selectItems value="#{daireMB.blokList}" var="blok" itemValue="#{blok}"
-                                   itemLabel="#{blok.aciklama}"/>
-                    <f:converter binding="#{blokConverter}"/>
-                </p:selectOneMenu>
+                <h:form id="daireGuncelleme">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+                        <p:panel>
+                            <div class="Container100 Responsive">
+                                <div class="ContainerIndent">
+                                    <div class="Container100 Responsive Fs20 hardblue">
+                                        <i class="icon-edit orange"></i> #{lbl.daire_guncelleme}
+                                    </div>
+                                    <h:panelGrid columns="2" cellpadding="5">
 
-                <h:outputLabel for="daireNo" value="#{lbl.daire_no} (*)" style="font-weight:bold"/>
-                <p:inputText id="daireNo" value="#{daireMB.selected.daireNo}" required="true"
-                             label="#{lbl.daire_no}"/>
+                                        <h:outputLabel for="blok" value="#{lbl.blok_ad} (*)" style="font-weight:bold"/>
+                                        <p:selectOneMenu id="blok" value="#{daireIslemleriMB.selected.blok}"
+                                                         style="font-weight:bold"
+                                                         required="true"
+                                                         label="#{lbl.blok_ad}">
+                                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                            <f:selectItems value="#{daireIslemleriMB.blokList}" var="blok" itemValue="#{blok}"
+                                                           itemLabel="#{blok.aciklama}"/>
+                                            <f:converter binding="#{blokConverter}"/>
+                                        </p:selectOneMenu>
 
-                <h:outputLabel for="daireKodu" value="#{lbl.daire_kodu} (*)" style="font-weight:bold"/>
-                <p:inputText id="daireKodu" value="#{daireMB.selected.daireKodu}" required="true"
-                             label="#{lbl.daire_kodu}"/>
+                                        <h:outputLabel for="daireNo" value="#{lbl.daire_no} (*)"
+                                                       style="font-weight:bold"/>
+                                        <p:inputText id="daireNo" value="#{daireIslemleriMB.selected.daireNo}" required="true"
+                                                     label="#{lbl.daire_no}"/>
 
-                <h:outputLabel for="alan" value="#{lbl.daire_alani}" style="font-weight:bold"/>
-                <p:inputText id="alan" value="#{daireMB.selected.alan}"
-                             label="#{lbl.daire_alani}"/>
+                                        <h:outputLabel for="daireKodu" value="#{lbl.daire_kodu} (*)"
+                                                       style="font-weight:bold"/>
+                                        <p:inputText id="daireKodu" value="#{daireIslemleriMB.selected.daireKodu}"
+                                                     required="true"
+                                                     label="#{lbl.daire_kodu}"/>
 
-                <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
-                <p:inputText id="kat" value="#{daireMB.selected.kat}"
-                             label="#{lbl.daire_kat}"/>
+                                        <h:outputLabel for="alan" value="#{lbl.daire_alani}" style="font-weight:bold"/>
+                                        <p:inputText id="alan" value="#{daireIslemleriMB.selected.alan}"
+                                                     label="#{lbl.daire_alani}"/>
 
-                <h:outputLabel for="daireTipi" value="#{lbl.daire_tipi} (*)" style="font-weight:bold"/>
-                <p:selectOneMenu id="daireTipi" value="#{daireMB.selected.daireTipi}" style="font-weight:bold"
-                                 required="true" label="#{lbl.daire_tipi}">
-                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                    <f:selectItems value="#{daireMB.daireTipiList}" var="daireTipi" itemValue="#{daireTipi}"
-                                   itemLabel="#{daireTipi.aciklama}"/>
-                    <f:converter binding="#{daireTipiConverter}"/>
-                </p:selectOneMenu>
+                                        <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
+                                        <p:inputText id="kat" value="#{daireIslemleriMB.selected.kat}"
+                                                     label="#{lbl.daire_kat}"/>
 
-                <h:outputLabel for="durum" value="#{lbl.durum}" style="font-weight:bold"/>
-                <p:selectOneMenu id="durum" value="#{daireMB.selected.durum}" style="font-weight:bold" required="true"
-                                 label="#{lbl.durum}">
-                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                    <f:selectItems value="#{daireMB.durumList}" var="drm" itemValue="#{drm}"
-                                   itemLabel="#{drm.aciklama}"/>
-                    <f:converter binding="#{durumConverter}"/>
-                </p:selectOneMenu>
+                                        <h:outputLabel for="daireTipi" value="#{lbl.daire_tipi} (*)"
+                                                       style="font-weight:bold"/>
+                                        <p:selectOneMenu id="daireTipi" value="#{daireIslemleriMB.selected.daireTipi}"
+                                                         style="font-weight:bold"
+                                                         required="true" label="#{lbl.daire_tipi}">
+                                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                            <f:selectItems value="#{daireIslemleriMB.daireTipiList}" var="daireTipi"
+                                                           itemValue="#{daireTipi}"
+                                                           itemLabel="#{daireTipi.aciklama}"/>
+                                            <f:converter binding="#{daireTipiConverter}"/>
+                                        </p:selectOneMenu>
 
-                <f:facet name="footer">
-                    <p:commandButton id="daire_guncelle" value="#{lbl.ortak_guncelle}"
-                                     update=":daireGuncelleme :main_form"
-                                     actionListener="#{daireMB.update(daireMB.selected)}"/>
-                </f:facet>
+                                        <h:outputLabel for="durum" value="#{lbl.durum}" style="font-weight:bold"/>
+                                        <p:selectOneMenu id="durum" value="#{daireIslemleriMB.selected.durum}"
+                                                         style="font-weight:bold"
+                                                         required="true"
+                                                         label="#{lbl.durum}">
+                                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                            <f:selectItems value="#{daireIslemleriMB.durumList}" var="drm" itemValue="#{drm}"
+                                                           itemLabel="#{drm.aciklama}"/>
+                                            <f:converter binding="#{durumConverter}"/>
+                                        </p:selectOneMenu>
 
-            </h:panelGrid>
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                        </p:panel>
 
-        </p:dialog>
-    </h:form>
-</h:body>
-</html>
+                    <h:panelGrid columns="3">
+                        <p:commandButton id="daire_guncelle" value="#{lbl.ortak_guncelle}"
+                                         action="#{daireIslemleriMB.update}">
+                            <p:confirm header="#{lbl.daire_guncelleme}" message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{daireIslemleriMB.geriDon}"/>
+                    </h:panelGrid>
+                </h:form>
+            </div>
+        </div>
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

@@ -1,115 +1,172 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
-    <ui:define name="title">
-        <h:outputText value="#{lbl.daire_islemleri}"/>
-    </ui:define>
+<ui:define name="title">
+    <h:outputText value="#{lbl.daire_islemleri}"/>
+</ui:define>
 
-    <ui:define name="content">
-
-            <div style="height:10px"></div>
-
-            <h:form id="main_form">
+<ui:define name="content">
+    <h:form id="main_form">
+        <div class="Container100">
+            <div class="ContainerIndent">
                 <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                <p:panel header="#{lbl.daire_islemleri}">
-                    <h:panelGrid columns="2" cellpadding="5">
+                <p:panel>
+                    <div class="Container100 Responsive Fs20 hardblue">
+                        <i class="icon-bell-alt orange"></i> #{lbl.label_uyari}
+                    </div>
 
-                        <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
-
-                        <p:autoComplete value="#{daireMB.sorguKriteri.kullanici}" disabled="#{not sessionInfo.adminMi}"
-                                        id="kullanici_list" completeMethod="#{daireMB.completePlayer}"
-                                        var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
-                                        itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
-
-                            <f:facet name="itemtip">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <f:facet name="header">
-                                        <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
-                                        <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
-                                    </f:facet>
-
-                                    <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
-                                    <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
-
-                                    <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
-                                    <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
-                                </h:panelGrid>
-                            </f:facet>
-
-                        </p:autoComplete>
-
-                        <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}" style="font-weight:bold"/>
-                        <p:selectOneMenu id="blok_adi" value="#{daireMB.sorguKriteri.blok}"
-                                         style="font-weight:bold">
-                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                            <f:selectItems value="#{daireMB.blokList}" var="blokList" itemValue="#{blokList}"
-                                           itemLabel="#{blokList.aciklama}"/>
-                            <f:converter binding="#{blokConverter}"/>
-                        </p:selectOneMenu>
-
-                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
-                        <p:inputText id="daire_no" value="#{daireMB.sorguKriteri.daireNo}"/>
-
-                        <p:commandButton value="#{lbl.ortak_sorgula}"
-                                         actionListener="#{daireMB.getDaireListBySorguKriteri()}"
-                                         update="@([id$=main_form])"/>
-
-                        <p:commandButton id="yeniDaireEkleme" value="#{lbl.daire_ekleme}"
-                                         icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
-                                         update="@([id$=daireEkleme])"
-                                         oncomplete="PF('daireEklePopup').show()"/>
-                    </h:panelGrid>
-
+                    <div class="fontRegular  Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <ol>
+                                <li>
+                                    <h:outputText value="#{msg.info_kayirli_daire_listesi}"
+                                                  style="font-size:16px; color: #0081c2;"/>
+                                </li>
+                                <li>
+                                    <h:outputText value="#{msg.info_daire_detay_islemleri}"
+                                                  style="font-size:16px; color: #0081c2;"/>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
                 </p:panel>
 
-                <div style="height:10px"></div>
+                <div class="EmptyBox10"></div>
 
-                <p:panel id="sorguSonucuPanel" header="#{lbl.sorgu_sonucu}"
+                <p:panel>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-home-1 orange"></i> #{lbl.daire_islemleri}
+                            </div>
+                            <h:panelGrid columns="2" cellpadding="5">
+
+                                <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}"
+                                               style="font-weight:bold"/>
+
+                                <p:autoComplete value="#{daireMB.sorguKriteri.kullanici}"
+                                                disabled="#{not sessionInfo.adminMi}"
+                                                id="kullanici_list" completeMethod="#{daireMB.completePlayer}"
+                                                var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
+                                                itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
+
+                                    <f:facet name="itemtip">
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <f:facet name="header">
+                                                <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
+                                                <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
+                                            </f:facet>
+
+                                            <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
+                                            <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
+
+                                            <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
+                                            <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
+                                        </h:panelGrid>
+                                    </f:facet>
+
+                                </p:autoComplete>
+
+                                <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
+                                               style="font-weight:bold"/>
+                                <p:selectOneMenu id="blok_adi" value="#{daireMB.sorguKriteri.blok}"
+                                                 style="font-weight:bold">
+                                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                    <f:selectItems value="#{daireMB.blokList}" var="blokList"
+                                                   itemValue="#{blokList}"
+                                                   itemLabel="#{blokList.aciklama}"/>
+                                    <f:converter binding="#{blokConverter}"/>
+                                </p:selectOneMenu>
+
+                                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                <p:inputText id="daire_no" value="#{daireMB.sorguKriteri.daireNo}"/>
+
+                                <p:commandButton value="#{lbl.ortak_sorgula}"
+                                                 actionListener="#{daireMB.getDaireListBySorguKriteri()}"
+                                                 update="@([id$=main_form])"/>
+
+                                <p:commandButton id="yeniDaireEkleme" value="#{lbl.daire_ekleme}" action="#{daireMB.daireEkleme}"
+                                                styleClass="ui-icon-plus" rendered="#{sessionInfo.adminMi}"/>
+                            </h:panelGrid>
+                        </div>
+                    </div>
+                </p:panel>
+
+                <div class="EmptyBox10"></div>
+
+                <p:panel id="sorguSonucuPanel"
                          rendered="#{not empty daireMB.dataModel.wrappedData}">
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <span class="FontBold Fs18 hardblue Container100">#{lbl.sorgu_sonucu}</span>
 
-                    <p:dataTable id="daireSorguSonucu" value="#{daireMB.dataModel}" var="varDaire"
-                                 paginatorPosition="bottom"
-                                 paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">
+                            <p:dataTable id="daireSorguSonucu" value="#{daireMB.dataModel}" var="varDaire"
+                                         paginatorPosition="bottom"
+                                         paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
+                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         rowsPerPageTemplate="5,10,15">
+                                <p:column style="width:16px">
+                                    <p:rowToggler/>
+                                </p:column>
+                                <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
+                                    <h:outputText value="#{varDaire.daireKodu}"
+                                                  style="font-weight:bold; color:#088A29;"/>
+                                </p:column>
 
-                        <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu"  style="width:10%">
-                            <h:outputText value="#{varDaire.daireKodu}" style="font-weight:bold; color:#088A29;"/>
-                        </p:column>
+                                <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
+                                    <h:outputText value="#{varDaire.blok.aciklama}"/>
+                                </p:column>
 
-                        <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama" style="width:10%">
-                            <h:outputText value="#{varDaire.blok.aciklama}"/>
-                        </p:column>
+                                <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
+                                    <h:outputText value="#{varDaire.daireNo}"/>
+                                </p:column>
 
-                        <p:column headerText="#{lbl.daire_no}" sortBy="daireNo" style="width:10%">
-                            <h:outputText value="#{varDaire.daireNo}"/>
-                        </p:column>
+                                <p:column headerText="#{lbl.daire_bakiye}" sortBy="guncelBakiye">
+                                    <h:outputText
+                                            value="#{varDaire.guncelBakiye} TL (#{varDaire.borcTipi.aciklama})"
+                                            style="font-weight:bold; color:#f075cb;"/>
+                                </p:column>
 
-                        <p:column headerText="#{lbl.daire_bakiye}" sortBy="guncelBakiye" style="width:10%">
-                            <h:outputText value="#{varDaire.guncelBakiye} TL (#{varDaire.borcTipi.aciklama})"  style="font-weight:bold; color:#f075cb;"/>
-                        </p:column>
+                                <p:column headerText="#{lbl.daire_tipi}" sortBy="daireTipi.aciklama">
+                                    <h:outputText value="#{varDaire.daireTipi.aciklama}"/>
+                                </p:column>
 
-                        <p:column headerText="#{lbl.daire_tipi}" sortBy="daireTipi.aciklama" style="width:10%">
-                            <h:outputText value="#{varDaire.daireTipi.aciklama}"/>
-                        </p:column>
+                                <p:column headerText="#{lbl.daire_kat}" sortBy="kat">
+                                    <h:outputText value="#{varDaire.kat}"/>
+                                </p:column>
 
-                        <p:column headerText="#{lbl.daire_kat}" sortBy="kat" style="width:10%">
-                            <h:outputText value="#{varDaire.kat}"/>
-                        </p:column>
+                                <p:column style="width:8%">
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
+                                            <p:menuitem id="viewButton1" value="#{lbl.daire_goruntuleme}"
+                                                        icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
+                                                        action="#{daireMB.daireGoruntule(varDaire)}">
+                                            </p:menuitem>
 
-                        <p:column headerText="#{lbl.sakin_listesi}" style="width:30%">
-                            <h:panelGrid id="pnl_daireKullanici" columns="1" cellpadding="0" cellspacing="0">
-                                <p:panel id="rich_daireKullanici">
-                                    <h:panelGrid id="panel1" columns="2" cellpadding="0" cellspacing="0"
-                                                 columnClasses="panelCol2 width40 ,panelCol2 width60">
-                                        <p:dataTable id="kullaniciListesiOfDaire" value="#{varDaire.kullaniciSakimList}"
+                                            <p:menuitem id="viewButtonDaireGuncelle" value="#{lbl.daire_guncelleme}"
+                                                        icon="ui-icon-wrench" rendered="#{sessionInfo.adminMi}"
+                                                        action="#{daireMB.daireGuncelleme(varDaire)}">
+                                            </p:menuitem>
+
+                                            <p:menuitem id="deleteDaire" value="#{lbl.daire_sil}"
+                                                        icon="ui-icon-trash" rendered="#{sessionInfo.adminMi}"
+                                                        action="#{daireMB.delete(varDaire)}">
+                                            </p:menuitem>
+                                        </p:menuButton>
+                                </p:column>
+
+                                <p:rowExpansion>
+                                    <p:panel id="rich_daireKullanici" styleClass="softGrayBack">
+                                        <span class="FontBold Fs18 hardblue Container100">#{lbl.sakin_listesi}</span>
+                                        <p:dataTable id="kullaniciListesiOfDaire"
+                                                     value="#{varDaire.kullaniciSakimList}"
                                                      var="varkullaniciDaire"
                                                      emptyMessage="#{msg.no_record_found}"
                                                      paginatorPosition="bottom" styleClass="noheader"
@@ -121,52 +178,20 @@
                                                 <h:outputText value="#{varkullaniciDaire.soyad}"/>
                                             </p:column>
                                         </p:dataTable>
-                                    </h:panelGrid>
-                                </p:panel>
-                            </h:panelGrid>
-                        </p:column>
+                                    </p:panel>
 
-                        <p:column style="width:10%">
-                            <p:commandLink id="viewButton1"
-                                           action="#{daireMB.daireGoruntule}"
-                                           ajax="false"
-                                           immediate="true">
-                                <p:graphicImage value="/images/enter-icon.png"/>
-                                <f:setPropertyActionListener value="#{varDaire}" target="#{daireMB.selected}"/>
-                            </p:commandLink>
+                                </p:rowExpansion>
 
-                            <p:commandLink id="viewButtonDaireGuncelle" icon="ui-icon-arrowrefresh-1-w"
-                                             update="@([id$=daireGuncelleme])"
-                                             oncomplete="PF('daireGuncellemePopup').show();"
-                                             immediate="true" rendered="#{sessionInfo.adminMi}"
-                                    >
-                                <p:graphicImage value="/images/edit_icon.png"/>
-                                <f:setPropertyActionListener value="#{varDaire}"
-                                                             target="#{daireMB.selected}"/>
-                            </p:commandLink>
-
-                            <p:commandLink id="deleteDaire" immediate="true" icon="ui-icon-trash"
-                                             rendered="#{sessionInfo.adminMi}"
-                                             action="#{daireMB.delete}" update=":main_form"
-                                    >
-                                <p:graphicImage value="/images/delete_icon.png"/>
-                                <f:setPropertyActionListener value="#{varDaire}"
-                                                             target="#{daireMB.selected}"/>
-                                <p:confirm header="#{lbl.daire_silme}"
-                                           message="#{msg.islemi_onayliyormusunuz}"/>
-                            </p:commandLink>
-                        </p:column>
-
-                    </p:dataTable>
-
+                            </p:dataTable>
+                        </div>
+                    </div>
                 </p:panel>
-            </h:form>
+            </div>
+        </div>
+    </h:form>
+</ui:define>
 
-        <ui:include src="daireGuncelleme.xhtml"/>
-        <ui:include src="daireEkleme.xhtml"/>
-    </ui:define>
+<ui:define name="body">
 
-    <ui:define name="body">
-
-    </ui:define>
+</ui:define>
 </ui:composition>
