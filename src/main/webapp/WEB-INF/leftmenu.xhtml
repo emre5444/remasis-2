@@ -53,12 +53,14 @@
 
             <p:submenu label="#{lbl.residence_islemleri}" icon="icon-home"
                        rendered="#{sessionInfo.isYetkili('rezidans_yonetimi')}">
-                <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf"
+                <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf" icon="icon-building-filled"
                             rendered="#{sessionInfo.isYetkili('blok_islemleri')}"/>
-                <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf"
+                <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf" icon="icon-logout-1"
                             rendered="#{sessionInfo.isYetkili('daire_sorgula')}"
                             value="#{lbl.hizli_menu_daireme_git}"/>
-
+                <p:menuitem url="/pages/rezidansIslemleri/daireEkleme.jsf" icon="icon-plus-squared"
+                            rendered="#{sessionInfo.isYetkili('daire_sorgula') and sessionInfo.adminMi}"
+                            value="#{lbl.daire_ekleme}"/>
             </p:submenu>
 
             <p:submenu label="#{lbl.finans_islemleri}" icon="icon-try"
