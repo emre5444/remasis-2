@@ -23,11 +23,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@ManagedBean(name = "daireMB")
+@ManagedBean(name = "daireIslemleriMB")
 @ViewScoped
-public class DaireMB extends AbstractMB implements Serializable {
+public class DaireIslemleriMB extends AbstractMB implements Serializable {
 
-    public static Logger logger = Logger.getLogger(DaireMB.class);
+    public static Logger logger = Logger.getLogger(DaireIslemleriMB.class);
     //servisler
     @ManagedProperty("#{daireService}")
     private IDaireService daireService;
@@ -59,82 +59,43 @@ public class DaireMB extends AbstractMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        setUserRolInfos();
         getFlushObjects();
-        blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket",sessionInfo);
+        prepareCombo();
+    }
+
+    public void prepareCombo() {
+        blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket", sessionInfo);
         durumList = ortakService.getListByNamedQuery("Durum.findAll");
         daireTipiList = ortakService.getListByNamedQuery("DaireTipi.findAll");
     }
 
     public void getFlushObjects() {
-        DaireSorguKriteri sk = (DaireSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
-        if (sk != null) {
-            sorguKriteri = sk;
-            getDaireListBySorguKriteri();
-        }
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+        selected = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireObject");
+        sorguKriteri = (DaireSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
     }
 
-    public void getDaireListBySorguKriteri() {
-        List<Daire> dataList = daireService.getListCriteriaForPaging(0, 500, sorguKriteri , sessionInfo);
-        daireSorguSonucu = dataList;
-        dataModel = new DaireDataModel(dataList);
-
-        if (dataList == null || dataList.size() <= 0) {
-            JsfUtil.addWarnMessage(message.getString("error.sonuc.yok"));
-        }
-    }
-
-    public List<Kullanici> completePlayer(String query) {
-        List<Kullanici> suggestions = ortakService.getKullaniciByName(query , sessionInfo);
-        return suggestions;
-    }
-
-    public void setUserRolInfos() {
-        if (!sessionInfo.isAdminMi()) {
-            sorguKriteri.setKullanici(sessionInfo.getKullanici());
-            getDaireListBySorguKriteri();
-        }
-    }
-
-
-    //page navigations
-    public String daireGoruntule(Daire selectedDaire) {
-        setSelected(selectedDaire);
-        ortakService.createErisimLog(sessionInfo ,sessionInfo.getKullanici(), LogTipi.getDaireGoruntuleObject(), label.getString("daire_kodu") + ":" + selected.getDaireKodu());
+    public String geriDon() {
         storeFlashObjects();
-        return "daireGoruntule.xhtml";
-    }
-
-    public String daireGuncelleme(Daire selectedDaire) {
-        setSelected(selectedDaire);
-        storeFlashObjects();
-        return "daireGuncelleme.xhtml";
-    }
-
-    public String daireEkleme() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireSorgula.xhtml");
-        return "daireEkleme.xhtml";
+        return getBackPage();
     }
 
     public void storeFlashObjects() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireSorgula.xhtml");
     }
 
-    public void delete(Daire daire) {
-        try {
-            setSelected(daire);
-            selected.setDurum(Durum.getPasifObject());
-            daireService.delete(selected);
-            getDaireListBySorguKriteri();
-            JsfUtil.addSuccessMessage(message.getString("islem_basarili"));
-        } catch (Exception e) {
-            logger.error(e.getStackTrace());
-            JsfUtil.addSuccessMessage("Hata!");
-        }
+    public String update() {
+        daireService.update(selected);
+        storeFlashObjects();
+        JsfUtil.addSuccessMessage(message.getString("daire_guncelleme_basarili"));
+        return getBackPage();
     }
 
+    public String yeniDaireEkleme() {
+        daireService.add(yeniDaire);
+        JsfUtil.addSuccessMessage(message.getString("daire_ekleme_basarili"));
+        return getBackPage();
+    }
 
     public IDaireService getDaireService() {
         return daireService;
