@@ -56,13 +56,13 @@
                                      paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                      rowsPerPageTemplate="5,10,15">
 
-                            <p:column headerText="#{lbl.rol_ad}" sortBy="ad">
+                            <p:column headerText="#{lbl.rol_ad}" sortBy="#{varRol.ad}">
                                 <h:outputText value="#{varRol.ad}"/>
                             </p:column>
-                            <p:column headerText="#{lbl.durum}" sortBy="durum.aciklama">
+                            <p:column headerText="#{lbl.durum}" sortBy="#{varRol.durum.aciklama}">
                                 <h:outputText value="#{varRol.durum.aciklama}"/>
                             </p:column>
-                            <p:column headerText="#{lbl.rol_tipi}" sortBy="sistemYoneticisiMi.aciklama">
+                            <p:column headerText="#{lbl.rol_tipi}" sortBy="#{varRol.sistemYoneticisiMi.aciklama}">
                                 <h:outputText value="#{varRol.sistemYoneticisiMi.aciklama}"/>
                             </p:column>
 

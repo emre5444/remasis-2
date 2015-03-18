@@ -91,19 +91,19 @@
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              rowsPerPageTemplate="5,10,15">
 
-                                    <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
+                                    <p:column headerText="#{lbl.daire_kodu}" sortBy="#{varDaire.daireKodu}">
                                         <h:outputText value="#{varDaire.daireKodu}"/>
                                     </p:column>
 
-                                    <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
+                                    <p:column headerText="#{lbl.daire_blokAdi}" sortBy="#{varDaire.blok.aciklama}">
                                         <h:outputText value="#{varDaire.blok.aciklama}"/>
                                     </p:column>
 
-                                    <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
+                                    <p:column headerText="#{lbl.daire_no}" sortBy="#{varDaire.daireNo}">
                                         <h:outputText value="#{varDaire.daireNo}"/>
                                     </p:column>
 
-                                    <p:column headerText="#{lbl.daire_tipi}">
+                                    <p:column headerText="#{lbl.daire_tipi}" sortBy="#{varDaire.daireTipi.aciklama}">
                                         <h:outputText value="#{varDaire.daireTipi.aciklama}"/>
                                     </p:column>
 

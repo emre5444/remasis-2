@@ -47,7 +47,7 @@
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rowsPerPageTemplate="5,10,15">
 
-                        <p:column headerText="#{lbl.blok_ad}" sortBy="aciklama">
+                        <p:column headerText="#{lbl.blok_ad}" sortBy="#{varBlok.aciklama}">
                             <h:outputText value="#{varBlok.aciklama}"/>
                         </p:column>
 
