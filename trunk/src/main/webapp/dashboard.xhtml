@@ -564,21 +564,21 @@
                         <p:ajax event="rowEdit" listener="#{anasayfaMB.onIletisimBilgileriRowEdit}"/>
                         <p:ajax event="rowEditCancel" listener="#{anasayfaMB.onIletisimBilgileriRowCancel}"/>
 
-                        <p:column style="width:35%" headerText="#{lbl.label_gorevli_ismi}">
+                        <p:column style="width:35%" headerText="#{lbl.label_gorevli_ismi}" sortBy="#{iletisim.bilgiTipi}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{iletisim.bilgiTipi}"/></f:facet>
                                 <f:facet name="input"><p:inputText id="bilgiTipi" value="#{iletisim.bilgiTipi}"
                                                                    style="width:100%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column style="width:35%" headerText="#{lbl.label_gorevli_unvan}">
+                        <p:column style="width:35%" headerText="#{lbl.label_gorevli_unvan}" sortBy="#{iletisim.bilgiTipiAck}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{iletisim.bilgiTipiAck}"/></f:facet>
                                 <f:facet name="input"><p:inputText id="bilgiTipiAck" value="#{iletisim.bilgiTipiAck}"
                                                                    style="width:100%"/></f:facet>
                             </p:cellEditor>
                         </p:column>
-                        <p:column style="width:35%" headerText="#{lbl.label_iletisim_bilgisi}">
+                        <p:column style="width:35%" headerText="#{lbl.label_iletisim_bilgisi}" sortBy="#{iletisim.iletisimBilgisi}">
                             <p:cellEditor>
                                 <f:facet name="output"><h:outputText value="#{iletisim.iletisimBilgisi}"/></f:facet>
                                 <f:facet name="input"><p:inputText id="iletisim_aciklama"
