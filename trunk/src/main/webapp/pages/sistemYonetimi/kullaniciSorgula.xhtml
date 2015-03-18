@@ -137,19 +137,19 @@
                 <p:column style="width:16px">
                     <p:rowToggler/>
                 </p:column>
-                <p:column headerText="#{lbl.ad}" sortBy="ad">
+                <p:column headerText="#{lbl.ad}" sortBy="#{varKullanici.ad}">
                     <h:outputText value="#{varKullanici.ad}"/>
                 </p:column>
-                <p:column headerText="#{lbl.soyad}" sortBy="soyad">
+                <p:column headerText="#{lbl.soyad}" sortBy="#{varKullanici.soyad}">
                     <h:outputText value="#{varKullanici.soyad}"/>
                 </p:column>
-                <p:column headerText="#{lbl.kullanici_adi}" sortBy="username">
+                <p:column headerText="#{lbl.kullanici_adi}" sortBy="#{varKullanici.username}">
                     <h:outputText value="#{varKullanici.username}"/>
                 </p:column>
-                <p:column headerText="#{lbl.kullanici_tcid}" sortBy="tcid">
+                <p:column headerText="#{lbl.kullanici_tcid}" sortBy="#{varKullanici.tckimlik}">
                     <h:outputText value="#{varKullanici.tckimlik}"/>
                 </p:column>
-                <p:column headerText="#{lbl.durum}" sortBy="tcid">
+                <p:column headerText="#{lbl.durum}" sortBy="#{varKullanici.durum.aciklama}">
                     <h:outputText value="#{varKullanici.durum.aciklama}"/>
                 </p:column>
 

@@ -215,19 +215,19 @@
                                          emptyMessage="#{msg.no_record_found}"
                                          rendered="#{anasayfaMB.belgeLoaded}">
 
-                                <p:column headerText="#{lbl.belge_talebi_konusu}" sortBy="belgeTipi.aciklama">
+                                <p:column headerText="#{lbl.belge_talebi_konusu}" sortBy="#{varBelge.belgeTipi.aciklama}">
                                     <h:outputText value="#{varBelge.belgeTipi.aciklama}"/>
                                 </p:column>
 
-                                <p:column headerText="#{lbl.label_belge_adi}" sortBy="dataName">
+                                <p:column headerText="#{lbl.label_belge_adi}" sortBy="#{varBelge.dataName}">
                                     <h:outputText value="#{varBelge.dataName}"/>
                                 </p:column>
-                                <p:column headerText="#{lbl.label_belge_tarihi}" sortBy="islemTarihi">
+                                <p:column headerText="#{lbl.label_belge_tarihi}" sortBy="#{varBelge.islemTarihi}">
                                     <h:outputText value="#{varBelge.islemTarihi}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </h:outputText>
                                 </p:column>
-                                <p:column headerText="#{lbl.ortak_aciklama}" sortBy="aciklama">
+                                <p:column headerText="#{lbl.ortak_aciklama}" sortBy="#{varBelge.aciklama}">
                                     <h:outputText value="#{varBelge.aciklama}"/>
                                 </p:column>
 
@@ -301,27 +301,27 @@
                                          emptyMessage="#{msg.no_record_found}"
                                     >
 
-                                <p:column sortBy="adSoyad">
+                                <p:column sortBy="#{varDuyuru.kullanici.adSoyad}">
                                     <f:facet name="header">
                                         <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
                                     </f:facet>
                                     <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
                                 </p:column>
-                                <p:column sortBy="kisaAciklama">
+                                <p:column sortBy="#{varDuyuru.mantiksalKisaAciklama}">
                                     <f:facet name="header">
                                         <h:outputText value="#{lbl.duyuru_konusu}"/>
                                     </f:facet>
                                     <h:outputText value="#{varDuyuru.mantiksalKisaAciklama}"/>
                                 </p:column>
                                 <ui:remove>
-                                    <p:column sortBy="aciklama">
+                                    <p:column sortBy="#{varDuyuru.mantiksalAciklama}">
                                         <f:facet name="header">
                                             <h:outputText value="#{lbl.duyuru_aciklama}"/>
                                         </f:facet>
                                         <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
                                     </p:column>
                                 </ui:remove>
-                                <p:column sortBy="tanitimZamani">
+                                <p:column sortBy="#{varDuyuru.tanitimZamani}">
                                     <f:facet name="header">
                                         <h:outputText value="#{lbl.duyuru_zamani}"/>
                                     </f:facet>
@@ -396,7 +396,7 @@
                                  scrollable="true" scrollHeight="250"
                                  rendered="#{anasayfaMB.anketLoaded}">
 
-                        <p:column sortBy="tanitimZamani">
+                        <p:column sortBy="#{varAnket.tanitimZamani}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_zamani}"/>
                             </f:facet>
@@ -405,20 +405,20 @@
                             </h:outputText>
                         </p:column>
 
-                        <p:column sortBy="adSoyad">
+                        <p:column sortBy="#{varAnket.kullanici.adSoyad}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
                             </f:facet>
                             <h:outputText value="#{varAnket.kullanici.adSoyad}"/>
                         </p:column>
 
-                        <p:column sortBy="kisaAciklama">
+                        <p:column sortBy="#{varAnket.anketKonusu}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.label_anket_konusu}"/>
                             </f:facet>
                             <h:outputText value="#{varAnket.anketKonusu}"/>
                         </p:column>
-                        <p:column sortBy="aciklama">
+                        <p:column sortBy="#{varAnket.aktifMi.aciklama}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.label_anket_aktif_mi}"/>
                             </f:facet>
@@ -426,7 +426,7 @@
 
                         </p:column>
 
-                        <p:column sortBy="aciklama">
+                        <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.label_anket_katinildimi}"/>
                             </f:facet>
@@ -480,33 +480,25 @@
                                  rendered="#{anasayfaMB.ilanLoaded}"
                             >
 
-                        <p:column sortBy="adSoyad">
+                        <p:column sortBy="#{varDuyuru.kullanici.adSoyad}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
                             </f:facet>
                             <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
                         </p:column>
-                        <p:column sortBy="daireBlokAd">
+                        <p:column sortBy="#{varDuyuru.daire.daireBlokAd}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_yayinlanan_daire}"/>
                             </f:facet>
                             <h:outputText value="#{varDuyuru.daire.daireBlokAd}"/>
                         </p:column>
-                        <p:column sortBy="kisaAciklama">
+                        <p:column sortBy="#{varDuyuru.mantiksalKisaAciklama}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_konusu}"/>
                             </f:facet>
                             <h:outputText value="#{varDuyuru.mantiksalKisaAciklama}"/>
                         </p:column>
-                        <ui:remove>
-                            <p:column sortBy="aciklama">
-                                <f:facet name="header">
-                                    <h:outputText value="#{lbl.duyuru_aciklama}"/>
-                                </f:facet>
-                                <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
-                            </p:column>
-                        </ui:remove>
-                        <p:column sortBy="tanitimZamani">
+                        <p:column sortBy="#{varDuyuru.tanitimZamani}">
                             <f:facet name="header">
                                 <h:outputText value="#{lbl.duyuru_zamani}"/>
                             </f:facet>

@@ -68,10 +68,10 @@
                                         <p:rowToggler/>
                                     </p:column>
 
-                                    <p:column headerText="#{lbl.kisa_aciklama}" sortBy="kisaAciklama">
+                                    <p:column headerText="#{lbl.kisa_aciklama}" sortBy="#{varBildirimTipi.kisaAciklama}">
                                         <h:outputText value="#{varBildirimTipi.kisaAciklama}"/>
                                     </p:column>
-                                    <p:column headerText="#{lbl.ortak_aciklama}" sortBy="aciklama">
+                                    <p:column headerText="#{lbl.ortak_aciklama}" sortBy="#{varBildirimTipi.aciklama}">
                                         <h:outputText value="#{varBildirimTipi.aciklama}"/>
                                     </p:column>
 
