@@ -29,7 +29,11 @@
                                 <h:panelGrid columns="2" cellpadding="5">
 
                                     <h:outputLabel for="ad" value="#{lbl.rol_ad}" style="font-weight:bold"/>
-                                    <p:inputText id="ad" value="#{rolController.sorguKriteri.ad}"/>
+                                    <p:inputText id="ad" value="#{rolController.sorguKriteri.ad}" size="50"/>
+
+                                    <h:outputLabel for="yetki_adi" value="#{lbl.label_yetki_adi}" style="font-weight:bold"/>
+                                    <p:inputText id="yetki_adi" value="#{rolController.sorguKriteri.yetkiAdi}" size="50"/>
+
 
                                     <p:commandButton value="#{lbl.ortak_sorgula}"
                                                      action="#{rolController.getRolListBySorguKriteri()}"
