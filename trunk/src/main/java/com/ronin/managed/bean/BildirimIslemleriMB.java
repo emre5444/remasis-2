@@ -3,23 +3,15 @@ package com.ronin.managed.bean;
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
 import com.ronin.common.model.Rol;
-import com.ronin.common.model.RolYetki;
-import com.ronin.common.model.Yetki;
 import com.ronin.common.service.IOrtakService;
-import com.ronin.common.service.IRolService;
 import com.ronin.managed.bean.lazydatamodel.BildirimTipiDataModel;
-import com.ronin.managed.bean.lazydatamodel.RolDataModel;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.BildirimTipi;
-import com.ronin.model.constant.Durum;
 import com.ronin.model.kriter.BildirimTipiSorguKriteri;
-import com.ronin.model.kriter.RolSorguKriteri;
 import com.ronin.service.IBildirimService;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-import org.primefaces.model.CheckboxTreeNode;
 import org.primefaces.model.DualListModel;
-import org.primefaces.model.TreeNode;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -27,11 +19,13 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 
-@ManagedBean(name = "bildirimMB")
+@ManagedBean(name = "bildirimIslemleriMB")
 @ViewScoped
-public class BildirimMB extends AbstractMB  implements Serializable {
+public class BildirimIslemleriMB extends AbstractMB implements Serializable {
 
     public static Logger logger = Logger.getLogger(DaireMB.class);
 
@@ -55,8 +49,6 @@ public class BildirimMB extends AbstractMB  implements Serializable {
 
     private BildirimTipi selectedBildirimTipi;
 
-    private BildirimTipiDataModel bildirimTipiDataModel;
-
     private List<IAbstractEntity> bildirimTipiList;
 
     private DualListModel<Rol> selectedRolList;
@@ -66,33 +58,52 @@ public class BildirimMB extends AbstractMB  implements Serializable {
     @PostConstruct
     public void init() {
         getFlushObjects();
-        selectedRolList =  new DualListModel<Rol>(sourceRol, targetRol);
+        prepareRolList();
+        selectedRolList = new DualListModel<Rol>(sourceRol, targetRol);
         bildirimTipiList = ortakService.getListByNamedQuery("BildirimTipi.findAll");
     }
 
     public void getFlushObjects() {
-        BildirimTipiSorguKriteri sk = (BildirimTipiSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
-        if (sk != null) {
-            sorguKriteri = sk;
-            getBildirimTipiListBySorguKriteri();
-        }
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+        selectedBildirimTipi = (BildirimTipi) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedBildirimTipiObject");
+        sorguKriteri = (BildirimTipiSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("bildirimTipiSorguKriteri");
     }
 
-    public String bildirimTipiRolGuncelleme(BildirimTipi selectedBildirimTipi) {
-        setSelectedBildirimTipi(selectedBildirimTipi);
+    public String geriDon() {
         storeFlashObjects();
-        return "bildirimTipiRolIliskilendirme.xhtml";
+        return getBackPage();
     }
 
     public void storeFlashObjects() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedBildirimTipiObject", selectedBildirimTipi);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("bildirimTipiSorguKriteri", sorguKriteri);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "bildirimTipiSorgula.xhtml");
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
     }
 
-    public void getBildirimTipiListBySorguKriteri() {
-        List<BildirimTipi> dataList = bildirimService.getListCriteriaForPaging(0, 100, sorguKriteri , sessionInfo);
-        bildirimTipiDataModel = new BildirimTipiDataModel(dataList);
+    public String updateBildirimTipiRolList() {
+        bildirimService.updateBldirimTipiRol(selectedRolList.getTarget(), selectedBildirimTipi, sessionInfo);
+        JsfUtil.addSuccessMessage(message.getString("bildirim_tipi_hepef_kitle_belirleme_basarili"));
+        storeFlashObjects();
+        return getBackPage();
+    }
+
+    public void prepareRolList() {
+        List<Rol> allRollList = bildirimService.getAllRolList(sessionInfo);
+        List<Rol> userRolList = bildirimService.getRolListByBildirimTipi(selectedBildirimTipi, sessionInfo);
+
+        sourceRol = getDifferenceOfRolLists(allRollList, userRolList);
+        targetRol = userRolList;
+
+        selectedRolList = new DualListModel<Rol>(sourceRol, targetRol);
+
+    }
+
+    public List<Rol> getDifferenceOfRolLists(List<Rol> list1, List<Rol> list2) {
+        List<Rol> resultList = new ArrayList<>();
+        for (Rol r1 : list1) {
+            if (!list2.contains(r1)) {
+                resultList.add(r1);
+            }
+        }
+        return resultList;
     }
 
 
@@ -102,14 +113,6 @@ public class BildirimMB extends AbstractMB  implements Serializable {
 
     public void setBildirimTipiList(List<IAbstractEntity> bildirimTipiList) {
         this.bildirimTipiList = bildirimTipiList;
-    }
-
-    public BildirimTipiDataModel getBildirimTipiDataModel() {
-        return bildirimTipiDataModel;
-    }
-
-    public void setBildirimTipiDataModel(BildirimTipiDataModel bildirimTipiDataModel) {
-        this.bildirimTipiDataModel = bildirimTipiDataModel;
     }
 
     public BildirimTipi getSelectedBildirimTipi() {

@@ -27,25 +27,31 @@
                             rendered="#{sessionInfo.isYetkili('sistem_ayarlari')}"/>
 
                 <p:submenu label="#{lbl.kullanici_yonetimi}" icon="icon-users"
-                            rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}">
-                    <p:menuitem value="#{lbl.kullanici_islemleri}" url="/pages/sistemYonetimi/kullaniciSorgula.jsf" icon="icon-vcard"
+                           rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}">
+                    <p:menuitem value="#{lbl.kullanici_islemleri}" url="/pages/sistemYonetimi/kullaniciSorgula.jsf"
+                                icon="icon-vcard"
                                 rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}"/>
-                    <p:menuitem value="#{lbl.kullanici_ekleme_islemleri}" url="/pages/sistemYonetimi/kullaniciEkle.jsf" icon="icon-user-add"
+                    <p:menuitem value="#{lbl.kullanici_ekleme_islemleri}" url="/pages/sistemYonetimi/kullaniciEkle.jsf"
+                                icon="icon-user-add"
                                 rendered="#{sessionInfo.isYetkili('kullanici_ekleme')}"/>
                 </p:submenu>
 
-                <p:submenu label="#{lbl.rol_yonetimi}"  icon="icon-lock-2"
-                            rendered="#{sessionInfo.isYetkili('rol_sorgulama')}">
-                    <p:menuitem value="#{lbl.rol_islemleri}" url="/pages/sistemYonetimi/rolSorgula.jsf" icon="icon-building"
+                <p:submenu label="#{lbl.rol_yonetimi}" icon="icon-lock-2"
+                           rendered="#{sessionInfo.isYetkili('rol_sorgulama')}">
+                    <p:menuitem value="#{lbl.rol_islemleri}" url="/pages/sistemYonetimi/rolSorgula.jsf"
+                                icon="icon-building"
                                 rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
                     <p:menuitem value="#{lbl.rol_ekleme}" url="/pages/sistemYonetimi/rolEkleme.jsf" icon="icon-plus"
                                 rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
                 </p:submenu>
 
+                <p:submenu label="#{lbl.menu_bildirim_islemleri}" icon="icon-share"
+                           rendered="#{sessionInfo.isYetkili('yetki_bildirim_tipi_islemleri')}">
+                    <p:menuitem value="#{lbl.menu_bildirim_tipi_islemleri}" icon="icon-mail"
+                                url="/pages/sistemYonetimi/bildirimTipiSorgula.jsf"
+                                rendered="#{sessionInfo.isYetkili('yetki_bildirim_tipi_islemleri')}"/>
+                </p:submenu>
 
-                <p:menuitem value="#{lbl.menu_bildirim_tipi_islemleri}" icon="icon-mail"
-                            url="/pages/sistemYonetimi/bildirimTipiSorgula.jsf"
-                            rendered="#{sessionInfo.isYetkili('yetki_bildirim_tipi_islemleri')}"/>
                 <p:menuitem value="#{lbl.odeme_plani_aktarma}"
                             url="/pages/sistemYonetimi/kutuktenBorcAktarmaIslemleri.jsf"
                             rendered="false"/>
@@ -53,7 +59,8 @@
 
             <p:submenu label="#{lbl.residence_islemleri}" icon="icon-home"
                        rendered="#{sessionInfo.isYetkili('rezidans_yonetimi')}">
-                <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf" icon="icon-building-filled"
+                <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf"
+                            icon="icon-building-filled"
                             rendered="#{sessionInfo.isYetkili('blok_islemleri')}"/>
                 <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf" icon="icon-logout-1"
                             rendered="#{sessionInfo.isYetkili('daire_sorgula')}"
