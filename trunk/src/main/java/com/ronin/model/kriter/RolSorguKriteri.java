@@ -16,6 +16,7 @@ public class RolSorguKriteri implements Serializable{
     
     private String ad;
     private String durum;
+    private String yetkiAdi;
 
     public String getAd() {
         return ad;
@@ -31,5 +32,13 @@ public class RolSorguKriteri implements Serializable{
 
     public void setDurum(String durum) {
         this.durum = durum;
+    }
+
+    public String getYetkiAdi() {
+        return yetkiAdi;
+    }
+
+    public void setYetkiAdi(String yetkiAdi) {
+        this.yetkiAdi = yetkiAdi;
     }
 }

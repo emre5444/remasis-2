@@ -6,6 +6,7 @@ import com.ronin.model.kriter.RolSorguKriteri;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
@@ -30,11 +31,17 @@ public class RolCriteria {
         cr.add(Restrictions.eq("r.sirket.id", sessionInfo.getSirket().getId()));
 
         if (!StringUtils.isEmpty(sorguKriteri.getAd())) {
-            cr.add(Restrictions.eq("r.ad", sorguKriteri.getAd()));
+            cr.add(Restrictions.like("r.ad", "%" + sorguKriteri.getAd() + "%"));
         }
 
         if (!StringUtils.isEmpty(sorguKriteri.getDurum())) {
             cr.add(Restrictions.like("r.durum", sorguKriteri.getDurum()));
+        }
+
+        if (!StringUtils.isEmpty(sorguKriteri.getYetkiAdi())) {
+            cr.createAlias("r.rolYetkiList", "ryl" , JoinType.INNER_JOIN);
+            cr.createAlias("ryl.yetki", "y" , JoinType.INNER_JOIN);
+            cr.add(Restrictions.like("y.ad", "%" + sorguKriteri.getYetkiAdi() + "%"));
         }
 
         return cr.list();
