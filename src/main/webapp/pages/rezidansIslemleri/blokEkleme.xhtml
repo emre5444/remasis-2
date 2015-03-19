@@ -77,7 +77,7 @@
 
                             <p:commandButton id="yeni_daire_ekle" value="#{lbl.label_daireyi_ekle}"
                                              process="daireBilgileriPanel"
-                                             update="@([id$=daireSorguSonucu])" styleClass="GreenButton"
+                                             update="daireSorguSonucu,daireBilgileriPanel" styleClass="GreenButton"
                                              action="#{blokIslemleriMB.daireyiListeyeEkle()}">
                             </p:commandButton>
                         </h:panelGrid>
