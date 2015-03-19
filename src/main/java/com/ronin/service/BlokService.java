@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,7 +76,7 @@ public class BlokService implements IBlokService {
     public List<Daire> getDaireListByBlok(Blok blok) {
         if (blok != null && blok.getId() != null)
             return iBlokDao.getDaireListByBlok(blok);
-        return null;
+        return new ArrayList<Daire>();
     }
 
 }
