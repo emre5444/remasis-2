@@ -8,9 +8,11 @@ package com.ronin.service;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.dao.api.IBlokDao;
+import com.ronin.model.Daire;
 import com.ronin.model.constant.Blok;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.kriter.BlokSorguKriteri;
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -30,24 +32,50 @@ public class BlokService implements IBlokService {
 
 
     @Transactional(readOnly = false)
-    public List<Blok> getListCriteriaForPaging(int first, int pageSize, BlokSorguKriteri sorguKriteri , SessionInfo sessionInfo) {
-        return iBlokDao.getListCriteriaForPaging(first, pageSize, sorguKriteri , sessionInfo);
+    public List<Blok> getListCriteriaForPaging(int first, int pageSize, BlokSorguKriteri sorguKriteri, SessionInfo sessionInfo) {
+        return iBlokDao.getListCriteriaForPaging(first, pageSize, sorguKriteri, sessionInfo);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void add(SessionInfo sessionInfo ,Blok blok) {
+    public Blok add(SessionInfo sessionInfo, Blok blok) {
         blok.setDurum(Durum.getAktifObject());
-        iBlokDao.add(sessionInfo,blok);
+        return iBlokDao.add(sessionInfo, blok);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void update(SessionInfo sessionInfo ,Blok blok) {
-        iBlokDao.update(sessionInfo ,blok);
+    public void update(SessionInfo sessionInfo, Blok blok) {
+        iBlokDao.update(sessionInfo, blok);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void delete(SessionInfo sessionInfo ,Blok blok) {
-        iBlokDao.delete(sessionInfo ,blok);
+    public void delete(SessionInfo sessionInfo, Blok blok) {
+        iBlokDao.delete(sessionInfo, blok);
+    }
+
+    public List<Daire> deleteTempDaire(List<Daire> daireList, Daire daire) {
+        daireList.remove(daire);
+        return daireList;
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList, Blok blok) {
+        if (daireList != null && daireList.size() > 0)
+            iBlokDao.addDaireListToBlok(sessionInfo, daireList, blok);
+    }
+
+    public boolean isDaireListedeVarMi(List<Daire> daireList, Daire daire) {
+        for (Daire d : daireList) {
+            if (d.isDaireAynimi(daire))
+                return true;
+        }
+        return false;
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public List<Daire> getDaireListByBlok(Blok blok) {
+        if (blok != null && blok.getId() != null)
+            return iBlokDao.getDaireListByBlok(blok);
+        return null;
     }
 
 }

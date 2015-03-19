@@ -2,8 +2,13 @@ package com.ronin.managed.bean;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
+import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.BlokDataModel;
+import com.ronin.managed.bean.lazydatamodel.DaireDataModel;
+import com.ronin.model.Daire;
+import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.Blok;
+import com.ronin.model.constant.Durum;
 import com.ronin.model.kriter.BlokSorguKriteri;
 import com.ronin.service.IBlokService;
 import org.apache.log4j.Logger;
@@ -15,6 +20,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,6 +42,9 @@ public class BlokIslemleriMB extends AbstractMB implements Serializable {
     @ManagedProperty("#{sessionInfo}")
     private SessionInfo sessionInfo;
 
+    @ManagedProperty("#{ortakService}")
+    private IOrtakService ortakService;
+
     private Blok yeniBlok = new Blok();
 
 
@@ -46,11 +55,21 @@ public class BlokIslemleriMB extends AbstractMB implements Serializable {
     //daire islemleri
     private Blok selected;
     private BlokDataModel dataModel;
+    private Daire selectedDaire;
     List<Blok> blokSorguSonucu;
+    private Daire yeniDaire = new Daire();
+    private List<IAbstractEntity> daireTipiList;
+    public List<Daire> daireList = new ArrayList<>();
+
+    private DaireDataModel daireDataModel;
 
     @PostConstruct
     public void init() {
         getFlushObjects();
+        daireTipiList = ortakService.getListByNamedQuery("DaireTipi.findAll");
+        daireList = blokService.getDaireListByBlok(selected);
+        if(daireList != null && daireList.size() > 0)
+            daireDataModel = new DaireDataModel(daireList);
     }
 
     public void getFlushObjects() {
@@ -68,8 +87,25 @@ public class BlokIslemleriMB extends AbstractMB implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
     }
 
+    public void deleteTempDaire() {
+        daireList = blokService.deleteTempDaire(daireList, selectedDaire);
+        daireDataModel = new DaireDataModel(daireList);
+    }
+
+    public void daireyiListeyeEkle() {
+        if (!blokService.isDaireListedeVarMi(daireList, yeniDaire)) {
+            yeniDaire.setDurum(Durum.getAktifObject());
+            daireList.add(yeniDaire);
+            daireDataModel = new DaireDataModel(daireList);
+            yeniDaire = new Daire();
+        } else {
+            JsfUtil.addErrorMessage(message.getString("error_ayni_daire_eklenemez"));
+        }
+    }
+
     public String yeniBlokEkleme() {
-        blokService.add(sessionInfo, yeniBlok);
+        Blok newBlok = blokService.add(sessionInfo, yeniBlok);
+        blokService.addDaireListToBlok(sessionInfo, daireList, newBlok);
         JsfUtil.addSuccessMessage(message.getString("blok_ekleme_basarili"));
         return "blokIslemleri.xhtml";
     }
@@ -151,5 +187,53 @@ public class BlokIslemleriMB extends AbstractMB implements Serializable {
 
     public void setSessionInfo(SessionInfo sessionInfo) {
         this.sessionInfo = sessionInfo;
+    }
+
+    public Daire getYeniDaire() {
+        return yeniDaire;
+    }
+
+    public void setYeniDaire(Daire yeniDaire) {
+        this.yeniDaire = yeniDaire;
+    }
+
+    public List<IAbstractEntity> getDaireTipiList() {
+        return daireTipiList;
+    }
+
+    public void setDaireTipiList(List<IAbstractEntity> daireTipiList) {
+        this.daireTipiList = daireTipiList;
+    }
+
+    public IOrtakService getOrtakService() {
+        return ortakService;
+    }
+
+    public void setOrtakService(IOrtakService ortakService) {
+        this.ortakService = ortakService;
+    }
+
+    public Daire getSelectedDaire() {
+        return selectedDaire;
+    }
+
+    public void setSelectedDaire(Daire selectedDaire) {
+        this.selectedDaire = selectedDaire;
+    }
+
+    public List<Daire> getDaireList() {
+        return daireList;
+    }
+
+    public void setDaireList(List<Daire> daireList) {
+        this.daireList = daireList;
+    }
+
+    public DaireDataModel getDaireDataModel() {
+        return daireDataModel;
+    }
+
+    public void setDaireDataModel(DaireDataModel daireDataModel) {
+        this.daireDataModel = daireDataModel;
     }
 }

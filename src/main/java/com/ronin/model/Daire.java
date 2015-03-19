@@ -92,6 +92,10 @@ public class Daire {
         return this.blok.getAciklama() + " " + this.daireNo.toString();
     }
 
+     public boolean isDaireAynimi(Daire daire){
+       return   daire.getDaireNo().equals(this.daireNo) || daire.getDaireKodu().equals(this.getDaireKodu());
+     }
+
     public Long getId() {
         return id;
     }

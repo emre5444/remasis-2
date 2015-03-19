@@ -7,6 +7,7 @@
 package com.ronin.dao.api;
 
 import com.ronin.commmon.beans.SessionInfo;
+import com.ronin.model.Daire;
 import com.ronin.model.constant.Blok;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.criteria.BlokCriteria;
@@ -30,30 +31,46 @@ public class BlokDao implements IBlokDao {
         return sessionFactory;
     }
 
-    public List<Blok> getListCriteriaForPaging(int first, int pageSize, BlokSorguKriteri sorguKriteri , SessionInfo sessionInfo) {
+    public List<Blok> getListCriteriaForPaging(int first, int pageSize, BlokSorguKriteri sorguKriteri, SessionInfo sessionInfo) {
 
         StringBuffer sb = null;
 
-        BlokCriteria criteria = new BlokCriteria(sorguKriteri, sessionInfo , getSessionFactory().getCurrentSession(), first, pageSize);
+        BlokCriteria criteria = new BlokCriteria(sorguKriteri, sessionInfo, getSessionFactory().getCurrentSession(), first, pageSize);
 
         return (List<Blok>) criteria.prepareResult();
     }
 
-    public void add(SessionInfo  sessionInfo, Blok blok) {
+    public Blok add(SessionInfo sessionInfo, Blok blok) {
         blok.setSirket(sessionInfo.getSirket());
-        getSessionFactory().getCurrentSession().save(blok);
+        Long blokId = (Long) getSessionFactory().getCurrentSession().save(blok);
+        return (Blok) sessionFactory.getCurrentSession().get(Blok.class, blokId);
     }
 
 
-    public void update(SessionInfo sessionInfo ,Blok blok) {
+    public void update(SessionInfo sessionInfo, Blok blok) {
         blok.setSirket(sessionInfo.getSirket());
         getSessionFactory().getCurrentSession().update(blok);
     }
 
 
-    public void delete(SessionInfo sessionInfo , Blok blok) {
+    public void delete(SessionInfo sessionInfo, Blok blok) {
         blok.setSirket(sessionInfo.getSirket());
         blok.setDurum(Durum.getPasifObject());
         getSessionFactory().getCurrentSession().update(blok);
     }
+
+    public void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList, Blok blok){
+        for(Daire daire : daireList){
+            daire.setBlok(blok);
+            getSessionFactory().getCurrentSession().save(blok);
+        }
+    }
+
+    public List<Daire> getDaireListByBlok(Blok blok){
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("select d from Daire d where d.blok = ?")
+                .setParameter(0, blok).list();
+        return (List<Daire>) list;
+    }
+
 }
