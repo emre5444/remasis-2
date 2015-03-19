@@ -45,4 +45,6 @@ public interface IDaireDao {
     void update(Daire arac);
 
     void delete(Daire arac);
+
+    void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList);
 }

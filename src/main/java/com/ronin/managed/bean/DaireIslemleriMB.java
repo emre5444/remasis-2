@@ -20,6 +20,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -56,6 +57,9 @@ public class DaireIslemleriMB extends AbstractMB implements Serializable {
     private List<IAbstractEntity> blokList;
     private List<IAbstractEntity> durumList;
     private List<IAbstractEntity> daireTipiList;
+
+    public List<Daire> daireList = new ArrayList<>();
+    private DaireDataModel daireDataModel;
 
     @PostConstruct
     public void init() {
@@ -95,6 +99,27 @@ public class DaireIslemleriMB extends AbstractMB implements Serializable {
         daireService.add(yeniDaire);
         JsfUtil.addSuccessMessage(message.getString("daire_ekleme_basarili"));
         return getBackPage();
+    }
+
+    public String yeniDaireListEkle(){
+        daireService.addDaireListToBlok(sessionInfo,daireList);
+        JsfUtil.addSuccessMessage(message.getString("daire_ekleme_basarili"));
+        return "daireSorgula.xhtml";
+    }
+
+    public void daireyiListeyeEkle() {
+        if (!daireService.isDaireListedeVarMi(daireList, yeniDaire)) {
+            daireList.add(yeniDaire);
+            daireDataModel = new DaireDataModel(daireList);
+            yeniDaire = new Daire();
+        } else {
+            JsfUtil.addErrorMessage(message.getString("error_ayni_daire_eklenemez"));
+        }
+    }
+
+    public void deleteTempDaire(Daire deletedDaire) {
+        daireList = daireService.deleteTempDaire(daireList, deletedDaire);
+        daireDataModel = new DaireDataModel(daireList);
     }
 
     public IDaireService getDaireService() {
@@ -200,5 +225,21 @@ public class DaireIslemleriMB extends AbstractMB implements Serializable {
 
     public void setDaireTipiList(List<IAbstractEntity> daireTipiList) {
         this.daireTipiList = daireTipiList;
+    }
+
+    public DaireDataModel getDaireDataModel() {
+        return daireDataModel;
+    }
+
+    public void setDaireDataModel(DaireDataModel daireDataModel) {
+        this.daireDataModel = daireDataModel;
+    }
+
+    public List<Daire> getDaireList() {
+        return daireList;
+    }
+
+    public void setDaireList(List<Daire> daireList) {
+        this.daireList = daireList;
     }
 }

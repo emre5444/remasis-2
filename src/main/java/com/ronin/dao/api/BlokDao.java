@@ -62,7 +62,7 @@ public class BlokDao implements IBlokDao {
     public void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList, Blok blok){
         for(Daire daire : daireList){
             daire.setBlok(blok);
-            getSessionFactory().getCurrentSession().save(blok);
+            getSessionFactory().getCurrentSession().save(daire);
         }
     }
 

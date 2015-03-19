@@ -49,4 +49,10 @@ public interface IDaireService {
 
     void delete(Daire arac);
 
+    boolean isDaireListedeVarMi(List<Daire> daireList, Daire daire);
+
+    List<Daire> deleteTempDaire(List<Daire> daireList, Daire daire);
+
+    void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList);
+
 }

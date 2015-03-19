@@ -16,6 +16,7 @@
 
         <h:form id="blokEkleme">
             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+            <div class="EmptyBox10"></div>
             <p:panel id="blokBilgileri">
                 <div class="Container100 Responsive">
                     <div class="ContainerIndent">
@@ -114,6 +115,10 @@
 
                                             <p:column headerText="#{lbl.daire_kat}" sortBy="#{varDaire.kat}">
                                                 <h:outputText value="#{varDaire.kat}"/>
+                                            </p:column>
+
+                                            <p:column headerText="#{lbl.daire_alani}" sortBy="#{varDaire.alan}">
+                                                <h:outputText value="#{varDaire.alan}"/>
                                             </p:column>
 
                                             <p:column style="width:10%;" exportable="false">
