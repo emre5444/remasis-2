@@ -2,9 +2,7 @@ package com.ronin.managed.bean;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
-import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.BlokDataModel;
-import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.Blok;
 import com.ronin.model.kriter.BlokSorguKriteri;
 import com.ronin.service.IBlokService;
@@ -20,11 +18,11 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@ManagedBean(name = "blokMB")
+@ManagedBean(name = "blokIslemleriMB")
 @ViewScoped
-public class BlokMB extends AbstractMB implements Serializable {
+public class BlokIslemleriMB extends AbstractMB implements Serializable {
 
-    public static Logger logger = Logger.getLogger(BlokMB.class);
+    public static Logger logger = Logger.getLogger(BlokIslemleriMB.class);
     //servisler
     @ManagedProperty("#{blokService}")
     private IBlokService blokService;
@@ -56,47 +54,31 @@ public class BlokMB extends AbstractMB implements Serializable {
     }
 
     public void getFlushObjects() {
-        BlokSorguKriteri sk = (BlokSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
-        if (sk != null) {
-            sorguKriteri = sk;
-            getBlokListBySorguKriteri();
-        }
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+        selected = (Blok) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedBlokObject");
+        sorguKriteri = (BlokSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+    }
+
+    public String geriDon() {
+        storeFlashObjects();
+        return getBackPage();
     }
 
     public void storeFlashObjects() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedBlokObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "blokIslemleri.xhtml");
     }
 
-    public String blokGuncelleme(Blok selectedBlok) {
-        setSelected(selectedBlok);
+    public String yeniBlokEkleme() {
+        blokService.add(sessionInfo, yeniBlok);
+        JsfUtil.addSuccessMessage(message.getString("blok_ekleme_basarili"));
+        return "blokIslemleri.xhtml";
+    }
+
+    public String update() {
+        blokService.update(sessionInfo, selected);
+        JsfUtil.addSuccessMessage(message.getString("blok_guncelleme_basarili"));
         storeFlashObjects();
-        return "blokGuncelleme.xhtml";
-    }
-
-    public String blokEkleme(Blok selectedBlok) {
-        setSelected(selectedBlok);
-        storeFlashObjects();
-        return "blokEkleme.xhtml";
-    }
-
-    public void getBlokListBySorguKriteri() {
-        List<Blok> dataList = blokService.getListCriteriaForPaging(0, 20, sorguKriteri, sessionInfo);
-        blokSorguSonucu = dataList;
-        dataModel = new BlokDataModel(dataList);
-
-        if (dataList == null || dataList.size() <= 0) {
-            JsfUtil.addWarnMessage(message.getString("error.sonuc.yok"));
-        }
-    }
-
-
-    public void delete(Blok selectedBlok) {
-        setSelected(selectedBlok);
-        blokService.delete(sessionInfo, selected);
-        getBlokListBySorguKriteri();
-        JsfUtil.addSuccessMessage(message.getString("blok_silme_basarili"));
+        return getBackPage();
     }
 
     public IBlokService getBlokService() {

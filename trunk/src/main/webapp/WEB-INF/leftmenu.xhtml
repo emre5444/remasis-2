@@ -59,15 +59,23 @@
 
             <p:submenu label="#{lbl.residence_islemleri}" icon="icon-home"
                        rendered="#{sessionInfo.isYetkili('rezidans_yonetimi')}">
-                <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf"
-                            icon="icon-building-filled"
-                            rendered="#{sessionInfo.isYetkili('blok_islemleri')}"/>
-                <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf" icon="icon-logout-1"
-                            rendered="#{sessionInfo.isYetkili('daire_sorgula')}"
-                            value="#{lbl.hizli_menu_daireme_git}"/>
-                <p:menuitem url="/pages/rezidansIslemleri/daireEkleme.jsf" icon="icon-plus-squared"
-                            rendered="#{sessionInfo.isYetkili('daire_sorgula') and sessionInfo.adminMi}"
-                            value="#{lbl.daire_ekleme}"/>
+                <p:submenu label="#{lbl.blok_yonetimi}" icon="icon-building" >
+                    <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf"
+                                icon="icon-building-filled"
+                              />
+                    <p:menuitem value="#{lbl.blok_ekleme}" url="/pages/rezidansIslemleri/blokEkleme.jsf"
+                                icon="icon-plus-squared"
+                                />
+                </p:submenu>
+
+                <p:submenu label="#{lbl.daire_yonetimi}" icon="icon-home">
+                    <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf" icon="icon-logout-1"
+                                rendered="#{sessionInfo.isYetkili('daire_sorgula')}"
+                                value="#{lbl.hizli_menu_daireme_git}"/>
+                    <p:menuitem url="/pages/rezidansIslemleri/daireEkleme.jsf" icon="icon-plus-squared"
+                                rendered="#{sessionInfo.isYetkili('daire_sorgula') and sessionInfo.adminMi}"
+                                value="#{lbl.daire_ekleme}"/>
+                </p:submenu>
             </p:submenu>
 
             <p:submenu label="#{lbl.finans_islemleri}" icon="icon-try"
