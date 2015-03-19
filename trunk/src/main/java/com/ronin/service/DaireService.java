@@ -174,6 +174,24 @@ public class DaireService implements IDaireService {
         iDaireDao.delete(arac);
     }
 
+    public boolean isDaireListedeVarMi(List<Daire> daireList, Daire daire) {
+        for (Daire d : daireList) {
+            if (d.isDaireAynimiWithBlok(daire))
+                return true;
+        }
+        return false;
+    }
+
+    public List<Daire> deleteTempDaire(List<Daire> daireList, Daire daire) {
+        daireList.remove(daire);
+        return daireList;
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList){
+        iDaireDao.addDaireListToBlok(sessionInfo,daireList);
+    }
+
     public IKullaniciDAO getKullaniciDAO() {
         return kullaniciDAO;
     }

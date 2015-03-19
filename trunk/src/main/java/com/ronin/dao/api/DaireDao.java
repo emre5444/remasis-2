@@ -128,6 +128,12 @@ public class DaireDao implements IDaireDao {
         getSessionFactory().getCurrentSession().update(arac);
     }
 
+    public void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList){
+        for(Daire daire : daireList){
+            getSessionFactory().getCurrentSession().save(daire);
+        }
+    }
+
 
     public void delete(Daire arac) {
         this.update(arac);

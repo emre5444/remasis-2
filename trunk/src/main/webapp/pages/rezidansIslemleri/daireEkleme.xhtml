@@ -17,7 +17,7 @@
             <div class="ContainerIndent">
                 <h:form id="daireEkleme">
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
-                    <p:panel>
+                    <p:panel id="daireBilgilleri">
                         <div class="Container100 Responsive">
                             <div class="ContainerIndent">
                                 <div class="Container100 Responsive Fs20 hardblue">
@@ -35,16 +35,16 @@
                                         <f:converter binding="#{blokConverter}"/>
                                     </p:selectOneMenu>
 
-                                    <h:outputLabel for="daireNo" value="#{lbl.daire_no} (*)"
-                                                   style="font-weight:bold"/>
-                                    <p:inputText id="daireNo" value="#{daireIslemleriMB.yeniDaire.daireNo}" required="true"
-                                                 label="#{lbl.daire_no}"/>
-
                                     <h:outputLabel for="daireKodu" value="#{lbl.daire_kodu} (*)"
                                                    style="font-weight:bold"/>
                                     <p:inputText id="daireKodu" value="#{daireIslemleriMB.yeniDaire.daireKodu}"
                                                  required="true"
                                                  label="#{lbl.daire_kodu}"/>
+
+                                    <h:outputLabel for="daireNo" value="#{lbl.daire_no} (*)"
+                                                   style="font-weight:bold"/>
+                                    <p:inputText id="daireNo" value="#{daireIslemleriMB.yeniDaire.daireNo}" required="true"
+                                                 label="#{lbl.daire_no}"/>
 
                                     <h:outputLabel for="alan" value="#{lbl.daire_alani}" style="font-weight:bold"/>
                                     <p:inputText id="alan" value="#{daireIslemleriMB.yeniDaire.alan}"
@@ -75,14 +75,78 @@
                                                        itemLabel="#{drm.aciklama}"/>
                                         <f:converter binding="#{durumConverter}"/>
                                     </p:selectOneMenu>
+
+                                    <p:commandButton id="yeni_daire_ekle" value="#{lbl.label_daireyi_ekle}"
+                                                     process="daireBilgilleri"
+                                                     update="daireSorguSonucu,daireBilgilleri" styleClass="GreenButton"
+                                                     action="#{daireIslemleriMB.daireyiListeyeEkle()}">
+                                    </p:commandButton>
                                 </h:panelGrid>
 
                             </div>
                         </div>
                     </p:panel>
+
+                    <div class="EmptyBox10"></div>
+
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-list orange"></i> #{lbl.label_eklenecek_daire_list}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5">
+
+                                    <p:dataTable id="daireSorguSonucu" value="#{daireIslemleriMB.daireDataModel}"
+                                                 var="varDaire"
+                                                 paginatorPosition="bottom"
+                                                 paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
+                                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                 rowsPerPageTemplate="5,10,15">
+
+                                        <p:column headerText="#{lbl.daire_kodu}" sortBy="#{varDaire.daireKodu}">
+                                            <h:outputText value="#{varDaire.daireKodu}"
+                                                          style="font-weight:bold; color:#088A29;"/>
+                                        </p:column>
+
+                                        <p:column headerText="#{lbl.daire_blokAdi}" sortBy="#{varDaire.blok.aciklama}">
+                                            <h:outputText value="#{varDaire.blok.aciklama}"/>
+                                        </p:column>
+
+                                        <p:column headerText="#{lbl.daire_no}" sortBy="#{varDaire.daireNo}">
+                                            <h:outputText value="#{varDaire.daireNo}"/>
+                                        </p:column>
+
+                                        <p:column headerText="#{lbl.daire_tipi}"
+                                                  sortBy="#{varDaire.daireTipi.aciklama}">
+                                            <h:outputText value="#{varDaire.daireTipi.aciklama}"/>
+                                        </p:column>
+
+                                        <p:column headerText="#{lbl.daire_kat}" sortBy="#{varDaire.kat}">
+                                            <h:outputText value="#{varDaire.kat}"/>
+                                        </p:column>
+
+                                        <p:column headerText="#{lbl.daire_alani}" sortBy="#{varDaire.alan}">
+                                            <h:outputText value="#{varDaire.alan}"/>
+                                        </p:column>
+
+                                        <p:column style="width:10%;" exportable="false">
+                                            <p:commandLink id="deleteButton1" styleClass="icon-cancel-circled-2"
+                                                           immediate="true"
+                                                           action="#{daireIslemleriMB.deleteTempDaire(varDaire)}"
+                                                           update="@([id$=daireSorguSonucu])" >
+                                            </p:commandLink>
+                                        </p:column>
+                                    </p:dataTable>
+
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
+
                     <h:panelGrid columns="3">
-                        <p:commandButton id="daire_kaydet" value="#{lbl.kaydet}"
-                                         styleClass="ui-icon-plus" action="#{daireIslemleriMB.yeniDaireEkleme}">
+                        <p:commandButton id="daire_kaydet" value="#{lbl.kaydet}" process="daire_kaydet"
+                                         styleClass="ui-icon-plus" action="#{daireIslemleriMB.yeniDaireListEkle}">
                             <p:confirm header="#{lbl.daire_ekleme}" message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
                         </p:commandButton>
                     </h:panelGrid>

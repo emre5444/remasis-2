@@ -96,6 +96,10 @@ public class Daire {
        return   daire.getDaireNo().equals(this.daireNo) || daire.getDaireKodu().equals(this.getDaireKodu());
      }
 
+    public boolean isDaireAynimiWithBlok(Daire daire){
+        return   daire.getBlok().getId().equals(this.getBlok().getId()) &&(daire.getDaireNo().equals(this.daireNo) || daire.getDaireKodu().equals(this.getDaireKodu()));
+    }
+
     public Long getId() {
         return id;
     }
