@@ -16,7 +16,7 @@
 
         <h:form id="blokEkleme">
             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
-            <p:panel>
+            <p:panel id="blokBilgileri">
                 <div class="Container100 Responsive">
                     <div class="ContainerIndent">
                         <div class="Container100 Responsive Fs20 hardblue">
@@ -32,8 +32,112 @@
                 </div>
             </p:panel>
 
+            <div class="EmptyBox10"></div>
+
+            <p:panel id="daireBilgileriPanel">
+                <div class="Container100 Responsive">
+                    <div class="ContainerIndent">
+                        <div class="Container100 Responsive Fs20 hardblue">
+                            <i class="icon-plus-2 orange"></i> #{lbl.daire_ekleme}
+                        </div>
+
+                        <h:panelGrid columns="2" cellpadding="5">
+
+                            <h:outputLabel for="daireKodu" value="#{lbl.daire_kodu} (*)"
+                                           style="font-weight:bold"/>
+                            <p:inputText id="daireKodu" value="#{blokIslemleriMB.yeniDaire.daireKodu}"
+                                         required="true"
+                                         label="#{lbl.daire_kodu}"/>
+
+                            <h:outputLabel for="daireNo" value="#{lbl.daire_no} (*)"
+                                           style="font-weight:bold"/>
+                            <p:inputText id="daireNo" value="#{blokIslemleriMB.yeniDaire.daireNo}" required="true"
+                                         label="#{lbl.daire_no}"/>
+
+                            <h:outputLabel for="alan" value="#{lbl.daire_alani}" style="font-weight:bold"/>
+                            <p:inputText id="alan" value="#{blokIslemleriMB.yeniDaire.alan}"
+                                         label="#{lbl.daire_alani}"/>
+
+                            <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
+                            <p:inputText id="kat" value="#{blokIslemleriMB.yeniDaire.kat}"
+                                         label="#{lbl.daire_kat}"/>
+
+                            <h:outputLabel for="daireTipi" value="#{lbl.daire_tipi} (*)"
+                                           style="font-weight:bold"/>
+                            <p:selectOneMenu id="daireTipi" value="#{blokIslemleriMB.yeniDaire.daireTipi}"
+                                             style="font-weight:bold"
+                                             required="true" label="#{lbl.daire_tipi}">
+                                <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                <f:selectItems value="#{blokIslemleriMB.daireTipiList}" var="daireTipi"
+                                               itemValue="#{daireTipi}"
+                                               itemLabel="#{daireTipi.aciklama}"/>
+                                <f:converter binding="#{daireTipiConverter}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton id="yeni_daire_ekle" value="#{lbl.label_daireyi_ekle}"
+                                             process="daireBilgileriPanel"
+                                             update="@([id$=daireSorguSonucu])" styleClass="GreenButton"
+                                             action="#{blokIslemleriMB.daireyiListeyeEkle()}">
+                            </p:commandButton>
+                        </h:panelGrid>
+
+                        <div class="EmptyBox10"></div>
+
+                        <p:panel>
+                            <div class="Container100 Responsive">
+                                <div class="ContainerIndent">
+                                    <div class="Container100 Responsive Fs20 hardblue">
+                                        <i class="icon-list orange"></i> #{lbl.label_eklenecek_daire_list}
+                                    </div>
+                                    <h:panelGrid columns="2" cellpadding="5">
+
+                                        <p:dataTable id="daireSorguSonucu" value="#{blokIslemleriMB.daireDataModel}"
+                                                     var="varDaire"
+                                                     paginatorPosition="bottom"
+                                                     paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
+                                                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                     rowsPerPageTemplate="5,10,15">
+
+                                            <p:column headerText="#{lbl.daire_kodu}" sortBy="#{varDaire.daireKodu}">
+                                                <h:outputText value="#{varDaire.daireKodu}"
+                                                              style="font-weight:bold; color:#088A29;"/>
+                                            </p:column>
+
+                                            <p:column headerText="#{lbl.daire_no}" sortBy="#{varDaire.daireNo}">
+                                                <h:outputText value="#{varDaire.daireNo}"/>
+                                            </p:column>
+
+                                            <p:column headerText="#{lbl.daire_tipi}"
+                                                      sortBy="#{varDaire.daireTipi.aciklama}">
+                                                <h:outputText value="#{varDaire.daireTipi.aciklama}"/>
+                                            </p:column>
+
+                                            <p:column headerText="#{lbl.daire_kat}" sortBy="#{varDaire.kat}">
+                                                <h:outputText value="#{varDaire.kat}"/>
+                                            </p:column>
+
+                                            <p:column style="width:10%;" exportable="false">
+                                                <p:commandLink id="deleteButton1" styleClass="icon-cancel-circled-2"
+                                                               immediate="true"
+                                                               action="#{blokIslemleriMB.deleteTempDaire}"
+                                                               update="@([id$=daireSorguSonucu])"
+                                                        >
+                                                    <f:setPropertyActionListener value="#{varDaire}"
+                                                                                 target="#{blokIslemleriMB.selectedDaire}"/>
+                                                </p:commandLink>
+                                            </p:column>
+                                        </p:dataTable>
+
+                                    </h:panelGrid>
+                                </div>
+                            </div>
+                        </p:panel>
+                    </div>
+                </div>
+            </p:panel>
+
             <h:panelGrid columns="3">
-                <p:commandButton id="blok_kaydet" value="#{lbl.kaydet}"
+                <p:commandButton id="blok_kaydet" value="#{lbl.kaydet}" process="blokBilgileri,blok_kaydet"
                                  action="#{blokIslemleriMB.yeniBlokEkleme()}">
                     <p:confirm header="#{lbl.blok_ekleme}" message="#{msg.islemi_onayliyormusunuz}"
                                icon="ui-icon-alert"/>

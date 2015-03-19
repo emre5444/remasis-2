@@ -6,6 +6,7 @@
 package com.ronin.service;
 
 import com.ronin.commmon.beans.SessionInfo;
+import com.ronin.model.Daire;
 import com.ronin.model.constant.Blok;
 import com.ronin.model.kriter.BlokSorguKriteri;
 
@@ -18,10 +19,18 @@ public interface IBlokService {
 
     List<Blok> getListCriteriaForPaging(int first, int pageSize, BlokSorguKriteri sorguKriteri , SessionInfo sessionInfo);
 
-    void add(SessionInfo sessionInfo ,Blok blok);
+    Blok add(SessionInfo sessionInfo ,Blok blok);
 
     void update(SessionInfo sessionInfo ,Blok blok);
 
     void delete(SessionInfo sessionInfo ,Blok blok);
+
+     List<Daire> deleteTempDaire(List<Daire> daireList , Daire daire);
+
+    void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList, Blok blok);
+
+    boolean isDaireListedeVarMi(List<Daire> daireList , Daire daire);
+
+    List<Daire> getDaireListByBlok(Blok blok);
 
 }
