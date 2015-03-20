@@ -30,7 +30,7 @@ import java.util.ResourceBundle;
 
 @ManagedBean(name = "talepMB")
 @ViewScoped
-public class TalepMB implements Serializable {
+public class TalepMB extends AbstractMB implements Serializable {
 
     public static Logger logger = Logger.getLogger(TalepMB.class);
     //servisler
@@ -80,7 +80,7 @@ public class TalepMB implements Serializable {
         talepTipiList = getTalepTipiByYetki();
         dataModel = null;
         sorguKriteri = new TalepSorguKriteri();
-        blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket",sessionInfo);
+        blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket", sessionInfo);
         durumList = ortakService.getListByNamedQuery("Durum.findAll");
     }
 
@@ -104,7 +104,7 @@ public class TalepMB implements Serializable {
     }
 
     public List<Kullanici> completePlayer(String query) {
-        List<Kullanici> suggestions = ortakService.getKullaniciByName(query , sessionInfo);
+        List<Kullanici> suggestions = ortakService.getKullaniciByName(query, sessionInfo);
         return suggestions;
     }
 
@@ -137,23 +137,6 @@ public class TalepMB implements Serializable {
         return talepTipiList;
     }
 
-    public void talepIptalEt() {
-        chectSelectedItem();
-        if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
-            try {
-                talepService.deleteTalep(selected);
-                bildirimGonderForIptal();
-                JsfUtil.addSuccessMessage(message.getString("talep_silme_basarili"));
-                getDaireListBySorguKriteri();
-            } catch (Exception e) {
-                logger.error(e.getStackTrace());
-                JsfUtil.addFatalMessage(e.toString());
-            }
-        } else {
-            throw new ServiceException(message.getString("talep_onay_red_gormus_onay"));
-        }
-    }
-
     public void bildirimGonderForIptal() {
         if (selected.getTalep().getTalepTipi().isArizaTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.ARIZA;
@@ -161,63 +144,65 @@ public class TalepMB implements Serializable {
             ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("ariza_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("ariza_talebi_iptal_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isItirazTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.AIDAT_ITIRAZ;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_iptal_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isSikayetTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.SIKAYET;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_iptal_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isBelgeTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.BELGE_TALEBI;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_iptal_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         }
     }
 
-    public boolean chectSelectedItem() {
-        if (selected == null) {
-            JsfUtil.addErrorMessage(message.getString("error_kayit_secilmedi"));
-            return false;
-        }
-        return true;
-    }
 
     //page navigations
-    public String talepGoruntuleme() {
-        if (chectSelectedItem()) {
+    public String talepGoruntuleme(TalepDaire selectedTalepDaire) {
+        setSelected(selectedTalepDaire);
+        storeFlashObjects();
+        return "talepGoruntuleme.xhtml";
+    }
+
+    public String talepOnaylama(TalepDaire selectedTalepDaire) {
+        setSelected(selectedTalepDaire);
+        if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
             storeFlashObjects();
-            return "talepGoruntuleme.xhtml";
+            return "talepOnaylama.xhtml";
+        } else {
+            JsfUtil.addErrorMessage(message.getString("talep_onay_red_gormus_onay"));
         }
         return "";
     }
 
-    public String talepOnaylama() {
-        if (chectSelectedItem()) {
-            if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
-                storeFlashObjects();
-                return "talepOnaylama.xhtml";
-            } else {
-                JsfUtil.addErrorMessage(message.getString("talep_onay_red_gormus_onay"));
-            }
+    public String talepReddetme(TalepDaire selectedTalepDaire) {
+        setSelected(selectedTalepDaire);
+        if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
+            storeFlashObjects();
+            return "talepReddetme.xhtml";
+        } else {
+            JsfUtil.addErrorMessage(message.getString("talep_onay_red_gormus_onay"));
         }
         return "";
     }
 
-    public String talepReddetme() {
-        if (chectSelectedItem()) {
-            if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
-                storeFlashObjects();
-                return "talepReddetme.xhtml";
-            } else {
-                JsfUtil.addErrorMessage(message.getString("talep_onay_red_gormus_onay"));
-            }
+    public void talepIptalEt(TalepDaire selectedTalepDaire) {
+        setSelected(selectedTalepDaire);
+        if (!selected.getTalep().getTalepOnayDurumu().isTalepOnayGormusMu()) {
+            talepService.deleteTalep(selected);
+            bildirimGonderForIptal();
+            JsfUtil.addSuccessMessage(message.getString("talep_silme_basarili"));
+            getDaireListBySorguKriteri();
+        } else {
+            throw new ServiceException(message.getString("talep_onay_red_gormus_onay"));
         }
-        return "";
     }
 
     public void storeFlashObjects() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedTalepDaireObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "talepSorgula.xhtml");
     }
 
     //getter and setters

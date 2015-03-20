@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
 <ui:define name="title">
     <h:outputText value="#{lbl.talep_sorgulama}"/>
@@ -13,194 +14,216 @@
 
 <ui:define name="content">
 
-        <h:form id="main_form">
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+<h:form id="main_form">
+<p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+<div class="EmptyBox10"></div>
+<div class="Container100">
+<div class="ContainerIndent">
+<p:panel>
+    <div class="Container100 Responsive">
+        <div class="ContainerIndent">
+            <div class="Container100 Responsive Fs20 hardblue">
+                <i class="icon-cubes orange"></i> #{lbl.talep_sorgulama}
+            </div>
+            <h:panelGrid columns="4" cellpadding="5">
 
-            <p:panel header="#{lbl.talep_sorgulama}">
-                <h:panelGrid columns="4" cellpadding="5">
+                <h:outputLabel for="talepTipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
+                <p:selectOneMenu id="talepTipi" value="#{talepMB.sorguKriteri.talepTipi}"
+                                 style="font-weight:bold">
+                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                    <f:selectItems value="#{talepMB.talepTipiList}" var="talTipi" itemValue="#{talTipi}"
+                                   itemLabel="#{talTipi.aciklama}"/>
+                    <f:converter binding="#{talepTipiConverter}"/>
+                </p:selectOneMenu>
 
-                    <h:outputLabel for="talepTipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
-                    <p:selectOneMenu id="talepTipi" value="#{talepMB.sorguKriteri.talepTipi}"
-                                     style="font-weight:bold">
-                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                        <f:selectItems value="#{talepMB.talepTipiList}" var="talTipi" itemValue="#{talTipi}"
-                                       itemLabel="#{talTipi.aciklama}"/>
-                        <f:converter binding="#{talepTipiConverter}"/>
-                    </p:selectOneMenu>
+                <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
+                <p:autoComplete value="#{talepMB.sorguKriteri.kullanici}" disabled="#{not sessionInfo.adminMi}"
+                                id="kullanici_list" completeMethod="#{talepMB.completePlayer}"
+                                var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
+                                itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
 
-                    <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
-                    <p:autoComplete value="#{talepMB.sorguKriteri.kullanici}" disabled="#{not sessionInfo.adminMi}"
-                                    id="kullanici_list" completeMethod="#{talepMB.completePlayer}"
-                                    var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
-                                    itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
+                    <f:facet name="itemtip">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <f:facet name="header">
+                                <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
+                                <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
+                            </f:facet>
 
-                        <f:facet name="itemtip">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <f:facet name="header">
-                                    <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
-                                    <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
-                                </f:facet>
+                            <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
+                            <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
 
-                                <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
-                                <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
-
-                                <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
-                                <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
-                            </h:panelGrid>
-                        </f:facet>
-                    </p:autoComplete>
-
-                    <h:outputLabel for="talepOnayDurumu" value="#{lbl.talep_onay_durumu}" style="font-weight:bold"/>
-                    <p:selectOneMenu id="talepOnayDurumu" value="#{talepMB.sorguKriteri.onayDurumu}">
-                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue=""/>
-                        <f:selectItem itemLabel="#{lbl.onay_bekleyen_talepler}" itemValue="ilkGiris"/>
-                        <f:selectItem itemLabel="#{lbl.onaylanmis_talepler}" itemValue="onaylandi"/>
-                        <f:selectItem itemLabel="#{lbl.reddedilmis_talepler}" itemValue="reddedildi"/>
-                    </p:selectOneMenu>
-
-                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
-                    <p:inputText id="daire_no" value="#{talepMB.sorguKriteri.daireNo}"/>
-
-                    <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}" style="font-weight:bold"/>
-                    <p:calendar id="baslangic_tarihi" value="#{talepMB.sorguKriteri.sorguBaslangicTarihi}"
-                                pattern="dd/MM/yyyy" mask="true"/>
-
-                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
-                    <p:calendar id="bitis_tarihi" value="#{talepMB.sorguKriteri.sorguBitisTarihi}" pattern="dd/MM/yyyy"
-                                mask="true"/>
-
-                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
-                    <p:selectOneMenu id="blok_adi" value="#{talepMB.sorguKriteri.blok}"
-                                     style="font-weight:bold">
-                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                        <f:selectItems value="#{talepMB.blokList}" var="blokList" itemValue="#{blokList}"
-                                       itemLabel="#{blokList.aciklama}"/>
-                        <f:converter binding="#{blokConverter}"/>
-                    </p:selectOneMenu>
-
-                    <h:panelGroup/><h:panelGroup/>
-                    <p:commandButton value="#{lbl.ortak_sorgula}"
-                                     actionListener="#{talepMB.getDaireListBySorguKriteri()}"
-                                     update="@([id$=main_form])"/>
-
-                </h:panelGrid>
-            </p:panel>
-
-            <div style="height:10px"></div>
-
-            <p:panel id="sorguSonucuPanel" header="#{lbl.sorgu_sonucu}"
-                     rendered="#{not empty talepMB.dataModel.wrappedData}">
-
-                <p:dataTable id="talepSorguSonucu" value="#{talepMB.dataModel}" var="varTalep"
-                             paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
-                             selection="#{talepMB.selected}"
-                             paginator="true" rows="10"
-                             selectionMode="single"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15">
-
-                    <p:column selectionMode="single" style="width:2%"/>
-
-                    <p:column headerText="#{lbl.talep_tipi}" sortBy="talep.talepTipi.aciklama" style="width:15%">
-                        <h:outputText value="#{varTalep.talep.talepTipi.aciklama}"/>
-                    </p:column>
-
-                    <p:column headerText="#{lbl.talep_no}" sortBy="talep.id" style="width:5%">
-                        <h:outputText value="#{varTalep.talep.id}"/>
-                    </p:column>
-
-                    <p:column headerText="#{lbl.talep_durumu}" sortBy="varTalep.talep.islemTarihi" style="width:20%">
-
-                        <h:panelGrid id="panel1" columns="2" >
-
-                            <h:outputLabel for="tal_tarihi" value="#{lbl.talep_tarihi}" style="font-weight:bold"/>
-                            <h:outputText id="tal_tarihi" value="#{varTalep.talep.islemTarihi}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-
-                            <h:outputLabel for="tal_durumu" value="#{lbl.talep_onay_durumu}"
-                                           style="font-weight:bold"/>
-                            <h:outputText id="tal_durumu" value="#{varTalep.talep.talepOnayDurumu.aciklama}"/>
-
-                            <h:outputLabel for="tal_aciklama" value="#{lbl.talep_aciklama}"
-                                           style="font-weight:bold"/>
-                            <h:outputText id="tal_aciklama" value="#{varTalep.talep.shortAciklama}"/>
-
+                            <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
+                            <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
                         </h:panelGrid>
+                    </f:facet>
+                </p:autoComplete>
 
-                    </p:column>
+                <h:outputLabel for="talepOnayDurumu" value="#{lbl.talep_onay_durumu}" style="font-weight:bold"/>
+                <p:selectOneMenu id="talepOnayDurumu" value="#{talepMB.sorguKriteri.onayDurumu}">
+                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue=""/>
+                    <f:selectItem itemLabel="#{lbl.onay_bekleyen_talepler}" itemValue="ilkGiris"/>
+                    <f:selectItem itemLabel="#{lbl.onaylanmis_talepler}" itemValue="onaylandi"/>
+                    <f:selectItem itemLabel="#{lbl.reddedilmis_talepler}" itemValue="reddedildi"/>
+                </p:selectOneMenu>
 
-                    <p:column headerText="#{lbl.talep_yapan_kullanici}" sortBy="talep.kullanici" style="width:10%">
-                        <h:outputText value="#{varTalep.talep.kullanici.adSoyad}"/>
-                    </p:column>
+                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                <p:inputText id="daire_no" value="#{talepMB.sorguKriteri.daireNo}"/>
 
-                    <p:column headerText="#{lbl.daire_bilgileri}" sortBy="varTalep.daire.daireNo" style="width:15%">
+                <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
+                               style="font-weight:bold"/>
+                <p:calendar id="baslangic_tarihi" value="#{talepMB.sorguKriteri.sorguBaslangicTarihi}"
+                            pattern="dd/MM/yyyy" mask="true"/>
 
-                        <h:panelGrid id="panel2" columns="2"
-                                >
+                <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                <p:calendar id="bitis_tarihi" value="#{talepMB.sorguKriteri.sorguBitisTarihi}"
+                            pattern="dd/MM/yyyy"
+                            mask="true"/>
 
-                            <h:outputLabel for="daire_kodu" value="#{lbl.daire_kodu}" style="font-weight:bold"/>
-                            <h:outputText id="daire_kodu" value="#{varTalep.daire.daireKodu}"/>
+                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                <p:selectOneMenu id="blok_adi" value="#{talepMB.sorguKriteri.blok}"
+                                 style="font-weight:bold">
+                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                    <f:selectItems value="#{talepMB.blokList}" var="blokList" itemValue="#{blokList}"
+                                   itemLabel="#{blokList.aciklama}"/>
+                    <f:converter binding="#{blokConverter}"/>
+                </p:selectOneMenu>
 
-                            <h:outputLabel for="daire_blok" value="#{lbl.daire_blokAdi}" style="font-weight:bold"/>
-                            <h:outputText id="daire_blok" value="#{varTalep.daire.blok.aciklama}"/>
+                <h:panelGroup/><h:panelGroup/>
+                <p:commandButton value="#{lbl.ortak_sorgula}"
+                                 actionListener="#{talepMB.getDaireListBySorguKriteri()}"
+                                 update="@([id$=main_form])"/>
 
-                            <h:outputLabel for="daire_no1" value="#{lbl.daire_no}" style="font-weight:bold"/>
-                            <h:outputText id="daire_no1" value="#{varTalep.daire.daireNo}"/>
-
-                        </h:panelGrid>
-
-                    </p:column>
-
-                    <p:column headerText="#{lbl.talep_onay_red_bilgileri}" sortBy="varTalep.talep.onayTarihi" style="width:20%">
-
-                        <h:panelGrid id="panel3" columns="2"
-                                >
-
-                            <h:outputLabel for="tal_onay_tarihi" value="#{lbl.talep_onay_zamani}"
-                                           style="font-weight:bold"/>
-                            <h:outputText id="tal_onay_tarihi" value="#{varTalep.talep.onayTarihi}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-
-                            <h:outputLabel for="tal_onay_kullanici" value="#{lbl.talep_onay_kullanici}"
-                                           style="font-weight:bold"/>
-                            <h:outputText id="tal_onay_kullanici"
-                                          value="#{varTalep.talep.onaylayanKullanici.adSoyad}"/>
-
-                            <h:outputLabel for="tal_onay_aciklama" value="#{lbl.talep_onay_aciklama}"
-                                           style="font-weight:bold"/>
-                            <h:outputText id="tal_onay_aciklama" value="#{varTalep.talep.shortOnayAciklama}"/>
-
-                        </h:panelGrid>
-                    </p:column>
-
-                    <p:column style="width:4%">
-                        <p:commandButton id="viewButtonTalepGoruntule" icon="ui-icon-search"
-                                         action="#{talepMB.talepGoruntuleme}"
-                                         immediate="true"
-                                >
-                            <f:setPropertyActionListener value="#{varTalep}"
-                                                         target="#{talepMB.selected}"/>
-                        </p:commandButton>
-                    </p:column>
-
-                </p:dataTable>
-            </p:panel>
-
-            <div style="height:10px"></div>
-
-            <h:panelGrid columns="3" rendered="#{not empty talepMB.dataModel.wrappedData}">
-                <p:commandButton value="#{lbl.ortak_onayla}"
-                                 action="#{talepMB.talepOnaylama}" rendered="#{sessionInfo.adminMi}"/>
-                <p:commandButton value="#{lbl.ortak_reddet}"
-                                 action="#{talepMB.talepReddetme}" rendered="#{sessionInfo.adminMi}"/>
-                <p:commandButton ajax="true" action="#{talepMB.talepIptalEt}" value="#{lbl.ortak_iptal}"  update=":main_form" icon="ui-icon-wrench" style="margin:0">
-                    <p:confirm header="#{lbl.ortak_onayla}" message="#{msg.islemi_onayliyormusunuz}"  />
-                </p:commandButton>
             </h:panelGrid>
+        </div>
+    </div>
+</p:panel>
 
-        </h:form>
+<div class="EmptyBox10"></div>
+
+<p:panel id="sorguSonucuPanel"
+         rendered="#{not empty talepMB.dataModel.wrappedData}">
+    <div class="Container100 Responsive">
+        <div class="ContainerIndent">
+            <div class="Container100 Responsive Fs20 hardblue">
+                <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
+            </div>
+            <p:dataTable id="talepSorguSonucu" value="#{talepMB.dataModel}" var="varTalep"
+                         paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
+                         selection="#{talepMB.selected}"
+                         paginator="true" rows="10"
+                         selectionMode="single"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15">
+
+                <p:column selectionMode="single" style="width:2%"/>
+
+                <p:column headerText="#{lbl.talep_tipi}" sortBy="talep.talepTipi.aciklama" style="width:15%">
+                    <h:outputText value="#{varTalep.talep.talepTipi.aciklama}"/>
+                </p:column>
+
+                <p:column headerText="#{lbl.talep_no}" sortBy="talep.id" style="width:5%">
+                    <h:outputText value="#{varTalep.talep.id}"/>
+                </p:column>
+
+                <p:column headerText="#{lbl.talep_durumu}" sortBy="varTalep.talep.islemTarihi" style="width:20%">
+
+                    <h:panelGrid id="panel1" columns="2">
+
+                        <h:outputLabel for="tal_tarihi" value="#{lbl.talep_tarihi}" style="font-weight:bold"/>
+                        <h:outputText id="tal_tarihi" value="#{varTalep.talep.islemTarihi}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+
+                        <h:outputLabel for="tal_durumu" value="#{lbl.talep_onay_durumu}"
+                                       style="font-weight:bold"/>
+                        <h:outputText id="tal_durumu" value="#{varTalep.talep.talepOnayDurumu.aciklama}"/>
+
+                        <h:outputLabel for="tal_aciklama" value="#{lbl.talep_aciklama}"
+                                       style="font-weight:bold"/>
+                        <h:outputText id="tal_aciklama" value="#{varTalep.talep.shortAciklama}"/>
+
+                    </h:panelGrid>
+
+                </p:column>
+
+                <p:column headerText="#{lbl.talep_yapan_kullanici}" sortBy="talep.kullanici" style="width:10%">
+                    <h:outputText value="#{varTalep.talep.kullanici.adSoyad}"/>
+                </p:column>
+
+                <p:column headerText="#{lbl.daire_bilgileri}" sortBy="varTalep.daire.daireNo" style="width:15%">
+
+                    <h:panelGrid id="panel2" columns="2">
+                        <h:outputLabel for="daire_kodu" value="#{lbl.daire_kodu}" style="font-weight:bold"/>
+                        <h:outputText id="daire_kodu" value="#{varTalep.daire.daireKodu}"/>
+
+                        <h:outputLabel for="daire_blok" value="#{lbl.daire_blokAdi}" style="font-weight:bold"/>
+                        <h:outputText id="daire_blok" value="#{varTalep.daire.blok.aciklama}"/>
+
+                        <h:outputLabel for="daire_no1" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                        <h:outputText id="daire_no1" value="#{varTalep.daire.daireNo}"/>
+
+                    </h:panelGrid>
+
+                </p:column>
+
+                <p:column headerText="#{lbl.talep_onay_red_bilgileri}" sortBy="varTalep.talep.onayTarihi"
+                          style="width:20%">
+
+                    <h:panelGrid id="panel3" columns="2"
+                            >
+
+                        <h:outputLabel for="tal_onay_tarihi" value="#{lbl.talep_onay_zamani}"
+                                       style="font-weight:bold"/>
+                        <h:outputText id="tal_onay_tarihi" value="#{varTalep.talep.onayTarihi}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+
+                        <h:outputLabel for="tal_onay_kullanici" value="#{lbl.talep_onay_kullanici}"
+                                       style="font-weight:bold"/>
+                        <h:outputText id="tal_onay_kullanici"
+                                      value="#{varTalep.talep.onaylayanKullanici.adSoyad}"/>
+
+                        <h:outputLabel for="tal_onay_aciklama" value="#{lbl.talep_onay_aciklama}"
+                                       style="font-weight:bold"/>
+                        <h:outputText id="tal_onay_aciklama" value="#{varTalep.talep.shortOnayAciklama}"/>
+
+                    </h:panelGrid>
+                </p:column>
+
+                <p:column style="width:10%">
+
+                        <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
+                            <p:menuitem id="viewButtonTalepGoruntule" value="#{lbl.label_talep_detay_goruntule}"
+                                        icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
+                                        action="#{talepMB.talepGoruntuleme(varTalep)}">
+                            </p:menuitem>
+
+                            <p:menuitem id="talepOnaylaButton" value="#{lbl.label_talebi_onayla}"
+                                        icon="ui-icon-check" rendered="#{sessionInfo.adminMi}"
+                                        action="#{talepMB.talepOnaylama(varTalep)}">
+                            </p:menuitem>
+
+                            <p:menuitem id="talepReddetButton" value="#{lbl.label_talebi_reddet}"
+                                        icon="ui-icon-bullet" rendered="#{sessionInfo.adminMi}"
+                                        action="#{talepMB.talepReddetme(varTalep)}">
+                            </p:menuitem>
+
+                            <p:menuitem id="talepIptalButton" value="#{lbl.label_talebi_sil}"
+                                        icon="ui-icon-circle-close" rendered="#{sessionInfo.adminMi}"
+                                        action="#{talepMB.talepIptalEt(varTalep)}">
+                            </p:menuitem>
+                        </p:menuButton>
+
+                </p:column>
+
+            </p:dataTable>
+        </div>
+    </div>
+</p:panel>
+
+</div>
+</div>
+</h:form>
 </ui:define>
 
 <ui:define name="body">
