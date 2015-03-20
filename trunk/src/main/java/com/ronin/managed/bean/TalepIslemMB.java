@@ -37,7 +37,7 @@ import java.util.ResourceBundle;
 
 @ManagedBean(name = "talepIslemMB")
 @ViewScoped
-public class TalepIslemMB implements Serializable {
+public class TalepIslemMB extends AbstractMB implements Serializable {
 
     public static Logger logger = Logger.getLogger(TalepIslemMB.class);
     //servisler
@@ -95,7 +95,8 @@ public class TalepIslemMB implements Serializable {
 
     public void getFlushObjects() {
         selected = (TalepDaire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedTalepDaireObject");
-        sk = (TalepSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        sorguKriteri = (TalepSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
     }
 
     public void preparePage() {
@@ -251,9 +252,13 @@ public class TalepIslemMB implements Serializable {
         return "daireGoruntule";
     }
 
+    public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
+    }
+
     public String geriDon() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sk);
-        return "talepSorgula.xhtml";
+        storeFlashObjects();
+        return getBackPage();
     }
 
     //getter and setters
