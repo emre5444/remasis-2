@@ -28,46 +28,46 @@
                                 </div>
                                 <h:panelGrid columns="2" cellpadding="5">
 
-                                    <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold"/>
+                                    <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="ad" value="#{kullaniciController.yeniKullanici.ad}" required="true"
                                                  label="#{lbl.ad}"/>
 
-                                    <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold"/>
+                                    <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="soyad" value="#{kullaniciController.yeniKullanici.soyad}"
                                                  required="true"
                                                  label="#{lbl.soyad}"/>
 
                                     <h:outputLabel for="username" value="#{lbl.kullanici_adi} (*)"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="username" value="#{kullaniciController.yeniKullanici.username}"
                                                  required="true" label="#{lbl.kullanici_adi}"/>
 
-                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="email" value="#{kullaniciController.yeniKullanici.email}"
                                                  label="#{lbl.kullanici_email}"/>
 
                                     <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <p:inputMask id="telefon" value="#{kullaniciController.yeniKullanici.gsm}"
                                                  label="#{lbl.kullanici_tlefon}" mask="(999) 999-99-99"/>
 
-                                    <h:outputLabel for="tcid" value="#{lbl.kullanici_tcid}" style="font-weight:bold"/>
+                                    <h:outputLabel for="tcid" value="#{lbl.kullanici_tcid}" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="tcid" value="#{kullaniciController.yeniKullanici.tckimlik}"
                                                  label="#{lbl.kullanici_tcid}"/>
 
-                                    <h:outputLabel for="password" value="#{lbl.sifre} (*)" style="font-weight:bold"/>
+                                    <h:outputLabel for="password" value="#{lbl.sifre} (*)" style="font-weight:bold; color: #0b4170"/>
                                     <p:password id="password" value="#{kullaniciController.yeniKullanici.password}"
                                                 feedback="true"
                                                 required="true" label="#{lbl.sifre}"/>
 
-                                    <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold"/>
+                                    <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputTextarea rows="6" cols="50"
                                                      value="#{kullaniciController.yeniKullanici.adres}"
                                                      id="adres"/>
 
-                                    <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"/>
+                                    <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold; color: #0b4170"/>
                                     <p:selectOneMenu id="durum" value="#{kullaniciController.sorguKriteri.durum}"
-                                                     style="font-weight:bold">
+                                                     style="font-weight:bold; color: #0b4170">
                                         <f:selectItems value="#{kullaniciController.durumList}" var="drm"
                                                        itemValue="#{drm}"
                                                        itemLabel="#{drm.aciklama}"/>

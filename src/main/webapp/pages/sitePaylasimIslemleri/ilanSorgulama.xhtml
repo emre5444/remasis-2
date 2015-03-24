@@ -20,22 +20,22 @@
                 <p:panel header="#{lbl.label_ilan_sorgulama}">
                     <h:panelGrid columns="4" cellpadding="5">
 
-                        <h:outputLabel for="ad" value="#{lbl.label_duyuru_konusu}" style="font-weight:bold"/>
+                        <h:outputLabel for="ad" value="#{lbl.label_duyuru_konusu}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="ad" value="#{ilanMB.sorguKriteri.konu}"/>
 
-                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
                         <p:selectOneMenu id="blok_adi" value="#{ilanMB.sorguKriteri.blok}"
-                                         style="font-weight:bold">
+                                         style="font-weight:bold; color: #0b4170">
                             <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                             <f:selectItems value="#{aidatIslemleriMB.blokList}" var="blokList" itemValue="#{blokList}"
                                            itemLabel="#{blokList.aciklama}"/>
                             <f:converter binding="#{blokConverter}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="daire_no" value="#{ilanMB.sorguKriteri.daireNo}"/>
 
-                        <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
+                        <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold; color: #0b4170"/>
                         <p:autoComplete value="#{ilanMB.sorguKriteri.kullanici}"
                                         disabled="#{not sessionInfo.adminMi}"
                                         id="kullanici_list" completeMethod="#{aidatIslemleriMB.completePlayer}"
@@ -61,11 +61,11 @@
 
 
                         <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
-                                       style="font-weight:bold"/>
+                                       style="font-weight:bold; color: #0b4170"/>
                         <p:calendar id="baslangic_tarihi" value="#{ilanMB.sorguKriteri.sorguBaslangicTarihi}"
                                     pattern="dd/MM/yyyy" mask="true"/>
 
-                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170"/>
                         <p:calendar id="bitis_tarihi" value="#{ilanMB.sorguKriteri.sorguBitisTarihi}"
                                     pattern="dd/MM/yyyy"
                                     mask="true"/>

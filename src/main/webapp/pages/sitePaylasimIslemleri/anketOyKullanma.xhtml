@@ -18,18 +18,18 @@
                     <h:panelGrid columns="2" cellpadding="5">
 
                         <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_konusu}"
-                                       style="font-weight:bold"/>
+                                       style="font-weight:bold; color: #0b4170"/>
                         <h:outputText  value="#{entityMB.selectedAnket.anketKonusu}"
                                          id="anket_konu_v"/>
 
                         <h:outputLabel for="anket_aciklama_v" value="#{lbl.label_anket_sorusu}"
-                                       style="font-weight:bold"/>
+                                       style="font-weight:bold; color: #0b4170"/>
                         <h:outputText value="#{entityMB.selectedAnket.aciklama}"
                                          id="anket_aciklama_v"
                                 />
 
                         <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_secenekler} (*)"
-                                       style="font-weight:bold"/>
+                                       style="font-weight:bold; color: #0b4170"/>
                         <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
                             <p:selectOneRadio id="anket_secim" value="#{entityMB.yeniAnket.selectedAnketSecim}"  layout="grid" columns="1" required="true" label="#{lbl.label_anket_secenekler}">
                                 <f:selectItems value="#{entityMB.anketSecimList}" var="anketSecim" itemLabel="#{anketSecim.secim}" itemValue="#{anketSecim}"/>
@@ -38,7 +38,7 @@
                         </h:panelGrid>
 
                         <h:outputLabel for="anket_aciklama_v1" value="#{lbl.ortak_aciklama}"
-                                       style="font-weight:bold"/>
+                                       style="font-weight:bold; color: #0b4170"/>
                         <p:inputTextarea rows="4" cols="40" value="#{entityMB.yeniAnket.oyAciklama}"
                                          label="#{lbl.label_anket_sorusu}"
                                          id="anket_aciklama_v1"

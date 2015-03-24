@@ -10,8 +10,8 @@
 
             <h:panelGrid columns="2" cellpadding="3">
 
-                <h:outputLabel for="kategori" value="#{lbl.envanter_kategori} (*)" style="font-weight:bold"/>
-                <p:selectOneMenu id="kategori" value="#{envanterMB.selected.kategori}" style="font-weight:bold"
+                <h:outputLabel for="kategori" value="#{lbl.envanter_kategori} (*)" style="font-weight:bold; color: #0b4170"/>
+                <p:selectOneMenu id="kategori" value="#{envanterMB.selected.kategori}" style="font-weight:bold; color: #0b4170"
                                  required="true">
                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                     <f:selectItems value="#{envanterMB.kategoriList}" var="kategori" itemValue="#{kategori}"
@@ -19,58 +19,58 @@
                     <f:converter binding="#{kategoriConverter}"/>
                 </p:selectOneMenu>
 
-                <h:outputLabel for="marka" value="#{lbl.envanter_marka} (*)" style="font-weight:bold"/>
+                <h:outputLabel for="marka" value="#{lbl.envanter_marka} (*)" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="marka" value="#{envanterMB.selected.marka}" required="true"
                              label="#{lbl.envanter_marka}"/>
 
-                <h:outputLabel for="model" value="#{lbl.envanter_model}" style="font-weight:bold"/>
+                <h:outputLabel for="model" value="#{lbl.envanter_model}" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="model" value="#{envanterMB.selected.model}" label="#{lbl.envanter_model}"/>
 
-                <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi} (*)" style="font-weight:bold"/>
+                <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi} (*)" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="urunAdi" value="#{envanterMB.selected.urunAdi}" label="#{lbl.envanter_urun_adi}"
                              required="true"/>
 
-                <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}" style="font-weight:bold"/>
+                <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="saticiFirma" value="#{envanterMB.selected.saticiFirma}"
                              label="#{lbl.envanter_satici_firma}"/>
 
                 <h:outputLabel for="alanPersonel" value="#{lbl.envanter_alimi_yapan_personel} (*)"
-                               style="font-weight:bold"/>
+                               style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="alanPersonel" value="#{envanterMB.selected.alimiYapanPersonel}" required="true"
                              label="#{lbl.envanter_alimi_yapan_personel}"/>
 
                 <h:outputLabel for="zimmetliPersonel" value="#{lbl.envanter_zimmetli_personel}"
-                               style="font-weight:bold"/>
+                               style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="zimmetliPersonel" value="#{envanterMB.selected.zimmetliPersonel}"
                              label="#{lbl.envanter_zimmetli_personel}"/>
 
-                <h:outputLabel for="departman" value="#{lbl.envanter_departman}" style="font-weight:bold"/>
+                <h:outputLabel for="departman" value="#{lbl.envanter_departman}" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="departman" value="#{envanterMB.selected.departman}" label="#{lbl.envanter_departman}"/>
 
-                <h:outputLabel for="alimZamani" value="#{lbl.envanter_alim_zamani} (*)" style="font-weight:bold"/>
+                <h:outputLabel for="alimZamani" value="#{lbl.envanter_alim_zamani} (*)" style="font-weight:bold; color: #0b4170"/>
                 <p:calendar id="alimZamani" value="#{envanterMB.selected.alimTarihi}" required="true"
                             label="#{lbl.envanter_alim_zamani}"
                             pattern="dd/MM/yyyy" mask="true"/>
 
                 <h:outputLabel for="garantiBaslangic" value="#{lbl.envanter_garanti_baslangic_zamani}"
-                               style="font-weight:bold"/>
+                               style="font-weight:bold; color: #0b4170"/>
                 <p:calendar id="garantiBaslangic" value="#{envanterMB.selected.garantiBaslangicTarihi}"
                             label="#{lbl.envanter_garanti_baslangic_zamani}"
                             pattern="dd/MM/yyyy" mask="true"/>
 
-                <h:outputLabel for="garantiSuresi" value="#{lbl.envanter_garanti_suresi}" style="font-weight:bold"/>
+                <h:outputLabel for="garantiSuresi" value="#{lbl.envanter_garanti_suresi}" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="garantiSuresi" value="#{envanterMB.selected.garantiSuresi}"
                              label="#{lbl.envanter_garanti_suresi}"/>
 
-                <h:outputLabel for="miktar" value="#{lbl.envanter_miktar} (*)" style="font-weight:bold"/>
+                <h:outputLabel for="miktar" value="#{lbl.envanter_miktar} (*)" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="miktar" value="#{envanterMB.selected.miktar}" label="#{lbl.envanter_miktar}"
                              required="true"/>
 
-                <h:outputLabel for="birimFiyat" value="#{lbl.envanter_birim_fiyat}" style="font-weight:bold"/>
+                <h:outputLabel for="birimFiyat" value="#{lbl.envanter_birim_fiyat}" style="font-weight:bold; color: #0b4170"/>
                 <p:inputText id="birimFiyat" value="#{envanterMB.selected.birimFiyat}"
                              label="#{lbl.envanter_birim_fiyat}"/>
 
-                <h:outputLabel for="aciklama" value="#{lbl.envanter_aciklama}" style="font-weight:bold"/>
+                <h:outputLabel for="aciklama" value="#{lbl.envanter_aciklama}" style="font-weight:bold; color: #0b4170"/>
                 <p:inputTextarea rows="6" cols="50" value="#{envanterMB.selected.aciklama}"
                                  id="aciklama"/>
 

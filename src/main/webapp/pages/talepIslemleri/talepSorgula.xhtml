@@ -43,16 +43,16 @@
 
             <h:panelGrid columns="2" cellpadding="5">
 
-                <h:outputLabel for="talepTipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
+                <h:outputLabel for="talepTipi" value="#{lbl.talep_tipi}" style="font-weight:bold; color: #0b4170"/>
                 <p:selectOneMenu id="talepTipi" value="#{talepMB.sorguKriteri.talepTipi}"
-                                 style="font-weight:bold">
+                                 style="font-weight:bold; color: #0b4170">
                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                     <f:selectItems value="#{talepMB.talepTipiList}" var="talTipi" itemValue="#{talTipi}"
                                    itemLabel="#{talTipi.aciklama}"/>
                     <f:converter binding="#{talepTipiConverter}"/>
                 </p:selectOneMenu>
 
-                <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
+                <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold; color: #0b4170"/>
                 <p:autoComplete value="#{talepMB.sorguKriteri.kullanici}" disabled="#{not sessionInfo.adminMi}"
                                 id="kullanici_list" completeMethod="#{talepMB.completePlayer}"
                                 var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
@@ -74,7 +74,7 @@
                     </f:facet>
                 </p:autoComplete>
 
-                <h:outputLabel for="talepOnayDurumu" value="#{lbl.talep_onay_durumu}" style="font-weight:bold"/>
+                <h:outputLabel for="talepOnayDurumu" value="#{lbl.talep_onay_durumu}" style="font-weight:bold; color: #0b4170"/>
                 <p:selectOneMenu id="talepOnayDurumu" value="#{talepMB.sorguKriteri.onayDurumu}">
                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue=""/>
                     <f:selectItem itemLabel="#{lbl.onay_bekleyen_talepler}" itemValue="ilkGiris"/>
@@ -82,22 +82,22 @@
                     <f:selectItem itemLabel="#{lbl.reddedilmis_talepler}" itemValue="reddedildi"/>
                 </p:selectOneMenu>
 
-                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold" rendered="#{talepMB.tumKriterlerMi}"/>
+                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170" rendered="#{talepMB.tumKriterlerMi}"/>
                 <p:inputText id="daire_no" value="#{talepMB.sorguKriteri.daireNo}" rendered="#{talepMB.tumKriterlerMi}"/>
 
                 <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}" rendered="#{talepMB.tumKriterlerMi}"
-                               style="font-weight:bold"/>
+                               style="font-weight:bold; color: #0b4170"/>
                 <p:calendar id="baslangic_tarihi" value="#{talepMB.sorguKriteri.sorguBaslangicTarihi}" rendered="#{talepMB.tumKriterlerMi}"
                             pattern="dd/MM/yyyy" mask="true"/>
 
-                <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold" rendered="#{talepMB.tumKriterlerMi}"/>
+                <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170" rendered="#{talepMB.tumKriterlerMi}"/>
                 <p:calendar id="bitis_tarihi" value="#{talepMB.sorguKriteri.sorguBitisTarihi}" rendered="#{talepMB.tumKriterlerMi}"
                             pattern="dd/MM/yyyy"
                             mask="true"/>
 
-                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold" rendered="#{talepMB.tumKriterlerMi}"/>
+                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170" rendered="#{talepMB.tumKriterlerMi}"/>
                 <p:selectOneMenu id="blok_adi" value="#{talepMB.sorguKriteri.blok}" rendered="#{talepMB.tumKriterlerMi}"
-                                 style="font-weight:bold">
+                                 style="font-weight:bold; color: #0b4170">
                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                     <f:selectItems value="#{talepMB.blokList}" var="blokList" itemValue="#{blokList}"
                                    itemLabel="#{blokList.aciklama}"/>
@@ -200,29 +200,29 @@
                                 </div>
                                 <h:panelGrid id="showTalepDetailTalepBilgileri" columns="2" cellpadding="5">
 
-                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold"/>
+                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_no" value="#{varTalep.talep.id}"/>
 
-                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
+                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_tipi" value="#{varTalep.talep.talepTipi.aciklama}"/>
 
                                     <h:outputLabel for="talep_kullanici" value="#{lbl.kullanici}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_kullanici" value="#{varTalep.talep.kullanici.adSoyad}"/>
 
                                     <h:outputLabel for="talep_tarihi" value="#{lbl.talep_tarihi}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_tarihi" value="#{varTalep.talep.islemTarihi}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </h:outputText>
 
                                     <h:outputLabel for="talep_onay_durum" value="#{lbl.talep_onay_durumu}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_onay_durum"
                                                   value="#{varTalep.talep.talepOnayDurumu.aciklama}"/>
 
                                     <h:outputLabel for="talep_aciklama" value="#{lbl.talep_aciklama}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_aciklama" value="#{varTalep.talep.aciklama}"/>
                                 </h:panelGrid>
                             </div>
@@ -238,14 +238,14 @@
                                     <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
                                 </div>
                                 <h:panelGrid id="showDaireDetailBilgileri" columns="2" cellpadding="5">
-                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="daire_no" value="#{varTalep.daire.daireNo}"/>
 
                                     <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="blok_adi" value="#{varTalep.daire.blok.aciklama}"/>
 
-                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
+                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="kat" value="#{varTalep.daire.kat}"/>
                                 </h:panelGrid>
                             </div>
@@ -262,18 +262,18 @@
                                 </div>
                                 <h:panelGrid id="showTalepORDetailTalepBilgileri" columns="2" cellpadding="5">
                                     <h:outputLabel for="tal_onay_tarihi" value="#{lbl.talep_onay_zamani}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="tal_onay_tarihi" value="#{varTalep.talep.onayTarihi}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </h:outputText>
 
                                     <h:outputLabel for="tal_onay_kullanici" value="#{lbl.talep_onay_kullanici}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="tal_onay_kullanici"
                                                   value="#{varTalep.talep.onaylayanKullanici.adSoyad}"/>
 
                                     <h:outputLabel for="tal_onay_aciklama" value="#{lbl.talep_onay_aciklama}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="tal_onay_aciklama" value="#{varTalep.talep.onayAciklama}"/>
 
                                 </h:panelGrid>

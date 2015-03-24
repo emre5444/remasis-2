@@ -25,9 +25,9 @@
                                 </div>
 
                                 <h:panelGrid columns="2" cellpadding="5">
-                                    <h:outputLabel for="blok" value="#{lbl.blok_ad} (*)" style="font-weight:bold"/>
+                                    <h:outputLabel for="blok" value="#{lbl.blok_ad} (*)" style="font-weight:bold; color: #0b4170"/>
                                     <p:selectOneMenu id="blok" value="#{daireIslemleriMB.yeniDaire.blok}"
-                                                     style="font-weight:bold"
+                                                     style="font-weight:bold; color: #0b4170"
                                                      required="true" label="#{lbl.blok_ad}">
                                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                                         <f:selectItems value="#{daireIslemleriMB.blokList}" var="blok" itemValue="#{blok}"
@@ -36,28 +36,28 @@
                                     </p:selectOneMenu>
 
                                     <h:outputLabel for="daireKodu" value="#{lbl.daire_kodu} (*)"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="daireKodu" value="#{daireIslemleriMB.yeniDaire.daireKodu}"
                                                  required="true"
                                                  label="#{lbl.daire_kodu}"/>
 
                                     <h:outputLabel for="daireNo" value="#{lbl.daire_no} (*)"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="daireNo" value="#{daireIslemleriMB.yeniDaire.daireNo}" required="true"
                                                  label="#{lbl.daire_no}"/>
 
-                                    <h:outputLabel for="alan" value="#{lbl.daire_alani}" style="font-weight:bold"/>
+                                    <h:outputLabel for="alan" value="#{lbl.daire_alani}" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="alan" value="#{daireIslemleriMB.yeniDaire.alan}"
                                                  label="#{lbl.daire_alani}"/>
 
-                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
+                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="kat" value="#{daireIslemleriMB.yeniDaire.kat}"
                                                  label="#{lbl.daire_kat}"/>
 
                                     <h:outputLabel for="daireTipi" value="#{lbl.daire_tipi} (*)"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <p:selectOneMenu id="daireTipi" value="#{daireIslemleriMB.yeniDaire.daireTipi}"
-                                                     style="font-weight:bold"
+                                                     style="font-weight:bold; color: #0b4170"
                                                      required="true" label="#{lbl.daire_tipi}">
                                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                                         <f:selectItems value="#{daireIslemleriMB.daireTipiList}" var="daireTipi"
@@ -66,9 +66,9 @@
                                         <f:converter binding="#{daireTipiConverter}"/>
                                     </p:selectOneMenu>
 
-                                    <h:outputLabel for="durum" value="#{lbl.durum} (*)" style="font-weight:bold"/>
+                                    <h:outputLabel for="durum" value="#{lbl.durum} (*)" style="font-weight:bold; color: #0b4170"/>
                                     <p:selectOneMenu id="durum" value="#{daireIslemleriMB.yeniDaire.durum}"
-                                                     style="font-weight:bold"
+                                                     style="font-weight:bold; color: #0b4170"
                                                      required="true" label="#{lbl.durum}">
                                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                                         <f:selectItems value="#{daireIslemleriMB.durumList}" var="drm" itemValue="#{drm}"

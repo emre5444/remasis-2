@@ -9,18 +9,18 @@
 
                 <h:panelGrid id="showTalepDetailTalepEkleme" columns="2" cellpadding="5">
 
-                    <h:outputLabel for="aidat_donem" value="#{lbl.islem_tarihi}" style="font-weight:bold"/>
+                    <h:outputLabel for="aidat_donem" value="#{lbl.islem_tarihi}" style="font-weight:bold; color: #0b4170"/>
                     <h:outputText id="aidat_donem" value="#{daireGoruntuleMB.selectedBorc.borc.islemTarihi}">
                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                     </h:outputText>
 
-                    <h:outputLabel for="aidat_borc_tutari" value="#{lbl.borc_tutari}" style="font-weight:bold"/>
+                    <h:outputLabel for="aidat_borc_tutari" value="#{lbl.borc_tutari}" style="font-weight:bold; color: #0b4170"/>
                     <h:outputText id="aidat_borc_tutari" value="#{daireGoruntuleMB.selectedBorc.borc.borc}"/>
 
-                    <h:outputLabel for="aidat_alacak_tutari" value="#{lbl.odenen_tutar}" style="font-weight:bold"/>
+                    <h:outputLabel for="aidat_alacak_tutari" value="#{lbl.odenen_tutar}" style="font-weight:bold; color: #0b4170"/>
                     <h:outputText id="aidat_alacak_tutari" value="#{daireGoruntuleMB.selectedBorc.borc.odenenTutar}"/>
 
-                    <h:outputLabel for="talep_aciklama_v" value="#{lbl.talep_aciklama} (*)" style="font-weight:bold"/>
+                    <h:outputLabel for="talep_aciklama_v" value="#{lbl.talep_aciklama} (*)" style="font-weight:bold; color: #0b4170"/>
                     <p:inputTextarea rows="6" cols="50" value="#{daireGoruntuleMB.yeniItiraz.aciklama}" required="true" label="#{lbl.talep_aciklama}"
                                  id="talep_aciklama_v"
                             />

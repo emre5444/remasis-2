@@ -20,21 +20,21 @@
             <p:panel header="#{lbl.menu_envanter_sorgulama}">
                 <h:panelGrid columns="6" cellpadding="5">
 
-                    <h:outputLabel for="barkodNo" value="#{lbl.envanter_barkod}" style="font-weight:bold"/>
+                    <h:outputLabel for="barkodNo" value="#{lbl.envanter_barkod}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="barkodNo" value="#{envanterMB.sorguKriteri.barkodNo}"/>
 
-                    <h:outputLabel for="marka" value="#{lbl.envanter_marka}" style="font-weight:bold"/>
+                    <h:outputLabel for="marka" value="#{lbl.envanter_marka}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="marka" value="#{envanterMB.sorguKriteri.marka}"/>
 
-                    <h:outputLabel for="model" value="#{lbl.envanter_model}" style="font-weight:bold"/>
+                    <h:outputLabel for="model" value="#{lbl.envanter_model}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="model" value="#{envanterMB.sorguKriteri.model}"/>
 
-                    <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi}" style="font-weight:bold"/>
+                    <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="urunAdi" value="#{envanterMB.sorguKriteri.urunAdi}"/>
 
-                    <h:outputLabel for="kategori" value="#{lbl.envanter_kategori}" style="font-weight:bold"/>
+                    <h:outputLabel for="kategori" value="#{lbl.envanter_kategori}" style="font-weight:bold; color: #0b4170"/>
                     <p:selectOneMenu id="kategori" value="#{envanterMB.sorguKriteri.kategori}"
-                                     style="font-weight:bold">
+                                     style="font-weight:bold; color: #0b4170">
                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                         <f:selectItems value="#{envanterMB.kategoriList}" var="kategoriList" itemValue="#{kategoriList}"
                                        itemLabel="#{kategoriList.aciklama}"/>
@@ -42,20 +42,20 @@
                     </p:selectOneMenu>
 
                     <h:outputLabel for="baslangic_tarihi" value="#{lbl.envanter_alim_zamani_bas}"
-                                   style="font-weight:bold"/>
+                                   style="font-weight:bold; color: #0b4170"/>
                     <p:calendar id="baslangic_tarihi" value="#{envanterMB.sorguKriteri.baslangicIlimTarihi}"
                                 pattern="dd/MM/yyyy" mask="true"/>
 
-                    <h:outputLabel for="bitis_tarihi" value="#{lbl.envanter_alim_zamani_bit}" style="font-weight:bold"/>
+                    <h:outputLabel for="bitis_tarihi" value="#{lbl.envanter_alim_zamani_bit}" style="font-weight:bold; color: #0b4170"/>
                     <p:calendar id="bitis_tarihi" value="#{envanterMB.sorguKriteri.bitisIlimTarihi}"
                                 pattern="dd/MM/yyyy"
                                 mask="true"/>
 
-                    <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}" style="font-weight:bold"/>
+                    <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="saticiFirma" value="#{envanterMB.sorguKriteri.saticiFirma}"/>
 
                     <h:outputLabel for="zimmetliPersonel" value="#{lbl.envanter_zimmetli_personel}"
-                                   style="font-weight:bold"/>
+                                   style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="zimmetliPersonel" value="#{envanterMB.sorguKriteri.zimmetliPersonel}"/>
 
                     <p:commandButton value="#{lbl.ortak_sorgula}"

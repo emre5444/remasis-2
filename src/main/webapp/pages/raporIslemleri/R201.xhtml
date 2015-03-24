@@ -33,7 +33,7 @@
                                 <h:panelGrid columns="2" cellpadding="5">
 
                                     <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
 
                                     <p:autoComplete value="#{raporMB.sorguKriteri.kullanici}"
                                                     disabled="#{not sessionInfo.adminMi}"
@@ -58,9 +58,9 @@
 
                                     </p:autoComplete>
 
-                                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
                                     <p:selectOneMenu id="blok_adi" value="#{raporMB.sorguKriteri.blok}"
-                                                     style="font-weight:bold">
+                                                     style="font-weight:bold; color: #0b4170">
                                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                                         <f:selectItems value="#{raporMB.blokList}" var="blokList"
                                                        itemValue="#{blokList}"
@@ -68,7 +68,7 @@
                                         <f:converter binding="#{blokConverter}"/>
                                     </p:selectOneMenu>
 
-                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText id="daire_no" value="#{raporMB.sorguKriteri.daireNo}"/>
 
                                     <p:commandButton ajax="false" value="#{lbl.raporla}"

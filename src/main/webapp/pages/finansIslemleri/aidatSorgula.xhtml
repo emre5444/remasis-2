@@ -21,20 +21,20 @@
             <p:panel header="#{lbl.aidat_sorgulama}">
                 <h:panelGrid columns="4" cellpadding="7">
 
-                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
                     <p:selectOneMenu id="blok_adi" value="#{aidatIslemleriMB.sorguKriteri.blok}"
-                                     style="font-weight:bold">
+                                     style="font-weight:bold; color: #0b4170">
                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                         <f:selectItems value="#{aidatIslemleriMB.blokList}" var="blokList" itemValue="#{blokList}"
                                        itemLabel="#{blokList.aciklama}"/>
                         <f:converter binding="#{blokConverter}"/>
                     </p:selectOneMenu>
 
-                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="daire_no" value="#{aidatIslemleriMB.sorguKriteri.daireNo}"/>
 
 
-                    <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
+                    <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold; color: #0b4170"/>
                     <p:autoComplete value="#{aidatIslemleriMB.sorguKriteri.kullanici}"
                                     disabled="#{not sessionInfo.adminMi}"
                                     id="kullanici_list" completeMethod="#{aidatIslemleriMB.completePlayer}"
@@ -58,9 +58,9 @@
                     </p:autoComplete>
 
 
-                    <h:outputLabel for="kaynak_tipi" value="#{lbl.kaynak_tipi}" style="font-weight:bold"/>
+                    <h:outputLabel for="kaynak_tipi" value="#{lbl.kaynak_tipi}" style="font-weight:bold; color: #0b4170"/>
                     <p:selectOneMenu id="kaynak_tipi" value="#{aidatIslemleriMB.sorguKriteri.kaynakTipi}"
-                                     style="font-weight:bold">
+                                     style="font-weight:bold; color: #0b4170">
                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                         <f:selectItems value="#{aidatIslemleriMB.kaynakTipiList}" var="kaynakTipiList"
                                        itemValue="#{kaynakTipiList}"
@@ -70,16 +70,16 @@
 
 
                     <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
-                                   style="font-weight:bold"/>
+                                   style="font-weight:bold; color: #0b4170"/>
                     <p:calendar id="baslangic_tarihi" value="#{aidatIslemleriMB.sorguKriteri.sorguBaslangicTarihi}"
                                 pattern="dd/MM/yyyy" mask="true"/>
 
-                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170"/>
                     <p:calendar id="bitis_tarihi" value="#{aidatIslemleriMB.sorguKriteri.sorguBitisTarihi}"
                                 pattern="dd/MM/yyyy"
                                 mask="true"/>
 
-                    <h:outputLabel for="dekont_no" value="#{lbl.borc_dekont_no}" style="font-weight:bold"/>
+                    <h:outputLabel for="dekont_no" value="#{lbl.borc_dekont_no}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="dekont_no" value="#{aidatIslemleriMB.sorguKriteri.dekontNo}"/>
 
                     <h:panelGroup/><h:panelGroup/>
@@ -157,15 +157,15 @@
                                      columnClasses="panelCol2 width40 ,panelCol2 width60">
 
                             <h:outputLabel for="daire_kodu" value="#{lbl.daire_kodu}"
-                                           style="font-weight:bold"/>
+                                           style="font-weight:bold; color: #0b4170"/>
                             <h:outputText id="daire_kodu" value="#{varAidat.daire.daireKodu}"/>
 
                             <h:outputLabel for="daire_blok" value="#{lbl.daire_blokAdi}"
-                                           style="font-weight:bold"/>
+                                           style="font-weight:bold; color: #0b4170"/>
                             <h:outputText id="daire_blok" value="#{varAidat.daire.blok.aciklama}"/>
 
                             <h:outputLabel for="daire_no1" value="#{lbl.daire_no}"
-                                           style="font-weight:bold"/>
+                                           style="font-weight:bold; color: #0b4170"/>
                             <h:outputText id="daire_no1" value="#{varAidat.daire.daireNo}"/>
 
                         </h:panelGrid>

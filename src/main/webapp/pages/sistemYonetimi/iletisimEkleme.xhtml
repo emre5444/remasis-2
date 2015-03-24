@@ -13,15 +13,15 @@
             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
                 <h:panelGrid columns="2" cellpadding="5">
 
-                    <h:outputLabel for="iletisim_ad_soyad" value="#{lbl.label_gorevli_ismi} (*)" style="font-weight:bold"/>
+                    <h:outputLabel for="iletisim_ad_soyad" value="#{lbl.label_gorevli_ismi} (*)" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText  size="30" value="#{entityMB.yeniIletisimBilgisi.bilgiTipi}"
                                      id="iletisim_ad_soyad" required="true" label="#{lbl.label_gorevli_ismi}"/>
 
-                    <h:outputLabel for="iletisim_unvan" value="#{lbl.label_gorevli_unvan} (*)" style="font-weight:bold"/>
+                    <h:outputLabel for="iletisim_unvan" value="#{lbl.label_gorevli_unvan} (*)" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText  size="40" value="#{entityMB.yeniIletisimBilgisi.bilgiTipiAck}"
                                   id="iletisim_unvan" required="true" label="#{lbl.label_gorevli_unvan}"/>
 
-                    <h:outputLabel for="iletisim_aciklama" value="#{lbl.label_iletisim_bilgisi} (*)" style="font-weight:bold"/>
+                    <h:outputLabel for="iletisim_aciklama" value="#{lbl.label_iletisim_bilgisi} (*)" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText  size="40" value="#{entityMB.yeniIletisimBilgisi.iletisimBilgisi}"
                                   id="iletisim_aciklama" required="true" label="#{lbl.label_iletisim_bilgisi}"/>
 

@@ -42,35 +42,35 @@
 
                     <h:panelGrid columns="2" cellpadding="5">
 
-                        <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                        <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="ad" value="#{kullaniciController.sorguKriteri.ad}"
                                      disabled="#{not sessionInfo.adminMi}"/>
 
-                        <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                        <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="soyad" value="#{kullaniciController.sorguKriteri.soyad}"
                                      disabled="#{not sessionInfo.adminMi}"/>
 
-                        <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold"
+                        <h:outputLabel for="username" value="#{lbl.kullanici_adi}" style="font-weight:bold; color: #0b4170"
                                        rendered="#{kullaniciController.tumKriterlerMi}"/>
                         <p:inputText id="username" value="#{kullaniciController.sorguKriteri.kullaniciAdi}"
                                      rendered="#{kullaniciController.tumKriterlerMi}"/>
 
-                        <h:outputLabel for="rol" value="#{lbl.rol}" style="font-weight:bold"
+                        <h:outputLabel for="rol" value="#{lbl.rol}" style="font-weight:bold; color: #0b4170"
                                        rendered="#{kullaniciController.tumKriterlerMi}"/>
                         <p:selectOneMenu id="rol" value="#{kullaniciController.sorguKriteri.rol}"
                                          rendered="#{kullaniciController.tumKriterlerMi}"
-                                         style="font-weight:bold">
+                                         style="font-weight:bold; color: #0b4170">
                             <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                             <f:selectItems value="#{kullaniciController.rolList}" var="rolvar" itemValue="#{rolvar}"
                                            itemLabel="#{rolvar.ad}"/>
                             <f:converter binding="#{rolConverter}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold"
+                        <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold; color: #0b4170"
                                        rendered="#{kullaniciController.tumKriterlerMi}"/>
                         <p:selectOneMenu id="rolTipi" value="#{kullaniciController.sorguKriteri.sistemYoneticisiMi}"
                                          rendered="#{kullaniciController.tumKriterlerMi}"
-                                         style="font-weight:bold">
+                                         style="font-weight:bold; color: #0b4170">
                             <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                             <f:selectItems value="#{kullaniciController.rolTipiList}" var="rolTipi"
                                            itemValue="#{rolTipi}"
@@ -78,9 +78,9 @@
                             <f:converter binding="#{evetHayirConverter}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
                         <p:selectOneMenu id="blok_adi" value="#{kullaniciController.sorguKriteri.blok}"
-                                         style="font-weight:bold">
+                                         style="font-weight:bold; color: #0b4170">
                             <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                             <f:selectItems value="#{kullaniciController.blokList}" var="blokList"
                                            itemValue="#{blokList}"
@@ -88,19 +88,19 @@
                             <f:converter binding="#{blokConverter}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="daire_no" value="#{kullaniciController.sorguKriteri.daireNo}"/>
 
-                        <h:outputLabel for="e_mail" value="#{lbl.kullanici_email}" style="font-weight:bold"
+                        <h:outputLabel for="e_mail" value="#{lbl.kullanici_email}" style="font-weight:bold; color: #0b4170"
                                        rendered="#{kullaniciController.tumKriterlerMi}"/>
                         <p:inputText id="e_mail" value="#{kullaniciController.sorguKriteri.email}"
                                      rendered="#{kullaniciController.tumKriterlerMi}"/>
 
-                        <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold"
+                        <h:outputLabel for="durum" value="#{lbl.kullanici_durum}" style="font-weight:bold; color: #0b4170"
                                        rendered="#{kullaniciController.tumKriterlerMi}"/>
                         <p:selectOneMenu id="durum" value="#{kullaniciController.sorguKriteri.durum}"
                                          rendered="#{kullaniciController.tumKriterlerMi}"
-                                         style="font-weight:bold">
+                                         style="font-weight:bold; color: #0b4170">
                             <f:selectItems value="#{kullaniciController.durumList}" var="drm" itemValue="#{drm}"
                                            itemLabel="#{drm.aciklama}"/>
                             <f:converter binding="#{durumConverter}"/>
