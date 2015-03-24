@@ -22,13 +22,26 @@
 <div class="EmptyBox10"></div>
 <div class="Container100">
 <div class="ContainerIndent">
-<p:panel>
+<p:panel id="sorguPannel">
     <div class="Container100 Responsive">
         <div class="ContainerIndent">
-            <div class="Container100 Responsive Fs20 hardblue">
-                <i class="icon-cubes orange"></i> #{lbl.talep_sorgulama}
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <div class="Container100 Responsive Fs20 hardblue">
+                        <i class="icon-cubes orange"></i>  <h:outputText value="#{lbl.talep_sorgulama}"
+                                                                          styleClass="FontBold Fs18 hardblue"></h:outputText>
+
+                        <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
+                        <p:selectBooleanCheckbox value="#{talepMB.tumKriterlerMi}" styleClass="Fright"
+                                                 style="margin-right: 5px;" onLabel="#{lbl.label_evet}"
+                                                 offLabel="#{lbl.label_hayir}">
+                            <p:ajax update="sorguPannel"/>
+                        </p:selectBooleanCheckbox>
+                    </div>
+                </div>
             </div>
-            <h:panelGrid columns="4" cellpadding="5">
+
+            <h:panelGrid columns="2" cellpadding="5">
 
                 <h:outputLabel for="talepTipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
                 <p:selectOneMenu id="talepTipi" value="#{talepMB.sorguKriteri.talepTipi}"
@@ -69,21 +82,21 @@
                     <f:selectItem itemLabel="#{lbl.reddedilmis_talepler}" itemValue="reddedildi"/>
                 </p:selectOneMenu>
 
-                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
-                <p:inputText id="daire_no" value="#{talepMB.sorguKriteri.daireNo}"/>
+                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold" rendered="#{talepMB.tumKriterlerMi}"/>
+                <p:inputText id="daire_no" value="#{talepMB.sorguKriteri.daireNo}" rendered="#{talepMB.tumKriterlerMi}"/>
 
-                <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
+                <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}" rendered="#{talepMB.tumKriterlerMi}"
                                style="font-weight:bold"/>
-                <p:calendar id="baslangic_tarihi" value="#{talepMB.sorguKriteri.sorguBaslangicTarihi}"
+                <p:calendar id="baslangic_tarihi" value="#{talepMB.sorguKriteri.sorguBaslangicTarihi}" rendered="#{talepMB.tumKriterlerMi}"
                             pattern="dd/MM/yyyy" mask="true"/>
 
-                <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
-                <p:calendar id="bitis_tarihi" value="#{talepMB.sorguKriteri.sorguBitisTarihi}"
+                <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold" rendered="#{talepMB.tumKriterlerMi}"/>
+                <p:calendar id="bitis_tarihi" value="#{talepMB.sorguKriteri.sorguBitisTarihi}" rendered="#{talepMB.tumKriterlerMi}"
                             pattern="dd/MM/yyyy"
                             mask="true"/>
 
-                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
-                <p:selectOneMenu id="blok_adi" value="#{talepMB.sorguKriteri.blok}"
+                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold" rendered="#{talepMB.tumKriterlerMi}"/>
+                <p:selectOneMenu id="blok_adi" value="#{talepMB.sorguKriteri.blok}" rendered="#{talepMB.tumKriterlerMi}"
                                  style="font-weight:bold">
                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                     <f:selectItems value="#{talepMB.blokList}" var="blokList" itemValue="#{blokList}"
@@ -91,7 +104,6 @@
                     <f:converter binding="#{blokConverter}"/>
                 </p:selectOneMenu>
 
-                <h:panelGroup/><h:panelGroup/>
                 <p:commandButton value="#{lbl.ortak_sorgula}"
                                  actionListener="#{talepMB.getTalepListBySorguKriteri()}"
                                  update="@([id$=main_form])"/>

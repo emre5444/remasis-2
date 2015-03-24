@@ -68,6 +68,7 @@ public class TalepMB extends AbstractMB implements Serializable {
     private List<IAbstractEntity> blokList;
     private List<IAbstractEntity> durumList;
     boolean sorguSonucuLoaded = false;
+    private boolean tumKriterlerMi;
 
     @PostConstruct
     public void init() {
@@ -308,5 +309,13 @@ public class TalepMB extends AbstractMB implements Serializable {
 
     public void setSorguSonucuLoaded(boolean sorguSonucuLoaded) {
         this.sorguSonucuLoaded = sorguSonucuLoaded;
+    }
+
+    public boolean isTumKriterlerMi() {
+        return tumKriterlerMi;
+    }
+
+    public void setTumKriterlerMi(boolean tumKriterlerMi) {
+        this.tumKriterlerMi = tumKriterlerMi;
     }
 }
