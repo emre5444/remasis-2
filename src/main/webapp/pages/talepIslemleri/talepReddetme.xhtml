@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
 <ui:define name="title">
     <h:outputText value="#{lbl.talep_ortak_reddetme}"/>
@@ -14,229 +15,264 @@
 <ui:define name="content">
 
 <h:form id="talepReddetme">
+
+<div class="EmptyBox10"></div>
+<div class="Container100">
+<div class="ContainerIndent">
+<div class="EmptyBox10"></div>
+
+
 <p:fieldset legend="#{lbl.talep_ortak_reddetme}">
-<p:panel header="#{lbl.daire_bilgileri}">
-    <h:panelGrid id="showDaireDetailBilgileri" columns="6" cellpadding="5">
-        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
-        <h:outputText id="daire_no" value="#{talepIslemMB.selected.daire.daireNo}"/>
+<p:panel>
+    <div class="Container100 Responsive">
+        <div class="ContainerIndent">
+            <div class="Container100 Responsive Fs20 hardblue">
+                <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
+            </div>
+            <h:panelGrid id="showDaireDetailBilgileri" columns="6" cellpadding="5">
+                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                <h:outputText id="daire_no" value="#{talepIslemMB.selected.daire.daireNo}"/>
 
-        <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}" style="font-weight:bold"/>
-        <h:outputText id="blok_adi" value="#{talepIslemMB.selected.daire.blok.aciklama}"/>
+                <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}" style="font-weight:bold"/>
+                <h:outputText id="blok_adi" value="#{talepIslemMB.selected.daire.blok.aciklama}"/>
 
-        <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
-        <h:outputText id="kat" value="#{talepIslemMB.selected.daire.kat}"/>
-    </h:panelGrid>
-</p:panel>
-
-<div style="height:10px"></div>
-
-<p:panel header="#{lbl.talep_bilgileri}">
-    <h:panelGrid id="showTalepDetailTalepBilgileri" columns="6" cellpadding="5">
-
-        <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold"/>
-        <h:outputText id="talep_no" value="#{talepIslemMB.selected.talep.id}"/>
-
-        <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
-        <h:outputText id="talep_tipi" value="#{talepIslemMB.selected.talep.talepTipi.aciklama}"/>
-
-        <h:outputLabel for="talep_kullanici" value="#{lbl.kullanici}" style="font-weight:bold"/>
-        <h:outputText id="talep_kullanici" value="#{talepIslemMB.selected.talep.kullanici.adSoyad}"/>
-
-        <h:outputLabel for="talep_tarihi" value="#{lbl.talep_tarihi}" style="font-weight:bold"/>
-        <h:outputText id="talep_tarihi" value="#{talepIslemMB.selected.talep.islemTarihi}">
-            <f:convertDateTime pattern="dd/MM/yyyy"/>
-        </h:outputText>
-
-        <h:outputLabel for="talep_onay_durum" value="#{lbl.talep_onay_durumu}"
-                       style="font-weight:bold"/>
-        <h:outputText id="talep_onay_durum" value="#{talepIslemMB.selected.talep.talepOnayDurumu.aciklama}"/>
-
-    </h:panelGrid>
-    <h:panelGrid columns="2" cellpadding="5">
-        <h:outputLabel for="talep_aciklama" value="#{lbl.talep_aciklama}" style="font-weight:bold"/>
-        <h:outputText id="talep_aciklama" value="#{talepIslemMB.selected.talep.aciklama}"/>
-    </h:panelGrid>
-
-</p:panel>
-
-<div style="height:10px"></div>
-
-<p:panel header="#{lbl.talep_ek_bilgileri}">
-
-    <h:panelGrid id="showBelgeTalepEkBilgileri" columns="2" cellpadding="5"
-                 rendered="#{talepIslemMB.selected.talep.talepTipi.belgeTalebiMi}">
-
-        <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}" style="font-weight:bold"/>
-        <h:outputText id="belge_tipi" value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
-
-        <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge"
-                     rows="20" emptyMessage="#{msg.no_record_found}">
-
-            <p:column headerText="#{lbl.label_belge_adi}" sortBy="belge.dataName"
-                      style="width:25%">
-                <h:outputText value="#{varBelge.belge.dataName}"/>
-            </p:column>
-            <p:column headerText="#{lbl.label_belge_kullanici}" sortBy="belge.kullanici.adSoyad"
-                      style="width:20%">
-                <h:outputText value="#{varBelge.belge.kullanici.adSoyad}"/>
-            </p:column>
-            <p:column headerText="#{lbl.label_belge_boyut}" sortBy="belge.size"
-                      style="width:20%">
-                <h:outputText value="#{varBelge.belge.size}"/>
-            </p:column>
-            <p:column headerText="#{lbl.label_belge_tarihi}" sortBy="belge.islemTarihi" style="width:20%">
-                <h:outputText value="#{varBelge.belge.islemTarihi}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputText>
-            </p:column>
-
-            <p:column style="width:4%">
-                <h:panelGrid columns="4">
-                    <p:commandLink ajax="false" update="@([id$=talepReddetme])"
-                                   id="downloadLink"
-                            >
-                        <p:graphicImage value="/images/download_icon.png"/>
-                        <f:setPropertyActionListener value="#{varBelge}" target="#{talepIslemMB.selectedDaireBelge}"/>
-                        <p:fileDownload value="#{talepIslemMB.download}"/>
-                    </p:commandLink>
-                    <p:commandButton id="deleteBelge1" immediate="true" icon="ui-icon-trash"
-                                     rendered="#{sessionInfo.adminMi and talepIslemMB.selected.talep.talepOnayDurumu.talepYapildiMi.evetMi}"
-                                     action="#{talepIslemMB.deleteBelge}" update="@([id$=talepReddetme])"
-                            >
-
-                        <f:setPropertyActionListener value="#{varBelge}"
-                                                     target="#{talepIslemMB.selectedDaireBelge}"/>
-                        <p:confirm header="#{lbl.label_belge_silme}"
-                                   message="#{msg.islemi_onayliyormusunuz}"/>
-                    </p:commandButton>
-                </h:panelGrid>
-
-            </p:column>
-        </p:dataTable>
-    </h:panelGrid>
-
-    <h:panelGrid id="showArizaTalepEkBilgileri" columns="2" cellpadding="5"
-                 rendered="#{talepIslemMB.selected.talep.talepTipi.arizaTalebiMi}">
-
-        <h:outputLabel for="mudahele_tarihi" value="#{lbl.talep_mudahale_tarihi}"
-                       style="font-weight:bold"/>
-        <h:outputText id="mudahele_tarihi" value="#{talepIslemMB.selected.talep.mudahaleTarihi}">
-            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
-        </h:outputText>
-
-        <h:outputLabel for="ariza_aciklama" value="#{lbl.ariza_aciklamasi}" style="font-weight:bold"/>
-        <h:outputText id="ariza_aciklama" value="#{talepIslemMB.selected.talep.arizaAciklama}"/>
-
-    </h:panelGrid>
-
-    <h:panelGrid id="showSikayetTalepEkBilgileri" columns="2" cellpadding="5"
-                 rendered="#{talepIslemMB.selected.talep.talepTipi.sikayetTalebiMi}">
-
-        <h:outputLabel for="sikayet_aciklama" value="#{lbl.sikayet_aciklama}" style="font-weight:bold"/>
-        <h:outputText id="sikayet_aciklama" value="#{talepIslemMB.selected.talep.sikayetAciklama}"/>
-
-    </h:panelGrid>
-
-    <h:panelGrid id="showItirazTalepEkBilgileri" columns="2" cellpadding="5"
-                 rendered="#{talepIslemMB.selected.talep.talepTipi.itirazTalebiMi}">
-
-        <p:dataTable value="#{talepIslemMB.getItirazEdilenDaireBorcAsList()}" var="varBorc" style="width:100%;"
-                     paginatorPosition="bottom"
-                     paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                     paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                     rowsPerPageTemplate="5,10,15">
-
-            <p:column sortBy="borc.dekontNo"
-                      style="width:10%">
-                <f:facet name="header">
-                    <h:outputText value="#{lbl.borc_dekont_no}"/>
-                </f:facet>
-                <h:outputText value="#{varBorc.borc.dekontNo}"/>
-            </p:column>
-            <p:column sortBy="borc.islemTarihi"
-                      style="width:9%">
-                <f:facet name="header">
-                    <h:outputText value="#{lbl.aidat_donemi}"/>
-                </f:facet>
-                <h:outputText value="#{varBorc.borc.islemTarihi}" style="font-weight:bold; color:#ce1797;">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputText>
-            </p:column>
-            <p:column sortBy="borc.odemeVadesi" style="width:9%">
-                <f:facet name="header">
-                    <h:outputText value="#{lbl.odeme_tarihi}"/>
-                </f:facet>
-                <h:outputText value="#{varBorc.borc.odemeVadesi}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputText>
-            </p:column>
-            <p:column sortBy="borc.sonOdemeTarihi" style="width:9%">
-                <f:facet name="header">
-                    <h:outputText value="#{lbl.son_odeme_tarihi}"/>
-                </f:facet>
-                <h:outputText value="#{varBorc.borc.sonOdemeTarihi}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </h:outputText>
-            </p:column>
-            <p:column sortBy="borc.borc"
-                      style="width:5%">
-                <f:facet name="header">
-                    <h:outputText value="#{lbl.borc_tutari}"/>
-                </f:facet>
-                <h:outputText value="#{varBorc.borc.borc}"
-                              style="text-align:right;font-weight:bold; color:#FF4000;"/>
-            </p:column>
-            <p:column sortBy="borc.odenenTutar"
-                      style="width:5%">
-                <f:facet name="header">
-                    <h:outputText value="#{lbl.odenen_tutar}"/>
-                </f:facet>
-                <h:outputText value="#{varBorc.borc.odenenTutar}"
-                              style="text-align:right;font-weight:bold; color:#088A29;"/>
-            </p:column>
-
-            <p:column sortBy="borc.aciklama"
-                      style="width:30%">
-                <f:facet name="header">
-                    <h:outputText value="#{lbl.ortak_aciklama}"/>
-                </f:facet>
-                <h:outputText value="#{varBorc.borc.aciklama}"/>
-            </p:column>
-
-        </p:dataTable>
-    </h:panelGrid>
-</p:panel>
-
-<div style="height:10px"></div>
-
-<p:panel header="#{lbl.talep_ortak_reddetme}">
-
-    <h:panelGrid id="showTalepReddetme" columns="2" cellpadding="5">
-
-        <h:outputLabel for="talep_red_aciklama_v" value="#{lbl.talep_aciklama} (*)"
-                       style="font-weight:bold"/>
-        <h:inputTextarea rows="6" cols="66" value="#{talepIslemMB.selected.talep.onayAciklama}"
-                         required="true" label="#{lbl.talep_aciklama}"
-                         id="talep_red_aciklama_v"
-                />
-
-
-        <f:facet name="footer">
-            <h:panelGrid columns="2">
-                <p:commandButton id="talep_red_button" value="#{lbl.ortak_reddet}"
-                                 action="#{talepIslemMB.talepReddet}">
-                    <p:confirm header="#{lbl.talep_ortak_reddetme}" message="#{msg.islemi_onayliyormusunuz}"/>
-                </p:commandButton>
-
-                <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
-                                 action="#{talepIslemMB.geriDon}"/>
+                <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
+                <h:outputText id="kat" value="#{talepIslemMB.selected.daire.kat}"/>
             </h:panelGrid>
-        </f:facet>
-    </h:panelGrid>
+        </div>
+    </div>
+</p:panel>
+
+<div class="EmptyBox10"></div>
+
+<p:panel>
+    <div class="Container100 Responsive">
+        <div class="ContainerIndent">
+            <div class="Container100 Responsive Fs20 hardblue">
+                <i class="icon-th-1 orange"></i> #{lbl.talep_bilgileri}
+            </div>
+            <h:panelGrid id="showTalepDetailTalepBilgileri" columns="6" cellpadding="5">
+
+                <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold"/>
+                <h:outputText id="talep_no" value="#{talepIslemMB.selected.talep.id}"/>
+
+                <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
+                <h:outputText id="talep_tipi" value="#{talepIslemMB.selected.talep.talepTipi.aciklama}"/>
+
+                <h:outputLabel for="talep_kullanici" value="#{lbl.kullanici}" style="font-weight:bold"/>
+                <h:outputText id="talep_kullanici" value="#{talepIslemMB.selected.talep.kullanici.adSoyad}"/>
+
+                <h:outputLabel for="talep_tarihi" value="#{lbl.talep_tarihi}" style="font-weight:bold"/>
+                <h:outputText id="talep_tarihi" value="#{talepIslemMB.selected.talep.islemTarihi}">
+                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                </h:outputText>
+
+                <h:outputLabel for="talep_onay_durum" value="#{lbl.talep_onay_durumu}"
+                               style="font-weight:bold"/>
+                <h:outputText id="talep_onay_durum" value="#{talepIslemMB.selected.talep.talepOnayDurumu.aciklama}"/>
+
+            </h:panelGrid>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel for="talep_aciklama" value="#{lbl.talep_aciklama}" style="font-weight:bold"/>
+                <h:outputText id="talep_aciklama" value="#{talepIslemMB.selected.talep.aciklama}"/>
+            </h:panelGrid>
+        </div>
+    </div>
+</p:panel>
+
+<div class="EmptyBox10"></div>
+
+<p:panel>
+    <div class="Container100 Responsive">
+        <div class="ContainerIndent">
+            <div class="Container100 Responsive Fs20 hardblue">
+                <i class="icon-plus-outline orange"></i> #{lbl.talep_ek_bilgileri}
+            </div>
+            <h:panelGrid id="showBelgeTalepEkBilgileri" columns="2" cellpadding="5"
+                         rendered="#{talepIslemMB.selected.talep.talepTipi.belgeTalebiMi}">
+
+                <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}" style="font-weight:bold"/>
+                <h:outputText id="belge_tipi" value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
+
+                <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge"
+                             rows="20" emptyMessage="#{msg.no_record_found}">
+
+                    <p:column headerText="#{lbl.label_belge_adi}" sortBy="belge.dataName"
+                              style="width:25%">
+                        <h:outputText value="#{varBelge.belge.dataName}"/>
+                    </p:column>
+                    <p:column headerText="#{lbl.label_belge_kullanici}" sortBy="belge.kullanici.adSoyad"
+                              style="width:20%">
+                        <h:outputText value="#{varBelge.belge.kullanici.adSoyad}"/>
+                    </p:column>
+                    <p:column headerText="#{lbl.label_belge_boyut}" sortBy="belge.size"
+                              style="width:20%">
+                        <h:outputText value="#{varBelge.belge.size}"/>
+                    </p:column>
+                    <p:column headerText="#{lbl.label_belge_tarihi}" sortBy="belge.islemTarihi" style="width:20%">
+                        <h:outputText value="#{varBelge.belge.islemTarihi}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="width:4%">
+                        <h:panelGrid columns="4">
+                            <p:commandLink ajax="false" update="@([id$=talepReddetme])"
+                                           id="downloadLink"
+                                    >
+                                <p:graphicImage value="/images/download_icon.png"/>
+                                <f:setPropertyActionListener value="#{varBelge}"
+                                                             target="#{talepIslemMB.selectedDaireBelge}"/>
+                                <p:fileDownload value="#{talepIslemMB.download}"/>
+                            </p:commandLink>
+                            <p:commandButton id="deleteBelge1" immediate="true" icon="ui-icon-trash"
+                                             rendered="#{sessionInfo.adminMi and talepIslemMB.selected.talep.talepOnayDurumu.talepYapildiMi.evetMi}"
+                                             action="#{talepIslemMB.deleteBelge}" update="@([id$=talepReddetme])"
+                                    >
+
+                                <f:setPropertyActionListener value="#{varBelge}"
+                                                             target="#{talepIslemMB.selectedDaireBelge}"/>
+                                <p:confirm header="#{lbl.label_belge_silme}"
+                                           message="#{msg.islemi_onayliyormusunuz}"/>
+                            </p:commandButton>
+                        </h:panelGrid>
+
+                    </p:column>
+                </p:dataTable>
+            </h:panelGrid>
+
+            <h:panelGrid id="showArizaTalepEkBilgileri" columns="2" cellpadding="5"
+                         rendered="#{talepIslemMB.selected.talep.talepTipi.arizaTalebiMi}">
+
+                <h:outputLabel for="mudahele_tarihi" value="#{lbl.talep_mudahale_tarihi}"
+                               style="font-weight:bold"/>
+                <h:outputText id="mudahele_tarihi" value="#{talepIslemMB.selected.talep.mudahaleTarihi}">
+                    <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                </h:outputText>
+
+                <h:outputLabel for="ariza_aciklama" value="#{lbl.ariza_aciklamasi}" style="font-weight:bold"/>
+                <h:outputText id="ariza_aciklama" value="#{talepIslemMB.selected.talep.arizaAciklama}"/>
+
+            </h:panelGrid>
+
+            <h:panelGrid id="showSikayetTalepEkBilgileri" columns="2" cellpadding="5"
+                         rendered="#{talepIslemMB.selected.talep.talepTipi.sikayetTalebiMi}">
+
+                <h:outputLabel for="sikayet_aciklama" value="#{lbl.sikayet_aciklama}" style="font-weight:bold"/>
+                <h:outputText id="sikayet_aciklama" value="#{talepIslemMB.selected.talep.sikayetAciklama}"/>
+
+            </h:panelGrid>
+
+            <h:panelGrid id="showItirazTalepEkBilgileri" columns="2" cellpadding="5"
+                         rendered="#{talepIslemMB.selected.talep.talepTipi.itirazTalebiMi}">
+
+                <p:dataTable value="#{talepIslemMB.getItirazEdilenDaireBorcAsList()}" var="varBorc" style="width:100%;"
+                             paginatorPosition="bottom"
+                             paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
+                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="5,10,15">
+
+                    <p:column sortBy="borc.dekontNo"
+                              style="width:10%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.borc_dekont_no}"/>
+                        </f:facet>
+                        <h:outputText value="#{varBorc.borc.dekontNo}"/>
+                    </p:column>
+                    <p:column sortBy="borc.islemTarihi"
+                              style="width:9%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.aidat_donemi}"/>
+                        </f:facet>
+                        <h:outputText value="#{varBorc.borc.islemTarihi}" style="font-weight:bold; color:#ce1797;">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="borc.odemeVadesi" style="width:9%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.odeme_tarihi}"/>
+                        </f:facet>
+                        <h:outputText value="#{varBorc.borc.odemeVadesi}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="borc.sonOdemeTarihi" style="width:9%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.son_odeme_tarihi}"/>
+                        </f:facet>
+                        <h:outputText value="#{varBorc.borc.sonOdemeTarihi}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column sortBy="borc.borc"
+                              style="width:5%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.borc_tutari}"/>
+                        </f:facet>
+                        <h:outputText value="#{varBorc.borc.borc}"
+                                      style="text-align:right;font-weight:bold; color:#FF4000;"/>
+                    </p:column>
+                    <p:column sortBy="borc.odenenTutar"
+                              style="width:5%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.odenen_tutar}"/>
+                        </f:facet>
+                        <h:outputText value="#{varBorc.borc.odenenTutar}"
+                                      style="text-align:right;font-weight:bold; color:#088A29;"/>
+                    </p:column>
+
+                    <p:column sortBy="borc.aciklama"
+                              style="width:30%">
+                        <f:facet name="header">
+                            <h:outputText value="#{lbl.ortak_aciklama}"/>
+                        </f:facet>
+                        <h:outputText value="#{varBorc.borc.aciklama}"/>
+                    </p:column>
+
+                </p:dataTable>
+            </h:panelGrid>
+        </div>
+    </div>
+</p:panel>
+
+<div class="EmptyBox10"></div>
+
+<p:panel>
+    <div class="Container100 Responsive">
+        <div class="ContainerIndent">
+            <div class="Container100 Responsive Fs20 hardblue">
+                <i class="icon-cancel-circled-outline orange"></i> #{lbl.talep_ortak_reddetme}
+            </div>
+            <h:panelGrid id="showTalepReddetme" columns="2" cellpadding="5">
+
+                <h:outputLabel for="talep_red_aciklama_v" value="#{lbl.talep_aciklama} (*)"
+                               style="font-weight:bold"/>
+                <h:inputTextarea rows="6" cols="66" value="#{talepIslemMB.selected.talep.onayAciklama}"
+                                 required="true" label="#{lbl.talep_aciklama}"
+                                 id="talep_red_aciklama_v"
+                        />
+
+
+                <f:facet name="footer">
+                    <h:panelGrid columns="2">
+                        <p:commandButton id="talep_red_button" value="#{lbl.ortak_reddet}"
+                                         action="#{talepIslemMB.talepReddet}">
+                            <p:confirm header="#{lbl.talep_ortak_reddetme}" message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{talepIslemMB.geriDon}"/>
+                    </h:panelGrid>
+                </f:facet>
+            </h:panelGrid>
+        </div>
+    </div>
 </p:panel>
 
 
 </p:fieldset>
+</div>
+</div>
 </h:form>
 </ui:define>
 
