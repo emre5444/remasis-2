@@ -15,6 +15,8 @@
 <ui:define name="content">
 
 <h:form id="main_form">
+<p:remoteCommand global="false" name="onloadTalep" action="#{talepMB.getTalepListBySorguKriteri()}" autoRun="true"
+                 update="@([id$=sorguSonucuPanel])"/>
 <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
 <div class="EmptyBox10"></div>
@@ -91,7 +93,7 @@
 
                 <h:panelGroup/><h:panelGroup/>
                 <p:commandButton value="#{lbl.ortak_sorgula}"
-                                 actionListener="#{talepMB.getDaireListBySorguKriteri()}"
+                                 actionListener="#{talepMB.getTalepListBySorguKriteri()}"
                                  update="@([id$=main_form])"/>
 
             </h:panelGrid>
@@ -101,18 +103,22 @@
 
 <div class="EmptyBox10"></div>
 
-<p:panel id="sorguSonucuPanel"
-         rendered="#{not empty talepMB.dataModel.wrappedData}">
+<p:panel id="sorguSonucuPanel">
     <div class="Container100 Responsive">
         <div class="ContainerIndent">
             <div class="Container100 Responsive Fs20 hardblue">
                 <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
             </div>
+
+            <h:panelGroup rendered="#{not talepMB.sorguSonucuLoaded}">
+                <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                     style="display:block;margin: 0 auto;" alt=""/>
+            </h:panelGroup>
+
             <p:dataTable id="talepSorguSonucu" value="#{talepMB.dataModel}" var="varTalep"
                          paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
-                         selection="#{talepMB.selected}"
                          paginator="true" rows="10"
-                         selectionMode="single"
+                         rendered="#{talepMB.sorguSonucuLoaded}"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15">
 

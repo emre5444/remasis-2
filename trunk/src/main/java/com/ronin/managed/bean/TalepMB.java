@@ -67,13 +67,13 @@ public class TalepMB extends AbstractMB implements Serializable {
     private List<TalepTipi> talepTipiList;
     private List<IAbstractEntity> blokList;
     private List<IAbstractEntity> durumList;
+    boolean sorguSonucuLoaded = false;
 
     @PostConstruct
     public void init() {
         prepareCombos();
         setUserRolInfos();
         getFlushObjects();
-        getDaireListBySorguKriteri();
     }
 
     public void prepareCombos() {
@@ -88,16 +88,16 @@ public class TalepMB extends AbstractMB implements Serializable {
         TalepSorguKriteri sk = (TalepSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
         if (sk != null) {
             sorguKriteri = sk;
-            getDaireListBySorguKriteri();
+            getTalepListBySorguKriteri();
         }
     }
 
-    public void getDaireListBySorguKriteri() {
+    public void getTalepListBySorguKriteri() {
         sorguKriteri.setTalepTipiList(talepTipiList);
         List<TalepDaire> dataList = talepService.getListCriteriaForPaging(0, 3000, sorguKriteri, sessionInfo);
 
         dataModel = new TalepDataModel(dataList);
-
+        sorguSonucuLoaded = true;
         if (dataList == null || dataList.size() <= 0) {
             JsfUtil.addWarnMessage(message.getString("error.sonuc.yok"));
         }
@@ -193,7 +193,7 @@ public class TalepMB extends AbstractMB implements Serializable {
             talepService.deleteTalep(selected);
             bildirimGonderForIptal();
             JsfUtil.addSuccessMessage(message.getString("talep_silme_basarili"));
-            getDaireListBySorguKriteri();
+            getTalepListBySorguKriteri();
         } else {
             throw new ServiceException(message.getString("talep_onay_red_gormus_onay"));
         }
@@ -300,5 +300,13 @@ public class TalepMB extends AbstractMB implements Serializable {
 
     public void setDurumList(List<IAbstractEntity> durumList) {
         this.durumList = durumList;
+    }
+
+    public boolean isSorguSonucuLoaded() {
+        return sorguSonucuLoaded;
+    }
+
+    public void setSorguSonucuLoaded(boolean sorguSonucuLoaded) {
+        this.sorguSonucuLoaded = sorguSonucuLoaded;
     }
 }
