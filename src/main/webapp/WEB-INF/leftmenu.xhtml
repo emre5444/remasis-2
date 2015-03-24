@@ -110,6 +110,7 @@
             <p:submenu label="#{lbl.talep_islemleri}" icon="icon-news"
                        rendered="#{sessionInfo.isYetkili('talep_islemleri')}">
                 <p:menuitem value="#{lbl.talep_sorgulama}"
+                            icon="icon-calendar"
                             url="/pages/talepIslemleri/talepSorgula.jsf"
                             rendered="#{sessionInfo.isYetkili('talep_sorgulama')}"/>
             </p:submenu>
@@ -129,8 +130,10 @@
             <p:submenu label="#{lbl.raporlama_islemleri}" icon="icon-file-pdf"
                        rendered="#{sessionInfo.isYetkili('rapor_islemleri')}">
                 <p:menuitem value="#{lbl.menu_aida_botcu_olan_daireler_listesi}"
+                            icon="icon-file-pdf"
                             url="/pages/raporIslemleri/R101.jsf" rendered="#{sessionInfo.isYetkili('yetki_r101')}"/>
                 <p:menuitem value="#{lbl.menu_odenmeyen_aidatlar_listesi}"
+                            icon="icon-file-pdf"
                             url="/pages/raporIslemleri/R201.jsf" rendered="#{sessionInfo.isYetkili('yetki_r201')}"/>
             </p:submenu>
         </ps:menu>
