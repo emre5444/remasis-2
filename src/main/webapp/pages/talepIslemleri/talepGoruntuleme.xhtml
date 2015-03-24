@@ -1,11 +1,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
 <ui:define name="title">
     <h:outputText value="#{lbl.talep_goruntuleme}"/>
@@ -14,7 +15,7 @@
 
 <ui:define name="content">
 
-<h:form id="talepGoruntuleme">
+<h:form>
 <div class="EmptyBox10"></div>
 <div class="Container100">
 <div class="ContainerIndent">
@@ -146,7 +147,7 @@
 
                     <p:column style="width:4%">
                         <h:panelGrid columns="4">
-                            <p:commandLink ajax="false" update="@([id$=talepGoruntuleme])"
+                            <p:commandLink
                                            id="downloadLink"
                                     >
                                 <p:graphicImage value="/images/download_icon.png"/>
@@ -156,7 +157,7 @@
                             </p:commandLink>
                             <p:commandButton id="deleteBelge1" immediate="true" icon="ui-icon-trash"
                                              rendered="#{sessionInfo.adminMi and talepIslemMB.selected.talep.talepOnayDurumu.talepYapildiMi.evetMi}"
-                                             action="#{talepIslemMB.deleteBelge}" update="@([id$=talepGoruntuleme])"
+                                             action="#{talepIslemMB.deleteBelge}"
                                     >
 
                                 <f:setPropertyActionListener value="#{varBelge}"
