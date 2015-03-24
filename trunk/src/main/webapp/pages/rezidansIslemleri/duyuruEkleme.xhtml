@@ -8,11 +8,11 @@
         <p:dialog header="#{lbl.yeni_ilan_ekle}" widgetVar="duyuruEklePopup" closeOnEscape="true" height="auto" width="auto">
 
                 <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="yorum_konu" value="#{lbl.duyuru_konusu} (*)" style="font-weight:bold"/>
+                    <h:outputLabel for="yorum_konu" value="#{lbl.duyuru_konusu} (*)" style="font-weight:bold; color: #0b4170"/>
                     <p:inputTextarea rows="3" cols="50" autoResize="false" value="#{daireGoruntuleMB.yeniDuyuru.kisaAciklama}"
                                  id="yorum_konu" required="true" label="#{lbl.duyuru_konusu}"/>
 
-                    <h:outputLabel for="yorum_aciklama" value="#{lbl.duyuru_aciklama} (*)" style="font-weight:bold"/>
+                    <h:outputLabel for="yorum_aciklama" value="#{lbl.duyuru_aciklama} (*)" style="font-weight:bold; color: #0b4170"/>
                     <p:editor id="yorum_aciklama"
                               value="#{daireGoruntuleMB.yeniDuyuru.aciklama}" required="true" width="450"/>
 

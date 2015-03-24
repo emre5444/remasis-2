@@ -22,12 +22,12 @@
                 <p:panel header="#{lbl.label_anket_sorgulama}">
                     <h:panelGrid columns="4" cellpadding="5">
 
-                        <h:outputLabel for="anket_konusu" value="#{lbl.label_anket_konusu}" style="font-weight:bold"/>
+                        <h:outputLabel for="anket_konusu" value="#{lbl.label_anket_konusu}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="anket_konusu" value="#{anketMB.sorguKriteri.anketKonusu}"/>
 
-                        <h:outputLabel for="rolTipi" value="#{lbl.label_anket_aktif_mi}" style="font-weight:bold"/>
+                        <h:outputLabel for="rolTipi" value="#{lbl.label_anket_aktif_mi}" style="font-weight:bold; color: #0b4170"/>
                         <p:selectOneMenu id="rolTipi" value="#{anketMB.sorguKriteri.anketAktifMi}"
-                                         style="font-weight:bold">
+                                         style="font-weight:bold; color: #0b4170">
                             <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                             <f:selectItems value="#{anketMB.anketAktifPasifList}" var="apTipi" itemValue="#{apTipi}"
                                            itemLabel="#{apTipi.aciklama}"/>
@@ -36,11 +36,11 @@
 
 
                         <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
-                                       style="font-weight:bold"/>
+                                       style="font-weight:bold; color: #0b4170"/>
                         <p:calendar id="baslangic_tarihi" value="#{anketMB.sorguKriteri.sorguBaslangicTarihi}"
                                     pattern="dd/MM/yyyy" mask="true"/>
 
-                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170"/>
                         <p:calendar id="bitis_tarihi" value="#{anketMB.sorguKriteri.sorguBitisTarihi}"
                                     pattern="dd/MM/yyyy"
                                     mask="true"/>

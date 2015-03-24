@@ -12,8 +12,8 @@
                             <p:messages/>
                             <h:panelGrid columns="2" columnClasses="label, value">
 
-                                <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu} (*)" style="font-weight:bold" />
-                                <p:selectOneMenu id="belge_tipi" value="#{anasayfaMB.yeniBelge.belgeTipi}" style="font-weight:bold" required="true" label="#{lbl.belge_talebi_konusu}" >
+                                <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu} (*)" style="font-weight:bold; color: #0b4170" />
+                                <p:selectOneMenu id="belge_tipi" value="#{anasayfaMB.yeniBelge.belgeTipi}" style="font-weight:bold; color: #0b4170" required="true" label="#{lbl.belge_talebi_konusu}" >
                                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                                     <f:selectItems value="#{anasayfaMB.belgeTipiList}" var="bt" itemValue="#{bt}" itemLabel="#{bt.aciklama}" />
                                     <f:converter binding="#{belgeTipiConverter}" />
@@ -29,13 +29,13 @@
                     <p:tab id="confirm" title="#{lbl.belge_icerik_bilgileri}">
                             <h:panelGrid columns="1" cellpadding="5">
                                 <h:panelGrid columns="2" columnClasses="label, value">
-                                    <h:outputText value="#{lbl.belge_talebi_konusu}" style="font-weight:bold"/>
+                                    <h:outputText value="#{lbl.belge_talebi_konusu}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText value="#{anasayfaMB.yeniBelge.belgeTipi.aciklama}" styleClass="outputLabel"/>
 
-                                    <h:outputText value="#{lbl.belge_ekleyen_kullanici}" style="font-weight:bold"/>
+                                    <h:outputText value="#{lbl.belge_ekleyen_kullanici}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText value="#{sessionInfo.kullanici.adSoyad}" styleClass="outputLabel"/>
 
-                                    <h:outputText value="#{lbl.ortak_aciklama}" style="font-weight:bold" />
+                                    <h:outputText value="#{lbl.ortak_aciklama}" style="font-weight:bold; color: #0b4170" />
                                     <h:outputText value="#{anasayfaMB.yeniBelge.aciklama}" styleClass="outputLabel"/>
                                 </h:panelGrid>
 

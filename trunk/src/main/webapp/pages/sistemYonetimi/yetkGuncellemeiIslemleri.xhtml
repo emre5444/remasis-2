@@ -27,13 +27,13 @@
                                 </div>
                                 <div class="EmptyBox10"></div>
                                 <h:panelGrid columns="2">
-                                    <h:outputLabel for="rol_konu" value="#{lbl.rol_ad} (*)" style="font-weight:bold"/>
+                                    <h:outputLabel for="rol_konu" value="#{lbl.rol_ad} (*)" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputText  value="#{rolIslemleriMB.selected.ad}" size="50"
                                                      id="rol_konu" required="true" label="#{lbl.rol_ad}"/>
 
-                                    <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold"/>
+                                    <h:outputLabel for="rolTipi" value="#{lbl.rol_tipi}" style="font-weight:bold; color: #0b4170"/>
                                     <p:selectOneMenu id="rolTipi" value="#{rolIslemleriMB.selected.sistemYoneticisiMi}"
-                                                     style="font-weight:bold">
+                                                     style="font-weight:bold; color: #0b4170">
                                         <f:selectItems value="#{rolIslemleriMB.rolTipiList}" var="rolTipi"
                                                        itemValue="#{rolTipi}"
                                                        itemLabel="#{rolTipi.aciklama}"/>

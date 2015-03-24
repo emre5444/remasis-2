@@ -8,11 +8,11 @@
         <p:dialog header="#{lbl.ilan_goruntuleme}" widgetVar="duyuruGoruntulePopup" closeOnEscape="true" height="auto" width="50%">
 
                 <h:panelGrid id="showDuyuruDetail" columns="2" cellpadding="5">
-                    <h:outputLabel for="yorum_konu_v" value="#{lbl.duyuru_konusu}" style="font-weight:bold"/>
+                    <h:outputLabel for="yorum_konu_v" value="#{lbl.duyuru_konusu}" style="font-weight:bold; color: #0b4170"/>
                     <h:outputText value="#{daireGoruntuleMB.selectedDuyuru.kisaAciklama}"
                                   id="yorum_konu_v"/>
 
-                    <h:outputLabel for="yorum_aciklama_v" value="#{lbl.duyuru_aciklama}" style="font-weight:bold"/>
+                    <h:outputLabel for="yorum_aciklama_v" value="#{lbl.duyuru_aciklama}" style="font-weight:bold; color: #0b4170"/>
                     <h:outputText rows="6" cols="33" value="#{daireGoruntuleMB.selectedDuyuru.aciklama}"
                                   id="yorum_aciklama_v" escape="false"
                             />

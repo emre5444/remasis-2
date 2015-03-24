@@ -20,15 +20,15 @@
             <p:panel header="#{lbl.label_duyuru_sorgulama}">
                 <h:panelGrid columns="2" cellpadding="5">
 
-                    <h:outputLabel for="ad" value="#{lbl.label_duyuru_konusu}" style="font-weight:bold"/>
+                    <h:outputLabel for="ad" value="#{lbl.label_duyuru_konusu}" style="font-weight:bold; color: #0b4170"/>
                     <p:inputText id="ad" value="#{duyuruMB.sorguKriteri.konu}"/>
 
                     <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
-                                   style="font-weight:bold"/>
+                                   style="font-weight:bold; color: #0b4170"/>
                     <p:calendar id="baslangic_tarihi" value="#{duyuruMB.sorguKriteri.sorguBaslangicTarihi}"
                                 pattern="dd/MM/yyyy" mask="true"/>
 
-                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170"/>
                     <p:calendar id="bitis_tarihi" value="#{duyuruMB.sorguKriteri.sorguBitisTarihi}"
                                 pattern="dd/MM/yyyy"
                                 mask="true"/>

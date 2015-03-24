@@ -24,14 +24,14 @@
                                     <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
                                 </div>
                                 <h:panelGrid id="showDaireDetailBilgileri" columns="6" cellpadding="5">
-                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="daire_no" value="#{talepIslemMB.selected.daire.daireNo}"/>
 
                                     <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="blok_adi" value="#{talepIslemMB.selected.daire.blok.aciklama}"/>
 
-                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold"/>
+                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="kat" value="#{talepIslemMB.selected.daire.kat}"/>
                                 </h:panelGrid>
                             </div>
@@ -48,31 +48,31 @@
                                 </div>
                                 <h:panelGrid id="showTalepDetailTalepBilgileri" columns="2" cellpadding="5">
 
-                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold"/>
+                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_no" value="#{talepIslemMB.selected.talep.id}"/>
 
-                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold"/>
+                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_tipi"
                                                   value="#{talepIslemMB.selected.talep.talepTipi.aciklama}"/>
 
                                     <h:outputLabel for="talep_kullanici" value="#{lbl.kullanici}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_kullanici"
                                                   value="#{talepIslemMB.selected.talep.kullanici.adSoyad}"/>
 
                                     <h:outputLabel for="talep_tarihi" value="#{lbl.talep_tarihi}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_tarihi" value="#{talepIslemMB.selected.talep.islemTarihi}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </h:outputText>
 
                                     <h:outputLabel for="talep_onay_durum" value="#{lbl.talep_onay_durumu}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_onay_durum"
                                                   value="#{talepIslemMB.selected.talep.talepOnayDurumu.aciklama}"/>
 
                                     <h:outputLabel for="talep_aciklama" value="#{lbl.talep_aciklama}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_aciklama" value="#{talepIslemMB.selected.talep.aciklama}"/>
                                 </h:panelGrid>
                             </div>
@@ -99,7 +99,7 @@
                                     <h:panelGroup></h:panelGroup>
 
                                     <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="belge_tipi"
                                                   value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
 
@@ -157,14 +157,14 @@
                                              rendered="#{talepIslemMB.selected.talep.talepTipi.arizaTalebiMi}">
 
                                     <h:outputLabel for="mudahele_tarihi" value="#{lbl.talep_mudahale_tarihi}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="mudahele_tarihi"
                                                   value="#{talepIslemMB.selected.talep.mudahaleTarihi}">
                                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
                                     </h:outputText>
 
                                     <h:outputLabel for="ariza_aciklama" value="#{lbl.ariza_aciklamasi}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="ariza_aciklama"
                                                   value="#{talepIslemMB.selected.talep.arizaAciklama}"/>
 
@@ -174,7 +174,7 @@
                                              rendered="#{talepIslemMB.selected.talep.talepTipi.sikayetTalebiMi}">
 
                                     <h:outputLabel for="sikayet_aciklama" value="#{lbl.sikayet_aciklama}"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="sikayet_aciklama"
                                                   value="#{talepIslemMB.selected.talep.sikayetAciklama}"/>
 
@@ -266,7 +266,7 @@
                                 <h:panelGrid id="showTalepOnaylama" columns="2" cellpadding="5">
 
                                     <h:outputLabel for="talep_onay_aciklama_v" value="#{lbl.talep_aciklama} (*)"
-                                                   style="font-weight:bold"/>
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:inputTextarea rows="6" cols="66"
                                                      value="#{talepIslemMB.selected.talep.onayAciklama}"
                                                      required="true" label="#{lbl.talep_aciklama}"

@@ -35,12 +35,12 @@
 
             <h:panelGrid columns="2" cellpadding="5">
                 <p:radioButton id="opt1" for="radio_button" itemIndex="0"/>
-                <h:outputLabel for="opt1" value="#{lbl.lbl_toplu_islem}" style="font-weight:bold"/>
+                <h:outputLabel for="opt1" value="#{lbl.lbl_toplu_islem}" style="font-weight:bold; color: #0b4170"/>
             </h:panelGrid>
             <p:outputLabel value="#{lbl.lbl_toplu_islem_desc}" style="color: red"/>
             <h:panelGrid columns="2" cellpadding="5">
                 <p:radioButton id="opt2" for="radio_button" itemIndex="1"/>
-                <h:outputLabel for="opt2" value="#{lbl.lbl_tekil_islem}" style="font-weight:bold"/>
+                <h:outputLabel for="opt2" value="#{lbl.lbl_tekil_islem}" style="font-weight:bold; color: #0b4170"/>
             </h:panelGrid>
             <p:outputLabel value="#{lbl.lbl_tekil_islem_desc}" style="color: red"/>
         </h:panelGrid>
@@ -53,8 +53,8 @@
         <p:messages showDetail="false"/>
         <h:panelGrid columns="2" cellpadding="5" cellspacing="2">
 
-            <h:outputLabel for="daireTipi1" value="#{lbl.daire_tipi}" style="font-weight:bold"/>
-            <p:selectOneMenu id="daireTipi1" value="#{aidatIslemleriMB.daireSorguKriteri.daireTipi}" style="font-weight:bold"
+            <h:outputLabel for="daireTipi1" value="#{lbl.daire_tipi}" style="font-weight:bold; color: #0b4170"/>
+            <p:selectOneMenu id="daireTipi1" value="#{aidatIslemleriMB.daireSorguKriteri.daireTipi}" style="font-weight:bold; color: #0b4170"
                               label="#{lbl.daire_tipi}">
                 <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                 <f:selectItems value="#{aidatIslemleriMB.daireTipiList}" var="daireTipi" itemValue="#{daireTipi}"
@@ -62,16 +62,16 @@
                 <f:converter binding="#{daireTipiConverter}"/>
             </p:selectOneMenu>
 
-            <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+            <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
             <p:selectOneMenu id="blok_adi" value="#{aidatIslemleriMB.daireSorguKriteri.blok}" label="#{lbl.blok_ad}"
-                             style="font-weight:bold" required="true">
+                             style="font-weight:bold; color: #0b4170" required="true">
                 <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                 <f:selectItems value="#{aidatIslemleriMB.blokList}" var="blokList" itemValue="#{blokList}"
                                itemLabel="#{blokList.aciklama}"/>
                 <f:converter binding="#{blokConverter}"/>
             </p:selectOneMenu>
 
-            <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+            <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
             <p:inputText id="daire_no" value="#{aidatIslemleriMB.daireSorguKriteri.daireNo}"/>
             <p:message for="daire_no"/>
 
@@ -168,8 +168,8 @@
 
             <h:panelGrid columns="2" cellpadding="5">
 
-                <h:outputLabel for="daireTipi" value="#{lbl.daire_tipi}" style="font-weight:bold"/>
-                <p:selectOneMenu id="daireTipi" value="#{aidatIslemleriMB.daireSorguKriteri.daireTipi}" style="font-weight:bold"
+                <h:outputLabel for="daireTipi" value="#{lbl.daire_tipi}" style="font-weight:bold; color: #0b4170"/>
+                <p:selectOneMenu id="daireTipi" value="#{aidatIslemleriMB.daireSorguKriteri.daireTipi}" style="font-weight:bold; color: #0b4170"
                               label="#{lbl.daire_tipi}">
                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                     <f:selectItems value="#{aidatIslemleriMB.daireTipiList}" var="daireTipi" itemValue="#{daireTipi}"
@@ -228,16 +228,16 @@
             <p:inputText id="aciklama" value="#{aidatIslemleriMB.yeniBorc.aciklama}"
                          label="#{lbl.ortak_aciklama}"/>
 
-            <h:outputLabel for="borc" value="#{lbl.borc_tutari} (*)" style="font-weight:bold"/>
+            <h:outputLabel for="borc" value="#{lbl.borc_tutari} (*)" style="font-weight:bold; color: #0b4170"/>
             <p:inputText id="borc" value="#{aidatIslemleriMB.yeniBorc.borc}" required="true" label="#{lbl.borc_tutari}"
                     />
 
-            <h:outputLabel for="son_odeme_tarihi" value="#{lbl.son_odeme_tarihi} (*)" style="font-weight:bold"/>
+            <h:outputLabel for="son_odeme_tarihi" value="#{lbl.son_odeme_tarihi} (*)" style="font-weight:bold; color: #0b4170"/>
             <p:calendar id="son_odeme_tarihi" value="#{aidatIslemleriMB.yeniBorc.sonOdemeTarihi}" mask="true"
                         pattern="dd/MM/yyyy" required="true"
                         label="#{lbl.son_odeme_tarihi}"/>
 
-            <h:outputLabel for="aidat_donemi" value="#{lbl.aidat_donemi} (*)" style="font-weight:bold"/>
+            <h:outputLabel for="aidat_donemi" value="#{lbl.aidat_donemi} (*)" style="font-weight:bold; color: #0b4170"/>
             <p:calendar id="aidat_donemi" value="#{aidatIslemleriMB.yeniBorc.islemTarihi}" mask="true"
                         pattern="dd/MM/yyyy" required="true" label="#{lbl.aidat_donemi}"/>
 
@@ -298,7 +298,7 @@
                 </p:column>
 
                 <p:column headerText="#{lbl.daire_kodu}" style="width:10%">
-                    <h:outputText value="#{daireBorcAlacak.daire.daireKodu}" style="font-weight:bold"/>
+                    <h:outputText value="#{daireBorcAlacak.daire.daireKodu}" style="font-weight:bold; color: #0b4170"/>
                 </p:column>
 
                 <p:column headerText="#{lbl.ortak_aciklama}" style="width:12%">

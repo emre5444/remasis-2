@@ -30,13 +30,13 @@
                             </div>
                             <h:panelGrid columns="2" cellpadding="5">
 
-                                <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold"/>
+                                <h:outputLabel for="ad" value="#{lbl.ad}" style="font-weight:bold; color: #0b4170"/>
                                 <p:outputLabel id="ad" value="#{kullaniciIslemleri.selected.ad}"/>
 
-                                <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold"/>
+                                <h:outputLabel for="soyad" value="#{lbl.soyad}" style="font-weight:bold; color: #0b4170"/>
                                 <p:outputLabel id="soyad" value="#{kullaniciIslemleri.selected.soyad}"/>
 
-                                <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold"/>
+                                <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold; color: #0b4170"/>
                                 <p:outputLabel id="email" value="#{kullaniciIslemleri.selected.email}"/>
 
                             </h:panelGrid>
@@ -54,9 +54,9 @@
                             </div>
                             <h:panelGrid columns="6" cellpadding="5">
 
-                                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
                                 <p:selectOneMenu id="blok_adi" value="#{kullaniciIslemleri.daireSorguKriteri.blok}"
-                                                 style="font-weight:bold"
+                                                 style="font-weight:bold; color: #0b4170"
                                                  label="#{lbl.blok_ad}">
                                     <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                                     <f:selectItems value="#{kullaniciIslemleri.blokList}" var="blokList"
@@ -65,7 +65,7 @@
                                     <f:converter binding="#{blokConverter}"/>
                                 </p:selectOneMenu>
 
-                                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                                 <p:inputText id="daire_no"
                                              value="#{kullaniciIslemleri.daireSorguKriteri.daireNo}"/>
                                 <p:message for="daire_no"/>
@@ -158,7 +158,7 @@
 
                                     <p:column headerText="#{lbl.kullanici_tipi}">
                                         <p:selectOneMenu id="kt" value="#{varkullaniciDaire.kullaniciTipi}"
-                                                         style="font-weight:bold">
+                                                         style="font-weight:bold; color: #0b4170">
                                             <f:selectItems value="#{kullaniciIslemleri.kullaniciTipiList}"
                                                            var="ktvar"
                                                            itemValue="#{ktvar}"

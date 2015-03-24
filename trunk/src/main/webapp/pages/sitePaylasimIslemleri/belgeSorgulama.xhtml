@@ -20,29 +20,29 @@
                 <p:panel header="#{lbl.label_belge_sorgulama}">
                     <h:panelGrid columns="4" cellpadding="5">
 
-                        <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}" style="font-weight:bold" />
-                        <p:selectOneMenu id="belge_tipi" value="#{belgeMB.sorguKriteri.belgeTipi}" style="font-weight:bold" label="#{lbl.belge_talebi_konusu}" >
+                        <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}" style="font-weight:bold; color: #0b4170" />
+                        <p:selectOneMenu id="belge_tipi" value="#{belgeMB.sorguKriteri.belgeTipi}" style="font-weight:bold; color: #0b4170" label="#{lbl.belge_talebi_konusu}" >
                             <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                             <f:selectItems value="#{belgeMB.belgeTipiList}" var="bt" itemValue="#{bt}" itemLabel="#{bt.aciklama}" />
                             <f:converter binding="#{belgeTipiConverter}" />
                         </p:selectOneMenu>
 
-                        <h:outputLabel for="belge_ad" value="#{lbl.label_belge_ismi}" style="font-weight:bold"/>
+                        <h:outputLabel for="belge_ad" value="#{lbl.label_belge_ismi}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="belge_ad" value="#{ilanMB.sorguKriteri.konu}"/>
 
-                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
                         <p:selectOneMenu id="blok_adi" value="#{belgeMB.sorguKriteri.blok}"
-                                         style="font-weight:bold">
+                                         style="font-weight:bold; color: #0b4170">
                             <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
                             <f:selectItems value="#{belgeMB.blokList}" var="blokList" itemValue="#{blokList}"
                                            itemLabel="#{blokList.aciklama}"/>
                             <f:converter binding="#{blokConverter}"/>
                         </p:selectOneMenu>
 
-                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
                         <p:inputText id="daire_no" value="#{belgeMB.sorguKriteri.daireNo}"/>
 
-                        <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
+                        <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold; color: #0b4170"/>
                         <p:autoComplete value="#{belgeMB.sorguKriteri.kullanici}"
                                         disabled="#{not sessionInfo.adminMi}"
                                         id="kullanici_list" completeMethod="#{aidatIslemleriMB.completePlayer}"
@@ -69,11 +69,11 @@
                         <h:panelGroup></h:panelGroup>
 
                         <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
-                                       style="font-weight:bold"/>
+                                       style="font-weight:bold; color: #0b4170"/>
                         <p:calendar id="baslangic_tarihi" value="#{belgeMB.sorguKriteri.sorguBaslangicTarihi}"
                                     pattern="dd/MM/yyyy" mask="true"/>
 
-                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold"/>
+                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170"/>
                         <p:calendar id="bitis_tarihi" value="#{belgeMB.sorguKriteri.sorguBitisTarihi}"
                                     pattern="dd/MM/yyyy"
                                     mask="true"/>
