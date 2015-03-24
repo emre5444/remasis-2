@@ -16,6 +16,7 @@
         <h:form id="talepOnaylama">
             <div class="Container100">
                 <div class="ContainerIndent">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
                     <h3>  #{lbl.talep_ortak_onaylama} </h3>
                     <p:panel>
                         <div class="Container100 Responsive">
@@ -24,14 +25,16 @@
                                     <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
                                 </div>
                                 <h:panelGrid id="showDaireDetailBilgileri" columns="6" cellpadding="5">
-                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="daire_no" value="#{talepIslemMB.selected.daire.daireNo}"/>
 
                                     <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
                                                    style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="blok_adi" value="#{talepIslemMB.selected.daire.blok.aciklama}"/>
 
-                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="kat" value="#{talepIslemMB.selected.daire.kat}"/>
                                 </h:panelGrid>
                             </div>
@@ -48,10 +51,12 @@
                                 </div>
                                 <h:panelGrid id="showTalepDetailTalepBilgileri" columns="2" cellpadding="5">
 
-                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_no" value="#{talepIslemMB.selected.talep.id}"/>
 
-                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_tipi"
                                                   value="#{talepIslemMB.selected.talep.talepTipi.aciklama}"/>
 
@@ -224,7 +229,7 @@
                                             </h:outputText>
                                         </p:column>
                                         <p:column sortBy="borc.borc"
-                                                 >
+                                                >
                                             <f:facet name="header">
                                                 <h:outputText value="#{lbl.borc_tutari}"/>
                                             </f:facet>
@@ -232,7 +237,7 @@
                                                           style="text-align:right;font-weight:bold; color:#FF4000;"/>
                                         </p:column>
                                         <p:column sortBy="borc.odenenTutar"
-                                                  >
+                                                >
                                             <f:facet name="header">
                                                 <h:outputText value="#{lbl.odenen_tutar}"/>
                                             </f:facet>
@@ -241,7 +246,7 @@
                                         </p:column>
 
                                         <p:column sortBy="borc.aciklama"
-                                                  >
+                                                >
                                             <f:facet name="header">
                                                 <h:outputText value="#{lbl.ortak_aciklama}"/>
                                             </f:facet>
@@ -273,24 +278,21 @@
                                                      id="talep_onay_aciklama_v"
                                             />
 
-
-                                    <f:facet name="footer">
-                                        <h:panelGrid columns="2">
-                                            <p:commandButton id="talep_onay_button" value="#{lbl.ortak_onayla}"
-                                                             action="#{talepIslemMB.talepOnayla}">
-                                                <p:confirm header="#{lbl.talep_ortak_onaylama}"
-                                                           message="#{msg.islemi_onayliyormusunuz}"/>
-                                            </p:commandButton>
-                                            <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
-                                                             action="#{talepIslemMB.geriDon}"/>
-                                        </h:panelGrid>
-                                    </f:facet>
                                 </h:panelGrid>
                             </div>
                         </div>
 
                     </p:panel>
-
+                    <h:panelGrid columns="2">
+                        <p:commandButton id="talep_onay_button" value="#{lbl.ortak_onayla}"
+                                         action="#{talepIslemMB.talepOnayla}">
+                            <p:confirm header="#{lbl.talep_ortak_onaylama}"
+                                       icon="ui-icon-alert"
+                                       message="#{msg.islemi_onayliyormusunuz}"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{talepIslemMB.geriDon}"/>
+                    </h:panelGrid>
                 </div>
             </div>
         </h:form>

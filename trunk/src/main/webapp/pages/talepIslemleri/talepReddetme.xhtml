@@ -15,6 +15,7 @@
         <h:form id="talepReddetme">
             <div class="Container100">
                 <div class="ContainerIndent">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
                     <h3>  #{lbl.talep_ortak_reddetme} </h3>
                     <p:panel>
                         <div class="Container100 Responsive">
@@ -265,25 +266,21 @@
                                                      id="talep_red_aciklama_v"
                                             />
 
-
-                                    <f:facet name="footer">
-                                        <h:panelGrid columns="2">
-                                            <p:commandButton id="talep_red_button" value="#{lbl.ortak_reddet}"
-                                                             action="#{talepIslemMB.talepReddet}">
-                                                <p:confirm header="#{lbl.talep_ortak_reddetme}"
-                                                           message="#{msg.islemi_onayliyormusunuz}"
-                                                           icon="ui-icon-alert"/>
-                                            </p:commandButton>
-
-                                            <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
-                                                             action="#{talepIslemMB.geriDon}"/>
-                                        </h:panelGrid>
-                                    </f:facet>
                                 </h:panelGrid>
                             </div>
                         </div>
                     </p:panel>
+                    <h:panelGrid columns="2">
+                        <p:commandButton id="talep_red_button" value="#{lbl.ortak_reddet}"
+                                         action="#{talepIslemMB.talepReddet}">
+                            <p:confirm header="#{lbl.talep_ortak_reddetme}"
+                                       message="#{msg.islemi_onayliyormusunuz}"
+                                       icon="ui-icon-alert"/>
+                        </p:commandButton>
 
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{talepIslemMB.geriDon}"/>
+                    </h:panelGrid>
                 </div>
             </div>
         </h:form>
