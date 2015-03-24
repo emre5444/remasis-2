@@ -1,80 +1,95 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
         <h:outputText value="#{lbl.odenmeyen_aidatlar_listesi}"/>
     </ui:define>
 
     <ui:define name="content">
+        <div class="EmptyBox10"></div>
+        <div class="Container100">
+            <div class="ContainerIndent">
 
-        <p:fieldset legend="#{lbl.odenmeyen_aidatlar_listesi}">
-
-            <div style="height:10px"></div>
-
-            <h:form id="main_form" target="_blank">
-                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
-
-                <p:panel header="#{lbl.sorgu_kriterleri}">
-                    <h:panelGrid columns="6" cellpadding="5">
-
-                        <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold"/>
-
-                        <p:autoComplete value="#{raporMB.sorguKriteri.kullanici}" disabled="#{not sessionInfo.adminMi}"
-                                        id="kullanici_list" completeMethod="#{raporMB.completePlayer}"
-                                        var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
-                                        itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
-
-                            <f:facet name="itemtip">
-                                <h:panelGrid columns="2" cellpadding="5">
-                                    <f:facet name="header">
-                                        <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
-                                        <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
-                                    </f:facet>
-
-                                    <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
-                                    <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
-
-                                    <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
-                                    <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
-                                </h:panelGrid>
-                            </f:facet>
-
-                        </p:autoComplete>
-
-                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
-                        <p:selectOneMenu id="blok_adi" value="#{raporMB.sorguKriteri.blok}"
-                                         style="font-weight:bold">
-                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                            <f:selectItems value="#{raporMB.blokList}" var="blokList" itemValue="#{blokList}"
-                                           itemLabel="#{blokList.aciklama}"/>
-                            <f:converter binding="#{blokConverter}"/>
-                        </p:selectOneMenu>
-
-                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
-                        <p:inputText id="daire_no" value="#{raporMB.sorguKriteri.daireNo}"/>
-
-                        <h:commandButton value="#{lbl.raporla}" action="#{raporMB.getR201ResultList()}"
-                                         />
-
-                    </h:panelGrid>
-
-                </p:panel>
+                <h3>  #{lbl.odenmeyen_aidatlar_listesi} </h3>
 
                 <div style="height:10px"></div>
 
-                <ui:include src="raporFormatIslemleri.xhtml">
-                    <ui:param name="entityMB" value="#{raporMB}"/>
-                </ui:include>
+                <h:form id="main_form" target="_blank">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-            </h:form>
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-chart-bar orange"></i> #{lbl.sorgu_kriterleri}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5">
 
-        </p:fieldset>
+                                    <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}"
+                                                   style="font-weight:bold"/>
+
+                                    <p:autoComplete value="#{raporMB.sorguKriteri.kullanici}"
+                                                    disabled="#{not sessionInfo.adminMi}"
+                                                    id="kullanici_list" completeMethod="#{raporMB.completePlayer}"
+                                                    var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
+                                                    itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
+
+                                        <f:facet name="itemtip">
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <f:facet name="header">
+                                                    <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
+                                                    <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
+                                                </f:facet>
+
+                                                <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
+                                                <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
+
+                                                <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
+                                                <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
+                                            </h:panelGrid>
+                                        </f:facet>
+
+                                    </p:autoComplete>
+
+                                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                                    <p:selectOneMenu id="blok_adi" value="#{raporMB.sorguKriteri.blok}"
+                                                     style="font-weight:bold">
+                                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                        <f:selectItems value="#{raporMB.blokList}" var="blokList"
+                                                       itemValue="#{blokList}"
+                                                       itemLabel="#{blokList.aciklama}"/>
+                                        <f:converter binding="#{blokConverter}"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                    <p:inputText id="daire_no" value="#{raporMB.sorguKriteri.daireNo}"/>
+
+                                    <p:commandButton ajax="false" value="#{lbl.raporla}"
+                                                     action="#{raporMB.getR201ResultList()}"
+                                            />
+
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
+
+                    <div style="height:10px"></div>
+
+                    <ui:include src="raporFormatIslemleri.xhtml">
+                        <ui:param name="entityMB" value="#{raporMB}"/>
+                    </ui:include>
+
+                </h:form>
+
+            </div>
+        </div>
     </ui:define>
 
     <ui:define name="body">
