@@ -102,7 +102,7 @@ public class DaireMB extends AbstractMB implements Serializable {
         setSelected(selectedDaire);
         ortakService.createErisimLog(sessionInfo ,sessionInfo.getKullanici(), LogTipi.getDaireGoruntuleObject(), label.getString("daire_kodu") + ":" + selected.getDaireKodu());
         storeFlashObjects();
-        return "daireGoruntule.xhtml";
+        return "daireGoruntuleme.xhtml";
     }
 
     public String daireGuncelleme(Daire selectedDaire) {
