@@ -31,14 +31,14 @@
                                     <h:outputLabel for="talep_konu_v" value="#{lbl.ariza_konusu} (*)"
                                                    style="font-weight:bold; color: #0b4170"/>
                                     <p:inputTextarea rows="3" cols="60"
-                                                     value="#{daireGoruntuleMB.yeniArizaTalep.aciklama}"
+                                                     value="#{talepIslemMB.yeniArizaTalep.aciklama}"
                                                      label="#{lbl.ariza_konusu}" required="true"
                                                      id="talep_konu_v"/>
 
                                     <h:outputLabel for="talep_aciklama_v" value="#{lbl.ariza_aciklamasi} (*)"
                                                    style="font-weight:bold; color: #0b4170"/>
                                     <p:inputTextarea rows="6" cols="60"
-                                                     value="#{daireGoruntuleMB.yeniArizaTalep.arizaAciklama}"
+                                                     value="#{talepIslemMB.yeniArizaTalep.arizaAciklama}"
                                                      required="true" label="#{lbl.ariza_aciklamasi}"
                                                      id="talep_aciklama_v"
                                             />
@@ -46,7 +46,7 @@
                                     <h:outputLabel for="talep_sorun_tarihi_v" value="#{lbl.hizmet_tarihi} (*)"
                                                    style="font-weight:bold; color: #0b4170"/>
                                     <p:calendar id="talep_sorun_tarihi_v"
-                                                value="#{daireGoruntuleMB.yeniArizaTalep.mudahaleTarihi}"
+                                                value="#{talepIslemMB.yeniArizaTalep.mudahaleTarihi}"
                                                 pattern="dd/MM/yyyy HH:mm" label="#{lbl.hizmet_tarihi}"
                                                 showOn="button" required="true"/>
                                 </h:panelGrid>
