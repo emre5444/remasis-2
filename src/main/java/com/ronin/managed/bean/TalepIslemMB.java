@@ -18,6 +18,7 @@ import com.ronin.service.IFileUploadService;
 import com.ronin.service.ITalepService;
 import org.apache.log4j.Logger;
 import org.hibernate.service.spi.ServiceException;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.model.DefaultStreamedContent;
@@ -68,17 +69,25 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
     //daire islemleri
     private TalepDaire selected;
     private DaireBelge selectedDaireBelge;
+    private Daire selectedDaire;
 
     private TalepDataModel dataModel;
     private DaireBelgeDataModel belgeDataModel;
 
-    //bildirim tipi
 
+    //bildirim tipi
     public BildirimTipi.ENUM bildirimTipi;
 
     //combolar
     private List<Kullanici> kullaniciList;
     private List<TalepTipi> talepTipiList;
+
+    //talepler
+    private ArizaTalebi yeniArizaTalep = new ArizaTalebi();
+    private ItirazTalebi yeniItiraz = new ItirazTalebi();
+    private SikayetTalebi yeniSikayetTalebi = new SikayetTalebi();
+    private BelgeTalebi yeniBelgeTalebi = new BelgeTalebi();
+    private DaireBorc selectedBorc;
 
     private Belge yeniBelge = new Belge();
     private List<IAbstractEntity> belgeTipiList;
@@ -94,7 +103,9 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
     }
 
     public void getFlushObjects() {
+        selectedBorc = (DaireBorc) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedBorc");
         selected = (TalepDaire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedTalepDaireObject");
+        selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaire");
         sorguKriteri = (TalepSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
     }
@@ -246,6 +257,37 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
         }
     }
 
+    public String yeniArizaTalebiEkleme() {
+        talepService.arizaTalebiEkleme(selectedDaire, yeniArizaTalep, sessionInfo);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
+        return getBackPage();
+    }
+
+    public String yeniItirazTalebiEkleme() {
+        talepService.itirazTalebiEkleme(selectedDaire, yeniItiraz, sessionInfo, selectedBorc);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
+        return getBackPage();
+    }
+
+    public String yeniSikayetTalebiEkleme() {
+        talepService.sikayetTalebiEkleme(selectedDaire, yeniSikayetTalebi, sessionInfo);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
+        return getBackPage();
+    }
+
+    public String yeniBelgeTalebiEkleme() {
+        talepService.belgeTalebiEkleme(selectedDaire, yeniBelgeTalebi, sessionInfo);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
+        return getBackPage();
+    }
 
     //page navigations
     public String daireGoruntule() {
@@ -396,5 +438,13 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
 
     public void setYeniBelge(Belge yeniBelge) {
         this.yeniBelge = yeniBelge;
+    }
+
+    public ArizaTalebi getYeniArizaTalep() {
+        return yeniArizaTalep;
+    }
+
+    public void setYeniArizaTalep(ArizaTalebi yeniArizaTalep) {
+        this.yeniArizaTalep = yeniArizaTalep;
     }
 }
