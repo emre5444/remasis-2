@@ -124,18 +124,11 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     private List<BorcAlacakViewBean> borcAlacakViewBeanList;
     private List<BorcAlacakViewBean> sonDonemborcAlacakViewBeanList;
 
-    //load booleans
-    boolean aidatLoaded = false;
-    boolean finansLoaded = false;
-    boolean belgeLoaded = false;
-    boolean ilanLoaded = false;
-    boolean talepLoaded = false;
-    boolean sakinLoaded = false;
-
     @PostConstruct
     public void init() {
         getFlushObjects();
         setUserRolInfos();
+        createPieModels();
         belgeTipiList = ortakService.getListByNamedQuery("BelgeTipi.findAll");
     }
 
@@ -209,13 +202,11 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         talepSorguKriteri.setDaireKodu(selected.getDaireKodu());
         List<TalepDaire> dataList = talepService.getListCriteriaForPaging(0, 100, talepSorguKriteri, sessionInfo);
         talepDatamodel = new TalepDataModel(dataList);
-        talepLoaded = true;
     }
 
     public void getDuyuruTabInfos() {
         List<Duyuru> dataList = ortakService.getAllDuyuruListByDaire(selected);
         duyuruDataModel = new DuyuruDataModel(dataList);
-        ilanLoaded = true;
     }
 
     public void getBorcTabInfos() {
@@ -231,19 +222,16 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         this.setToplamOdenenTutar(df.format(toplamOdeme));
         this.setToplamBakiyeTutar(df.format(toplamOdeme - toplemBorc));
         borcDataModel = new BorcDataModel(dataList);
-        aidatLoaded = true;
     }
 
     public void getDaireBilgileriTabInfos() {
         List<KullaniciDaire> dataList = daireService.getKullaniciListByDaire(selected);
         kullaniciDaireDataModel = new KullaniciDaireDataModel(dataList);
-        sakinLoaded = true;
     }
 
     public void getBelgelerTabInfos() {
         List<DaireBelge> belgeList = fileUploadService.getDaireBelgeList(selected);
         belgeDataModel = new DaireBelgeDataModel(belgeList);
-        belgeLoaded = true;
     }
 
     public void getDaireListBySorguKriteri() {
@@ -359,7 +347,6 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     public void createPieModels() {
         createPieModel1();
         createPieModel2();
-         finansLoaded = true;
     }
 
     public String doubleFormatter(Double deger) {
@@ -706,51 +693,4 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         this.daireSorguSonucu = daireSorguSonucu;
     }
 
-    public boolean isAidatLoaded() {
-        return aidatLoaded;
-    }
-
-    public void setAidatLoaded(boolean aidatLoaded) {
-        this.aidatLoaded = aidatLoaded;
-    }
-
-    public boolean isFinansLoaded() {
-        return finansLoaded;
-    }
-
-    public void setFinansLoaded(boolean finansLoaded) {
-        this.finansLoaded = finansLoaded;
-    }
-
-    public boolean isBelgeLoaded() {
-        return belgeLoaded;
-    }
-
-    public void setBelgeLoaded(boolean belgeLoaded) {
-        this.belgeLoaded = belgeLoaded;
-    }
-
-    public boolean isTalepLoaded() {
-        return talepLoaded;
-    }
-
-    public void setTalepLoaded(boolean talepLoaded) {
-        this.talepLoaded = talepLoaded;
-    }
-
-    public boolean isIlanLoaded() {
-        return ilanLoaded;
-    }
-
-    public void setIlanLoaded(boolean ilanLoaded) {
-        this.ilanLoaded = ilanLoaded;
-    }
-
-    public boolean isSakinLoaded() {
-        return sakinLoaded;
-    }
-
-    public void setSakinLoaded(boolean sakinLoaded) {
-        this.sakinLoaded = sakinLoaded;
-    }
 }

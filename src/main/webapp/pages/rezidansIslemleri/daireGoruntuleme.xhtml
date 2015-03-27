@@ -18,656 +18,696 @@
             <div class="Container100">
                 <div class="ContainerIndent">
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
-                    <p:growl id="growl" showDetail="true" life="3000"/>
+                    <p:growl id="growl"/>
 
-                    <p:megaMenu orientation="horizontal" style="margin-top:20px">
-                        <p:submenu label="#{lbl.talep_islemleri}" icon="icon-news">
+                    <p:menubar style="margin-top:20px">
+                        <p:submenu label="#{lbl.talep_islemleri}" icon="fa fa-bell-o">
 
                             <p:menuitem id="arizaTalebiGiris" value="#{lbl.daire_islemler_ariza_talebi_giris}"
-                                        icon="ui-icon-search"
+                                        icon="fa fa-wrench"
                                         action="#{daireGoruntuleMB.arzaTalebiGiris()}">
                             </p:menuitem>
                             <p:menuitem id="sikayetTalebiGiris" value="#{lbl.daire_islemler_sikayet_talebi_giris}"
-                                        icon="ui-icon-search"
+                                        icon="fa fa-wechat"
                                         action="#{daireGoruntuleMB.sikayetTalebiGiris()}">
                             </p:menuitem>
                             <p:menuitem id="belgeTalebiGiris" value="#{lbl.daire_islemleri_belge_talebi_giris}"
-                                        icon="ui-icon-search"
+                                        icon="fa fa-file-excel-o"
                                         action="#{daireGoruntuleMB.belgeTalebiGiris()}">
                             </p:menuitem>
 
                         </p:submenu>
-                    </p:megaMenu>
+                    </p:menubar>
 
+                    <div class="EmptyBox10"></div>
                     <div class="Container50 Responsive">
                         <div class="ContainerIndent">
-                            <p:panel header="#{lbl.daire_bilgileri}" scrollable="true" scrollHeight="150"
-                                     style="box-shadow: none;">
-                                <h:panelGrid columns="4" width="100%">
-                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
-                                                   style="font-weight:bold; color: #0b4170"/>
+                            <p:panel style="min-height: 260px;">
+                                <div class="Container100 Responsive">
+                                    <div class="ContainerIndent">
+                                        <div class="Container100 Responsive Fs20 hardblue">
+                                            <i class="icon-home-1 orange"></i> #{lbl.daire_bilgileri}
+                                        </div>
+                                        <h:panelGrid columns="2" width="100%">
+                                            <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
+                                                           style="font-weight:bold; color: #0b4170"/>
 
-                                    <h:outputText id="daire_no" value="#{daireGoruntuleMB.selected.daireNo}"/>
+                                            <h:outputText id="daire_no" value="#{daireGoruntuleMB.selected.daireNo}"/>
 
-                                    <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
-                                                   style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
+                                                           style="font-weight:bold; color: #0b4170"/>
 
-                                    <h:outputText id="blok_adi" value="#{daireGoruntuleMB.selected.blok.aciklama}"/>
+                                            <h:outputText id="blok_adi"
+                                                          value="#{daireGoruntuleMB.selected.blok.aciklama}"/>
 
-                                    <h:outputLabel for="daire_kodu1" value="#{lbl.daire_kodu}"
-                                                   style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputLabel for="daire_kodu1" value="#{lbl.daire_kodu}"
+                                                           style="font-weight:bold; color: #0b4170"/>
 
-                                    <h:outputText id="daire_kodu1" value="#{daireGoruntuleMB.selected.daireKodu}"/>
+                                            <h:outputText id="daire_kodu1"
+                                                          value="#{daireGoruntuleMB.selected.daireKodu}"/>
 
-                                    <h:outputLabel for="daire_tipi" value="#{lbl.daire_tipi}"
-                                                   style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputLabel for="daire_tipi" value="#{lbl.daire_tipi}"
+                                                           style="font-weight:bold; color: #0b4170"/>
 
-                                    <h:outputText id="daire_tipi"
-                                                  value="#{daireGoruntuleMB.selected.daireTipi.aciklama}"/>
+                                            <h:outputText id="daire_tipi"
+                                                          value="#{daireGoruntuleMB.selected.daireTipi.aciklama}"/>
 
-                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}"
-                                                   style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputLabel for="kat" value="#{lbl.daire_kat}"
+                                                           style="font-weight:bold; color: #0b4170"/>
 
-                                    <h:outputText id="kat" value="#{daireGoruntuleMB.selected.kat}"/>
+                                            <h:outputText id="kat" value="#{daireGoruntuleMB.selected.kat}"/>
 
-                                    <h:outputLabel for="daire_bakiye_borc_borc" value="#{lbl.daire_bakiye}"
-                                                   style="font-weight:bold;"
-                                                   rendered="#{daireGoruntuleMB.selected.borcTipi.borclumu and not empty daireGoruntuleMB.selected.guncelBakiye}"/>
-                                    <h:outputText id="daire_bakiye_borc_borc"
-                                                  value="#{daireGoruntuleMB.selected.guncelBakiye} TL (#{daireGoruntuleMB.selected.borcTipi.aciklama})"
-                                                  rendered="#{daireGoruntuleMB.selected.borcTipi.borclumu and not empty daireGoruntuleMB.selected.guncelBakiye}"
-                                                  style="font-weight:bold; color: red;"/>
-
-                                    <h:outputLabel for="daire_bakiye" value="#{lbl.daire_bakiye}"
-                                                   style="font-weight:bold;"
-                                                   rendered="#{not daireGoruntuleMB.selected.borcTipi.borclumu and not empty daireGoruntuleMB.selected.guncelBakiye}"/>
-                                    <h:outputText id="daire_bakiye"
-                                                  rendered="#{not daireGoruntuleMB.selected.borcTipi.borclumu and not empty daireGoruntuleMB.selected.guncelBakiye}"
-                                                  value="#{daireGoruntuleMB.selected.guncelBakiye} TL (#{daireGoruntuleMB.selected.borcTipi.aciklama})"
-                                                  style="font-weight:bold; color: #006400;"/>
-                                </h:panelGrid>
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
                             </p:panel>
                         </div>
                     </div>
 
                     <div class="Container50 Responsive">
                         <div class="ContainerIndent">
-                            <p:panel id="pnl_sakin_list" header="#{lbl.sakin_listesi}" scrollable="true"
-                                     scrollHeight="150"
-                                     style="box-shadow: none;">
-                                <h:panelGroup rendered="#{not daireGoruntuleMB.sakinLoaded}">
-                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                         style="display:block;margin: 0 auto;" alt=""/>
-                                </h:panelGroup>
-                                <h:panelGroup rendered="#{daireGoruntuleMB.sakinLoaded}">
-                                    <p:dataTable value="#{daireGoruntuleMB.kullaniciDaireDataModel}"
-                                                 var="varKullanici"
-                                                 emptyMessage="#{msg.no_record_found}">
+                            <p:panel style="min-height: 260px;">
+                                <i class="icon-try Fs50 Fleft Wid25 red TexAlCenter"></i>
 
-                                        <p:column headerText="#{lbl.ad}" sortBy="kullanici.ad">
-                                            <h:outputText value="#{varKullanici.kullanici.ad}"/>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.soyad}" sortBy="kullanici.soyad">
-                                            <h:outputText value="#{varKullanici.kullanici.soyad}"/>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.kullanici_adi}" sortBy="kullanici.username">
-                                            <h:outputText value="#{varKullanici.kullanici.username}"/>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.kullanici_tipi}"
-                                                  sortBy="kullaniciTipi.aciklama">
-                                            <h:outputText value="#{varKullanici.kullaniciTipi.aciklama}"/>
-                                        </p:column>
+                                <div class="Fs25 Fright MarTop10 leaden Wid70">#{lbl.lbl_finans_durumu}</div>
+                                <div class="Fs18 Fright leaden Wid70">#{lbl.lbl_bakiye_bilgisi}
+                                    <h:outputText value="#{daireGoruntuleMB.getBorcTutariForGenel()}"
+                                                  style="font-weight:bold; color: red;"
+                                                  rendered="#{daireGoruntuleMB.getBorcTutariForGenel() gt 0.0}">
+                                        <f:convertNumber pattern="#,###,##0.00"/>
+                                    </h:outputText>
+                                    <h:outputText value="#{-daireGoruntuleMB.getBorcTutariForGenel()}"
+                                                  style="font-weight:bold; color: green;"
+                                                  rendered="#{daireGoruntuleMB.getBorcTutariForGenel() lt 0.0}">
+                                        <f:convertNumber pattern="#,###,##0.00"/>
+                                    </h:outputText>
+                                </div>
+                                <div class="EmptyBox10"></div>
+                                <p:separator styleClass="Wid100"></p:separator>
 
-                                        <p:column style="width:4%">
-                                            <h:panelGrid columns="4">
-                                                <p:commandButton id="viewKulaniciDetal" icon="ui-icon-search"
-                                                                 update="@([id$=kullaniciDaireGoruntuleme])"
-                                                                 oncomplete="PF('kullaniciGoruntulePopup').show();"
-                                                                 immediate="true"
-                                                        >
-                                                    <f:setPropertyActionListener value="#{varKullanici}"
-                                                                                 target="#{daireGoruntuleMB.selectedKullaniciDaire}"/>
-                                                </p:commandButton>
+                                <ui:repeat value="#{daireGoruntuleMB.borcAlacakViewBeanList}" var="ba">
 
-                                            </h:panelGrid>
-                                        </p:column>
-                                    </p:dataTable>
-                                </h:panelGroup>
+                                    <div class="EmptyBox10"></div>
+                                    <div class="Fs13 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.lbl_tutar}
+                                        <br/><span
+                                                class="Fs16 orange"><h:outputText value="#{ba.tutar}">
+                                            <f:convertNumber pattern="#,###,##0.00"/>
+                                        </h:outputText></span></div>
+                                    <div class="Fs13 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.lbl_alacak_borc_oran}
+                                        <br/><span
+                                                class="Fs16 orange">#{daireGoruntuleMB.doubleFormatter(ba.rate)}</span>
+                                    </div>
+                                    <div class="Fs13 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.ortak_aciklama}
+                                        <br/><span
+                                                class="Fs16 orange">#{ba.aciklama}</span></div>
+                                    <div class="EmptyBox10"></div>
+                                </ui:repeat>
+                                <p:separator styleClass="Wid100"></p:separator>
+                                <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i
+                                        class="icon-doc-1 orange"> Get Full Report</i></a>
+
                             </p:panel>
                         </div>
                     </div>
 
-                    <p:panel id="anasayfa_borc_alacak_durum1" header="#{lbl.label_borc_alacak_ozet_detay}"
-                            >
-                        <h:panelGroup rendered="#{not daireGoruntuleMB.finansLoaded}">
-                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                 style="display:block;margin: 0 auto;" alt=""/>
-                        </h:panelGroup>
-
-                        <h:panelGroup rendered="#{daireGoruntuleMB.finansLoaded}">
-                            <table width="100%">
-                                <tr>
-                                    <td width="50%">
-                                        <p:chart type="pie" model="#{daireGoruntuleMB.pieModel2}"
-                                                 style="width:300px;height:200px"/>
-
-                                    </td>
-                                    <td width="50%" style="padding-top: 10px;">
-
-                                        <p:dataTable id="borc_alacak_table1" var="ba"
-                                                     value="#{daireGoruntuleMB.sonDonemborcAlacakViewBeanList}">
-
-                                            <p:column style="width:25%" headerText="#{lbl.lbl_tutar}">
-                                                <h:outputText value="#{ba.tutar}">
-                                                    <f:convertNumber pattern="#,###,##0.00"/>
-                                                </h:outputText>
-                                            </p:column>
-                                            <p:column style="width:25%"
-                                                      headerText="#{lbl.lbl_alacak_borc_oran}">
-                                                <h:outputText
-                                                        value="#{daireGoruntuleMB.doubleFormatter(ba.rate)}"/>
-                                            </p:column>
-                                            <p:column style="width:25%" headerText="#{lbl.ortak_aciklama}">
-                                                <h:outputText value="#{ba.aciklama}"/>
-                                            </p:column>
-
-                                        </p:dataTable>
-                                        <ui:remove>
-                                            <br/>
-                                            <h:outputText
-                                                    value="#{daireGoruntuleMB.getBorcTutariForCurrent()}"
-                                                    style="font-weight:bold; color: red;"
-                                                    rendered="#{daireGoruntuleMB.getBorcTutariForCurrent() gt 0.0}">
-                                                <f:convertNumber pattern="#,###,##0.00"/>
-                                            </h:outputText>
-                                            <h:outputText value="#{' TL'} #{msg.msg_borc_var}"
-                                                          style="font-weight:bold; color: red;"
-                                                          rendered="#{daireGoruntuleMB.getBorcTutariForCurrent() gt 0.0}"/>
-                                            <h:outputText
-                                                    value="#{-daireGoruntuleMB.getBorcTutariForCurrent()}"
-                                                    style="font-weight:bold; color: green;"
-                                                    rendered="#{daireGoruntuleMB.getBorcTutariForCurrent() lt 0.0}">
-                                                <f:convertNumber pattern="#,###,##0.00"/>
-                                            </h:outputText>
-                                            <h:outputText value="#{' TL'} #{msg.msg_alacak_var}"
-                                                          style="font-weight:bold; color: green;"
-                                                          rendered="#{daireGoruntuleMB.getBorcTutariForCurrent() lt 0.0}"/>
-                                        </ui:remove>
-                                    </td>
-                                </tr>
-                            </table>
-                        </h:panelGroup>
-                    </p:panel>
-
-                    <p:panel id="anasayfa_borc_alacak_durum" header="#{lbl.label_borc_alacak_ozet_genel}"
-                            >
-                        <h:panelGroup rendered="#{not daireGoruntuleMB.finansLoaded}">
-                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                 style="display:block;margin: 0 auto;" alt=""/>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{daireGoruntuleMB.finansLoaded}">
-                            <table width="100%">
-                                <tr>
-                                    <td width="50%">
-                                        <p:chart type="pie" model="#{daireGoruntuleMB.pieModel1}"
-                                                 style="width:300px;height:200px"/>
-                                    </td>
-                                    <td width="50%" style="padding-top: 10px;">
+                    <ui:remove>
+                        <div class="Container33 Responsive">
+                            <div class="ContainerIndent">
+                                <p:panel>
+                                    <div class="Fs24 MarTop10 leaden Wid100 TexAlCenter">#{lbl.label_borc_alacak_dengesi}</div>
+                                    <p:separator styleClass="Wid100"></p:separator>
+                                    <p:chart type="pie" model="#{daireGoruntuleMB.pieModel1}"
+                                             responsive="true"/>
+                                </p:panel>
+                            </div>
+                        </div>
+                    </ui:remove>
 
 
-                                        <p:dataTable id="borc_alacak_table" var="ba"
-                                                     value="#{daireGoruntuleMB.borcAlacakViewBeanList}">
+                    <div class="EmptyBox10"></div>
 
-                                            <p:column style="width:25%" headerText="#{lbl.lbl_tutar}">
-                                                <h:outputText value="#{ba.tutar}">
-                                                    <f:convertNumber pattern="#,###,##0.00"/>
-                                                </h:outputText>
-                                            </p:column>
-                                            <p:column style="width:25%"
-                                                      headerText="#{lbl.lbl_alacak_borc_oran}">
-                                                <h:outputText
-                                                        value="#{daireGoruntuleMB.doubleFormatter(ba.rate)}"/>
-                                            </p:column>
-                                            <p:column style="width:25%" headerText="#{lbl.ortak_aciklama}">
-                                                <h:outputText value="#{ba.aciklama}"/>
-                                            </p:column>
-                                        </p:dataTable>
+                    <div class="Container100">
+                        <div class="ContainerIndent">
 
-                                        <br/>
-                                        <h:outputText value="#{daireGoruntuleMB.getBorcTutariForGenel()}"
-                                                      style="font-weight:bold; color: red;"
-                                                      rendered="#{daireGoruntuleMB.getBorcTutariForGenel() gt 0.0}">
-                                            <f:convertNumber pattern="#,###,##0.00"/>
-                                        </h:outputText>
-                                        <h:outputText value="#{' TL'} #{msg.msg_borc_var}"
-                                                      style="font-weight:bold; color: red;"
-                                                      rendered="#{daireGoruntuleMB.getBorcTutariForGenel() gt 0.0}"/>
-                                        <h:outputText value="#{-daireGoruntuleMB.getBorcTutariForGenel()}"
-                                                      style="font-weight:bold; color: green;"
-                                                      rendered="#{daireGoruntuleMB.getBorcTutariForGenel() lt 0.0}">
-                                            <f:convertNumber pattern="#,###,##0.00"/>
-                                        </h:outputText>
-                                        <h:outputText value="#{' TL'} #{msg.msg_alacak_var}"
-                                                      style="font-weight:bold; color: green;"
-                                                      rendered="#{daireGoruntuleMB.getBorcTutariForGenel() lt 0.0}"/>
+                            <p:tabView dynamic="true" cache="true">
+                                <p:ajax event="tabChange" listener="#{daireGoruntuleMB.onTabChange}"
+                                        update="@([id$=growl]) , @([id$=tabChange])"/>
 
-                                    </td>
-                                </tr>
-                            </table>
-                        </h:panelGroup>
-                    </p:panel>
+                                <p:tab id="daire_detay" title="#{lbl.daire_detaylari}">
+                                    <p:panel id="pnl_sakin_list">
+                                        <div class="Container100 Responsive">
+                                            <div class="ContainerIndent">
+                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                    <i class="icon-users-2 orange"></i> #{lbl.sakin_listesi}
+                                                </div>
+                                                <p:dataTable value="#{daireGoruntuleMB.kullaniciDaireDataModel}"
+                                                             var="varKullanici"
+                                                             emptyMessage="#{msg.no_record_found}">
 
-                    <p:panel id="pnl_aidat_listesi" header="#{lbl.aidat_listesi}" scrollable="true"
-                             scrollHeight="150"
-                             style="box-shadow: none;">
-                        <h:commandLink>
-                            <p:graphicImage value="/images/excel_kucuk.png" style="width: 20px;"/>
-                            <p:dataExporter type="xls" target="daireAidatSorguSonucu"
-                                            fileName="daire_aidat_listesi"/>
-                        </h:commandLink>
-                        <h:commandLink>
-                            <p:graphicImage value="/images/pdf_kucuk.png" style="width: 20px;"/>
-                            <p:dataExporter type="pdf" target="daireAidatSorguSonucu"
-                                            fileName="daire_aidat_listesi"/>
-                        </h:commandLink>
+                                                    <p:column headerText="#{lbl.ad}" sortBy="kullanici.ad">
+                                                        <h:outputText value="#{varKullanici.kullanici.ad}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.soyad}" sortBy="kullanici.soyad">
+                                                        <h:outputText value="#{varKullanici.kullanici.soyad}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.kullanici_adi}"
+                                                              sortBy="kullanici.username">
+                                                        <h:outputText value="#{varKullanici.kullanici.username}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.kullanici_tipi}"
+                                                              sortBy="kullaniciTipi.aciklama">
+                                                        <h:outputText value="#{varKullanici.kullaniciTipi.aciklama}"/>
+                                                    </p:column>
 
-                        <h:panelGroup rendered="#{not daireGoruntuleMB.aidatLoaded}">
-                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                 style="display:block;margin: 0 auto;" alt=""/>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{daireGoruntuleMB.aidatLoaded}">
-                            <p:dataTable id="daireAidatSorguSonucu"
-                                         value="#{daireGoruntuleMB.borcDataModel}"
-                                         var="varBorc"
-                                         paginatorPosition="bottom"
-                                         paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,15,20,25">
+                                                    <p:column style="width:4%">
+                                                        <h:panelGrid columns="4">
+                                                            <p:commandButton id="viewKulaniciDetal"
+                                                                             icon="ui-icon-search"
+                                                                             update="@([id$=kullaniciDaireGoruntuleme])"
+                                                                             oncomplete="PF('kullaniciGoruntulePopup').show();"
+                                                                             immediate="true"
+                                                                    >
+                                                                <f:setPropertyActionListener value="#{varKullanici}"
+                                                                                             target="#{daireGoruntuleMB.selectedKullaniciDaire}"/>
+                                                            </p:commandButton>
 
-                                <p:column sortBy="borc.dekontNo"
-                                          style="width:10%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.borc_dekont_no}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.dekontNo}"/>
-                                </p:column>
-                                <p:column sortBy="borc.islemTarihi"
-                                          style="width:9%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.aidat_donemi}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.islemTarihi}"
-                                                  style="font-weight:bold; color:#ce1797;">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column sortBy="borc.odemeVadesi" style="width:9%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.odeme_tarihi}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.odemeVadesi}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column sortBy="borc.sonOdemeTarihi" style="width:9%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.son_odeme_tarihi}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.sonOdemeTarihi}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column sortBy="borc.borc"
-                                          style="width:5%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.borc_tutari}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.borc}"
-                                                  style="text-align:right;font-weight:bold; color:#FF4000;"/>
-                                </p:column>
-                                <p:column sortBy="borc.odenenTutar"
-                                          style="width:5%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.odenen_tutar}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.odenenTutar}"
-                                                  style="text-align:right;font-weight:bold; color:#088A29;"/>
-                                </p:column>
+                                                        </h:panelGrid>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </p:panel>
 
-                                <p:column sortBy="borc.bakiye"
-                                          style="width:5%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.kalan_bakiye}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.bakiye}"
-                                                  style="text-align:right;font-weight:bold; color:#{varBorc.borc.isBorcluMu() ? '#DF0101' : '#f075cb'};"/>
-                                </p:column>
+                                </p:tab>
+                                <p:tab id="aidat_bilgileri" title="#{lbl.aidet_bilgileri}">
+                                    <p:panel id="pnl_aidat_listesi">
+                                        <div class="Container100 Responsive">
+                                            <div class="ContainerIndent">
+                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                    <i class="icon-try orange"></i> #{lbl.aidat_listesi}
+                                                </div>
+                                                <h:commandLink>
+                                                    <p:graphicImage value="/images/excel_kucuk.png"
+                                                                    style="width: 20px;"/>
+                                                    <p:dataExporter type="xls" target="daireAidatSorguSonucu"
+                                                                    fileName="daire_aidat_listesi"/>
+                                                </h:commandLink>
+                                                <h:commandLink>
+                                                    <p:graphicImage value="/images/pdf_kucuk.png" style="width: 20px;"/>
+                                                    <p:dataExporter type="pdf" target="daireAidatSorguSonucu"
+                                                                    fileName="daire_aidat_listesi"/>
+                                                </h:commandLink>
+                                                <p:dataTable id="daireAidatSorguSonucu"
+                                                             value="#{daireGoruntuleMB.borcDataModel}"
+                                                             var="varBorc"
+                                                             paginatorPosition="bottom"
+                                                             paginator="true" rows="10"
+                                                             emptyMessage="#{msg.no_record_found}"
+                                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,15,20,25">
 
-                                <p:column sortBy="borc.aciklama"
-                                          style="width:25%">
-                                    <f:facet name="header">
-                                        <h:outputText value="#{lbl.ortak_aciklama}"/>
-                                    </f:facet>
-                                    <h:outputText value="#{varBorc.borc.aciklama}"/>
-                                </p:column>
+                                                    <p:column sortBy="borc.dekontNo"
+                                                              style="width:10%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.borc_dekont_no}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.dekontNo}"/>
+                                                    </p:column>
+                                                    <p:column sortBy="borc.islemTarihi"
+                                                              style="width:9%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.aidat_donemi}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.islemTarihi}"
+                                                                      style="font-weight:bold; color:#ce1797;">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:outputText>
+                                                    </p:column>
+                                                    <p:column sortBy="borc.odemeVadesi" style="width:9%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.odeme_tarihi}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.odemeVadesi}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:outputText>
+                                                    </p:column>
+                                                    <p:column sortBy="borc.sonOdemeTarihi" style="width:9%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.son_odeme_tarihi}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.sonOdemeTarihi}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:outputText>
+                                                    </p:column>
+                                                    <p:column sortBy="borc.borc"
+                                                              style="width:5%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.borc_tutari}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.borc}"
+                                                                      style="text-align:right;font-weight:bold; color:#FF4000;"/>
+                                                    </p:column>
+                                                    <p:column sortBy="borc.odenenTutar"
+                                                              style="width:5%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.odenen_tutar}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.odenenTutar}"
+                                                                      style="text-align:right;font-weight:bold; color:#088A29;"/>
+                                                    </p:column>
 
-                                <p:column>
-                                    <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
-                                        <p:menuitem id="aidatDetayGoruntule" value="#{lbl.label_aidat_detayi}"
-                                                    icon="ui-icon-search"
-                                                    action="#{daireGoruntuleMB.daireGoruntule(varDaire)}">
-                                        </p:menuitem>
+                                                    <p:column sortBy="borc.bakiye"
+                                                              style="width:5%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.kalan_bakiye}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.bakiye}"
+                                                                      style="text-align:right;font-weight:bold; color:#{varBorc.borc.isBorcluMu() ? '#DF0101' : '#f075cb'};"/>
+                                                    </p:column>
 
-                                        <p:menuitem id="aidatItirazEt" value="#{lbl.itiraz_et}"
-                                                    icon="ui-icon-wrench"
-                                                    action="#{daireGoruntuleMB.itirazTalebiGiris(varBorc)}">
-                                        </p:menuitem>
+                                                    <p:column sortBy="borc.aciklama"
+                                                              style="width:25%">
+                                                        <f:facet name="header">
+                                                            <h:outputText value="#{lbl.ortak_aciklama}"/>
+                                                        </f:facet>
+                                                        <h:outputText value="#{varBorc.borc.aciklama}"/>
+                                                    </p:column>
 
-                                    </p:menuButton>
-                                </p:column>
+                                                    <p:column>
+                                                        <p:menuButton value="#{lbl.label_islemler}"
+                                                                      styleClass="GreenButton">
+                                                            <p:menuitem id="aidatDetayGoruntule"
+                                                                        value="#{lbl.label_aidat_detayi}"
+                                                                        icon="ui-icon-search"
+                                                                        action="#{daireGoruntuleMB.daireGoruntule(varDaire)}">
+                                                            </p:menuitem>
 
-                                <p:column style="width:8%" exportable="false">
-                                    <h:panelGrid columns="4">
-                                        <p:commandButton id="viewBorcKalemDetail" icon="ui-icon-search"
-                                                         update="@([id$=aidatDetayGoruntuleme])"
-                                                         oncomplete="PF('aidatDetayGoruntulePopup').show();"
-                                                         immediate="true"
-                                                >
-                                            <f:setPropertyActionListener value="#{varBorc}"
-                                                                         target="#{daireGoruntuleMB.selectedBorc}"/>
-                                        </p:commandButton>
-                                        <p:commandButton id="yeniitirazTalebiEkleme"
-                                                         value="#{lbl.itiraz_et}"
-                                                         action="#{daireGoruntuleMB.chectAidatItiraz(daireGoruntuleMB.selectedBorc)}"
-                                                         update="@([id$=itirazTalepGirisForm])">
-                                            <f:setPropertyActionListener value="#{varBorc}"
-                                                                         target="#{daireGoruntuleMB.selectedBorc}"/>
-                                        </p:commandButton>
+                                                            <p:menuitem id="aidatItirazEt" value="#{lbl.itiraz_et}"
+                                                                        icon="ui-icon-wrench"
+                                                                        action="#{daireGoruntuleMB.itirazTalebiGiris(varBorc)}">
+                                                            </p:menuitem>
 
+                                                        </p:menuButton>
+                                                    </p:column>
 
-                                    </h:panelGrid>
-                                </p:column>
-
-
-                                <p:columnGroup type="footer">
-                                    <p:row>
-                                        <p:column colspan="4" style="text-align:right;font-weight:bold;"
-                                                  footerText="#{lbl.toplam}"/>
-                                        <p:column footerText="#{daireGoruntuleMB.toplamBorcTutar}"
-                                                  style="font-weight:bold; color:#FF4000;"/>
-                                        <p:column footerText="#{daireGoruntuleMB.toplamOdenenTutar}"
-                                                  style="font-weight:bold; color:#088A29;"/>
-                                        <p:column footerText="#{daireGoruntuleMB.toplamBakiyeTutar}"
-                                                  style="font-weight:bold; color:#f075cb;"/>
-                                    </p:row>
-                                </p:columnGroup>
-
-                            </p:dataTable>
-                        </h:panelGroup>
-                    </p:panel>
-
-                    <p:panel id="pnl_belgeler" header="#{lbl.label_belge_list}" scrollable="true"
-                             scrollHeight="150"
-                             style="box-shadow: none;">
-                        <h:panelGroup rendered="#{not daireGoruntuleMB.belgeLoaded}">
-                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                 style="display:block;margin: 0 auto;" alt=""/>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{daireGoruntuleMB.belgeLoaded}">
-                            <p:dataTable value="#{daireGoruntuleMB.belgeDataModel}" var="varDaireBelge"
-                                         paginatorPosition="bottom"
-                                         selection="#{daireGoruntuleMB.selectedDaireBelge}"
-                                         paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,10,15">
-
-                                <p:column headerText="#{lbl.belge_talebi_konusu}"
-                                          sortBy="belgeTipi.aciklama"
-                                          style="width:15%">
-                                    <h:outputText value="#{varDaireBelge.belge.belgeTipi.aciklama}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.label_belge_adi}" sortBy="dataName"
-                                          style="width:25%">
-                                    <h:outputText value="#{varDaireBelge.belge.dataName}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.label_belge_kullanici}"
-                                          sortBy="kullanici.adSoyad"
-                                          style="width:15%">
-                                    <h:outputText value="#{varDaireBelge.belge.kullanici.adSoyad}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.label_belge_boyut}" sortBy="size"
-                                          style="width:5%">
-                                    <h:outputText value="#{varDaireBelge.belge.size}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.label_belge_tarihi}" sortBy="islemTarihi"
-                                          style="width:10%">
-                                    <h:outputText value="#{varDaireBelge.belge.islemTarihi}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                    </h:outputText>
-                                </p:column>
-                                <p:column headerText="#{lbl.talep_no}" sortBy="talep.id"
-                                          style="width:10%">
-                                    <h:outputText value="#{varDaireBelge.talep.id}"
-                                                  style="text-align:center;font-weight:bold;"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.ortak_aciklama}" sortBy="aciklama"
-                                          style="width:20%">
-                                    <h:outputText value="#{varDaireBelge.belge.aciklama}"/>
-                                </p:column>
-                                <p:column style="width:4%">
-                                    <h:panelGrid columns="4">
-                                        <p:commandLink ajax="false" update=":main_form"
-                                                       id="downloadLink"
-                                                >
-                                            <p:graphicImage value="/images/download_icon.png"/>
-                                            <f:setPropertyActionListener value="#{varDaireBelge}"
-                                                                         target="#{daireGoruntuleMB.selectedDaireBelge}"/>
-                                            <p:fileDownload value="#{daireGoruntuleMB.download}"/>
-                                        </p:commandLink>
+                                                    <p:column style="width:8%" exportable="false">
+                                                        <h:panelGrid columns="4">
+                                                            <p:commandButton id="viewBorcKalemDetail"
+                                                                             icon="ui-icon-search"
+                                                                             update="@([id$=aidatDetayGoruntuleme])"
+                                                                             oncomplete="PF('aidatDetayGoruntulePopup').show();"
+                                                                             immediate="true"
+                                                                    >
+                                                                <f:setPropertyActionListener value="#{varBorc}"
+                                                                                             target="#{daireGoruntuleMB.selectedBorc}"/>
+                                                            </p:commandButton>
+                                                            <p:commandButton id="yeniitirazTalebiEkleme"
+                                                                             value="#{lbl.itiraz_et}"
+                                                                             action="#{daireGoruntuleMB.chectAidatItiraz(daireGoruntuleMB.selectedBorc)}"
+                                                                             update="@([id$=itirazTalepGirisForm])">
+                                                                <f:setPropertyActionListener value="#{varBorc}"
+                                                                                             target="#{daireGoruntuleMB.selectedBorc}"/>
+                                                            </p:commandButton>
 
 
-                                        <p:commandButton id="deleteBelge1" immediate="true"
-                                                         icon="ui-icon-trash"
-                                                         action="#{daireGoruntuleMB.deleteBelge}"
-                                                         update="@([id$=pnl_belgeler])"
-                                                >
+                                                        </h:panelGrid>
+                                                    </p:column>
 
-                                            <f:setPropertyActionListener value="#{varDaireBelge}"
-                                                                         target="#{daireGoruntuleMB.selectedDaireBelge}"/>
-                                            <p:confirm header="#{lbl.label_belge_silme}"
-                                                       message="#{msg.islemi_onayliyormusunuz}"/>
-                                        </p:commandButton>
-                                    </h:panelGrid>
-                                </p:column>
-                                <f:facet name="footer">
-                                    <p:commandButton id="yeniBelgeEkleme" value="#{lbl.label_belge_ekle}"
-                                                     action="#{daireGoruntuleMB.clearBelgeYuklemeObject}"
-                                                     onclick="belge_yukle.loadStep(belge_yukle.cfg.steps[0], true);PF('belgeEklePopup').show();"
-                                                     type="button"/>
-                                </f:facet>
-                            </p:dataTable>
-                        </h:panelGroup>
-                    </p:panel>
 
-                    <p:panel id="pnl_ilanlar" header="#{lbl.ilan_listesi}" scrollable="true"
-                             scrollHeight="150"
-                             style="box-shadow: none;">
-                        <h:panelGroup rendered="#{not daireGoruntuleMB.ilanLoaded}">
-                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                 style="display:block;margin: 0 auto;" alt=""/>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{daireGoruntuleMB.ilanLoaded}">
-                            <p:dataTable value="#{daireGoruntuleMB.duyuruDataModel}" var="varDuyuru"
-                                         selection="#{daireGoruntuleMB.selectedDuyuru}"
-                                         paginatorPosition="bottom"
-                                         paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,10,15">
-                                <p:column headerText="#{lbl.duyuru_yayinlayan_kullanici}" sortBy="adSoyad"
-                                          style="width:15%">
-                                    <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.duyuru_yayinlanan_daire}" sortBy="daireBlokAd"
-                                          style="width:10%">
-                                    <h:outputText value="#{varDuyuru.daire.daireBlokAd}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.duyuru_konusu}" sortBy="kisaAciklama"
-                                          style="width:25%">
-                                    <h:outputText value="#{varDuyuru.kisaAciklama}"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.duyuru_aciklama}" sortBy="aciklama"
-                                          style="width:35%">
-                                    <h:outputText value="#{varDuyuru.aciklama}" escape="false"/>
-                                </p:column>
-                                <p:column headerText="#{lbl.duyuru_zamani}" sortBy="tanitimZamani"
-                                          style="width:15%">
-                                    <h:outputText value="#{varDuyuru.tanitimZamani}"/>
-                                </p:column>
+                                                    <p:columnGroup type="footer">
+                                                        <p:row>
+                                                            <p:column colspan="4"
+                                                                      style="text-align:right;font-weight:bold;"
+                                                                      footerText="#{lbl.toplam}"/>
+                                                            <p:column footerText="#{daireGoruntuleMB.toplamBorcTutar}"
+                                                                      style="font-weight:bold; color:#FF4000;"/>
+                                                            <p:column footerText="#{daireGoruntuleMB.toplamOdenenTutar}"
+                                                                      style="font-weight:bold; color:#088A29;"/>
+                                                            <p:column footerText="#{daireGoruntuleMB.toplamBakiyeTutar}"
+                                                                      style="font-weight:bold; color:#f075cb;"/>
+                                                        </p:row>
+                                                    </p:columnGroup>
 
-                                <p:column style="width:4%">
-                                    <h:panelGrid columns="4">
-                                        <p:commandButton id="viewButton1" icon="ui-icon-search"
-                                                         update="@([id$=duyuruGoruntuleme])"
-                                                         oncomplete="PF('duyuruGoruntulePopup').show();"
-                                                         immediate="true"
-                                                >
-                                            <f:setPropertyActionListener value="#{varDuyuru}"
-                                                                         target="#{daireGoruntuleMB.selectedDuyuru}"/>
-                                        </p:commandButton>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </p:panel>
 
-                                        <p:commandButton id="deleteButton1" icon="ui-icon-trash"
-                                                         immediate="true"
-                                                         action="#{daireGoruntuleMB.deleteDuyuru}"
-                                                         update="@([id$=pnl_ilanlar])"
-                                                >
-                                            <f:setPropertyActionListener value="#{varDuyuru}"
-                                                                         target="#{daireGoruntuleMB.selectedDuyuru}"/>
-                                            <p:confirm header="#{lbl.ilan_iptali}"
-                                                       message="#{msg.islemi_onayliyormusunuz}"/>
-                                        </p:commandButton>
-                                    </h:panelGrid>
-                                </p:column>
-                                <f:facet name="footer">
-                                    <p:commandButton id="yorumEkleme" value="#{lbl.ilan_ekleme}"
-                                                     onclick="PF('duyuruEklePopup').show();" type="button"/>
-                                </f:facet>
+                                </p:tab>
 
-                            </p:dataTable>
-                        </h:panelGroup>
-                    </p:panel>
+                                <p:tab id="daire_belgeler" title="#{lbl.daire_belgeler}">
+                                    <p:panel id="pnl_belgeler">
+                                        <div class="Container100 Responsive">
+                                            <div class="ContainerIndent">
+                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                    <i class="icon-doc orange"></i> #{lbl.label_belge_list}
+                                                </div>
 
-                    <p:panel id="sorguSonucuPanel" header="#{lbl.talep_daire_listesi}" scrollable="true"
-                             scrollHeight="150"
-                             style="box-shadow: none;">
-                        <h:panelGroup rendered="#{not daireGoruntuleMB.talepLoaded}">
-                            <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                 style="display:block;margin: 0 auto;" alt=""/>
-                        </h:panelGroup>
-                        <h:panelGroup rendered="#{daireGoruntuleMB.talepLoaded}">
-                            <p:dataTable id="talepSorguSonucu" value="#{daireGoruntuleMB.talepDatamodel}"
-                                         var="varTalep"
-                                         paginatorPosition="bottom"
-                                         selection="#{talepMB.selected}"
-                                         paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                         rowsPerPageTemplate="5,10,15">
+                                                <p:dataTable value="#{daireGoruntuleMB.belgeDataModel}"
+                                                             var="varDaireBelge"
+                                                             paginatorPosition="bottom"
+                                                             selection="#{daireGoruntuleMB.selectedDaireBelge}"
+                                                             paginator="true" rows="10"
+                                                             emptyMessage="#{msg.no_record_found}"
+                                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10,15">
 
-                                <p:column headerText="#{lbl.talep_tipi}" sortBy="talep.talepTipi.aciklama"
-                                          style="width:15%">
-                                    <h:outputText value="#{varTalep.talep.talepTipi.aciklama}"/>
-                                </p:column>
+                                                    <p:column headerText="#{lbl.belge_talebi_konusu}"
+                                                              sortBy="belgeTipi.aciklama"
+                                                              style="width:15%">
+                                                        <h:outputText
+                                                                value="#{varDaireBelge.belge.belgeTipi.aciklama}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.label_belge_adi}" sortBy="dataName"
+                                                              style="width:25%">
+                                                        <h:outputText value="#{varDaireBelge.belge.dataName}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.label_belge_kullanici}"
+                                                              sortBy="kullanici.adSoyad"
+                                                              style="width:15%">
+                                                        <h:outputText value="#{varDaireBelge.belge.kullanici.adSoyad}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.label_belge_boyut}" sortBy="size"
+                                                              style="width:5%">
+                                                        <h:outputText value="#{varDaireBelge.belge.size}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.label_belge_tarihi}"
+                                                              sortBy="islemTarihi"
+                                                              style="width:10%">
+                                                        <h:outputText value="#{varDaireBelge.belge.islemTarihi}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:outputText>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.talep_no}" sortBy="talep.id"
+                                                              style="width:10%">
+                                                        <h:outputText value="#{varDaireBelge.talep.id}"
+                                                                      style="text-align:center;font-weight:bold;"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.ortak_aciklama}" sortBy="aciklama"
+                                                              style="width:20%">
+                                                        <h:outputText value="#{varDaireBelge.belge.aciklama}"/>
+                                                    </p:column>
+                                                    <p:column style="width:4%">
+                                                        <h:panelGrid columns="4">
+                                                            <p:commandLink ajax="false" update=":main_form"
+                                                                           id="downloadLink"
+                                                                    >
+                                                                <p:graphicImage value="/images/download_icon.png"/>
+                                                                <f:setPropertyActionListener value="#{varDaireBelge}"
+                                                                                             target="#{daireGoruntuleMB.selectedDaireBelge}"/>
+                                                                <p:fileDownload value="#{daireGoruntuleMB.download}"/>
+                                                            </p:commandLink>
 
-                                <p:column headerText="#{lbl.talep_no}" sortBy="talep.id" style="width:5%">
-                                    <h:outputText value="#{varTalep.talep.id}"/>
-                                </p:column>
 
-                                <p:column headerText="#{lbl.talep_durumu}"
-                                          sortBy="varTalep.talep.islemTarihi"
-                                          style="width:20%">
+                                                            <p:commandButton id="deleteBelge1" immediate="true"
+                                                                             icon="ui-icon-trash"
+                                                                             action="#{daireGoruntuleMB.deleteBelge}"
+                                                                             update="@([id$=pnl_belgeler])"
+                                                                    >
 
-                                    <h:panelGrid id="panel1" columns="2">
+                                                                <f:setPropertyActionListener value="#{varDaireBelge}"
+                                                                                             target="#{daireGoruntuleMB.selectedDaireBelge}"/>
+                                                                <p:confirm header="#{lbl.label_belge_silme}"
+                                                                           message="#{msg.islemi_onayliyormusunuz}"/>
+                                                            </p:commandButton>
+                                                        </h:panelGrid>
+                                                    </p:column>
+                                                    <f:facet name="footer">
+                                                        <p:commandButton id="yeniBelgeEkleme"
+                                                                         value="#{lbl.label_belge_ekle}"
+                                                                         action="#{daireGoruntuleMB.clearBelgeYuklemeObject}"
+                                                                         onclick="belge_yukle.loadStep(belge_yukle.cfg.steps[0], true);PF('belgeEklePopup').show();"
+                                                                         type="button"/>
+                                                    </f:facet>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </p:panel>
 
-                                        <h:outputLabel for="tal_tarihi" value="#{lbl.talep_tarihi}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="tal_tarihi" value="#{varTalep.talep.islemTarihi}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                        </h:outputText>
+                                </p:tab>
 
-                                        <h:outputLabel for="tal_durumu" value="#{lbl.talep_onay_durumu}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="tal_durumu"
-                                                      value="#{varTalep.talep.talepOnayDurumu.aciklama}"/>
+                                <p:tab id="daire_duyurular" title="#{lbl.daire_ilanlar}">
+                                    <p:panel id="pnl_ilanlar">
+                                        <div class="Container100 Responsive">
+                                            <div class="ContainerIndent">
+                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                    <i class="icon-th-list-2 orange"></i> #{lbl.ilan_listesi}
+                                                </div>
 
-                                        <h:outputLabel for="tal_aciklama" value="#{lbl.talep_aciklama}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="tal_aciklama"
-                                                      value="#{varTalep.talep.shortAciklama}"/>
+                                                <p:dataTable value="#{daireGoruntuleMB.duyuruDataModel}" var="varDuyuru"
+                                                             selection="#{daireGoruntuleMB.selectedDuyuru}"
+                                                             paginatorPosition="bottom"
+                                                             paginator="true" rows="10"
+                                                             emptyMessage="#{msg.no_record_found}"
+                                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10,15">
+                                                    <p:column headerText="#{lbl.duyuru_yayinlayan_kullanici}"
+                                                              sortBy="adSoyad"
+                                                              style="width:15%">
+                                                        <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.duyuru_yayinlanan_daire}"
+                                                              sortBy="daireBlokAd"
+                                                              style="width:10%">
+                                                        <h:outputText value="#{varDuyuru.daire.daireBlokAd}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.duyuru_konusu}" sortBy="kisaAciklama"
+                                                              style="width:25%">
+                                                        <h:outputText value="#{varDuyuru.kisaAciklama}"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.duyuru_aciklama}" sortBy="aciklama"
+                                                              style="width:35%">
+                                                        <h:outputText value="#{varDuyuru.aciklama}" escape="false"/>
+                                                    </p:column>
+                                                    <p:column headerText="#{lbl.duyuru_zamani}" sortBy="tanitimZamani"
+                                                              style="width:15%">
+                                                        <h:outputText value="#{varDuyuru.tanitimZamani}"/>
+                                                    </p:column>
 
-                                    </h:panelGrid>
+                                                    <p:column style="width:4%">
+                                                        <h:panelGrid columns="4">
+                                                            <p:commandButton id="viewButton1" icon="ui-icon-search"
+                                                                             update="@([id$=duyuruGoruntuleme])"
+                                                                             oncomplete="PF('duyuruGoruntulePopup').show();"
+                                                                             immediate="true"
+                                                                    >
+                                                                <f:setPropertyActionListener value="#{varDuyuru}"
+                                                                                             target="#{daireGoruntuleMB.selectedDuyuru}"/>
+                                                            </p:commandButton>
 
-                                </p:column>
+                                                            <p:commandButton id="deleteButton1" icon="ui-icon-trash"
+                                                                             immediate="true"
+                                                                             action="#{daireGoruntuleMB.deleteDuyuru}"
+                                                                             update="@([id$=pnl_ilanlar])"
+                                                                    >
+                                                                <f:setPropertyActionListener value="#{varDuyuru}"
+                                                                                             target="#{daireGoruntuleMB.selectedDuyuru}"/>
+                                                                <p:confirm header="#{lbl.ilan_iptali}"
+                                                                           message="#{msg.islemi_onayliyormusunuz}"/>
+                                                            </p:commandButton>
+                                                        </h:panelGrid>
+                                                    </p:column>
+                                                    <f:facet name="footer">
+                                                        <p:commandButton id="yorumEkleme" value="#{lbl.ilan_ekleme}"
+                                                                         onclick="PF('duyuruEklePopup').show();"
+                                                                         type="button"/>
+                                                    </f:facet>
 
-                                <p:column headerText="#{lbl.talep_yapan_kullanici}" sortBy="talep.kullanici"
-                                          style="width:10%">
-                                    <h:outputText value="#{varTalep.talep.kullanici.adSoyad}"/>
-                                </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </p:panel>
 
-                                <p:column headerText="#{lbl.daire_bilgileri}"
-                                          sortBy="varTalep.daire.daireNo"
-                                          style="width:15%">
+                                </p:tab>
 
-                                    <h:panelGrid id="panel2" columns="2"
-                                            >
+                                <p:tab id="daire_talepler" title="#{lbl.talepler}">
 
-                                        <h:outputLabel for="daire_kodu" value="#{lbl.daire_kodu}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="daire_kodu" value="#{varTalep.daire.daireKodu}"/>
+                                    <p:panel id="sorguSonucuPanel">
+                                        <div class="Container100 Responsive">
+                                            <div class="ContainerIndent">
+                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                    <i class="icon-list orange"></i> #{lbl.talep_daire_listesi}
+                                                </div>
+                                                <p:dataTable id="talepSorguSonucu"
+                                                             value="#{daireGoruntuleMB.talepDatamodel}" var="varTalep"
+                                                             paginatorPosition="bottom"
+                                                             emptyMessage="#{msg.no_record_found}"
+                                                             paginator="true" rows="10"
+                                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                                             rowsPerPageTemplate="5,10,15">
 
-                                        <h:outputLabel for="daire_blok" value="#{lbl.daire_blokAdi}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="daire_blok"
-                                                      value="#{varTalep.daire.blok.aciklama}"/>
+                                                    <p:column style="width:16px">
+                                                        <p:rowToggler/>
+                                                    </p:column>
 
-                                        <h:outputLabel for="daire_no1" value="#{lbl.daire_no}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="daire_no1" value="#{varTalep.daire.daireNo}"/>
+                                                    <p:column headerText="#{lbl.talep_tipi}"
+                                                              sortBy="talep.talepTipi.aciklama">
+                                                        <h:outputText value="#{varTalep.talep.talepTipi.aciklama}"/>
+                                                    </p:column>
 
-                                    </h:panelGrid>
+                                                    <p:column headerText="#{lbl.talep_tarihi}"
+                                                              sortBy="#{varTalep.talep.islemTarihi}">
+                                                        <h:outputText id="tal_tarihi"
+                                                                      value="#{varTalep.talep.islemTarihi}">
+                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                        </h:outputText>
+                                                    </p:column>
 
-                                </p:column>
+                                                    <p:column headerText="#{lbl.talep_onay_durumu}"
+                                                              sortBy="#{varTalep.talep.talepOnayDurumu.aciklama}">
+                                                        <h:outputText id="tal_durumu"
+                                                                      value="#{varTalep.talep.talepOnayDurumu.aciklama}"/>
+                                                    </p:column>
 
-                                <p:column headerText="#{lbl.talep_onay_red_bilgileri}"
-                                          sortBy="varTalep.talep.onayTarihi"
-                                          style="width:20%">
+                                                    <p:column headerText="#{lbl.talep_yapan_kullanici}"
+                                                              sortBy="talep.kullanici">
+                                                        <h:outputText value="#{varTalep.talep.kullanici.adSoyad}"/>
+                                                    </p:column>
 
-                                    <h:panelGrid id="panel3" columns="2"
-                                            >
+                                                    <p:column headerText="#{lbl.daire_blokAdi}"
+                                                              sortBy="#{varTalep.daire.blok.aciklama}">
+                                                        <h:outputText id="daire_blok"
+                                                                      value="#{varTalep.daire.blok.aciklama}"/>
+                                                    </p:column>
 
-                                        <h:outputLabel for="tal_onay_tarihi"
-                                                       value="#{lbl.talep_onay_zamani}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="tal_onay_tarihi"
-                                                      value="#{varTalep.talep.onayTarihi}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                        </h:outputText>
+                                                    <p:column headerText="#{lbl.daire_no}"
+                                                              sortBy="#{varTalep.daire.daireNo}">
+                                                        <h:outputText id="daire_no1" value="#{varTalep.daire.daireNo}"/>
+                                                    </p:column>
 
-                                        <h:outputLabel for="tal_onay_kullanici"
-                                                       value="#{lbl.talep_onay_kullanici}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="tal_onay_kullanici"
-                                                      value="#{varTalep.talep.onaylayanKullanici.adSoyad}"/>
+                                                    <p:rowExpansion>
 
-                                        <h:outputLabel for="tal_onay_aciklama"
-                                                       value="#{lbl.talep_onay_aciklama}"
-                                                       style="font-weight:bold; color: #0b4170"/>
-                                        <h:outputText id="tal_onay_aciklama"
-                                                      value="#{varTalep.talep.shortOnayAciklama}"/>
+                                                        <p:panel>
+                                                            <div class="Container100 Responsive">
+                                                                <div class="ContainerIndent">
+                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                        <i class="icon-th-1 orange"></i> #{lbl.talep_bilgileri}
+                                                                    </div>
+                                                                    <h:panelGrid id="showTalepDetailTalepBilgileri"
+                                                                                 columns="2" cellpadding="5">
 
-                                    </h:panelGrid>
-                                </p:column>
-                            </p:dataTable>
-                        </h:panelGroup>
-                    </p:panel>
+                                                                        <h:outputLabel for="talep_no"
+                                                                                       value="#{lbl.talep_no}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="talep_no"
+                                                                                      value="#{varTalep.talep.id}"/>
+
+                                                                        <h:outputLabel for="talep_tipi"
+                                                                                       value="#{lbl.talep_tipi}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="talep_tipi"
+                                                                                      value="#{varTalep.talep.talepTipi.aciklama}"/>
+
+                                                                        <h:outputLabel for="talep_kullanici"
+                                                                                       value="#{lbl.kullanici}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="talep_kullanici"
+                                                                                      value="#{varTalep.talep.kullanici.adSoyad}"/>
+
+                                                                        <h:outputLabel for="talep_tarihi"
+                                                                                       value="#{lbl.talep_tarihi}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="talep_tarihi"
+                                                                                      value="#{varTalep.talep.islemTarihi}">
+                                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                                        </h:outputText>
+
+                                                                        <h:outputLabel for="talep_onay_durum"
+                                                                                       value="#{lbl.talep_onay_durumu}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="talep_onay_durum"
+                                                                                      value="#{varTalep.talep.talepOnayDurumu.aciklama}"/>
+
+                                                                        <h:outputLabel for="talep_aciklama"
+                                                                                       value="#{lbl.talep_aciklama}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="talep_aciklama"
+                                                                                      value="#{varTalep.talep.aciklama}"/>
+                                                                    </h:panelGrid>
+                                                                </div>
+                                                            </div>
+                                                        </p:panel>
+
+                                                        <div class="EmptyBox10"></div>
+
+                                                        <p:panel>
+                                                            <div class="Container100 Responsive">
+                                                                <div class="ContainerIndent">
+                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                        <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
+                                                                    </div>
+                                                                    <h:panelGrid id="showDaireDetailBilgileri"
+                                                                                 columns="2" cellpadding="5">
+                                                                        <h:outputLabel for="daire_no"
+                                                                                       value="#{lbl.daire_no}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="daire_no"
+                                                                                      value="#{varTalep.daire.daireNo}"/>
+
+                                                                        <h:outputLabel for="blok_adi"
+                                                                                       value="#{lbl.daire_blokAdi}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="blok_adi"
+                                                                                      value="#{varTalep.daire.blok.aciklama}"/>
+
+                                                                        <h:outputLabel for="kat"
+                                                                                       value="#{lbl.daire_kat}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="kat"
+                                                                                      value="#{varTalep.daire.kat}"/>
+                                                                    </h:panelGrid>
+                                                                </div>
+                                                            </div>
+                                                        </p:panel>
+
+                                                        <div class="EmptyBox10"></div>
+
+                                                        <p:panel>
+                                                            <div class="Container100 Responsive">
+                                                                <div class="ContainerIndent">
+                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                        <i class="icon-ok-1 orange"></i> #{lbl.talep_onay_red_bilgileri}
+                                                                    </div>
+                                                                    <h:panelGrid id="showTalepORDetailTalepBilgileri"
+                                                                                 columns="2" cellpadding="5">
+                                                                        <h:outputLabel for="tal_onay_tarihi"
+                                                                                       value="#{lbl.talep_onay_zamani}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="tal_onay_tarihi"
+                                                                                      value="#{varTalep.talep.onayTarihi}">
+                                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                                        </h:outputText>
+
+                                                                        <h:outputLabel for="tal_onay_kullanici"
+                                                                                       value="#{lbl.talep_onay_kullanici}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="tal_onay_kullanici"
+                                                                                      value="#{varTalep.talep.onaylayanKullanici.adSoyad}"/>
+
+                                                                        <h:outputLabel for="tal_onay_aciklama"
+                                                                                       value="#{lbl.talep_onay_aciklama}"
+                                                                                       style="font-weight:bold; color: #0b4170"/>
+                                                                        <h:outputText id="tal_onay_aciklama"
+                                                                                      value="#{varTalep.talep.onayAciklama}"/>
+
+                                                                    </h:panelGrid>
+                                                                </div>
+                                                            </div>
+                                                        </p:panel>
+
+                                                    </p:rowExpansion>
+
+                                                </p:dataTable>
+                                            </div>
+                                        </div>
+                                    </p:panel>
+
+                                </p:tab>
+
+                            </p:tabView>
+
+                        </div>
+                    </div>
 
                 </div>
             </div>
