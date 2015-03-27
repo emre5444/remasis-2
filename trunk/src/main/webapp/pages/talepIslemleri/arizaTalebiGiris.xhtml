@@ -49,26 +49,19 @@
                                                 value="#{daireGoruntuleMB.yeniArizaTalep.mudahaleTarihi}"
                                                 pattern="dd/MM/yyyy HH:mm" label="#{lbl.hizmet_tarihi}"
                                                 showOn="button" required="true"/>
-
-                                    <f:facet name="footer">
-                                        <p:commandButton id="arizaTalep_kaydet" value="#{lbl.kaydet}"
-                                                         update="@([id$=sorguSonucuPanel])"
-                                                         actionListener="#{daireGoruntuleMB.yeniArizaTalebiEkleme}"/>
-                                    </f:facet>
-
                                 </h:panelGrid>
                             </div>
                         </div>
                     </p:panel>
 
                     <h:panelGrid columns="3">
-                        <p:commandButton id="arizaTalep_kaydet" value="#{lbl.ortak_guncelle}"
-                                         action="#{kullaniciIslemleri.update}">
-                            <p:confirm header="#{lbl.kullanici_guncelleme}" message="#{msg.islemi_onayliyormusunuz}"
+                        <p:commandButton id="arizaTalep_kaydet" value="#{lbl.kaydet}"
+                                         action="#{talepIslemMB.yeniArizaTalebiEkleme}">
+                            <p:confirm header="#{lbl.talep_ariza_talebi_giris}" message="#{msg.islemi_onayliyormusunuz}"
                                        icon="ui-icon-alert"/>
                         </p:commandButton>
                         <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
-                                         action="#{kullaniciIslemleri.geriDon}"/>
+                                         action="#{talepIslemMB.geriDon}"/>
                     </h:panelGrid>
 
                 </div>

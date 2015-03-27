@@ -42,7 +42,7 @@ import java.util.ResourceBundle;
 
 @ManagedBean(name = "daireGoruntuleMB")
 @ViewScoped
-public class DaireGoruntuleMB implements Serializable {
+public class DaireGoruntuleMB extends AbstractMB implements Serializable {
 
     public static Logger logger = Logger.getLogger(DaireGoruntuleMB.class);
     //servisler
@@ -78,13 +78,8 @@ public class DaireGoruntuleMB implements Serializable {
     private TalepSorguKriteri talepSorguKriteri = new TalepSorguKriteri();
 
     //talep islemleri
-    private ArizaTalebi yeniArizaTalep = new ArizaTalebi();
-    private ItirazTalebi yeniItiraz = new ItirazTalebi();
-    private SikayetTalebi yeniSikayetTalebi = new SikayetTalebi();
-    private BelgeTalebi yeniBelgeTalebi = new BelgeTalebi();
     private TalepDaire selectedTalep;
     private TalepDataModel talepDatamodel;
-    private String talepIslem;
 
     //daire islemleri
     private Daire selected;
@@ -141,35 +136,59 @@ public class DaireGoruntuleMB implements Serializable {
     public void init() {
         getFlushObjects();
         setUserRolInfos();
-        prepareDummyLoadObjects();
-    }
-
-    public void prepareDummyLoadObjects() {
-        aidatLoaded = false;
-        finansLoaded = false;
-        belgeLoaded = false;
-        ilanLoaded = false;
-        talepLoaded = false;
-        sakinLoaded = false;
-    }
-
-    public void getFlushObjects() {
-        selected = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireObject");
         belgeTipiList = ortakService.getListByNamedQuery("BelgeTipi.findAll");
     }
 
-    public void handleDaireIslem() {
-        if (talepIslem.equals("arizaTalebiGiris")) {
-            RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.execute("PF('talepEklePopup').show()");
-        } else if (talepIslem.equals("sikayetTalebiGiris")) {
-            RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.execute("PF('sikayetTalebiPopup').show()");
-        } else if (talepIslem.equals("belgeTalebiGiris")) {
-            RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.execute("PF('belgeTalebiPopup').show()");
+    public void setUserRolInfos() {
+        if (!sessionInfo.isAdminMi() && selected == null) {
+            sorguKriteri.setKullanici(sessionInfo.getKullanici());
+            getDaireListBySorguKriteri();
+            if (dataModel.getRowCount() >= 1) {
+                selected = daireSorguSonucu.get(0);
+                ortakService.createErisimLog(sessionInfo, sessionInfo.getKullanici(), LogTipi.getDaireGoruntuleObject(), label.getString("daire_kodu") + ":" + selected.getDaireKodu());
+                getDaireBilgileriTabInfos();
+            }
         }
-        talepIslem = null;
+    }
+
+    public void getFlushObjects() {
+        sorguKriteri = (DaireSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+        selected = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireObject");
+    }
+
+    public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
+    }
+
+    public String geriDon() {
+        storeFlashObjects();
+        return getBackPage();
+    }
+
+    public String arzaTalebiGiris(){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
+        return "arizaTalebiGiris.xhtml";
+    }
+
+    public String itirazTalebiGiris(DaireBorc daireBorc){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedBorc", daireBorc);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
+        return "aidatItirazTalebiGiris.xhtml";
+    }
+
+    public String sikayetTalebiGiris(){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
+        return "sikayetTalebiGiris.xhtml";
+    }
+
+    public String belgeTalebiGiris(){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
+        return "belgeTalebiGiris.xhtml";
     }
 
     public void onTabChange(TabChangeEvent event) {
@@ -242,57 +261,6 @@ public class DaireGoruntuleMB implements Serializable {
         return suggestions;
     }
 
-    public void setUserRolInfos() {
-        if (!sessionInfo.isAdminMi() && selected == null) {
-            sorguKriteri.setKullanici(sessionInfo.getKullanici());
-            getDaireListBySorguKriteri();
-            if (dataModel.getRowCount() >= 1) {
-                selected = daireSorguSonucu.get(0);
-                ortakService.createErisimLog(sessionInfo, sessionInfo.getKullanici(), LogTipi.getDaireGoruntuleObject(), label.getString("daire_kodu") + ":" + selected.getDaireKodu());
-                getDaireBilgileriTabInfos();
-            }
-        }
-    }
-
-    public void yeniArizaTalebiEkleme() {
-        talepService.arizaTalebiEkleme(selected, yeniArizaTalep, sessionInfo);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
-        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
-        getTalepTabInfos();
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('talepEklePopup').hide()");
-    }
-
-    public void yeniSikayetTalebiEkleme() {
-        talepService.sikayetTalebiEkleme(selected, yeniSikayetTalebi, sessionInfo);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
-        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
-        getTalepTabInfos();
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('sikayetTalebiPopup').hide()");
-    }
-
-    public void yeniItirazTalebiEkleme() {
-        talepService.itirazTalebiEkleme(selected, yeniItiraz, sessionInfo, selectedBorc);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
-        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
-        getTalepTabInfos();
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('itirazTalepEklePopup').hide()");
-    }
-
-    public void yeniBelgeTalebiEkleme() {
-        talepService.belgeTalebiEkleme(selected, yeniBelgeTalebi, sessionInfo);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
-        JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
-        getTalepTabInfos();
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('belgeTalebiPopup').hide()");
-    }
 
     public void yeniDuyuruEkle() {
         try {
@@ -319,26 +287,6 @@ public class DaireGoruntuleMB implements Serializable {
             ortakService.deleteDuyuru(selectedDuyuru);
             getDuyuruTabInfos();
             JsfUtil.addSuccessMessage(message.getString("duyuru_silme_basarili"));
-        } catch (Exception e) {
-            logger.error(e.getStackTrace());
-            JsfUtil.addSuccessMessage("Hata!");
-        }
-    }
-
-    public void update(Daire daire) {
-        try {
-            daireService.update(daire);
-            JsfUtil.addSuccessMessage("?slem basarili");
-        } catch (Exception e) {
-            logger.error(e.getStackTrace());
-            JsfUtil.addSuccessMessage("Hata!");
-        }
-    }
-
-    public void delete(Daire daire) {
-        try {
-            daireService.update(daire);
-            JsfUtil.addSuccessMessage("?slem basarili");
         } catch (Exception e) {
             logger.error(e.getStackTrace());
             JsfUtil.addSuccessMessage("Hata!");
@@ -446,36 +394,6 @@ public class DaireGoruntuleMB implements Serializable {
     }
 
 
-    //kontroller
-    public void cleanPage() {
-        sorguKriteri.setBlok(null);
-        sorguKriteri.setDaireNo(null);
-        dataModel = null;
-        borcDataModel = null;
-        talepDatamodel = null;
-        duyuruDataModel = null;
-    }
-
-    public void chectAidatItiraz(DaireBorc daireBorc) {
-        if (daireBorc == null) {
-            JsfUtil.addErrorMessage(message.getString("aida_itiraz_icin_borc_secilmeli"));
-        } else {
-            RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.execute("PF('itirazTalepEklePopup').show()");
-        }
-    }
-
-    //page navigations
-    public String daireGoruntule() {
-        cleanPage();
-        getDaireBilgileriTabInfos();
-        ortakService.createErisimLog(sessionInfo, sessionInfo.getKullanici(), LogTipi.getDaireGoruntuleObject(), label.getString("daire_kodu") + ":" + selected.getDaireKodu());
-        return "daireGoruntule";
-    }
-
-    //getter and setters
-
-
     public IDaireService getDaireService() {
         return daireService;
     }
@@ -540,14 +458,6 @@ public class DaireGoruntuleMB implements Serializable {
         this.talepSorguKriteri = talepSorguKriteri;
     }
 
-    public ArizaTalebi getYeniArizaTalep() {
-        return yeniArizaTalep;
-    }
-
-    public void setYeniArizaTalep(ArizaTalebi yeniArizaTalep) {
-        this.yeniArizaTalep = yeniArizaTalep;
-    }
-
     public TalepDaire getSelectedTalep() {
         return selectedTalep;
     }
@@ -562,14 +472,6 @@ public class DaireGoruntuleMB implements Serializable {
 
     public void setTalepDatamodel(TalepDataModel talepDatamodel) {
         this.talepDatamodel = talepDatamodel;
-    }
-
-    public String getTalepIslem() {
-        return talepIslem;
-    }
-
-    public void setTalepIslem(String talepIslem) {
-        this.talepIslem = talepIslem;
     }
 
     public Daire getSelected() {
@@ -668,14 +570,6 @@ public class DaireGoruntuleMB implements Serializable {
         this.kullaniciList = kullaniciList;
     }
 
-    public ItirazTalebi getYeniItiraz() {
-        return yeniItiraz;
-    }
-
-    public void setYeniItiraz(ItirazTalebi yeniItiraz) {
-        this.yeniItiraz = yeniItiraz;
-    }
-
     public IKullaniciService getKullaniciService() {
         return kullaniciService;
     }
@@ -716,14 +610,6 @@ public class DaireGoruntuleMB implements Serializable {
         this.istamamlandiMi = istamamlandiMi;
     }
 
-    public SikayetTalebi getYeniSikayetTalebi() {
-        return yeniSikayetTalebi;
-    }
-
-    public void setYeniSikayetTalebi(SikayetTalebi yeniSikayetTalebi) {
-        this.yeniSikayetTalebi = yeniSikayetTalebi;
-    }
-
     public String getToplamBorcTutar() {
         return toplamBorcTutar;
     }
@@ -746,14 +632,6 @@ public class DaireGoruntuleMB implements Serializable {
 
     public void setToplamBakiyeTutar(String toplamBakiyeTutar) {
         this.toplamBakiyeTutar = toplamBakiyeTutar;
-    }
-
-    public BelgeTalebi getYeniBelgeTalebi() {
-        return yeniBelgeTalebi;
-    }
-
-    public void setYeniBelgeTalebi(BelgeTalebi yeniBelgeTalebi) {
-        this.yeniBelgeTalebi = yeniBelgeTalebi;
     }
 
     public boolean isSkip() {
