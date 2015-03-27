@@ -27,12 +27,12 @@
                                     <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu} (*)"
                                                    style="font-weight:bold; color: #0b4170"/>
                                     <p:selectOneMenu id="belge_tipi"
-                                                     value="#{daireGoruntuleMB.yeniBelgeTalebi.belgeTipi}"
+                                                     value="#{talepIslemMB.yeniBelgeTalebi.belgeTipi}"
                                                      style="font-weight:bold; color: #0b4170"
                                                      label="#{lbl.belge_talebi_konusu}"
                                                      required="true">
                                         <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                                        <f:selectItems value="#{daireGoruntuleMB.belgeTipiList}" var="bt"
+                                        <f:selectItems value="#{talepIslemMB.belgeTipiList}" var="bt"
                                                        itemValue="#{bt}"
                                                        itemLabel="#{bt.aciklama}"/>
                                         <f:converter binding="#{belgeTipiConverter}"/>
@@ -41,7 +41,7 @@
                                     <h:outputLabel for="talep_aciklama_v" value="#{lbl.ortak_aciklama} (*)"
                                                    style="font-weight:bold; color: #0b4170"/>
                                     <p:inputTextarea rows="6" cols="60"
-                                                     value="#{daireGoruntuleMB.yeniBelgeTalebi.aciklama}"
+                                                     value="#{talepIslemMB.yeniBelgeTalebi.aciklama}"
                                                      required="true" label="#{lbl.ortak_aciklama}"
                                                      id="talep_aciklama_v"
                                             />
