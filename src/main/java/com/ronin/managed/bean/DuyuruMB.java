@@ -66,8 +66,9 @@ public class DuyuruMB implements Serializable {
         dataModel = new DuyuruDataModel(dataList);
     }
 
-    public void deleteDuyuru() {
+    public void deleteDuyuru(Duyuru selectedDuyuru) {
         try {
+            setSelected(selectedDuyuru);
             ortakService.deleteDuyuru(selected);
             JsfUtil.addSuccessMessage(message.getString("duyuru_silme_basarili"));
             getDuyuruListBySorguKriteri();

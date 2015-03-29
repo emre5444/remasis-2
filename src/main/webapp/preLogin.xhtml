@@ -78,31 +78,14 @@
                             <div class="ContainerIndent">
                                 <p:dataTable id="kullaniciSirketTable" value="#{preLoginMB.dataModel}" var="varSirket"
                                              paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
-                                             selection="#{preLoginMB.selected}"
-                                             rows="10">
+                                             selection="#{preLoginMB.selected}" selectionMode="single" rowKey="#{varSirket.sirket.id}">
 
-                                    <p:column headerText="#{lbl.label_sec}" selectionMode="single" style="width:30px;"/>
-                                    <p:column headerText="#{lbl.label_detay}" style="width:30px;">
-                                        <p:rowToggler/>
-                                    </p:column>
                                     <p:column headerText="Şirket Adı">
                                         <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
                                     </p:column>
                                     <p:column headerText="Logo">
                                         <p:graphicImage value="/images/sirket/#{varSirket.sirket.sirketLogo}.png"/>
                                     </p:column>
-
-                                    <p:rowExpansion>
-                                        <h:panelGrid columns="2" columnClasses="label,value" style="width:300px">
-
-                                            <h:outputText value="Id:"/>
-                                            <h:outputText value="#{varSirket.sirket.id}"/>
-
-                                            <h:outputText value="Adı"/>
-                                            <h:outputText value="#{varSirket.sirket.sirketAdi}"/>
-
-                                        </h:panelGrid>
-                                    </p:rowExpansion>
 
                                 </p:dataTable>
                             </div>

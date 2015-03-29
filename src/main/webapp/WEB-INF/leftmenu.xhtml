@@ -92,10 +92,19 @@
             </p:submenu>
 
             <p:submenu label="#{lbl.label_site_ici_paylasim_islem}" icon="icon-share-squared"
-                       rendered="#{sessionInfo.isYetkili('site_ici_paylasim_islemleri')}">
-                <p:menuitem value="#{lbl.label_anket_sorgulama}"
-                            url="/pages/sitePaylasimIslemleri/anketSorgulama.jsf"
-                            rendered="#{sessionInfo.isYetkili('anket_islemleri')}"/>
+                       rendered="#{sessionInfo.isYetkili('anket_islemleri')}">
+
+                <p:submenu label="#{lbl.label_anket_yonetimi}" icon="icon-users"
+                           rendered="#{sessionInfo.isYetkili('anket_islemleri')}">
+                    <p:menuitem value="#{lbl.label_anket_sorgulama}" url="/pages/sitePaylasimIslemleri/anketSorgulama.jsf"
+                                icon="icon-vcard"
+                                rendered="#{sessionInfo.isYetkili('anket_islemleri')}"/>
+                    <p:menuitem value="#{lbl.label_yeni_anket_ekleme}" url="/pages/sitePaylasimIslemleri/anketEkleme.jsf"
+                                icon="icon-plus-outline"
+                                rendered="#{sessionInfo.isYetkili('anket_islemleri')}"/>
+                </p:submenu>
+
+
                 <p:menuitem value="#{lbl.label_belge_sorgulama}"
                             url="/pages/sitePaylasimIslemleri/belgeSorgulama.jsf"
                             rendered="#{sessionInfo.isYetkili('belge_islemleri')}"/>
@@ -122,9 +131,16 @@
                 <p:menuitem value="#{lbl.menu_envanter_ekle}" url="/pages/envanterIslemleri/envanterGirisi.jsf"
                             rendered="#{sessionInfo.isYetkili('envanter_girisi')}"/>
 
-                <p:menuitem value="#{lbl.menu_envanter_kategori_sorgulama}"
-                            url="/pages/envanterIslemleri/kategoriIslemleri.jsf"
-                            rendered="#{sessionInfo.isYetkili('kategori_islemleri')}"/>
+                <p:submenu label="#{lbl.menu_envanter_kategori_sorgulama}" icon="icon-users"
+                           rendered="#{sessionInfo.isYetkili('kategori_islemleri')}">
+                    <p:menuitem value="#{lbl.menu_envanter_kategori_sorgulama}" url="/pages/envanterIslemleri/kategoriIslemleri.jsf"
+                                icon="icon-vcard"
+                                rendered="#{sessionInfo.isYetkili('kategori_islemleri')}"/>
+                    <p:menuitem value="#{lbl.label_yeni_kategori_ekleme}" url="/pages/envanterIslemleri/kategoriEkleme.jsf"
+                                icon="icon-plus-outline"
+                                rendered="#{sessionInfo.isYetkili('kategori_islemleri')}"/>
+                </p:submenu>
+
             </p:submenu>
 
             <p:submenu label="#{lbl.raporlama_islemleri}" icon="icon-file-pdf"

@@ -65,4 +65,9 @@ public class FinansalIslemlerService implements IFinansalIslemlerService {
         iFinansalIslemlerDao.updateObject(object);
     }
 
+    @Transactional(readOnly = false)
+    public void deleteObject(Object object) {
+        iFinansalIslemlerDao.deleteObject(object);
+    }
+
 }

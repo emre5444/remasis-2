@@ -1,90 +1,141 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
-    <h:form id="updateEnvanter">
-        <p:dialog header="#{lbl.label_envanter_guncelle}" widgetVar="envanterUpdatePopup" closeOnEscape="true"
-                  height="auto" width="50%">
+    <ui:define name="title">
+        <h:outputText value="#{lbl.label_envanter_guncelle}"/>
+    </ui:define>
 
-            <h:panelGrid columns="2" cellpadding="3">
+    <ui:define name="content">
 
-                <h:outputLabel for="kategori" value="#{lbl.envanter_kategori} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:selectOneMenu id="kategori" value="#{envanterMB.selected.kategori}" style="font-weight:bold; color: #0b4170"
-                                 required="true">
-                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                    <f:selectItems value="#{envanterMB.kategoriList}" var="kategori" itemValue="#{kategori}"
-                                   itemLabel="#{kategori.aciklama}"/>
-                    <f:converter binding="#{kategoriConverter}"/>
-                </p:selectOneMenu>
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="updateEnvanter">
+                    <p:messages id="messagesforAnket" showDetail="false" autoUpdate="true" closable="true"/>
 
-                <h:outputLabel for="marka" value="#{lbl.envanter_marka} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="marka" value="#{envanterMB.selected.marka}" required="true"
-                             label="#{lbl.envanter_marka}"/>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
 
-                <h:outputLabel for="model" value="#{lbl.envanter_model}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="model" value="#{envanterMB.selected.model}" label="#{lbl.envanter_model}"/>
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-try orange"></i> #{lbl.label_anket_bilgileri}
+                            </div>
 
-                <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="urunAdi" value="#{envanterMB.selected.urunAdi}" label="#{lbl.envanter_urun_adi}"
-                             required="true"/>
+                            <h:panelGrid columns="2" cellpadding="5">
 
-                <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="saticiFirma" value="#{envanterMB.selected.saticiFirma}"
-                             label="#{lbl.envanter_satici_firma}"/>
+                                <h:outputLabel for="kategori" value="#{lbl.envanter_kategori} (*)"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:selectOneMenu id="kategori" value="#{envanterIslemleriMB.selected.kategori}"
+                                                 style="font-weight:bold; color: #0b4170"
+                                                 required="true">
+                                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                    <f:selectItems value="#{envanterIslemleriMB.kategoriList}" var="kategori"
+                                                   itemValue="#{kategori}"
+                                                   itemLabel="#{kategori.aciklama}"/>
+                                    <f:converter binding="#{kategoriConverter}"/>
+                                </p:selectOneMenu>
 
-                <h:outputLabel for="alanPersonel" value="#{lbl.envanter_alimi_yapan_personel} (*)"
-                               style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="alanPersonel" value="#{envanterMB.selected.alimiYapanPersonel}" required="true"
-                             label="#{lbl.envanter_alimi_yapan_personel}"/>
+                                <h:outputLabel for="marka" value="#{lbl.envanter_marka} (*)"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="marka" value="#{envanterIslemleriMB.selected.marka}" required="true"
+                                             label="#{lbl.envanter_marka}"/>
 
-                <h:outputLabel for="zimmetliPersonel" value="#{lbl.envanter_zimmetli_personel}"
-                               style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="zimmetliPersonel" value="#{envanterMB.selected.zimmetliPersonel}"
-                             label="#{lbl.envanter_zimmetli_personel}"/>
+                                <h:outputLabel for="model" value="#{lbl.envanter_model}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="model" value="#{envanterIslemleriMB.selected.model}"
+                                             label="#{lbl.envanter_model}"/>
 
-                <h:outputLabel for="departman" value="#{lbl.envanter_departman}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="departman" value="#{envanterMB.selected.departman}" label="#{lbl.envanter_departman}"/>
+                                <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi} (*)"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="urunAdi" value="#{envanterIslemleriMB.selected.urunAdi}"
+                                             label="#{lbl.envanter_urun_adi}"
+                                             required="true"/>
 
-                <h:outputLabel for="alimZamani" value="#{lbl.envanter_alim_zamani} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:calendar id="alimZamani" value="#{envanterMB.selected.alimTarihi}" required="true"
-                            label="#{lbl.envanter_alim_zamani}"
-                            pattern="dd/MM/yyyy" mask="true"/>
+                                <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="saticiFirma" value="#{envanterIslemleriMB.selected.saticiFirma}"
+                                             label="#{lbl.envanter_satici_firma}"/>
 
-                <h:outputLabel for="garantiBaslangic" value="#{lbl.envanter_garanti_baslangic_zamani}"
-                               style="font-weight:bold; color: #0b4170"/>
-                <p:calendar id="garantiBaslangic" value="#{envanterMB.selected.garantiBaslangicTarihi}"
-                            label="#{lbl.envanter_garanti_baslangic_zamani}"
-                            pattern="dd/MM/yyyy" mask="true"/>
+                                <h:outputLabel for="alanPersonel" value="#{lbl.envanter_alimi_yapan_personel} (*)"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="alanPersonel"
+                                             value="#{envanterIslemleriMB.selected.alimiYapanPersonel}" required="true"
+                                             label="#{lbl.envanter_alimi_yapan_personel}"/>
 
-                <h:outputLabel for="garantiSuresi" value="#{lbl.envanter_garanti_suresi}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="garantiSuresi" value="#{envanterMB.selected.garantiSuresi}"
-                             label="#{lbl.envanter_garanti_suresi}"/>
+                                <h:outputLabel for="zimmetliPersonel" value="#{lbl.envanter_zimmetli_personel}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="zimmetliPersonel"
+                                             value="#{envanterIslemleriMB.selected.zimmetliPersonel}"
+                                             label="#{lbl.envanter_zimmetli_personel}"/>
 
-                <h:outputLabel for="miktar" value="#{lbl.envanter_miktar} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="miktar" value="#{envanterMB.selected.miktar}" label="#{lbl.envanter_miktar}"
-                             required="true"/>
+                                <h:outputLabel for="departman" value="#{lbl.envanter_departman}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="departman" value="#{envanterIslemleriMB.selected.departman}"
+                                             label="#{lbl.envanter_departman}"/>
 
-                <h:outputLabel for="birimFiyat" value="#{lbl.envanter_birim_fiyat}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="birimFiyat" value="#{envanterMB.selected.birimFiyat}"
-                             label="#{lbl.envanter_birim_fiyat}"/>
+                                <h:outputLabel for="alimZamani" value="#{lbl.envanter_alim_zamani} (*)"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:calendar id="alimZamani" value="#{envanterIslemleriMB.selected.alimTarihi}"
+                                            required="true"
+                                            label="#{lbl.envanter_alim_zamani}"
+                                            pattern="dd/MM/yyyy" mask="true"/>
 
-                <h:outputLabel for="aciklama" value="#{lbl.envanter_aciklama}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputTextarea rows="6" cols="50" value="#{envanterMB.selected.aciklama}"
-                                 id="aciklama"/>
+                                <h:outputLabel for="garantiBaslangic" value="#{lbl.envanter_garanti_baslangic_zamani}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:calendar id="garantiBaslangic"
+                                            value="#{envanterIslemleriMB.selected.garantiBaslangicTarihi}"
+                                            label="#{lbl.envanter_garanti_baslangic_zamani}"
+                                            pattern="dd/MM/yyyy" mask="true"/>
 
-                <f:facet name="footer">
-                    <p:commandButton id="rol_kaydet" value="#{lbl.kaydet}" update="@([id$=main_form]) , updateEnvanter"
-                                     oncomplete="PF('envanterUpdatePopup').hide();"
-                                     actionListener="#{envanterMB.updateEnvanter}" icon="ui-icon-disk">
-                        <p:confirm header="#{lbl.ortak_guncelle}" message="#{msg.islemi_onayliyormusunuz}"/>
-                    </p:commandButton>
-                </f:facet>
+                                <h:outputLabel for="garantiSuresi" value="#{lbl.envanter_garanti_suresi}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="garantiSuresi" value="#{envanterIslemleriMB.selected.garantiSuresi}"
+                                             label="#{lbl.envanter_garanti_suresi}"/>
 
-            </h:panelGrid>
+                                <h:outputLabel for="miktar" value="#{lbl.envanter_miktar} (*)"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="miktar" value="#{envanterIslemleriMB.selected.miktar}"
+                                             label="#{lbl.envanter_miktar}"
+                                             required="true"/>
 
-        </p:dialog>
-    </h:form>
-</h:body>
-</html>
+                                <h:outputLabel for="birimFiyat" value="#{lbl.envanter_birim_fiyat}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputText id="birimFiyat" value="#{envanterIslemleriMB.selected.birimFiyat}"
+                                             label="#{lbl.envanter_birim_fiyat}"/>
+
+                                <h:outputLabel for="aciklama" value="#{lbl.envanter_aciklama}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputTextarea rows="6" cols="50" value="#{envanterIslemleriMB.selected.aciklama}"
+                                                 id="aciklama"/>
+
+
+                            </h:panelGrid>
+
+                            <div class="EmptyBox10"/>
+
+                            <p:commandButton id="rol_kaydet" value="#{lbl.ortak_guncelle}"
+                                             update="@([id$=main_form]) , updateEnvanter"
+                                             actionListener="#{envanterIslemleriMB.updateEnvanter}"
+                                             rendered="#{sessionInfo.isAdminMi()}">
+                                <p:confirm header="#{lbl.ortak_guncelle}" message="#{msg.islemi_onayliyormusunuz}"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                             action="#{envanterIslemleriMB.geriDon}"/>
+
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

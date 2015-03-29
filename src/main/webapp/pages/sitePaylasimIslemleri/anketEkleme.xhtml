@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{lbl.label_yeni_anket_ekleme}"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="AnketEkleme">
+                    <p:messages id="messages2" showDetail="false" autoUpdate="true" closable="true"/>
+
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <p:panel>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-users orange"></i> #{lbl.label_anket_bilgileri}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5">
+
+                                    <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_konusu} (*)"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputTextarea rows="3" cols="40" autoResize="false"
+                                                     value="#{anketMB.yeniAnket.anketKonusu}"
+                                                     label="#{lbl.label_anket_konusu}" required="true"
+                                                     id="anket_konu_v"/>
+
+                                    <h:outputLabel for="anket_aciklama_v" value="#{lbl.label_anket_sorusu} (*)"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputTextarea rows="8" cols="40" autoResize="false"
+                                                     value="#{anketMB.yeniAnket.aciklama}" required="true"
+                                                     label="#{lbl.label_anket_sorusu}"
+                                                     id="anket_aciklama_v"/>
+
+                                    <h:outputLabel for="rolTipi" value="#{lbl.label_anket_aktif_mi} (*)"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:selectOneMenu id="rolTipi" value="#{anketMB.yeniAnket.aktifMi}"
+                                                     required="true"
+                                                     style="font-weight:bold; color: #0b4170">
+                                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                        <f:selectItems value="#{anketMB.anketAktifPasifList}" var="apTipi"
+                                                       itemValue="#{apTipi}"
+                                                       itemLabel="#{apTipi.aciklama}"/>
+                                        <f:converter binding="#{evetHayirConverter}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <div class="EmptyBox10"/>
+
+
+                            <p:panel>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-th-1 orange"></i> #{lbl.label_anket_soru_tanimlama_islemleri}
+                                </div>
+                                <h:panelGrid columns="6" cellpadding="5"
+                                             rendered="#{sessionInfo.adminMi and not anketMB.anketKullaniciDataModel.rowAvailable}">
+
+                                    <h:outputLabel for="soru" value="#{lbl.label_anket_sorusu_yeni}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputTextarea id="soru" rows="1" cols="40"
+                                                     value="#{anketMB.yeniAnket.yeniSecenek}"/>
+
+                                    <f:facet name="footer">
+                                        <p:commandButton id="btn_kullanici_daire_bul"
+                                                         value="#{lbl.label_anket_secenek_ekle}"
+                                                         update="@([id$=AnketEkleme])" styleClass="GreenButton"
+                                                         actionListener="#{anketMB.addTempAnketSecimToAnket}"/>
+                                    </f:facet>
+
+                                </h:panelGrid>
+
+                                <div class="EmptyBox5"/>
+
+                                <div class="Container60 Responsive">
+                                    <div class="ContainerIndent">
+
+                                        <h:panelGrid columns="2" cellpadding="5">
+
+                                            <p:dataTable id="secenekListesiOfAnket"
+                                                         value="#{anketMB.anketSecenekDataModel}"
+                                                         var="varAnketSecenek"
+                                                         emptyMessage="#{msg.no_record_found}"
+                                                         selection="#{anketMB.selectedAnketSecim}"
+                                                         paginatorPosition="bottom" paginator="true"
+                                                         reflow="true" rows="10">
+
+                                                <p:column headerText="#{lbl.label_anket_sorusu}" style="width: 70%">
+                                                    <h:outputText value="#{varAnketSecenek.secim}"/>
+                                                </p:column>
+
+
+                                                <p:column style="width: 10%">
+                                                    <p:commandButton id="deleteButton1" icon="fa fa-trash-o"
+                                                                     styleClass="RedButton"
+                                                                     immediate="true" value="#{lbl.sil}"
+                                                                     rendered="#{sessionInfo.adminMi and not anketMB.anketKullaniciDataModel.rowAvailable}"
+                                                                     update="@([id$=AnketEkleme])"
+                                                                     action="#{anketMB.deleteTempSecimToAnket}">
+                                                        <f:setPropertyActionListener value="#{varAnketSecenek}"
+                                                                                     target="#{anketMB.selectedAnketSecim}"/>
+                                                        <p:confirm header="#{lbl.label_anket_secim_silme}"
+                                                                   message="#{msg.islemi_onayliyormusunuz}"/>
+                                                    </p:commandButton>
+                                                </p:column>
+
+                                            </p:dataTable>
+                                        </h:panelGrid>
+
+                                    </div>
+                                </div>
+                            </p:panel>
+
+                            <div class="EmptyBox5"/>
+
+                            <p:commandButton id="btn_anket_ekle_guncelle" value="#{lbl.ortak_kaydet}"
+                                             update="@([id$=AnketEkleme])"
+                                             actionListener="#{anketMB.anketEkleDecision}">
+                                <p:confirm header="#{lbl.label_anket_ekle}"
+                                           message="#{msg.islemi_onayliyormusunuz}"/>
+                            </p:commandButton>
+
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

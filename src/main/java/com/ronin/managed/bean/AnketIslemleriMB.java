@@ -6,7 +6,6 @@ import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.AnketDataModel;
 import com.ronin.managed.bean.lazydatamodel.AnketKullaniciDataModel;
 import com.ronin.managed.bean.lazydatamodel.AnketSecenekDataModel;
-import com.ronin.managed.bean.lazydatamodel.KullaniciDaireDataModel;
 import com.ronin.model.Anket;
 import com.ronin.model.AnketKullanici;
 import com.ronin.model.AnketSecim;
@@ -18,9 +17,7 @@ import com.ronin.model.constant.EvetHayir;
 import com.ronin.model.helper.PieChartModelHelper;
 import com.ronin.model.kriter.AnketSorguKriteri;
 import com.ronin.model.sorguSonucu.AnketSonucViewBean;
-import com.ronin.model.sorguSonucu.BorcAlacakViewBean;
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.chart.PieChartModel;
 
 import javax.annotation.PostConstruct;
@@ -32,9 +29,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@ManagedBean(name = "anketMB")
+@ManagedBean(name = "anketIslemleriMB")
 @ViewScoped
-public class AnketMB implements Serializable {
+public class AnketIslemleriMB extends AbstractMB implements Serializable {
 
     public static Logger logger = Logger.getLogger(DaireMB.class);
 
@@ -61,6 +58,7 @@ public class AnketMB implements Serializable {
     private AnketDataModel dataModel;
     private AnketKullaniciDataModel anketKullaniciDataModel;
     private List<AnketKullanici> anketKullaniciList;
+    private AnketKullanici anketKullanici;
 
     private List<AnketSonucViewBean> anketSonucViewBeanList;
 
@@ -75,27 +73,15 @@ public class AnketMB implements Serializable {
 
     @PostConstruct
     public void init() {
+        getFlushObjects();
         prepareCombos();
-        getAnketListBySorguKriteri();
+        prepareAnketDetailInfo();
     }
 
-    //page navigations
-    public String goruntule(Anket selectedAnket) {
-        setSelectedAnket(selectedAnket);
-        storeFlashObjects();
-        return "anketOyKullanma.xhtml";
-    }
-
-    public String guncelle(Anket selectedAnket) {
-        setSelectedAnket(selectedAnket);
-        storeFlashObjects();
-        return "anketGuncelleme.xhtml";
-    }
-
-    public void storeFlashObjects() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedAnketObject", selectedAnket);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "anketSorgulama.xhtml");
+    public void getFlushObjects() {
+        selectedAnket = (Anket) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedAnketObject");
+        sorguKriteri = (AnketSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
     }
 
     public void delete(Anket selectedAnket) {
@@ -109,6 +95,15 @@ public class AnketMB implements Serializable {
             logger.error(e.getStackTrace());
             JsfUtil.addSuccessMessage("Hata!");
         }
+    }
+
+    public String geriDon() {
+        storeFlashObjects();
+        return getBackPage();
+    }
+
+    public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
     }
 
     public void getAnketListBySorguKriteri() {
@@ -133,8 +128,11 @@ public class AnketMB implements Serializable {
     }
 
     public void prepareAnketKullaniciList() {
-        anketKullaniciList = ortakService.getKullaniciAnketListByAnket(selectedAnket);
-        anketKullaniciDataModel = new AnketKullaniciDataModel(anketKullaniciList);
+        anketKullanici = ortakService.getAnketKullanici(selectedAnket, sessionInfo.getKullanici().getId());
+        if (sessionInfo.isAdminMi()) {
+            anketKullaniciList = ortakService.getKullaniciAnketListByAnket(selectedAnket);
+            anketKullaniciDataModel = new AnketKullaniciDataModel(anketKullaniciList);
+        }
     }
 
     private void createPieModelForAnket() {
@@ -180,8 +178,6 @@ public class AnketMB implements Serializable {
         try {
             ortakService.anketeKatilimEkleme(sessionInfo, selectedAnket, yeniAnket.getSelectedAnketSecim(), yeniAnket.getOyAciklama());
             JsfUtil.addSuccessMessage(message.getString("anket_oy_kullanma_basarili"));
-            RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.execute("PF('anketeKatilimEklemePopup').hide()");
             getAnketListBySorguKriteri();
         } catch (Exception e) {
             logger.error(e.getStackTrace());
@@ -196,17 +192,13 @@ public class AnketMB implements Serializable {
     public void anketEkleDecision() {
         if (anketSecimList == null || anketSecimList.size() <= 1) {
             JsfUtil.addErrorMessage(message.getString("anket_senecek_yok"));
-        } else {
-            if (guncellemeMi) {
-                yeniAnketGuncelle();
-            } else {
-                yeniAnketEkle();
-            }
         }
+        yeniAnketEkle();
     }
 
     public void yeniAnketGuncelle() {
         try {
+            yeniAnket = selectedAnket;
             ortakService.anketGuncelle(yeniAnket, anketSecimList);
             getAnketListBySorguKriteri();
             JsfUtil.addSuccessMessage(message.getString("anket_guncelleme_basarili"));
@@ -356,5 +348,13 @@ public class AnketMB implements Serializable {
 
     public void setAnketSonucViewBeanList(List<AnketSonucViewBean> anketSonucViewBeanList) {
         this.anketSonucViewBeanList = anketSonucViewBeanList;
+    }
+
+    public AnketKullanici getAnketKullanici() {
+        return anketKullanici;
+    }
+
+    public void setAnketKullanici(AnketKullanici anketKullanici) {
+        this.anketKullanici = anketKullanici;
     }
 }

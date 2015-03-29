@@ -205,4 +205,8 @@ public class FinansalIslemlerDao implements IFinansalIslemlerDao {
     public void updateObject(Object object) {
         getSessionFactory().getCurrentSession().update(object);
     }
+
+    public void deleteObject(Object object) {
+        getSessionFactory().getCurrentSession().delete(object);
+    }
 }
