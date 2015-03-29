@@ -68,10 +68,10 @@ function chartJS() {
         }
     };
     this.cfg.legend = {
-        show: false,
+        show: true,
         rendererOptions: {
             numberColumns: 1
         },
-        location: 's'
+        location: 'e'
     };
 }
