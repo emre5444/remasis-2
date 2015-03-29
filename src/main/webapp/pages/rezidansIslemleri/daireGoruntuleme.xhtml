@@ -227,22 +227,28 @@
                                 </p:tab>
                                 <p:tab id="aidat_bilgileri" title="#{lbl.aidet_bilgileri}">
                                     <p:panel id="pnl_aidat_listesi">
+
+
+
                                         <div class="Container100 Responsive">
                                             <div class="ContainerIndent">
+
                                                 <div class="Container100 Responsive Fs20 hardblue">
-                                                    <i class="icon-try orange"></i> #{lbl.aidat_listesi}
+                                                    <i class="icon-try orange"></i>  <h:outputText value="#{lbl.aidat_listesi}"
+                                                                                                   styleClass="FontBold Fs18 hardblue"></h:outputText>
+
+                                                    <p:commandLink ajax="false" styleClass="icon-file-excel Fright">
+                                                        <p:dataExporter type="xls" target="daireAidatSorguSonucu"
+                                                                        fileName="daire_aidat_listesi"/>
+                                                    </p:commandLink>
+                                                    <p:commandLink ajax="false" styleClass="Fright icon-file-pdf" style="margin-right: 5px;">
+                                                        <p:dataExporter type="pdf" target="daireAidatSorguSonucu"
+                                                                        fileName="daire_aidat_listesi"/>
+                                                    </p:commandLink>
+
                                                 </div>
-                                                <h:commandLink>
-                                                    <p:graphicImage value="/images/excel_kucuk.png"
-                                                                    style="width: 20px;"/>
-                                                    <p:dataExporter type="xls" target="daireAidatSorguSonucu"
-                                                                    fileName="daire_aidat_listesi"/>
-                                                </h:commandLink>
-                                                <h:commandLink>
-                                                    <p:graphicImage value="/images/pdf_kucuk.png" style="width: 20px;"/>
-                                                    <p:dataExporter type="pdf" target="daireAidatSorguSonucu"
-                                                                    fileName="daire_aidat_listesi"/>
-                                                </h:commandLink>
+
+
                                                 <p:dataTable id="daireAidatSorguSonucu"
                                                              value="#{daireGoruntuleMB.borcDataModel}"
                                                              var="varBorc"
