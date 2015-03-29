@@ -18,8 +18,6 @@
             <div class="Container100">
                 <div class="ContainerIndent">
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
-                    <p:growl id="growl"/>
-
                     <p:menubar style="margin-top:20px">
                         <p:submenu label="#{lbl.talep_islemleri}" icon="ui-icon-comment">
 
@@ -40,7 +38,7 @@
                     </p:menubar>
 
                     <div class="EmptyBox10"></div>
-                    <div class="Container50 Responsive">
+                    <div class="Container33 Responsive">
                         <div class="ContainerIndent">
                             <p:panel style="min-height: 260px;">
                                 <div class="Container100 Responsive">
@@ -84,7 +82,7 @@
                         </div>
                     </div>
 
-                    <div class="Container50 Responsive">
+                    <div class="Container33 Responsive">
                         <div class="ContainerIndent">
                             <p:panel style="min-height: 260px;">
                                 <i class="icon-try Fs50 Fleft Wid25 red TexAlCenter"></i>
@@ -130,19 +128,18 @@
                         </div>
                     </div>
 
-                    <ui:remove>
-                        <div class="Container33 Responsive">
-                            <div class="ContainerIndent">
-                                <p:panel>
-                                    <div class="Fs24 MarTop10 leaden Wid100 TexAlCenter">#{lbl.label_borc_alacak_dengesi}</div>
-                                    <p:separator styleClass="Wid100"></p:separator>
-                                    <p:chart type="pie" model="#{daireGoruntuleMB.pieModel1}"
-                                             responsive="true"/>
-                                </p:panel>
-                            </div>
-                        </div>
-                    </ui:remove>
 
+                    <div class="Container33 Responsive">
+                        <div class="ContainerIndent">
+                            <p:panel style="max-height: 260px;">
+                                <div class="Fs24 MarTop10 leaden Wid100 TexAlCenter">#{lbl.label_borc_alacak_dengesi}</div>
+                                <p:separator styleClass="Wid100"></p:separator>
+                                <p:chart type="pie" model="#{daireGoruntuleMB.pieModel1}"
+                                         style="width: 350px; height: 200px"
+                                         responsive="true"/>
+                            </p:panel>
+                        </div>
+                    </div>
 
                     <div class="EmptyBox10"></div>
 
@@ -299,7 +296,7 @@
                                                             <p:menuitem id="aidatDetayGoruntule"
                                                                         value="#{lbl.label_aidat_detayi}"
                                                                         icon="ui-icon-search"
-                                                                        action="#{daireGoruntuleMB.daireGoruntule(varDaire)}">
+                                                                    >
                                                             </p:menuitem>
 
                                                             <p:menuitem id="aidatItirazEt" value="#{lbl.itiraz_et}"
@@ -318,13 +315,6 @@
                                                                              oncomplete="PF('aidatDetayGoruntulePopup').show();"
                                                                              immediate="true"
                                                                     >
-                                                                <f:setPropertyActionListener value="#{varBorc}"
-                                                                                             target="#{daireGoruntuleMB.selectedBorc}"/>
-                                                            </p:commandButton>
-                                                            <p:commandButton id="yeniitirazTalebiEkleme"
-                                                                             value="#{lbl.itiraz_et}"
-                                                                             action="#{daireGoruntuleMB.chectAidatItiraz(daireGoruntuleMB.selectedBorc)}"
-                                                                             update="@([id$=itirazTalepGirisForm])">
                                                                 <f:setPropertyActionListener value="#{varBorc}"
                                                                                              target="#{daireGoruntuleMB.selectedBorc}"/>
                                                             </p:commandButton>
@@ -708,6 +698,12 @@
 
                         </div>
                     </div>
+
+                    <h:panelGrid columns="3">
+
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{daireGoruntuleMB.geriDon}"/>
+                    </h:panelGrid>
 
                 </div>
             </div>
