@@ -97,7 +97,7 @@ public interface IOrtakService {
 
     List<Notification> getAllNotificationList(SessionInfo sessionInfo,int limit);
 
-    void update(Object notification);
+    void update(Object object);
 
     List<IletisimBilgileri> getAllIletisimBilgileriBySirket(SessionInfo sessionInfo);
 
@@ -108,4 +108,6 @@ public interface IOrtakService {
     void iletisimBilgisiEkle(SessionInfo sessionInfo , IletisimBilgileri iletisimBilgileri);
 
     void createHataLog(SessionInfo sessionInfo , String message , String stachTrace);
+
+    AnketKullanici getAnketKullanici (Anket anket, Long kullaniciId );
 }

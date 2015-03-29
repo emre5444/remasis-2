@@ -33,9 +33,9 @@ public class AidatCriteria {
         cr.createAlias("db.borc", "b", JoinType.INNER_JOIN);
         cr.createAlias("db.daire", "d", JoinType.INNER_JOIN);
         cr.createAlias("b.islemTipi", "ist", JoinType.INNER_JOIN);
-        cr.createAlias("db.daire.blok", "bl", JoinType.INNER_JOIN);
-        cr.createAlias("d.kullaniciDaireList", "kdl", JoinType.LEFT_OUTER_JOIN);
-        cr.createAlias("kdl.kullanici", "k", JoinType.LEFT_OUTER_JOIN);
+        cr.createAlias("d.blok", "bl", JoinType.INNER_JOIN);
+        cr.createAlias("d.kullaniciDaireList", "kdl", JoinType.INNER_JOIN);
+        cr.createAlias("kdl.kullanici", "k", JoinType.INNER_JOIN);
 
         cr.add(Restrictions.eq("b.durum.id", Durum.getAktifObject().getId()));
         cr.add(Restrictions.eq("b.sirket.id", sessionInfo.getSirket().getId()));

@@ -302,8 +302,8 @@ public class OrtakService implements IOrtakService {
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public void update(Object notification) {
-        iOrtakDao.update(notification);
+    public void update(Object object) {
+        iOrtakDao.update(object);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -330,6 +330,11 @@ public class OrtakService implements IOrtakService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void createHataLog(SessionInfo sessionInfo , String message , String stachTrace){
         iOrtakDao.createHataLog(sessionInfo , message , stachTrace);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public AnketKullanici getAnketKullanici (Anket anket, Long kullaniciId ){
+        return iOrtakDao.getAnketKullanici(anket, kullaniciId);
     }
 
 }

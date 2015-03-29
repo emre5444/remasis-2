@@ -1,61 +1,231 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:c="http://java.sun.com/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
-    <c:if test="empty openDialog">
-        <c:set target="openDialog" value="false"/>
-    </c:if>
+    <ui:define name="title">
+        <h:outputText value="#{lbl.label_anket_bilgileri}"/>
+    </ui:define>
 
-    <p:dialog header="#{lbl.label_anket_katilim}" visible="#{openDialog}"
-              widgetVar="anketeKatilimEklemePopup" closeOnEscape="true" height="auto" width="auto">
+    <ui:define name="content">
 
-        <p:messages id="messages12" showDetail="false" autoUpdate="true" closable="true"/>
-        <h:form id="AnketeKatilimEkleme">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="anketGoruntuleme">
+                    <p:messages id="messagesforAnket" showDetail="false" autoUpdate="true" closable="true"/>
 
-                    <h:panelGrid columns="2" cellpadding="5">
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
 
-                        <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_konusu}"
-                                       style="font-weight:bold; color: #0b4170"/>
-                        <h:outputText  value="#{entityMB.selectedAnket.anketKonusu}"
-                                         id="anket_konu_v"/>
+                            <p:panel>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-try orange"></i> #{lbl.label_anket_bilgileri}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5"
+                                             rendered="#{anketIslemleriMB.isAnketeKtinildiMi(anketIslemleriMB.selectedAnket).hayirMi and anketIslemleriMB.selectedAnket.aktifMi.isEvetMi()}">
 
-                        <h:outputLabel for="anket_aciklama_v" value="#{lbl.label_anket_sorusu}"
-                                       style="font-weight:bold; color: #0b4170"/>
-                        <h:outputText value="#{entityMB.selectedAnket.aciklama}"
-                                         id="anket_aciklama_v"
-                                />
+                                    <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_konusu}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText value="#{anketIslemleriMB.selectedAnket.anketKonusu}"
+                                                  id="anket_konu_v"/>
 
-                        <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_secenekler} (*)"
-                                       style="font-weight:bold; color: #0b4170"/>
-                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-                            <p:selectOneRadio id="anket_secim" value="#{entityMB.yeniAnket.selectedAnketSecim}"  layout="grid" columns="1" required="true" label="#{lbl.label_anket_secenekler}">
-                                <f:selectItems value="#{entityMB.anketSecimList}" var="anketSecim" itemLabel="#{anketSecim.secim}" itemValue="#{anketSecim}"/>
-                                <f:converter binding="#{anketSecimConverter}"/>
-                            </p:selectOneRadio>
-                        </h:panelGrid>
+                                    <h:outputLabel for="anket_aciklama_v" value="#{lbl.label_anket_sorusu}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText value="#{anketIslemleriMB.selectedAnket.aciklama}"
+                                                  id="anket_aciklama_v"/>
 
-                        <h:outputLabel for="anket_aciklama_v1" value="#{lbl.ortak_aciklama}"
-                                       style="font-weight:bold; color: #0b4170"/>
-                        <p:inputTextarea rows="4" cols="40" value="#{entityMB.yeniAnket.oyAciklama}"
-                                         label="#{lbl.label_anket_sorusu}"
-                                         id="anket_aciklama_v1"
-                                />
+                                    <h:outputLabel for="anket_konu_v" value="#{lbl.label_anket_secenekler}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                        <p:selectOneRadio id="anket_secim"
+                                                          value="#{anketIslemleriMB.yeniAnket.selectedAnketSecim}"
+                                                          layout="grid"
+                                                          columns="1" label="#{lbl.label_anket_secenekler}">
+                                            <f:selectItems value="#{anketIslemleriMB.anketSecimList}" var="anketSecim"
+                                                           itemLabel="#{anketSecim.secim}" itemValue="#{anketSecim}"/>
+                                            <f:converter binding="#{anketSecimConverter}"/>
+                                        </p:selectOneRadio>
+                                    </h:panelGrid>
 
-                    </h:panelGrid>
+                                    <h:outputLabel for="anket_oy_aciklama_v" value="#{lbl.ortak_aciklama}"
+                                                   style="font-weight:bold"/>
+                                    <p:inputTextarea rows="4" cols="40" value="#{anketIslemleriMB.yeniAnket.oyAciklama}"
+                                                     label="#{lbl.label_anket_sorusu}"
+                                                     id="anket_oy_aciklama_v"/>
 
-                <div style="height:10px"></div>
+                                </h:panelGrid>
 
-                <p:commandButton id="btn_anket_ekle_guncelle" value="#{lbl.label_btn_gonder}" update="@([id$=#{formName}]) :AnketeKatilimEkleme"
-                                 actionListener="#{entityMB.anketeKatilimEkle}">
-                    <p:confirm header="#{lbl.label_ankete_katilma}"
-                               message="#{msg.islemi_onayliyormusunuz}"/>
-                </p:commandButton>
+                                <h:panelGrid columns="2" cellpadding="5"
+                                             rendered="#{!(anketIslemleriMB.isAnketeKtinildiMi(anketIslemleriMB.selectedAnket).hayirMi and anketIslemleriMB.selectedAnket.aktifMi.isEvetMi())}">
+                                    <h:outputLabel for="anket_konu_y" value="#{lbl.label_anket_konusu}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText value="#{anketIslemleriMB.selectedAnket.anketKonusu}"
+                                                  id="anket_konu_y"/>
 
-        </h:form>
-    </p:dialog>
+                                    <h:outputLabel for="anket_aciklama_y" value="#{lbl.label_anket_sorusu}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText value="#{anketIslemleriMB.selectedAnket.aciklama}"
+                                                  id="anket_aciklama_y"/>
 
-</h:body>
-</html>
+                                    <h:outputLabel for="anket_konu_y" value="#{lbl.label_anket_secenekler} (*)"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                                        <p:selectOneRadio id="anket_secim_y"
+                                                          value="#{anketIslemleriMB.anketKullanici.anketSecim}"
+                                                          layout="grid" columns="1" required="true"
+                                                          label="#{lbl.label_anket_secenekler}"
+                                                          disabled="true">
+                                            <f:selectItems value="#{anketIslemleriMB.anketSecimList}" var="anketSecim"
+                                                           itemLabel="#{anketSecim.secim}" itemValue="#{anketSecim}"/>
+                                            <f:converter binding="#{anketSecimConverter}"/>
+                                        </p:selectOneRadio>
+                                    </h:panelGrid>
+
+                                    <h:outputLabel for="anket_aciklama_v1" value="#{lbl.ortak_aciklama}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputTextarea rows="4" cols="40"
+                                                     value="#{anketIslemleriMB.anketKullanici.anket.oyAciklama}"
+                                                     label="#{lbl.label_anket_sorusu}"
+                                                     id="anket_aciklama_v1" disabled="true"/>
+
+
+                                </h:panelGrid>
+
+                            </p:panel>
+
+                            <div class="EmptyBox10"/>
+
+                            <p:panel>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-try orange"></i> #{lbl.label_anket_katilim_oranlari}
+                                </div>
+
+                                <div class="Container33 Responsive">
+                                    <div class="ContainerIndent">
+                                        <p:chart type="pie" id="anketDetail" model="#{anketIslemleriMB.pieModelAnket}"
+                                                 rendered="#{not empty anketIslemleriMB.pieModelAnket}"
+                                                 style="width:300px;height:250px" responsive="true"/>
+                                    </div>
+                                </div>
+
+                                <div class="Container33 Responsive">
+                                    <div class="ContainerIndent">
+                                        <p:dataTable id="anket_sonuc_table1" var="ank"
+                                                     value="#{anketIslemleriMB.anketSonucViewBeanList}"
+                                                     reflow="true">
+
+                                            <p:column headerText="#{lbl.lbl_toplam_katilim}">
+                                                <h:outputText value="#{ank.tutar}">
+                                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column headerText="#{lbl.lbl_alacak_borc_oran}">
+                                                <h:outputText value="#{ank.rate}">
+                                                    <f:convertNumber pattern="#,###,##0.00"/>
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column headerText="#{lbl.label_anket_secenekler}">
+                                                <h:outputText value="#{ank.secim}"/>
+                                            </p:column>
+
+                                        </p:dataTable>
+                                    </div>
+                                </div>
+                            </p:panel>
+
+                            <div class="EmptyBox10"/>
+
+                            <p:panel id="ankete_katilan_kullanicilar11"
+                                     rendered="#{sessionInfo.adminMi}">
+
+                                <i class="icon-list-alt orange"></i> <h:outputText
+                                    value=" #{lbl.label_anket_katilim_listesi}"
+                                    styleClass="FontBold Fs18 hardblue"></h:outputText>
+                                <h:panelGrid columns="2" styleClass="Fright">
+                                    <h:commandLink>
+                                        <p:graphicImage id="excel" value="/images/excel_kucuk.png"/>
+                                        <p:dataExporter type="xls" target="katilimListesiOfAnket1"
+                                                        fileName="ankete_katilim_listesi"/>
+                                        <p:tooltip for="excel" value="#{lbl.type_excel}" trackMouse="true"/>
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <p:graphicImage id="pdf" value="/images/pdf_kucuk.png"/>
+                                        <p:dataExporter type="pdf" target="katilimListesiOfAnket1"
+                                                        fileName="ankete_katilim_listesi"/>
+                                        <p:tooltip for="pdf" value="#{lbl.type_pdf}" trackMouse="true"/>
+                                    </h:commandLink>
+                                </h:panelGrid>
+
+                                <div class="EmptyBox5"></div>
+
+
+                                <p:dataTable id="katilimListesiOfAnket1"
+                                             value="#{anketIslemleriMB.anketKullaniciDataModel}"
+                                             var="varAnketKullanici"
+                                             emptyMessage="#{msg.no_record_found}"
+                                             paginatorPosition="bottom" paginator="true"
+                                             reflow="true" rows="10">
+
+                                    <p:column sortBy="tanitimZamani">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.duyuru_zamani}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varAnketKullanici.tanitimZamani}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column sortBy="adSoyad">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varAnketKullanici.kullanici.adSoyad}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="anketSecim.secim">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.label_anket_sorusu}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varAnketKullanici.anketSecim.secim}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="aciklama">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.ortak_aciklama}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varAnketKullanici.aciklama}"/>
+                                    </p:column>
+
+                                </p:dataTable>
+                            </p:panel>
+
+                            <div class="EmptyBox10"/>
+
+                            <p:commandButton id="btn_anket_ekle_guncelle" value="#{lbl.label_btn_gonder}"
+                                             update="@([id$=anketGoruntuleme])"
+                                             actionListener="#{anketIslemleriMB.anketeKatilimEkle}"
+                                             rendered="#{anketIslemleriMB.isAnketeKtinildiMi(anketIslemleriMB.selectedAnket).hayirMi and anketIslemleriMB.selectedAnket.aktifMi.isEvetMi()}">
+                                <p:confirm header="#{lbl.label_ankete_katilma}"
+                                           message="#{msg.islemi_onayliyormusunuz}"/>
+                            </p:commandButton>
+
+                            <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                             action="#{anketIslemleriMB.geriDon}"/>
+
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

@@ -6,14 +6,16 @@ import com.ronin.common.model.Kullanici;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.AidatDataModel;
 import com.ronin.managed.bean.lazydatamodel.DaireDataModel;
-import com.ronin.model.*;
+import com.ronin.model.Borc;
+import com.ronin.model.Daire;
+import com.ronin.model.DaireBorc;
+import com.ronin.model.DaireBorcKalem;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.BorcKalem;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.constant.KaynakTipi;
 import com.ronin.model.kriter.AidatSorguKriteri;
 import com.ronin.model.kriter.DaireSorguKriteri;
-import com.ronin.model.kriter.TalepSorguKriteri;
 import com.ronin.model.sorguSonucu.DaireBorcAlacakView;
 import com.ronin.model.sorguSonucu.DaireBorcKalemView;
 import com.ronin.service.IDaireService;
@@ -21,7 +23,6 @@ import com.ronin.service.IFinansalIslemlerService;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
-import org.primefaces.event.RowEditEvent;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
@@ -32,13 +33,14 @@ import javax.faces.context.FacesContext;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
-@ManagedBean(name = "aidatIslemleriMB")
+@ManagedBean(name = "aidatMB")
 @ViewScoped
-public class AidatIslemleriMB extends AbstractMB implements Serializable {
+public class AidatMB extends AbstractMB implements Serializable {
 
-    public static Logger logger = Logger.getLogger(AidatIslemleriMB.class);
+    public static Logger logger = Logger.getLogger(AidatMB.class);
     //servisler
     @ManagedProperty("#{msg}")
     private ResourceBundle message;
@@ -88,13 +90,33 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
     private List<DaireBorcAlacakView> daireBorcAlacakViewList;
 
     private boolean skip;
+    private boolean tumKriterlerMi;
+    private String currentStep;
 
     @PostConstruct
     public void init() {
         getFlushObjects();
+        prepareCombos();
+        setUserRolInfos();
         daireBorcKalemViews = new ArrayList<DaireBorcKalemView>();
         daireBorcAlacakViewList = new ArrayList<>();
+
+        if (!sessionInfo.isAdminMi()) {
+            getAidatListBySorguKriteri();
+        }
+    }
+
+    public void setUserRolInfos() {
+        if (!sessionInfo.isAdminMi()) {
+            sorguKriteri.setKullanici(sessionInfo.getKullanici());
+        }
+    }
+
+    public void prepareCombos() {
+        blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket", sessionInfo);
         borcKalemList = ortakService.getListByNamedQueryWithSirket("BorcKalem.findAllWithSirket", sessionInfo);
+        kaynakTipiList = ortakService.getListByNamedQuery("KaynakTipi.findAll");
+        daireTipiList = ortakService.getListByNamedQuery("DaireTipi.findAll");
     }
 
     public List<Kullanici> completePlayer(String query) {
@@ -177,24 +199,29 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
         } else if (skip && event.getNewStep().equals("borc_kalem")) {
             return "son_duzenleme";
         }
+
         return event.getNewStep();
     }
 
-    public void getFlushObjects() {
-        selected = (DaireBorc) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireBorcObject");
-        sorguKriteri = (AidatSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
-        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+    public String guncelleme(DaireBorc selected) {
+        setSelected(selected);
+        storeFlashObjects();
+        return "aidatGuncelleme.xhtml";
     }
 
-    public String geriDon() {
-        storeFlashObjects();
-        return getBackPage();
+    public void getFlushObjects() {
+        AidatSorguKriteri sk = (AidatSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        if (sk != null) {
+            sorguKriteri = sk;
+            getAidatListBySorguKriteri();
+        }
     }
 
     public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireBorcObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "aidatSorgula.xhtml");
     }
-
 
     public void addDaireBorcKalemView() {
         daireBorcKalemViews.clear();
@@ -244,17 +271,17 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
         }
     }
 
-    public String update(Object object) {
+    public void update(Object object) {
         try {
             finansalIslemlerService.updateObject(object);
-            storeFlashObjects();
+            getAidatListBySorguKriteri();
             JsfUtil.addSuccessMessage(message.getString("islem_basarili"));
-            return getBackPage();
+            RequestContext requestContext = RequestContext.getCurrentInstance();
+            requestContext.execute("PF('aidatGuncellemePopup').hide()");
         } catch (Exception e) {
             logger.error(e.getStackTrace());
             JsfUtil.addSuccessMessage("Hata!");
         }
-        return "";
     }
 
     public void delete(DaireBorc selectedDaireBorc) {
@@ -277,34 +304,6 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
             Thread.currentThread().interrupt();
         }
         return "aidatSorgula?faces-redirect=true";
-    }
-
-    public void onDaireBorcKalemRowEdit(RowEditEvent event) {
-        DaireBorcKalem selectedDaireBorcKalem = (DaireBorcKalem) event.getObject();
-        if (selectedDaireBorcKalem.getId() == null) {
-            selectedDaireBorcKalem.setDurum(Durum.getAktifObject());
-            selectedDaireBorcKalem.setDaireBorc(selected);
-            getFinansalIslemlerService().addDaireBorcKalem(selectedDaireBorcKalem);
-        } else {
-            getFinansalIslemlerService().updateObject(selectedDaireBorcKalem);
-        }
-        getAidatListBySorguKriteri();
-        JsfUtil.addSuccessMessage(message.getString("borc_kalem_ekleme_basarili"));
-    }
-
-    public void onDaireBorcKalemRowCancel(RowEditEvent event) {
-        DaireBorcKalem selectedDaireBorcKalem = (DaireBorcKalem) event.getObject();
-        if(selectedDaireBorcKalem.getId() == null){
-            selected.getDaireBorcKalems().remove(selectedDaireBorcKalem);
-            return;
-        }
-        getFinansalIslemlerService().deleteObject(selectedDaireBorcKalem);
-        getAidatListBySorguKriteri();
-        JsfUtil.addSuccessMessage(message.getString("borc_kalem_silme_basarili"));
-    }
-
-    public void addNewBorcKalem() {
-        selected.getDaireBorcKalems().add(new DaireBorcKalem());
     }
 
     public boolean isTopluIslem() {
@@ -518,5 +517,21 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
 
     public void setTempSelectedDaireList(List<Daire> tempSelectedDaireList) {
         this.tempSelectedDaireList = tempSelectedDaireList;
+    }
+
+    public boolean isTumKriterlerMi() {
+        return tumKriterlerMi;
+    }
+
+    public void setTumKriterlerMi(boolean tumKriterlerMi) {
+        this.tumKriterlerMi = tumKriterlerMi;
+    }
+
+    public String getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(String currentStep) {
+        this.currentStep = currentStep;
     }
 }

@@ -326,8 +326,8 @@ public class OrtakDao implements IOrtakDao {
         getSessionFactory().getCurrentSession().update(anket);
     }
 
-    public void update(Object notification) {
-        getSessionFactory().getCurrentSession().update(notification);
+    public void update(Object object) {
+        getSessionFactory().getCurrentSession().update(object);
     }
 
     public List<IletisimBilgileri> getAllIletisimBilgileriBySirket(SessionInfo sessionInfo) {
@@ -357,4 +357,16 @@ public class OrtakDao implements IOrtakDao {
         getSessionFactory().getCurrentSession().save(sistemHata);
     }
 
+    public AnketKullanici getAnketKullanici(Anket anket, Long kullaniciId) {
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("select a from AnketKullanici a " +
+                        "where a.anket.id = ? and a.kullanici.id = ?")
+                .setParameter(0, anket.getId())
+                .setParameter(1, kullaniciId)
+                .list();
+        if (list.isEmpty()) {
+            return null;
+        }
+        return (AnketKullanici) list.get(0);
+    }
 }

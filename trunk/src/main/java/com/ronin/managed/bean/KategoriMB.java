@@ -69,8 +69,9 @@ public class KategoriMB implements Serializable {
     }
 
 
-    public void deleteKategori() {
+    public void deleteKategori(Kategori selectedKategori) {
         try {
+            setSelected(selectedKategori);
             envanterService.kategoriSilme(sessionInfo, selected);
             getKategoriListBySorguKriteri();
             JsfUtil.addSuccessMessage(message.getString("kategori_silme_basarili"));

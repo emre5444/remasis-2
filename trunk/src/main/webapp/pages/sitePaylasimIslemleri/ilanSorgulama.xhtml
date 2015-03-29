@@ -1,155 +1,204 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
         <h:outputText value="#{lbl.label_ilan_sorgulama}"/>
     </ui:define>
 
     <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="main_form">
 
-            <h:form id="main_form">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <p:panel>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-briefcase orange"></i> #{lbl.label_ilan_sorgulama}
+                                </div>
 
-                <p:panel header="#{lbl.label_ilan_sorgulama}">
-                    <h:panelGrid columns="4" cellpadding="5">
+                                <div class="EmptyBox5"/>
 
-                        <h:outputLabel for="ad" value="#{lbl.label_duyuru_konusu}" style="font-weight:bold; color: #0b4170"/>
-                        <p:inputText id="ad" value="#{ilanMB.sorguKriteri.konu}"/>
-
-                        <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
-                        <p:selectOneMenu id="blok_adi" value="#{ilanMB.sorguKriteri.blok}"
-                                         style="font-weight:bold; color: #0b4170">
-                            <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                            <f:selectItems value="#{aidatIslemleriMB.blokList}" var="blokList" itemValue="#{blokList}"
-                                           itemLabel="#{blokList.aciklama}"/>
-                            <f:converter binding="#{blokConverter}"/>
-                        </p:selectOneMenu>
-
-                        <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
-                        <p:inputText id="daire_no" value="#{ilanMB.sorguKriteri.daireNo}"/>
-
-                        <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold; color: #0b4170"/>
-                        <p:autoComplete value="#{ilanMB.sorguKriteri.kullanici}"
-                                        disabled="#{not sessionInfo.adminMi}"
-                                        id="kullanici_list" completeMethod="#{aidatIslemleriMB.completePlayer}"
-                                        var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
-                                        itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
-
-                            <f:facet name="itemtip">
                                 <h:panelGrid columns="2" cellpadding="5">
-                                    <f:facet name="header">
-                                        <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
-                                        <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
-                                    </f:facet>
 
-                                    <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
-                                    <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
+                                    <h:outputLabel for="ad" value="#{lbl.label_duyuru_konusu}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="ad" value="#{ilanMB.sorguKriteri.konu}"/>
 
-                                    <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
-                                    <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
+                                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:selectOneMenu id="blok_adi" value="#{ilanMB.sorguKriteri.blok}"
+                                                     style="font-weight:bold; color: #0b4170">
+                                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                        <f:selectItems value="#{aidatIslemleriMB.blokList}" var="blokList"
+                                                       itemValue="#{blokList}"
+                                                       itemLabel="#{blokList.aciklama}"/>
+                                        <f:converter binding="#{blokConverter}"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="daire_no" value="#{ilanMB.sorguKriteri.daireNo}"/>
+
+                                    <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:autoComplete value="#{ilanMB.sorguKriteri.kullanici}"
+                                                    disabled="#{not sessionInfo.adminMi}"
+                                                    id="kullanici_list"
+                                                    completeMethod="#{aidatIslemleriMB.completePlayer}"
+                                                    var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
+                                                    itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
+
+                                        <f:facet name="itemtip">
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <f:facet name="header">
+                                                    <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
+                                                    <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
+                                                </f:facet>
+
+                                                <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
+                                                <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
+
+                                                <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
+                                                <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
+                                            </h:panelGrid>
+                                        </f:facet>
+                                    </p:autoComplete>
+
+
+                                    <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:calendar id="baslangic_tarihi"
+                                                value="#{ilanMB.sorguKriteri.sorguBaslangicTarihi}"
+                                                pattern="dd/MM/yyyy" mask="true"/>
+
+                                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:calendar id="bitis_tarihi" value="#{ilanMB.sorguKriteri.sorguBitisTarihi}"
+                                                pattern="dd/MM/yyyy"
+                                                mask="true"/>
+
+                                    <p:commandButton value="#{lbl.ortak_sorgula}"
+                                                     action="#{ilanMB.getIlanListBySorguKriteri()}"
+                                                     update=":main_form"/>
+
                                 </h:panelGrid>
-                            </f:facet>
-                        </p:autoComplete>
+
+                            </p:panel>
+
+                            <div class="EmptyBox10"/>
+
+                            <p:panel rendered="#{not empty ilanMB.dataModel.wrappedData}">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-list-alt orange"></i> #{lbl.sorgu_sonucu}
+                                </div>
+
+                                <div class="EmptyBox5"/>
+
+                                <p:dataTable value="#{ilanMB.dataModel}" var="varDuyuru" paginatorPosition="bottom"
+                                             paginator="true" rows="20" emptyMessage="#{msg.no_record_found}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15" reflow="true">
+
+                                    <p:column style="width: 16px;">
+                                        <p:rowToggler/>
+                                    </p:column>
+
+                                    <p:column sortBy="adSoyad">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
+                                    </p:column>
+                                    <p:column sortBy="daireBlokAd">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.duyuru_yayinlanan_daire}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varDuyuru.daire.daireBlokAd}"/>
+                                    </p:column>
+                                    <p:column sortBy="kisaAciklama">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.duyuru_konusu}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varDuyuru.kisaAciklama}"/>
+                                    </p:column>
+                                    <p:column sortBy="aciklama">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.duyuru_aciklama}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
+
+                                    </p:column>
+                                    <p:column sortBy="tanitimZamani">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.duyuru_zamani}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varDuyuru.tanitimZamani}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column>
+
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+
+                                            <p:menuitem id="deleteButton1" value="#{lbl.sil}"
+                                                        icon="fa fa-trash-o" immediate="true"
+                                                        rendered="#{sessionInfo.adminMi}"
+                                                        action="#{ilanMB.deleteDuyuru(varDuyuru)}"
+                                                        update="@([id$=main_form])">
+                                            </p:menuitem>
+                                        </p:menuButton>
+
+                                    </p:column>
+
+                                    <p:rowExpansion>
+                                        <div class="EmptyBox5"></div>
+                                        <div class="Container60 Responsive">
+                                            <div class="ContainerIndent">
+                                                <div class="EmptyBox5"></div>
+                                                <p:panelGrid id="showIlanDetail" columns="2">
+
+                                                    <h:outputLabel for="yorum_konu_v"
+                                                                   value="#{lbl.duyuru_konusu}"
+                                                                   style="font-weight:bold; color: #0b4170"/>
+                                                    <h:outputText
+                                                            value="#{varDuyuru.kisaAciklama}"
+                                                            id="yorum_konu_v"/>
+
+                                                    <h:outputLabel for="yorum_aciklama_v"
+                                                                   value="#{lbl.duyuru_aciklama}"
+                                                                   style="font-weight:bold; color: #0b4170"/>
+                                                    <h:outputText rows="6" cols="33"
+                                                                  value="#{varDuyuru.aciklama}"
+                                                                  id="yorum_aciklama_v" escape="false"/>
+
+                                                </p:panelGrid>
+                                            </div>
+                                        </div>
+
+                                        <div class="EmptyBox5"></div>
+
+                                    </p:rowExpansion>
 
 
+                                </p:dataTable>
 
-                        <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
-                                       style="font-weight:bold; color: #0b4170"/>
-                        <p:calendar id="baslangic_tarihi" value="#{ilanMB.sorguKriteri.sorguBaslangicTarihi}"
-                                    pattern="dd/MM/yyyy" mask="true"/>
+                            </p:panel>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
 
-                        <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170"/>
-                        <p:calendar id="bitis_tarihi" value="#{ilanMB.sorguKriteri.sorguBitisTarihi}"
-                                    pattern="dd/MM/yyyy"
-                                    mask="true"/>
-
-                        <p:commandButton value="#{lbl.ortak_sorgula}" action="#{ilanMB.getIlanListBySorguKriteri()}"
-                                         update=":main_form"/>
-
-                    </h:panelGrid>
-
-                </p:panel>
-
-                <div style="height:10px"></div>
-
-                <p:panel header="#{lbl.sorgu_sonucu}" rendered="#{not empty ilanMB.dataModel.wrappedData}">
-
-                    <p:dataTable value="#{ilanMB.dataModel}" var="varDuyuru" paginatorPosition="bottom"
-                                 paginator="true" rows="20" emptyMessage="#{msg.no_record_found}"
-                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                 rowsPerPageTemplate="5,10,15">
-
-                        <p:column sortBy="adSoyad">
-                            <f:facet name="header">
-                                <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
-                            </f:facet>
-                            <h:outputText value="#{varDuyuru.kullanici.adSoyad}"/>
-                        </p:column>
-                        <p:column sortBy="daireBlokAd">
-                            <f:facet name="header">
-                                <h:outputText value="#{lbl.duyuru_yayinlanan_daire}"/>
-                            </f:facet>
-                            <h:outputText value="#{varDuyuru.daire.daireBlokAd}"/>
-                        </p:column>
-                        <p:column sortBy="kisaAciklama">
-                            <f:facet name="header">
-                                <h:outputText value="#{lbl.duyuru_konusu}"/>
-                            </f:facet>
-                            <h:outputText value="#{varDuyuru.kisaAciklama}"/>
-                        </p:column>
-                        <p:column sortBy="aciklama">
-                            <f:facet name="header">
-                                <h:outputText value="#{lbl.duyuru_aciklama}"/>
-                            </f:facet>
-                            <h:outputText value="#{varDuyuru.mantiksalAciklama}" escape="false"/>
-
-                        </p:column>
-                        <p:column sortBy="tanitimZamani">
-                            <f:facet name="header">
-                                <h:outputText value="#{lbl.duyuru_zamani}"/>
-                            </f:facet>
-                            <h:outputText value="#{varDuyuru.tanitimZamani}">
-                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                            </h:outputText>
-                        </p:column>
-
-                        <p:column exportable="false">
-                            <h:panelGrid columns="2">
-                                <p:commandLink  icon="ui-icon-search"
-                                                update="@([id$=showAdminDuyuru])"
-                                                oncomplete="PF('duyuruGoruntulePopup').show();"
-                                        >
-                                    <p:graphicImage value="/images/show_icon.png"/>
-                                    <f:setPropertyActionListener value="#{varDuyuru}" target="#{ilanMB.selected}"/>
-                                </p:commandLink>
-
-                                <p:commandButton id="deleteButton1" icon="ui-icon-trash" immediate="true"
-                                                 rendered="#{sessionInfo.adminMi}"
-                                                 action="#{anasayfaMB.deleteDuyuru}" update="@([id$=anasayfa_form])"
-                                        >
-                                    <f:setPropertyActionListener value="#{varDuyuru}"
-                                                                 target="#{ilanMB.selected}"/>
-                                    <p:confirm header="#{lbl.ilan_iptali}"
-                                               message="#{msg.islemi_onayliyormusunuz}"/>
-                                </p:commandButton>
-                            </h:panelGrid>
-                        </p:column>
-
-                    </p:dataTable>
-
-                </p:panel>
-            </h:form>
-
-        <ui:include src="../sitePaylasimIslemleri/duyuruGoruntuleme.xhtml">
-            <ui:param name="entityMB" value="#{ilanMB}"/>
-        </ui:include>
     </ui:define>
 
     <ui:define name="body">

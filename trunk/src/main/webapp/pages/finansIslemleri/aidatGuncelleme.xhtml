@@ -1,84 +1,179 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
-    <h:form id="aidatGuncelleme">
-        <p:dialog header="#{lbl.aidat_guncelleme}" widgetVar="aidatGuncellemePopup" closeOnEscape="true" height="auto"
-                  width="auto">
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+    <ui:define name="title">
+        <h:outputText value="#{lbl.aidat_guncelleme}"/>
+    </ui:define>
 
-            <h:panelGrid columns="2" cellpadding="5"
-                         rendered="#{aidatIslemleriMB.selected.borc.islemTipi.borcDekontuMu}">
+    <ui:define name="content">
 
-                <h:outputLabel for="dekontNoBorc" value="#{lbl.borc_dekont_no} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="dekontNoBorc" value="#{aidatIslemleriMB.selected.borc.dekontNo}" required="true" rendered="true"
-                             label="#{lbl.borc_dekont_no}"/>
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="aidatGuncelleme">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                <h:outputLabel for="islemTarihiBorc" value="#{lbl.islem_tarihi} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:calendar id="islemTarihiBorc" value="#{aidatIslemleriMB.selected.borc.islemTarihi}" required="true"
-                             label="#{lbl.islem_tarihi}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </p:calendar>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <p:panel>
 
-                <h:outputLabel for="sonOdemeTarihiBorc" value="#{lbl.son_odeme_tarihi} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:calendar id="sonOdemeTarihiBorc" value="#{aidatIslemleriMB.selected.borc.sonOdemeTarihi}"
-                             required="true"
-                             label="#{lbl.son_odeme_tarihi}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </p:calendar>
-
-                <h:outputLabel for="borcBorc" value="#{lbl.borc_tutari} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="borcBorc" value="#{aidatIslemleriMB.selected.borc.borc}" required="true"
-                             label="#{lbl.borc_tutari}"/>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-try orange"></i> #{lbl.aidat_guncelleme}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5"
+                                             rendered="#{aidatIslemleriMB.selected.borc.islemTipi.borcDekontuMu}">
 
 
-                <h:outputLabel for="aciklamaBorc" value="#{lbl.kisa_aciklama}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="aciklamaBorc" value="#{aidatIslemleriMB.selected.borc.aciklama}"
-                             label="#{lbl.kisa_aciklama}"/>
+                                    <h:outputLabel for="islemTarihiBorc" value="#{lbl.islem_tarihi} (*)"
+                                                   style="font-weight:bold"/>
+                                    <p:calendar id="islemTarihiBorc"
+                                                value="#{aidatIslemleriMB.selected.borc.islemTarihi}"
+                                                required="true"
+                                                label="#{lbl.islem_tarihi}" pattern="dd/MM/yyyy">
+                                    </p:calendar>
 
-                <f:facet name="footer">
-                    <p:commandButton id="aidat_guncelleBorc" value="#{lbl.ortak_guncelle}"
-                                     update=":aidatGuncelleme :main_form"
-                                     actionListener="#{aidatIslemleriMB.update(aidatIslemleriMB.selected)}"/>
-                </f:facet>
+                                    <h:outputLabel for="sonOdemeTarihiBorc" value="#{lbl.son_odeme_tarihi} (*)"
+                                                   style="font-weight:bold"/>
+                                    <p:calendar id="sonOdemeTarihiBorc"
+                                                value="#{aidatIslemleriMB.selected.borc.sonOdemeTarihi}"
+                                                required="true"
+                                                label="#{lbl.son_odeme_tarihi}" pattern="dd/MM/yyyy">
+                                    </p:calendar>
 
-            </h:panelGrid>
-
-
-            <h:panelGrid columns="2" cellpadding="5" rendered="#{aidatIslemleriMB.selected.borc.islemTipi.odeme}">
-
-                <h:outputLabel for="islemTarihiOdeme" value="#{lbl.islem_tarihi} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:calendar id="islemTarihiOdeme" value="#{aidatIslemleriMB.selected.borc.islemTarihi}" required="true"
-                             label="#{lbl.islem_tarihi}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </p:calendar>
-
-                <h:outputLabel for="odemeVadesiOdeme" value="#{lbl.odeme_tarihi} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:calendar id="odemeVadesiOdeme" value="#{aidatIslemleriMB.selected.borc.odemeVadesi}" required="true"
-                             label="#{lbl.islem_tarihi}">
-                    <f:convertDateTime pattern="dd/MM/yyyy"/>
-                </p:calendar>
-
-                <h:outputLabel for="odenenTutarOdeme" value="#{lbl.odenen_tutar} (*)" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="odenenTutarOdeme" value="#{aidatIslemleriMB.selected.borc.odenenTutar}" required="true"
-                             label="#{lbl.odenen_tutar}"/>
+                                    <h:outputLabel for="borcBorc" value="#{lbl.borc_tutari} (*)"
+                                                   style="font-weight:bold"/>
+                                    <p:inputText id="borcBorc" value="#{aidatIslemleriMB.selected.borc.borc}"
+                                                 required="true"
+                                                 label="#{lbl.borc_tutari}"/>
 
 
-                <h:outputLabel for="aciklamaOdeme" value="#{lbl.odeme_aciklama}" style="font-weight:bold; color: #0b4170"/>
-                <p:inputText id="aciklamaOdeme" value="#{aidatIslemleriMB.selected.borc.odemeAciklama}"
-                             label="#{lbl.odeme_aciklama}"/>
+                                    <h:outputLabel for="aciklamaBorc" value="#{lbl.kisa_aciklama}"
+                                                   style="font-weight:bold"/>
+                                    <p:inputText id="aciklamaBorc" value="#{aidatIslemleriMB.selected.borc.aciklama}"
+                                                 label="#{lbl.kisa_aciklama}"/>
 
-                <f:facet name="footer">
-                    <p:commandButton id="aidat_guncelleOdeme" value="#{lbl.ortak_guncelle}"
-                                     update=":aidatGuncelleme :main_form"
-                                     actionListener="#{aidatIslemleriMB.update(aidatIslemleriMB.selected)}"/>
-                </f:facet>
 
-            </h:panelGrid>
+                                </h:panelGrid>
 
-        </p:dialog>
-    </h:form>
-</h:body>
-</html>
+
+                                <h:panelGrid columns="2" cellpadding="5"
+                                             rendered="#{aidatIslemleriMB.selected.borc.islemTipi.odeme}">
+
+                                    <h:outputLabel for="islemTarihiOdeme" value="#{lbl.islem_tarihi} (*)"
+                                                   style="font-weight:bold"/>
+                                    <p:calendar id="islemTarihiOdeme"
+                                                value="#{aidatIslemleriMB.selected.borc.islemTarihi}"
+                                                required="true"
+                                                label="#{lbl.islem_tarihi}" pattern="dd/MM/yyyy">
+                                    </p:calendar>
+
+                                    <h:outputLabel for="odemeVadesiOdeme" value="#{lbl.odeme_tarihi} (*)"
+                                                   style="font-weight:bold"/>
+                                    <p:calendar id="odemeVadesiOdeme"
+                                                value="#{aidatIslemleriMB.selected.borc.odemeVadesi}"
+                                                required="true"
+                                                label="#{lbl.islem_tarihi}" pattern="dd/MM/yyyy">
+                                    </p:calendar>
+
+                                    <h:outputLabel for="odenenTutarOdeme" value="#{lbl.odenen_tutar} (*)"
+                                                   style="font-weight:bold"/>
+                                    <p:inputText id="odenenTutarOdeme"
+                                                 value="#{aidatIslemleriMB.selected.borc.odenenTutar}"
+                                                 required="true"
+                                                 label="#{lbl.odenen_tutar}"/>
+
+
+                                    <h:outputLabel for="aciklamaOdeme" value="#{lbl.odeme_aciklama}"
+                                                   style="font-weight:bold"/>
+                                    <p:inputText id="aciklamaOdeme"
+                                                 value="#{aidatIslemleriMB.selected.borc.odemeAciklama}"
+                                                 label="#{lbl.odeme_aciklama}"/>
+
+
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <div class="EmptyBox10"/>
+
+                            <h:panelGrid columns="3">
+                                <p:commandButton id="btn_guncelle" value="#{lbl.ortak_guncelle}"
+                                                 action="#{aidatIslemleriMB.update(aidatIslemleriMB.selected)}">
+                                    <p:confirm header="#{lbl.kullanici_guncelleme}"
+                                               message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+                                <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                                 action="#{aidatIslemleriMB.geriDon}"/>
+                            </h:panelGrid>
+                        </div>
+                    </div>
+
+                    <div class="EmptyBox10"/>
+
+
+                    <div class="Container70 Responsive">
+                    <div class="ContainerIndent">
+                    <p:panel id="daire_borc_kalem" rendered="#{aidatIslemleriMB.selected.borc.islemTipi.borcDekontuMu}">
+                        <div class="Container100 Responsive Fs20 hardblue">
+                            <i class="icon-money orange"></i> #{lbl.borc_kalem_guncelleme}
+                        </div>
+                        <p:dataTable id="borcKalems" var="borcKalems" value="#{aidatIslemleriMB.selected.daireBorcKalems}"
+                                     editable="#{sessionInfo.adminMi}" emptyMessage="#{msg.no_record_found}">
+
+                            <p:ajax event="rowEdit" listener="#{aidatIslemleriMB.onDaireBorcKalemRowEdit}" update="@([id$=daire_borc_kalem])"/>
+                            <p:ajax event="rowEditCancel"
+                                    listener="#{aidatIslemleriMB.onDaireBorcKalemRowCancel}" update="@([id$=daire_borc_kalem])"/>
+
+                            <p:column headerText="#{lbl.borc_kalem_combo}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText
+                                            value="#{borcKalems.borcKalem}"/></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{borcKalems.borcKalem}" style="width:100%">
+                                            <f:selectItems value="#{aidatIslemleriMB.borcKalemList}" var="borcKalem"
+                                                           itemLabel="#{borcKalem.aciklama}"
+                                                           itemValue="#{borcKalem}"/>
+                                            <f:converter binding="#{borcKalemConverter}"/>
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="#{lbl.borc_tutari}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText
+                                            value="#{borcKalems.tutar}"/></f:facet>
+                                    <f:facet name="input"><h:inputText id="tutarAck" required="true" label="#{lbl.borc_tutari}"
+                                                                       value="#{borcKalems.tutar}" style="width:95%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column rendered="#{sessionInfo.adminMi}">
+                                <p:rowEditor id="rowEditor"/>
+                                <p:tooltip for="rowEditor" value="#{lbl.ortak_guncelle}" trackMouse="true"/>
+                            </p:column>
+                            <f:facet name="footer">
+                                <p:commandButton id="yeniBorcKalemEkle"
+                                                 value="#{lbl.borc_kalem_ekle}" styleClass="GreenButton"
+                                                 icon="ui-icon-plus" rendered="#{sessionInfo.adminMi}"
+                                                 update="@([id$=daire_borc_kalem])"
+                                                 action="#{aidatIslemleriMB.addNewBorcKalem()}"/>
+                            </f:facet>
+                        </p:dataTable>
+
+                    </p:panel>
+                    </div>
+                    </div>
+                </h:form>
+
+            </div>
+        </div>
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

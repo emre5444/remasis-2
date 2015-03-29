@@ -69,8 +69,9 @@ public class IlanMB implements Serializable {
         blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket",sessionInfo);
     }
 
-    public void deleteDuyuru() {
+    public void deleteDuyuru(Duyuru selectedDuyuru) {
         try {
+            setSelected(selectedDuyuru);
             ortakService.deleteDuyuru(selected);
             JsfUtil.addSuccessMessage(message.getString("duyuru_silme_basarili"));
             getIlanListBySorguKriteri();

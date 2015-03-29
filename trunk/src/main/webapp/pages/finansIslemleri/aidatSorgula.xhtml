@@ -1,11 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
         <h:outputText value="#{lbl.aidat_sorgulama}"/>
@@ -13,256 +13,359 @@
 
     <ui:define name="content">
 
-        <div style="height:10px"></div>
+        <div class="EmptyBox10"></div>
 
-        <h:form id="main_form">
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="main_form">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-            <p:panel header="#{lbl.aidat_sorgulama}">
-                <h:panelGrid columns="4" cellpadding="7">
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <p:panel>
 
-                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold; color: #0b4170"/>
-                    <p:selectOneMenu id="blok_adi" value="#{aidatIslemleriMB.sorguKriteri.blok}"
-                                     style="font-weight:bold; color: #0b4170">
-                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                        <f:selectItems value="#{aidatIslemleriMB.blokList}" var="blokList" itemValue="#{blokList}"
-                                       itemLabel="#{blokList.aciklama}"/>
-                        <f:converter binding="#{blokConverter}"/>
-                    </p:selectOneMenu>
+                                <div class="Container100">
+                                    <div class="ContainerIndent">
+                                        <div class="Container100 Responsive Fs20 hardblue">
+                                            <i class="icon-try orange"></i> <h:outputText value="#{lbl.aidat_sorgulama}"
+                                                                                          styleClass="FontBold Fs18 hardblue"></h:outputText>
 
-                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="daire_no" value="#{aidatIslemleriMB.sorguKriteri.daireNo}"/>
+                                            <h:outputText value="#{lbl.label_tum_kriterler}" styleClass="Fright"/>
+                                            <p:selectBooleanCheckbox value="#{aidatMB.tumKriterlerMi}"
+                                                                     styleClass="Fright"
+                                                                     style="margin-right: 5px;"
+                                                                     onLabel="#{lbl.label_evet}"
+                                                                     offLabel="#{lbl.label_hayir}">
+                                                <p:ajax update="main_form"/>
+                                            </p:selectBooleanCheckbox>
+                                        </div>
+                                    </div>
+                                </div>
 
-
-                    <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}" style="font-weight:bold; color: #0b4170"/>
-                    <p:autoComplete value="#{aidatIslemleriMB.sorguKriteri.kullanici}"
-                                    disabled="#{not sessionInfo.adminMi}"
-                                    id="kullanici_list" completeMethod="#{aidatIslemleriMB.completePlayer}"
-                                    var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
-                                    itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
-
-                        <f:facet name="itemtip">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <f:facet name="header">
-                                    <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
-                                    <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
-                                </f:facet>
-
-                                <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
-                                <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
-
-                                <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
-                                <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
-                            </h:panelGrid>
-                        </f:facet>
-                    </p:autoComplete>
+                                <div class="EmptyBox5"></div>
 
 
-                    <h:outputLabel for="kaynak_tipi" value="#{lbl.kaynak_tipi}" style="font-weight:bold; color: #0b4170"/>
-                    <p:selectOneMenu id="kaynak_tipi" value="#{aidatIslemleriMB.sorguKriteri.kaynakTipi}"
-                                     style="font-weight:bold; color: #0b4170">
-                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                        <f:selectItems value="#{aidatIslemleriMB.kaynakTipiList}" var="kaynakTipiList"
-                                       itemValue="#{kaynakTipiList}"
-                                       itemLabel="#{kaynakTipiList.aciklama}"/>
-                        <f:converter binding="#{kaynakTipiConverter}"/>
-                    </p:selectOneMenu>
+                                <h:panelGrid columns="2" cellpadding="5">
+
+                                    <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}" style="font-weight:bold"/>
+                                    <p:selectOneMenu id="blok_adi" value="#{aidatMB.sorguKriteri.blok}"
+                                                     style="font-weight:bold">
+                                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                        <f:selectItems value="#{aidatMB.blokList}" var="blokList"
+                                                       itemValue="#{blokList}"
+                                                       itemLabel="#{blokList.aciklama}"/>
+                                        <f:converter binding="#{blokConverter}"/>
+                                    </p:selectOneMenu>
+
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold"/>
+                                    <p:inputText id="daire_no" value="#{aidatMB.sorguKriteri.daireNo}"/>
 
 
-                    <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
-                                   style="font-weight:bold; color: #0b4170"/>
-                    <p:calendar id="baslangic_tarihi" value="#{aidatIslemleriMB.sorguKriteri.sorguBaslangicTarihi}"
-                                pattern="dd/MM/yyyy" mask="true"/>
+                                    <h:outputLabel for="kullanici_list" value="#{lbl.kullanici}"
+                                                   style="font-weight:bold"/>
+                                    <p:autoComplete value="#{aidatMB.sorguKriteri.kullanici}"
+                                                    disabled="#{not sessionInfo.adminMi}"
+                                                    id="kullanici_list"
+                                                    completeMethod="#{aidatMB.completePlayer}"
+                                                    var="varKullanici" itemLabel="#{varKullanici.adSoyad}"
+                                                    itemValue="#{varKullanici}" converter="#{kullaniciConverter}">
 
-                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}" style="font-weight:bold; color: #0b4170"/>
-                    <p:calendar id="bitis_tarihi" value="#{aidatIslemleriMB.sorguKriteri.sorguBitisTarihi}"
-                                pattern="dd/MM/yyyy"
-                                mask="true"/>
+                                        <f:facet name="itemtip">
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <f:facet name="header">
+                                                    <h:outputLabel for="k_kodu" value="#{lbl.kullanici}"/>
+                                                    <h:outputText id="k_kodu" value="#{varKullanici.username}"/>
+                                                </f:facet>
 
-                    <h:outputLabel for="dekont_no" value="#{lbl.borc_dekont_no}" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="dekont_no" value="#{aidatIslemleriMB.sorguKriteri.dekontNo}"/>
+                                                <h:outputLabel for="k_adi" value="#{lbl.ad}"/>
+                                                <h:outputText id="k_adi" value="#{varKullanici.ad}"/>
 
-                    <h:panelGroup/><h:panelGroup/>
-                    <p:commandButton value="#{lbl.ortak_sorgula}"
-                                     actionListener="#{aidatIslemleriMB.getAidatListBySorguKriteri()}"
-                                     update="@([id$=main_form])"/>
-
-                </h:panelGrid>
-            </p:panel>
-
-            <div style="height:10px"></div>
-
-            <p:panel id="sorguSonucuPanel" header="#{lbl.sorgu_sonucu}"
-                     rendered="#{not empty aidatIslemleriMB.dataModel.wrappedData}">
-
-                <p:dataTable id="aidatSorguSonucu" value="#{aidatIslemleriMB.dataModel}" var="varAidat"
-                             paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
-                             selection="#{aidatIslemleriMB.selected}"
-                             paginator="true" rows="10" style="headerClass: text-align left"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15">
-
-                    <f:facet name="header">
-                        <h:panelGrid columns="3" style="width:10%">
-                            <h:outputText value="#{lbl.label_disa_aktar}"/>
-                            <h:commandLink>
-                                <p:graphicImage value="/images/excel_kucuk.png" style="width: 20px;"/>
-                                <p:dataExporter type="xls" target="aidatSorguSonucu"
-                                                fileName="daire_aidat_listesi"/>
-                            </h:commandLink>
-
-                            <h:commandLink>
-                                <p:graphicImage value="/images/pdf_kucuk.png" style="width: 20px;"/>
-                                <p:dataExporter type="pdf" target="aidatSorguSonucu"
-                                                fileName="daire_aidat_listesi"/>
-                            </h:commandLink>
-                        </h:panelGrid>
-
-                    </f:facet>
-
-                    <p:column headerText="#{lbl.malik}" exportable="false" style="width:10%">
-
-                        <p:dataTable id="kullaniciMalikOfDaire" value="#{varAidat.daire.kullaniciMalik}"
-                                     var="varkullaniciMalik"
-                                     emptyMessage="#{msg.no_record_found}"
-                                     paginatorPosition="bottom" styleClass="noheader"
-                                     rows="3">
-                            <p:column headerText="#{lbl.ad}">
-                                <h:outputText value="#{varkullaniciMalik.ad}"/>
-                            </p:column>
-                            <p:column headerText="#{lbl.soyad}">
-                                <h:outputText value="#{varkullaniciMalik.soyad}"/>
-                            </p:column>
-                        </p:dataTable>
-
-                    </p:column>
-
-                    <p:column headerText="#{lbl.sakin_listesi}" exportable="false" style="width:10%">
-                        <p:dataTable id="kullaniciListesiOfDaire" value="#{varAidat.daire.kullaniciSakimList}"
-                                     var="varkullaniciDaire"
-                                     emptyMessage="#{msg.no_record_found}"
-                                     paginatorPosition="bottom" styleClass="noheader"
-                                     rows="3">
-                            <p:column headerText="#{lbl.ad}">
-                                <h:outputText value="#{varkullaniciDaire.ad}"/>
-                            </p:column>
-                            <p:column headerText="#{lbl.soyad}">
-                                <h:outputText value="#{varkullaniciDaire.soyad}"/>
-                            </p:column>
-                        </p:dataTable>
-                    </p:column>
-
-                    <p:column headerText="#{lbl.daire_bilgileri}" sortBy="varAidat.daire.daireNo" exportable="false" style="width:10%">
-                        <h:panelGrid id="panel2" columns="2" cellpadding="0" cellspacing="0"
-                                     columnClasses="panelCol2 width40 ,panelCol2 width60">
-
-                            <h:outputLabel for="daire_kodu" value="#{lbl.daire_kodu}"
-                                           style="font-weight:bold; color: #0b4170"/>
-                            <h:outputText id="daire_kodu" value="#{varAidat.daire.daireKodu}"/>
-
-                            <h:outputLabel for="daire_blok" value="#{lbl.daire_blokAdi}"
-                                           style="font-weight:bold; color: #0b4170"/>
-                            <h:outputText id="daire_blok" value="#{varAidat.daire.blok.aciklama}"/>
-
-                            <h:outputLabel for="daire_no1" value="#{lbl.daire_no}"
-                                           style="font-weight:bold; color: #0b4170"/>
-                            <h:outputText id="daire_no1" value="#{varAidat.daire.daireNo}"/>
-
-                        </h:panelGrid>
-                    </p:column>
-
-                    <p:column sortBy="borc.dekontNo"
-                              style="width:8%">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.borc_dekont_no}"/>
-                        </f:facet>
-                        <h:outputText value="#{varAidat.borc.dekontNo}"/>
-                    </p:column>
-                    <p:column sortBy="borc.islemTarihi"
-                              style="width:8%">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.aidat_donemi}"/>
-                        </f:facet>
-                        <h:outputText value="#{varAidat.borc.islemTarihi}" style="font-weight:bold; color:#ce1797;">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column sortBy="borc.odemeVadesi" style="width:8%">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.odeme_tarihi}"/>
-                        </f:facet>
-                        <h:outputText value="#{varAidat.borc.odemeVadesi}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column sortBy="borc.sonOdemeTarihi" style="width:8%">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.son_odeme_tarihi}"/>
-                        </f:facet>
-                        <h:outputText value="#{varAidat.borc.sonOdemeTarihi}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-                    <p:column sortBy="borc.borc"
-                              style="width:8%">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.borc_tutari}"/>
-                        </f:facet>
-                        <h:outputText value="#{varAidat.borc.borc}"
-                                      style="text-align:right;font-weight:bold; color:#FF4000;"/>
-                    </p:column>
-                    <p:column sortBy="borc.odenenTutar"
-                              style="width:8%">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.odenen_tutar}"/>
-                        </f:facet>
-                        <h:outputText value="#{varAidat.borc.odenenTutar}"
-                                      style="text-align:right;font-weight:bold; color:#088A29;"/>
-                    </p:column>
+                                                <h:outputLabel for="k_soyad" value="#{lbl.kullanici_soyadi}"/>
+                                                <h:outputText id="k_soyad" value="#{varKullanici.soyad}"/>
+                                            </h:panelGrid>
+                                        </f:facet>
+                                    </p:autoComplete>
 
 
-                    <p:column sortBy="borc.aciklama"
-                              style="width:25%">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.ortak_aciklama}"/>
-                        </f:facet>
-                        <h:outputText value="#{varAidat.borc.aciklama}"/>
-                    </p:column>
-
-                    <p:column style="width:10%">
-
-                        <p:commandLink id="viewButtonAidatGuncelle" icon="ui-icon-arrowrefresh-1-w"
-                                       update="@([id$=aidatGuncelleme])"
-                                       oncomplete="PF('aidatGuncellemePopup').show();"
-                                       immediate="true" rendered="#{sessionInfo.adminMi}"
-                                >
-                            <p:graphicImage value="/images/edit_icon.png"/>
-                            <f:setPropertyActionListener value="#{varAidat}"
-                                                         target="#{aidatIslemleriMB.selected}"/>
-                        </p:commandLink>
-                        <p:tooltip id="toolTipAidatGuncelle" for="viewButtonAidatGuncelle"
-                                   value="#{lbl.aidat_guncelleme}"/>
-
-                        <p:commandLink id="deleteAidat" immediate="true" icon="ui-icon-trash"
-                                       rendered="#{sessionInfo.adminMi}"
-                                       action="#{aidatIslemleriMB.delete}" update=":main_form"
-                                >
-                            <p:graphicImage value="/images/delete_icon.png"/>
-                            <f:setPropertyActionListener value="#{varAidat}"
-                                                         target="#{aidatIslemleriMB.selected}"/>
-                            <p:confirm header="#{lbl.aidat_silme}"
-                                       message="#{msg.islemi_onayliyormusunuz}"/>
-                        </p:commandLink>
-                        <p:tooltip id="toolTipAidatSilme" for="deleteAidat" value="#{lbl.aidat_silme}"/>
-                    </p:column>
+                                    <h:outputLabel for="kaynak_tipi" value="#{lbl.kaynak_tipi}"
+                                                   style="font-weight:bold"/>
+                                    <p:selectOneMenu id="kaynak_tipi"
+                                                     value="#{aidatMB.sorguKriteri.kaynakTipi}"
+                                                     style="font-weight:bold">
+                                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                        <f:selectItems value="#{aidatMB.kaynakTipiList}" var="kaynakTipiList"
+                                                       itemValue="#{kaynakTipiList}"
+                                                       itemLabel="#{kaynakTipiList.aciklama}"/>
+                                        <f:converter binding="#{kaynakTipiConverter}"/>
+                                    </p:selectOneMenu>
 
 
-                </p:dataTable>
-            </p:panel>
+                                    <h:outputLabel for="baslangic_tarihi" value="#{lbl.sorgu_baslangic_tarihi}"
+                                                   style="font-weight:bold"
+                                                   rendered="#{aidatMB.tumKriterlerMi}"/>
+                                    <p:calendar id="baslangic_tarihi"
+                                                value="#{aidatMB.sorguKriteri.sorguBaslangicTarihi}"
+                                                pattern="dd/MM/yyyy" mask="true"
+                                                rendered="#{aidatMB.tumKriterlerMi}"/>
 
-        </h:form>
+                                    <h:outputLabel for="bitis_tarihi" value="#{lbl.sorgu_bitis_tarihi}"
+                                                   style="font-weight:bold"
+                                                   rendered="#{aidatMB.tumKriterlerMi}"/>
+                                    <p:calendar id="bitis_tarihi"
+                                                value="#{aidatMB.sorguKriteri.sorguBitisTarihi}"
+                                                pattern="dd/MM/yyyy"
+                                                mask="true" rendered="#{aidatMB.tumKriterlerMi}"/>
 
-        <ui:include src="aidatGuncelleme.xhtml"/>
+                                    <h:outputLabel for="dekont_no" value="#{lbl.borc_dekont_no}"
+                                                   style="font-weight:bold"
+                                                   rendered="#{aidatMB.tumKriterlerMi}"/>
+                                    <p:inputText id="dekont_no" value="#{aidatMB.sorguKriteri.dekontNo}"
+                                                 rendered="#{aidatMB.tumKriterlerMi}"/>
+
+                                    <h:panelGroup/><h:panelGroup/>
+                                    <p:commandButton value="#{lbl.ortak_sorgula}"
+                                                     actionListener="#{aidatMB.getAidatListBySorguKriteri()}"
+                                                     update="@([id$=main_form])"/>
+
+                                </h:panelGrid>
+                            </p:panel>
+
+                        </div>
+                    </div>
+
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+
+                            <div class="EmptyBox10"></div>
+
+                            <p:panel id="sorguSonucuPanel"
+                                     rendered="#{not empty aidatMB.dataModel.wrappedData}">
+                                <i class="icon-list-alt orange"></i> <h:outputText value=" #{lbl.sorgu_sonucu}"
+                                                                                   styleClass="FontBold Fs18 hardblue"></h:outputText>
+
+                                <h:panelGrid columns="2" styleClass="Fright">
+                                    <h:commandLink>
+                                        <p:graphicImage id="excel" value="/images/excel_kucuk.png"/>
+                                        <p:dataExporter type="xls" target="aidatSorguSonucu"
+                                                        fileName="daire_aidat_listesi"/>
+                                        <p:tooltip for="excel" value="#{lbl.type_excel}" trackMouse="true"/>
+                                    </h:commandLink>
+
+                                    <h:commandLink>
+                                        <p:graphicImage id="pdf" value="/images/pdf_kucuk.png"/>
+                                        <p:dataExporter type="pdf" target="aidatSorguSonucu"
+                                                        fileName="daire_aidat_listesi"/>
+                                        <p:tooltip for="pdf" value="#{lbl.type_pdf}" trackMouse="true"/>
+                                    </h:commandLink>
+                                </h:panelGrid>
+
+
+                                <div class="EmptyBox5"></div>
+
+                                <p:dataTable id="aidatSorguSonucu" value="#{aidatMB.dataModel}" var="varAidat"
+                                             reflow="true"
+                                             paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
+                                             selection="#{aidatMB.selected}"
+                                             paginator="true" rows="10"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15">
+                                    <p:column headerText="#{lbl.row_toggler_detay}">
+                                        <p:rowToggler/>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.daire_kodu}">
+                                        <h:outputText value="#{varAidat.daire.daireKodu}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.borc_dekont_no}">
+                                        <h:outputText value="#{varAidat.borc.dekontNo}"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.aidat_donemi}">
+                                        <h:outputText value="#{varAidat.borc.islemTarihi}"
+                                                      style="font-weight:bold; color:#ce1797;">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.odeme_tarihi}">
+                                        <h:outputText value="#{varAidat.borc.odemeVadesi}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.son_odeme_tarihi}">
+                                        <h:outputText value="#{varAidat.borc.sonOdemeTarihi}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.borc_tutari}">
+                                        <h:outputText id="borc"
+                                                      value="#{varAidat.borc.borc}"
+                                                      style="text-align:right;font-weight:bold; color:#FF4000;"/>
+                                    </p:column>
+
+                                    <p:column headerText="#{lbl.odenen_tutar}">
+                                        <h:outputText value="#{varAidat.borc.odenenTutar}"
+                                                      style="text-align:right;font-weight:bold; color:#088A29;"/>
+                                    </p:column>
+
+
+                                    <p:column headerText="#{lbl.ortak_aciklama}">
+                                        <h:outputText value="#{varAidat.borc.aciklama}"
+                                                      rendered="#{varAidat.borc.islemTipi.isBorcDekontuMu()}"/>
+                                        <h:outputText value="#{varAidat.borc.odemeAciklama}"
+                                                      rendered="#{varAidat.borc.islemTipi.isOdeme()}"/>
+                                    </p:column>
+
+                                    <p:rowExpansion>
+                                        <div class="EmptyBox5"></div>
+                                        <p:panel>
+                                            <div class="Container100">
+                                                <div class="ContainerIndent">
+
+                                                    <div class="Container25 Responsive">
+                                                        <div class="ContainerIndent">
+                                                            <h:panelGroup>
+                                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <i class="icon-home orange"></i> #{lbl.daire_bilgileri}
+                                                                </div>
+
+                                                                <div class="EmptyBox5"></div>
+                                                                <h:panelGrid id="panel2" columns="2">
+
+                                                                    <h:outputLabel for="daire_blok"
+                                                                                   value="#{lbl.daire_blokAdi}"
+                                                                                   styleClass="hardblue"/>
+                                                                    <h:outputText id="daire_blok"
+                                                                                  value="#{varAidat.daire.blok.aciklama}"/>
+
+                                                                    <h:outputLabel for="daire_no1"
+                                                                                   value="#{lbl.daire_no}"
+                                                                                   styleClass="hardblue"/>
+                                                                    <h:outputText id="daire_no1"
+                                                                                  value="#{varAidat.daire.daireNo}"/>
+
+                                                                </h:panelGrid>
+                                                            </h:panelGroup>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="Container25 Responsive">
+                                                        <div class="ContainerIndent">
+                                                            <h:panelGroup>
+                                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <i class="icon-money orange"></i> #{lbl.borc_kalem_combo}
+                                                                </div>
+
+                                                                <div class="EmptyBox5"></div>
+                                                                <p:dataTable var="borcKalem" reflow="true"
+                                                                             value="#{varAidat.daireBorcKalems}"
+                                                                             emptyMessage="#{msg.no_record_found}">
+                                                                    <p:column headerText="#{lbl.borc_kalem_combo}">
+                                                                        <h:outputText
+                                                                                value="#{borcKalem.borcKalem.aciklama}"/>
+                                                                    </p:column>
+
+                                                                    <p:column headerText="#{lbl.borc_tutari}">
+                                                                        <h:outputText value="#{borcKalem.tutar}"/>
+                                                                    </p:column>
+                                                                </p:dataTable>
+                                                            </h:panelGroup>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="Container25 Responsive">
+                                                        <div class="ContainerIndent">
+                                                            <h:panelGroup>
+
+                                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <i class="icon-user orange"></i> #{lbl.malik_bilgileri}
+                                                                </div>
+                                                                <div class="EmptyBox5"></div>
+
+                                                                <p:dataTable id="kullaniciMalikOfDaire" reflow="true"
+                                                                             value="#{varAidat.daire.kullaniciMalik}"
+                                                                             var="varkullaniciMalik"
+                                                                             emptyMessage="#{msg.no_record_found}"
+                                                                             paginatorPosition="bottom"
+                                                                             styleClass="noheader">
+                                                                    <p:column headerText="#{lbl.ad}">
+                                                                        <h:outputText value="#{varkullaniciMalik.ad}"/>
+                                                                    </p:column>
+                                                                    <p:column headerText="#{lbl.soyad}">
+                                                                        <h:outputText
+                                                                                value="#{varkullaniciMalik.soyad}"/>
+                                                                    </p:column>
+                                                                </p:dataTable>
+
+                                                            </h:panelGroup>
+                                                        </div>
+                                                    </div>
+                                                    <div class="Container25 Responsive">
+                                                        <div class="ContainerIndent">
+                                                            <h:panelGroup>
+
+                                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <i class="icon-users orange"></i> #{lbl.sakin_bilgileri}
+                                                                </div>
+                                                                <div class="EmptyBox5"></div>
+
+                                                                <p:dataTable id="kullaniciListesiOfDaire" reflow="true"
+                                                                             value="#{varAidat.daire.kullaniciSakimList}"
+                                                                             var="varkullaniciDaire"
+                                                                             emptyMessage="#{msg.no_record_found}"
+                                                                             paginatorPosition="bottom"
+                                                                             styleClass="noheader">
+                                                                    <p:column headerText="#{lbl.ad}">
+                                                                        <h:outputText value="#{varkullaniciDaire.ad}"/>
+                                                                    </p:column>
+                                                                    <p:column headerText="#{lbl.soyad}">
+                                                                        <h:outputText
+                                                                                value="#{varkullaniciDaire.soyad}"/>
+                                                                    </p:column>
+                                                                </p:dataTable>
+
+                                                            </h:panelGroup>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </p:panel>
+
+                                        <div class="EmptyBox5"></div>
+
+                                    </p:rowExpansion>
+
+                                    <p:column>
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+
+                                            <p:menuitem id="viewButtonAidatGuncelle" value="#{lbl.ortak_guncelle}"
+                                                        icon="ui-icon-search"
+                                                        rendered="#{sessionInfo.adminMi}"
+                                                        action="#{aidatMB.guncelleme(varAidat)}">
+                                            </p:menuitem>
+
+                                            <p:menuitem id="deleteAidat" value="#{lbl.aidat_silme}"
+                                                        icon="ui-icon-trash"
+                                                        rendered="#{sessionInfo.adminMi}"
+                                                        action="#{aidatMB.delete(varAidat)}">
+                                            </p:menuitem>
+
+                                        </p:menuButton>
+                                    </p:column>
+
+
+                                </p:dataTable>
+                            </p:panel>
+                        </div>
+                    </div>
+
+                </h:form>
+            </div>
+        </div>
     </ui:define>
 
     <ui:define name="body">

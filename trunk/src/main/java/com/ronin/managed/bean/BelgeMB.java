@@ -116,8 +116,9 @@ public class BelgeMB implements Serializable {
         setDownload(new DefaultStreamedContent(input, externalContext.getMimeType(selectedDaireBelge.getBelge().getDataName()), selectedDaireBelge.getBelge().getDataName()));
     }
 
-    public void deleteBelge() {
+    public void deleteBelge(DaireBelge selectedDaireBelge) {
         try {
+            setSelectedDaireBelge(selectedDaireBelge);
             fileUploadService.belgeSil(selectedDaireBelge);
             JsfUtil.addSuccessMessage(message.getString("belge_silme_basarili"));
             getBelgeListBySorguKriteri();

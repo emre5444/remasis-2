@@ -32,4 +32,5 @@ public interface IFinansalIslemlerDao {
 
     void updateObject(Object object);
 
+    void deleteObject(Object object);
 }

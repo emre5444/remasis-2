@@ -1,230 +1,249 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
         <h:outputText value="#{lbl.menu_envanter_sorgulama}"/>
     </ui:define>
 
     <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="main_form">
 
-        <h:form id="main_form">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <p:panel>
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-briefcase orange"></i> #{lbl.menu_envanter_sorgulama}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5">
 
-            <p:panel header="#{lbl.menu_envanter_sorgulama}">
-                <h:panelGrid columns="6" cellpadding="5">
+                                    <h:outputLabel for="barkodNo" value="#{lbl.envanter_barkod}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="barkodNo" value="#{envanterMB.sorguKriteri.barkodNo}"/>
 
-                    <h:outputLabel for="barkodNo" value="#{lbl.envanter_barkod}" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="barkodNo" value="#{envanterMB.sorguKriteri.barkodNo}"/>
+                                    <h:outputLabel for="marka" value="#{lbl.envanter_marka}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="marka" value="#{envanterMB.sorguKriteri.marka}"/>
 
-                    <h:outputLabel for="marka" value="#{lbl.envanter_marka}" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="marka" value="#{envanterMB.sorguKriteri.marka}"/>
+                                    <h:outputLabel for="model" value="#{lbl.envanter_model}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="model" value="#{envanterMB.sorguKriteri.model}"/>
 
-                    <h:outputLabel for="model" value="#{lbl.envanter_model}" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="model" value="#{envanterMB.sorguKriteri.model}"/>
+                                    <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="urunAdi" value="#{envanterMB.sorguKriteri.urunAdi}"/>
 
-                    <h:outputLabel for="urunAdi" value="#{lbl.envanter_urun_adi}" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="urunAdi" value="#{envanterMB.sorguKriteri.urunAdi}"/>
+                                    <h:outputLabel for="kategori" value="#{lbl.envanter_kategori}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:selectOneMenu id="kategori" value="#{envanterMB.sorguKriteri.kategori}"
+                                                     style="font-weight:bold; color: #0b4170">
+                                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                        <f:selectItems value="#{envanterMB.kategoriList}" var="kategoriList"
+                                                       itemValue="#{kategoriList}"
+                                                       itemLabel="#{kategoriList.aciklama}"/>
+                                        <f:converter binding="#{kategoriConverter}"/>
+                                    </p:selectOneMenu>
 
-                    <h:outputLabel for="kategori" value="#{lbl.envanter_kategori}" style="font-weight:bold; color: #0b4170"/>
-                    <p:selectOneMenu id="kategori" value="#{envanterMB.sorguKriteri.kategori}"
-                                     style="font-weight:bold; color: #0b4170">
-                        <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                        <f:selectItems value="#{envanterMB.kategoriList}" var="kategoriList" itemValue="#{kategoriList}"
-                                       itemLabel="#{kategoriList.aciklama}"/>
-                        <f:converter binding="#{kategoriConverter}"/>
-                    </p:selectOneMenu>
+                                    <h:outputLabel for="baslangic_tarihi" value="#{lbl.envanter_alim_zamani_bas}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:calendar id="baslangic_tarihi"
+                                                value="#{envanterMB.sorguKriteri.baslangicIlimTarihi}"
+                                                pattern="dd/MM/yyyy" mask="true"/>
 
-                    <h:outputLabel for="baslangic_tarihi" value="#{lbl.envanter_alim_zamani_bas}"
-                                   style="font-weight:bold; color: #0b4170"/>
-                    <p:calendar id="baslangic_tarihi" value="#{envanterMB.sorguKriteri.baslangicIlimTarihi}"
-                                pattern="dd/MM/yyyy" mask="true"/>
+                                    <h:outputLabel for="bitis_tarihi" value="#{lbl.envanter_alim_zamani_bit}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:calendar id="bitis_tarihi" value="#{envanterMB.sorguKriteri.bitisIlimTarihi}"
+                                                pattern="dd/MM/yyyy"
+                                                mask="true"/>
 
-                    <h:outputLabel for="bitis_tarihi" value="#{lbl.envanter_alim_zamani_bit}" style="font-weight:bold; color: #0b4170"/>
-                    <p:calendar id="bitis_tarihi" value="#{envanterMB.sorguKriteri.bitisIlimTarihi}"
-                                pattern="dd/MM/yyyy"
-                                mask="true"/>
+                                    <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="saticiFirma" value="#{envanterMB.sorguKriteri.saticiFirma}"/>
 
-                    <h:outputLabel for="saticiFirma" value="#{lbl.envanter_satici_firma}" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="saticiFirma" value="#{envanterMB.sorguKriteri.saticiFirma}"/>
+                                    <h:outputLabel for="zimmetliPersonel" value="#{lbl.envanter_zimmetli_personel}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="zimmetliPersonel"
+                                                 value="#{envanterMB.sorguKriteri.zimmetliPersonel}"/>
 
-                    <h:outputLabel for="zimmetliPersonel" value="#{lbl.envanter_zimmetli_personel}"
-                                   style="font-weight:bold; color: #0b4170"/>
-                    <p:inputText id="zimmetliPersonel" value="#{envanterMB.sorguKriteri.zimmetliPersonel}"/>
+                                    <p:commandButton value="#{lbl.ortak_sorgula}"
+                                                     action="#{envanterMB.getEnvanterListBySorguKriteri()}"
+                                                     update=":main_form"/>
 
-                    <p:commandButton value="#{lbl.ortak_sorgula}"
-                                     action="#{envanterMB.getEnvanterListBySorguKriteri()}"
-                                     update=":main_form"/>
+                                </h:panelGrid>
 
-                </h:panelGrid>
+                            </p:panel>
 
-            </p:panel>
+                            <div class="EmptyBox10"/>
 
-            <div style="height:10px"></div>
-
-            <p:panel header="#{lbl.sorgu_sonucu}" rendered="#{not empty envanterMB.dataModel.wrappedData}">
-                <h:commandLink>
-                    <p:graphicImage value="/images/excel_kucuk.png" style="width: 20px;"/>
-                    <p:dataExporter type="xls" target="sorguSonucuTable"
-                                    fileName="envanterListesi"/>
-                </h:commandLink>
-                <h:commandLink>
-                    <p:graphicImage value="/images/pdf_kucuk.png" style="width: 20px;"/>
-                    <p:dataExporter type="pdf" target="sorguSonucuTable"
-                                    fileName="envanterListesi"/>
-                </h:commandLink>
-                <p:dataTable id="sorguSonucuTable" value="#{envanterMB.dataModel}" var="varData"
-                             paginatorPosition="bottom"
-                             paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
-                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                             rowsPerPageTemplate="5,10,15">
-
-                    <p:column sortBy="barkodNo">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_barkod}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.barkodNo}"/>
-                    </p:column>
-
-                    <p:column sortBy="kategori.aciklama">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_kategori}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.kategori.aciklama}"/>
-                    </p:column>
-
-                    <p:column sortBy="marka">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_marka}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.marka}"/>
-                    </p:column>
-
-                    <p:column sortBy="model">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_model}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.model}"/>
-                    </p:column>
-
-                    <p:column sortBy="urunAdi">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_urun_adi}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.urunAdi}"/>
-                    </p:column>
-
-                    <p:column sortBy="saticiFirma">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_satici_firma}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.saticiFirma}"/>
-                    </p:column>
-
-                    <p:column sortBy="alimiYapanPersonel">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_alimi_yapan_personel}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.alimiYapanPersonel}"/>
-                    </p:column>
-
-                    <p:column sortBy="zimmetliPersonel">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_zimmetli_personel}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.zimmetliPersonel}"/>
-                    </p:column>
-
-                    <p:column sortBy="alimTarihi">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_alim_zamani}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.alimTarihi}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column sortBy="garantiBaslangicTarihi">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_garanti_baslangic_zamani}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.garantiBaslangicTarihi}">
-                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                        </h:outputText>
-                    </p:column>
-
-                    <p:column sortBy="garantiSuresi">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_garanti_suresi}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.garantiSuresi}"/>
-                    </p:column>
-
-                    <p:column sortBy="miktar">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_miktar}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.miktar}"/>
-                    </p:column>
-
-                    <p:column sortBy="birimFiyat">
-                        <f:facet name="header">
-                            <h:outputText value="#{lbl.envanter_birim_fiyat}"/>
-                        </f:facet>
-                        <h:outputText value="#{varData.birimFiyat}"/>
-                    </p:column>
+                            <p:panel rendered="#{not empty envanterMB.dataModel.wrappedData}">
+                                <div class="Responsive Fs18 hardblue">
+                                    <i class="icon-list-alt orange"></i> #{lbl.sorgu_sonucu}
 
 
-                    <p:column style="width:10%" exportable="false">
-                        <h:panelGrid columns="3">
-                            <p:commandLink id="viewButton1" icon="ui-icon-search"
-                                           update="@([id$=showEnvanter])"
-                                           oncomplete="PF('envanterGoruntulePopup').show();"
-                                    >
-                                <p:graphicImage value="/images/show_icon.png"/>
-                                <f:setPropertyActionListener value="#{varData}"
-                                                             target="#{envanterMB.selected}"/>
-                            </p:commandLink>
+                                    <h:panelGrid columns="2" styleClass="Fright">
+                                        <h:commandLink>
+                                            <p:graphicImage id="excel" value="/images/excel_kucuk.png"/>
+                                            <p:dataExporter type="xls" target="sorguSonucuTable"
+                                                            fileName="envanterListesi"/>
+                                            <p:tooltip for="excel" value="#{lbl.type_excel}" trackMouse="true"/>
+                                        </h:commandLink>
 
-                            <p:commandLink id="guncelleData" immediate="true"
-                                           rendered="#{sessionInfo.adminMi}"
-                                           oncomplete="PF('envanterUpdatePopup').show();"
-                                           update="@([id$=updateEnvanter])"
-                                    >
-                                <p:graphicImage value="/images/update-icon.png"/>
+                                        <h:commandLink>
+                                            <p:graphicImage id="pdf" value="/images/pdf_kucuk.png"/>
+                                            <p:dataExporter type="pdf" target="sorguSonucuTable"
+                                                            fileName="envanterListesi"/>
+                                            <p:tooltip for="pdf" value="#{lbl.type_pdf}" trackMouse="true"/>
+                                        </h:commandLink>
+                                    </h:panelGrid>
+                                </div>
+                                <div class="EmptyBox5"></div>
 
-                                <f:setPropertyActionListener value="#{varData}"
-                                                             target="#{envanterMB.selected}"/>
-                            </p:commandLink>
+                                <p:dataTable id="sorguSonucuTable" value="#{envanterMB.dataModel}" var="varData"
+                                             paginatorPosition="bottom"
+                                             paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
+                                             paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                             rowsPerPageTemplate="5,10,15" reflow="true">
 
-                            <p:commandLink id="deleteData" immediate="true"
-                                           rendered="#{sessionInfo.adminMi}"
-                                           action="#{envanterMB.deleteEnvanter}"
-                                           update=":main_form"
-                                    >
-                                <p:graphicImage value="/images/delete_icon.png"/>
+                                    <p:column sortBy="barkodNo">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_barkod}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.barkodNo}"/>
+                                    </p:column>
 
-                                <f:setPropertyActionListener value="#{varData}"
-                                                             target="#{envanterMB.selected}"/>
-                                <p:confirm header="#{lbl.label_envanter_silme}"
-                                           message="#{msg.islemi_onayliyormusunuz}"/>
-                            </p:commandLink>
-                        </h:panelGrid>
-                    </p:column>
+                                    <p:column sortBy="kategori.aciklama">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_kategori}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.kategori.aciklama}"/>
+                                    </p:column>
 
-                </p:dataTable>
+                                    <p:column sortBy="marka">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_marka}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.marka}"/>
+                                    </p:column>
 
-            </p:panel>
-        </h:form>
+                                    <p:column sortBy="model">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_model}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.model}"/>
+                                    </p:column>
 
-        <ui:include src="envanterGoruntuleme.xhtml"/>
-        <ui:include src="envanterGuncelle.xhtml"/>
+                                    <p:column sortBy="urunAdi">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_urun_adi}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.urunAdi}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="saticiFirma">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_satici_firma}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.saticiFirma}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="alimiYapanPersonel">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_alimi_yapan_personel}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.alimiYapanPersonel}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="zimmetliPersonel">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_zimmetli_personel}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.zimmetliPersonel}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="alimTarihi">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_alim_zamani}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.alimTarihi}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column sortBy="garantiBaslangicTarihi">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_garanti_baslangic_zamani}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.garantiBaslangicTarihi}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+
+                                    <p:column sortBy="garantiSuresi">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_garanti_suresi}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.garantiSuresi}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="miktar">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_miktar}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.miktar}"/>
+                                    </p:column>
+
+                                    <p:column sortBy="birimFiyat">
+                                        <f:facet name="header">
+                                            <h:outputText value="#{lbl.envanter_birim_fiyat}"/>
+                                        </f:facet>
+                                        <h:outputText value="#{varData.birimFiyat}"/>
+                                    </p:column>
+
+
+                                    <p:column exportable="false">
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+
+                                            <p:menuitem id="viewButtonEnvanterGoruntule" value="#{lbl.ortak_goruntule}"
+                                                        icon="fa fa-search"
+                                                        rendered="#{sessionInfo.adminMi}"
+                                                        action="#{envanterMB.goruntule(varData)}">
+                                            </p:menuitem>
+
+                                            <p:menuitem id="viewButtonAnketGuncelle"
+                                                        value="#{lbl.ortak_guncelle}"
+                                                        rendered="#{sessionInfo.adminMi}"
+                                                        icon="fa fa-wrench"
+                                                        action="#{envanterMB.guncelle(varData)}">
+                                            </p:menuitem>
+
+                                            <p:menuitem id="viewButtonEnvanterSil" value="#{lbl.sil}"
+                                                        icon="fa fa-trash-o" immediate="true"
+                                                        rendered="#{sessionInfo.adminMi}"
+                                                        action="#{envanterMB.deleteEnvanter(varData)}"
+                                                        update="@([id$=main_form])">
+                                            </p:menuitem>
+
+                                        </p:menuButton>
+                                    </p:column>
+
+                                </p:dataTable>
+
+                            </p:panel>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
     </ui:define>
 
     <ui:define name="body">

@@ -22,9 +22,9 @@ import java.net.UnknownHostException;
 import java.util.List;
 import java.util.ResourceBundle;
 
-@ManagedBean(name = "envanterMB")
+@ManagedBean(name = "envanterIslemleriMB")
 @ViewScoped
-public class EnvanterMB implements Serializable {
+public class EnvanterIslemleriMB extends AbstractMB implements Serializable {
 
     @ManagedProperty("#{sessionInfo}")
     private SessionInfo sessionInfo;
@@ -53,26 +53,23 @@ public class EnvanterMB implements Serializable {
 
     @PostConstruct
     public void init() {
+        getFlushObjects();
         kategoriList = ortakService.getListByNamedQuery("Kategori.findAll");
     }
 
-    //page navigations
-    public String goruntule(Envanter selectedEnvanter) {
-        setSelected(selectedEnvanter);
-        storeFlashObjects();
-        return "envanterGoruntuleme.xhtml";
+    public void getFlushObjects() {
+        selected = (Envanter) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedEnvanterObject");
+        sorguKriteri = (EnvanterSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
     }
 
-    public String guncelle(Envanter selectedEnvanter) {
-        setSelected(selectedEnvanter);
+    public String geriDon() {
         storeFlashObjects();
-        return "envanterGuncelle.xhtml";
+        return getBackPage();
     }
 
     public void storeFlashObjects() {
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedEnvanterObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "envanterSorgulama.xhtml");
     }
 
     public void getEnvanterListBySorguKriteri() {

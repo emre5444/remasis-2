@@ -1,26 +1,53 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
-<h:body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
 
-    <h:form id="kategoriEkleme">
-        <p:dialog header="#{lbl.label_yeni_kategori_ekleme}" widgetVar="kategoriEklePopup" closeOnEscape="true" height="auto" width="auto">
-            <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+    <ui:define name="title">
+        <h:outputText value="#{lbl.label_yeni_kategori_ekleme}"/>
+    </ui:define>
 
-                <h:panelGrid columns="2" cellpadding="5">
-                    <h:outputLabel for="kategori_adi" value="#{lbl.label_kategori_adi} (*)" style="font-weight:bold; color: #0b4170"/>
-                    <p:inputTextarea rows="3" cols="40" value="#{kategoriMB.yeniKategori.aciklama}"
-                                 id="kategori_adi" required="true" label="#{lbl.label_kategori_adi}"/>
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="kategoriEkleme">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                    <f:facet name="footer">
-                        <p:commandButton id="rol_kaydet" value="#{lbl.kaydet}" update="@([id$=main_form]) , kategoriEkleme"  oncomplete="PF('kategoriEklePopup').hide();"
-                                         actionListener="#{kategoriMB.yeniKategoriEkleme}" icon="ui-icon-disk" />
-                    </f:facet>
-                </h:panelGrid>
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                <i class="icon-briefcase orange"></i> #{lbl.label_yeni_kategori_ekleme}
+                            </div>
 
-        </p:dialog>
+                            <div class="EmptyBox5"/>
 
-    </h:form>
-</h:body>
-</html>
+                            <h:panelGrid columns="2" cellpadding="5">
+
+                                <h:outputLabel for="kategori_adi" value="#{lbl.label_kategori_adi} (*)"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:inputTextarea rows="1" cols="40" value="#{kategoriMB.yeniKategori.aciklama}"
+                                                 id="kategori_adi" required="true" label="#{lbl.label_kategori_adi}"/>
+
+
+                                    <p:commandButton id="rol_kaydet" value="#{lbl.kaydet}"
+                                                     update="@([id$=main_form]) , kategoriEkleme"
+                                                     actionListener="#{kategoriMB.yeniKategoriEkleme}"
+                                                     styleClass="GreenButton"/>
+
+                            </h:panelGrid>
+
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

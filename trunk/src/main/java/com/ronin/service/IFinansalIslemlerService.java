@@ -31,4 +31,5 @@ public interface IFinansalIslemlerService {
 
     void updateObject(Object object);
 
+    void deleteObject(Object object);
 }
