@@ -229,19 +229,20 @@
                                     <p:panel id="pnl_aidat_listesi">
 
 
-
                                         <div class="Container100 Responsive">
                                             <div class="ContainerIndent">
 
                                                 <div class="Container100 Responsive Fs20 hardblue">
-                                                    <i class="icon-try orange"></i>  <h:outputText value="#{lbl.aidat_listesi}"
-                                                                                                   styleClass="FontBold Fs18 hardblue"></h:outputText>
+                                                    <i class="icon-try orange"></i> <h:outputText
+                                                        value="#{lbl.aidat_listesi}"
+                                                        styleClass="FontBold Fs18 hardblue"></h:outputText>
 
                                                     <p:commandLink ajax="false" styleClass="icon-file-excel Fright">
                                                         <p:dataExporter type="xls" target="daireAidatSorguSonucu"
                                                                         fileName="daire_aidat_listesi"/>
                                                     </p:commandLink>
-                                                    <p:commandLink ajax="false" styleClass="Fright icon-file-pdf" style="margin-right: 5px;">
+                                                    <p:commandLink ajax="false" styleClass="Fright icon-file-pdf"
+                                                                   style="margin-right: 5px;">
                                                         <p:dataExporter type="pdf" target="daireAidatSorguSonucu"
                                                                         fileName="daire_aidat_listesi"/>
                                                     </p:commandLink>
@@ -257,6 +258,9 @@
                                                              emptyMessage="#{msg.no_record_found}"
                                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                                              rowsPerPageTemplate="5,15,20,25">
+                                                    <p:column style="width:16px">
+                                                        <p:rowToggler/>
+                                                    </p:column>
 
                                                     <p:column sortBy="borc.dekontNo"
                                                             >
@@ -342,6 +346,114 @@
 
                                                         </p:menuButton>
                                                     </p:column>
+
+                                                    <p:rowExpansion>
+                                                        <p:panel>
+                                                            <div class="Container100 Responsive">
+                                                                <div class="ContainerIndent">
+                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                        <i class="icon-try orange"></i> #{lbl.daire_aidat_detay_bilgileri}
+                                                                    </div>
+                                                                    <h:panelGrid columns="2" cellpadding="5">
+
+                                                                        <h:outputLabel for="donem"
+                                                                                       value="#{lbl.daire_borc_detay_donem}"
+                                                                                       style="font-weight:bold; color: #0b4170"
+                                                                                       rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                                        <p:outputLabel id="donem"
+                                                                                       value="#{varBorc.borc.islemTarihi}"
+                                                                                       rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}">
+                                                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                                        </p:outputLabel>
+
+                                                                        <h:outputLabel for="toplam_borc"
+                                                                                       value="#{lbl.borc_tutari}"
+                                                                                       style="font-weight:bold; color: #0b4170"
+                                                                                       rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                                        <p:outputLabel id="toplam_borc"
+                                                                                       value="#{varBorc.borc.borc}"
+                                                                                       rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                                                                        <h:outputLabel for="aciklama"
+                                                                                       value="#{lbl.ortak_aciklama}"
+                                                                                       style="font-weight:bold; color: #0b4170"
+                                                                                       rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                                        <p:outputLabel id="aciklama"
+                                                                                       value="#{varBorc.borc.aciklama}"
+                                                                                       rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                                                                        <h:outputLabel for="odenen_borc"
+                                                                                       value="#{lbl.odenen_tutar}"
+                                                                                       style="font-weight:bold; color: #0b4170"
+                                                                                       rendered="#{not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                                        <p:outputLabel id="odenen_borc"
+                                                                                       value="#{varBorc.borc.odenenTutar}"
+                                                                                       rendered="#{ not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                                                                        <h:outputLabel for="odeme_aciklama"
+                                                                                       value="#{lbl.daire_borc_odeme_aciklama}"
+                                                                                       style="font-weight:bold; color: #0b4170"
+                                                                                       rendered="#{ not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                                        <p:outputLabel id="odeme_aciklama"
+                                                                                       value="#{varBorc.borc.odemeAciklama}"
+                                                                                       rendered="#{  not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                                                                        <h:outputLabel for="banka" value="#{lbl.banka}"
+                                                                                       style="font-weight:bold; color: #0b4170"
+                                                                                       rendered="#{ not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                                        <p:outputLabel id="banka"
+                                                                                       value="#{varBorc.borc.banka.aciklama}"
+                                                                                       rendered="#{  not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                                                                        <h:outputLabel for="odeme_tipi"
+                                                                                       value="#{lbl.odeme_tipi}"
+                                                                                       style="font-weight:bold; color: #0b4170"
+                                                                                       rendered="#{  not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                                        <p:outputLabel id="odeme_tipi"
+                                                                                       value="#{varBorc.borc.odemeTipi.aciklama}"
+                                                                                       rendered="#{  not varBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+
+                                                                    </h:panelGrid>
+                                                                </div>
+                                                            </div>
+                                                        </p:panel>
+
+                                                        <div style="height:10px"></div>
+
+                                                        <p:panel
+                                                                rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}">
+                                                            <div class="Container100 Responsive">
+                                                                <div class="ContainerIndent">
+                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                        <i class="icon-list orange"></i> #{lbl.daire_aidat_detay_listesi}
+                                                                    </div>
+                                                                    <h:panelGrid id="aidatDetayDetailPanel" columns="1"
+                                                                                 cellpadding="5">
+
+                                                                        <p:dataTable id="borcKalemListesiOfDaire"
+                                                                                     value="#{varBorc.daireBorcKalems}"
+                                                                                     var="varBorcKalem"
+                                                                                     emptyMessage="#{msg.no_record_found}"
+                                                                                     paginatorPosition="bottom"
+                                                                                     style="width:100%" rows="30">
+                                                                            <p:column
+                                                                                    headerText="#{lbl.daire_aidat_kalem}">
+                                                                                <h:outputText
+                                                                                        value="#{varBorcKalem.borcKalem.aciklama}"/>
+                                                                            </p:column>
+                                                                            <p:column
+                                                                                    headerText="#{lbl.daire_aidat_kalem_tutar}">
+                                                                                <h:outputText
+                                                                                        value="#{varBorcKalem.tutar}"/>
+                                                                            </p:column>
+                                                                        </p:dataTable>
+
+
+                                                                    </h:panelGrid>
+                                                                </div>
+                                                            </div>
+                                                        </p:panel>
+                                                    </p:rowExpansion>
 
                                                     <p:columnGroup type="footer">
                                                         <p:row>
