@@ -156,32 +156,32 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
 
     public String geriDon() {
         storeFlashObjects();
-        return getBackPage();
+        return "daireSorgula.xhtml";
     }
 
     public String arzaTalebiGiris(){
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
-        return "arizaTalebiGiris.xhtml";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "/pages/talepIslemleri/arizaTalebiGiris.xhtml";
     }
 
     public String itirazTalebiGiris(DaireBorc daireBorc){
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedBorc", daireBorc);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
-        return "aidatItirazTalebiGiris.xhtml";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "/pages/talepIslemleri/aidatItirazTalebiGiris.xhtml";
     }
 
     public String sikayetTalebiGiris(){
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
-        return "sikayetTalebiGiris.xhtml";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "/pages/talepIslemleri/sikayetTalebiGiris.xhtml";
     }
 
     public String belgeTalebiGiris(){
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
-        return "belgeTalebiGiris.xhtml";
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "/pages/talepIslemleri/belgeTalebiGiris.xhtml";
     }
 
     public void onTabChange(TabChangeEvent event) {
