@@ -101,7 +101,6 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
         <url-pattern>*.xhtml</url-pattern>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
@@ -136,6 +135,5 @@
         <param-name>primefaces.FONT_AWESOME</param-name>
         <param-value>true</param-value>
     </context-param>
-
 
 </web-app>
