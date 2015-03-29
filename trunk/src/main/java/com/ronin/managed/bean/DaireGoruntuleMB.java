@@ -184,6 +184,13 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         return "/pages/talepIslemleri/belgeTalebiGiris.xhtml";
     }
 
+    public String borcDetayGoruntuleme(DaireBorc daireBorc){
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedBorc", daireBorc);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
+        return "daireBorcKalemGoruntuleme.xhtml";
+    }
+
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getId().equals("daire_detay")) {
             getDaireBilgileriTabInfos();

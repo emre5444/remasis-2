@@ -160,7 +160,9 @@
                                                 <p:dataTable value="#{daireGoruntuleMB.kullaniciDaireDataModel}"
                                                              var="varKullanici"
                                                              emptyMessage="#{msg.no_record_found}">
-
+                                                    <p:column style="width:16px">
+                                                        <p:rowToggler/>
+                                                    </p:column>
                                                     <p:column headerText="#{lbl.ad}" sortBy="kullanici.ad">
                                                         <h:outputText value="#{varKullanici.kullanici.ad}"/>
                                                     </p:column>
@@ -176,20 +178,47 @@
                                                         <h:outputText value="#{varKullanici.kullaniciTipi.aciklama}"/>
                                                     </p:column>
 
-                                                    <p:column style="width:4%">
-                                                        <h:panelGrid columns="4">
-                                                            <p:commandButton id="viewKulaniciDetal"
-                                                                             icon="ui-icon-search"
-                                                                             update="@([id$=kullaniciDaireGoruntuleme])"
-                                                                             oncomplete="PF('kullaniciGoruntulePopup').show();"
-                                                                             immediate="true"
-                                                                    >
-                                                                <f:setPropertyActionListener value="#{varKullanici}"
-                                                                                             target="#{daireGoruntuleMB.selectedKullaniciDaire}"/>
-                                                            </p:commandButton>
+                                                    <p:rowExpansion>
+                                                        <p:panel id="rich_daireKullanici" styleClass="softGrayBack">
+                                                            <div class="Container100 Responsive Fs20 hardblue">
+                                                                <i class="icon-user-outline orange"></i> #{lbl.sakin_listesi}
+                                                            </div>
+                                                            <h:panelGrid id="showDuyuruDetailForKullanici" columns="2"
+                                                                         cellpadding="5">
+                                                                <h:outputLabel for="malik_ad" value="#{lbl.ad}"
+                                                                               style="font-weight:bold; color: #0b4170"/>
+                                                                <h:outputText
+                                                                        value="#{varKullanici.kullanici.ad}"
+                                                                        id="malik_ad"/>
 
-                                                        </h:panelGrid>
-                                                    </p:column>
+                                                                <h:outputLabel for="malik_soyad" value="#{lbl.soyad}"
+                                                                               style="font-weight:bold; color: #0b4170"/>
+                                                                <h:outputText rows="6" cols="33"
+                                                                              value="#{varKullanici.kullanici.soyad}"
+                                                                              id="malik_soyad"
+                                                                        />
+
+                                                                <h:outputLabel for="malik_kullanici_adi"
+                                                                               value="#{lbl.kullanici_adi}"
+                                                                               style="font-weight:bold; color: #0b4170"/>
+                                                                <h:outputText rows="6" cols="33"
+                                                                              value="#{varKullanici.kullanici.username}"
+                                                                              id="malik_kullanici_adi"
+                                                                        />
+
+                                                                <h:outputLabel for="malik_kullanici_tipi"
+                                                                               value="#{lbl.kullanici_tipi}"
+                                                                               style="font-weight:bold; color: #0b4170"/>
+                                                                <h:outputText rows="6" cols="33"
+                                                                              value="#{varKullanici.kullaniciTipi.aciklama}"
+                                                                              id="malik_kullanici_tipi"
+                                                                        />
+
+                                                            </h:panelGrid>
+                                                        </p:panel>
+
+                                                    </p:rowExpansion>
+
                                                 </p:dataTable>
                                             </div>
                                         </div>
@@ -224,14 +253,14 @@
                                                              rowsPerPageTemplate="5,15,20,25">
 
                                                     <p:column sortBy="borc.dekontNo"
-                                                              style="width:10%">
+                                                            >
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.borc_dekont_no}"/>
                                                         </f:facet>
                                                         <h:outputText value="#{varBorc.borc.dekontNo}"/>
                                                     </p:column>
                                                     <p:column sortBy="borc.islemTarihi"
-                                                              style="width:9%">
+                                                            >
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.aidat_donemi}"/>
                                                         </f:facet>
@@ -240,7 +269,7 @@
                                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                                         </h:outputText>
                                                     </p:column>
-                                                    <p:column sortBy="borc.odemeVadesi" style="width:9%">
+                                                    <p:column sortBy="borc.odemeVadesi">
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.odeme_tarihi}"/>
                                                         </f:facet>
@@ -248,7 +277,7 @@
                                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                                         </h:outputText>
                                                     </p:column>
-                                                    <p:column sortBy="borc.sonOdemeTarihi" style="width:9%">
+                                                    <p:column sortBy="borc.sonOdemeTarihi">
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.son_odeme_tarihi}"/>
                                                         </f:facet>
@@ -257,7 +286,7 @@
                                                         </h:outputText>
                                                     </p:column>
                                                     <p:column sortBy="borc.borc"
-                                                              style="width:5%">
+                                                            >
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.borc_tutari}"/>
                                                         </f:facet>
@@ -265,7 +294,7 @@
                                                                       style="text-align:right;font-weight:bold; color:#FF4000;"/>
                                                     </p:column>
                                                     <p:column sortBy="borc.odenenTutar"
-                                                              style="width:5%">
+                                                            >
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.odenen_tutar}"/>
                                                         </f:facet>
@@ -274,7 +303,7 @@
                                                     </p:column>
 
                                                     <p:column sortBy="borc.bakiye"
-                                                              style="width:5%">
+                                                            >
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.kalan_bakiye}"/>
                                                         </f:facet>
@@ -283,7 +312,7 @@
                                                     </p:column>
 
                                                     <p:column sortBy="borc.aciklama"
-                                                              style="width:25%">
+                                                            >
                                                         <f:facet name="header">
                                                             <h:outputText value="#{lbl.ortak_aciklama}"/>
                                                         </f:facet>
@@ -296,6 +325,7 @@
                                                             <p:menuitem id="aidatDetayGoruntule"
                                                                         value="#{lbl.label_aidat_detayi}"
                                                                         icon="ui-icon-search"
+                                                                        action="#{daireGoruntuleMB.borcDetayGoruntuleme(varBorc)}"
                                                                     >
                                                             </p:menuitem>
 
@@ -306,23 +336,6 @@
 
                                                         </p:menuButton>
                                                     </p:column>
-
-                                                    <p:column style="width:8%" exportable="false">
-                                                        <h:panelGrid columns="4">
-                                                            <p:commandButton id="viewBorcKalemDetail"
-                                                                             icon="ui-icon-search"
-                                                                             update="@([id$=aidatDetayGoruntuleme])"
-                                                                             oncomplete="PF('aidatDetayGoruntulePopup').show();"
-                                                                             immediate="true"
-                                                                    >
-                                                                <f:setPropertyActionListener value="#{varBorc}"
-                                                                                             target="#{daireGoruntuleMB.selectedBorc}"/>
-                                                            </p:commandButton>
-
-
-                                                        </h:panelGrid>
-                                                    </p:column>
-
 
                                                     <p:columnGroup type="footer">
                                                         <p:row>
@@ -710,8 +723,6 @@
 
         <ui:include src="duyuruGoruntuleme.xhtml"/>
         <ui:include src="duyuruEkleme.xhtml"/>
-        <ui:include src="kullaniciDaireGoruntuleme.xhtml"/>
-        <ui:include src="daireBorcKalemGoruntuleme.xhtml"/>
         <ui:include src="daireBelgeEkleme.xhtml"/>
 
     </ui:define>
