@@ -4,27 +4,22 @@
  */
 package com.ronin.common.service;
 
-import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.model.KullaniciRol;
-import com.ronin.common.model.RolYetki;
-
-import java.util.*;
-import javax.faces.context.FacesContext;
-
-import com.ronin.model.constant.LogTipi;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.log4testng.Logger;
+
+import javax.faces.context.FacesContext;
+import java.util.*;
 
 /**
  * @author esimsek
@@ -77,13 +72,13 @@ public class KullaniciDetayService implements UserDetailsService {
             boolean credentialsNonExpired = true;
             boolean accountNonLocked = true;
 
-            return new User(kullanici.getUsername(),
+            return new CustomUserDetails(kullanici.getUsername(),
                     kullanici.getPassword().toLowerCase(),
                     enabled,
                     accountNonExpired,
                     credentialsNonExpired,
                     accountNonLocked,
-                    getAuthorities(kullanici));
+                    getAuthorities(kullanici), kullanici.getSirketList());
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }

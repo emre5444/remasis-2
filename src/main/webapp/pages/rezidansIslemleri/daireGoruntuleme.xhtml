@@ -89,12 +89,12 @@
 
                                 <div class="Fs25 Fright MarTop10 leaden Wid70">#{lbl.lbl_finans_durumu}</div>
                                 <div class="Fs18 Fright leaden Wid70">#{lbl.lbl_bakiye_bilgisi}
-                                    <h:outputText value="#{daireGoruntuleMB.getBorcTutariForGenel()}"
+                                    <h:outputText value="#{-daireGoruntuleMB.getBorcTutariForGenel()}"
                                                   style="font-weight:bold; color: red;"
                                                   rendered="#{daireGoruntuleMB.getBorcTutariForGenel() gt 0.0}">
                                         <f:convertNumber pattern="#,###,##0.00"/>
                                     </h:outputText>
-                                    <h:outputText value="#{-daireGoruntuleMB.getBorcTutariForGenel()}"
+                                    <h:outputText value="#{daireGoruntuleMB.getBorcTutariForGenel()}"
                                                   style="font-weight:bold; color: green;"
                                                   rendered="#{daireGoruntuleMB.getBorcTutariForGenel() lt 0.0}">
                                         <f:convertNumber pattern="#,###,##0.00"/>
