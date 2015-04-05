@@ -12,6 +12,9 @@ import com.ronin.model.constant.Durum;
 import com.ronin.model.constant.KullaniciTipi;
 import com.ronin.model.kriter.KullaniciSorguKriteri;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -33,6 +36,10 @@ public class KullaniciService implements IKullaniciService {
 
     @Autowired
     IRolDao rolDao;
+
+    @Autowired
+    @Qualifier("sessionRegistry")
+    private SessionRegistry sessionRegistry;
 
     @Transactional(readOnly = false)
     public void addKullanici(Kullanici user) {
@@ -177,6 +184,21 @@ public class KullaniciService implements IKullaniciService {
         kullaniciDAO.sifreHatirlatmaIstekGonder(sifreHatirlatma);
     }
 
+    public int getActiveUsersCount(SessionInfo sessionInfo){
+        List<Object> principals = sessionRegistry.getAllPrincipals();
+
+        List<String> usersNamesList = new ArrayList<String>();
+
+        for (Object principal: principals) {
+            if (principal instanceof CustomUserDetails) {
+                if(!((CustomUserDetails) principal).getSirketList().isEmpty() &&
+                        ((CustomUserDetails) principal).getSirketList().contains(sessionInfo.getSirket()))
+                usersNamesList.add(((CustomUserDetails) principal).getUsername());
+            }
+        }
+
+        return usersNamesList.size();
+    }
 
     public IRolDao getRolDao() {
         return rolDao;
@@ -184,5 +206,13 @@ public class KullaniciService implements IKullaniciService {
 
     public void setRolDao(IRolDao rolDao) {
         this.rolDao = rolDao;
+    }
+
+    public SessionRegistry getSessionRegistry() {
+        return sessionRegistry;
+    }
+
+    public void setSessionRegistry(SessionRegistry sessionRegistry) {
+        this.sessionRegistry = sessionRegistry;
     }
 }

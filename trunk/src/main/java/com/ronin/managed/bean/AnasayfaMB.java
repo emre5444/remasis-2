@@ -122,6 +122,8 @@ public class AnasayfaMB implements Serializable {
 
     private boolean openDialog;
 
+    private int onlineVisitors;
+
     //loading booleans
 
     boolean duyuruLoaded = false;
@@ -215,8 +217,8 @@ public class AnasayfaMB implements Serializable {
         borcAlacakViewBeanList = finansalIslemlerService.getBorcAlacakDurumu(sessionInfo, null);
         for (BorcAlacakViewBean bav : borcAlacakViewBeanList) {
             if (!sessionInfo.isAdminMi()) {
-                pieModel1.set(bav.getDaire().getDaireKodu() + " " + (bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")), bav.getTutar());
-                bav.setAciklama(bav.getDaire().getDaireKodu() + " " + (bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")));
+                pieModel1.set((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")), bav.getTutar());
+                bav.setAciklama((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")));
             } else {
                 pieModel1.set((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")), bav.getTutar());
                 bav.setAciklama((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")));
@@ -366,6 +368,7 @@ public class AnasayfaMB implements Serializable {
     public void prepareDummyLoadObjects() {
         belgeTipiList = ortakService.getListByNamedQuery("BelgeTipi.findAll");
         anketAktifPasifList = ortakService.getListByNamedQuery("EvetHayir.findAll");
+        onlineVisitors = kullaniciService.getActiveUsersCount(sessionInfo);
         duyuruLoaded = false;
         ilanLoaded = false;
         belgeLoaded = false;
@@ -840,5 +843,13 @@ public class AnasayfaMB implements Serializable {
 
     public void setOrtakService(IOrtakService ortakService) {
         this.ortakService = ortakService;
+    }
+
+    public int getOnlineVisitors() {
+        return onlineVisitors;
+    }
+
+    public void setOnlineVisitors(int onlineVisitors) {
+        this.onlineVisitors = onlineVisitors;
     }
 }

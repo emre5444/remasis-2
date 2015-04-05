@@ -103,7 +103,7 @@
                                 <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">Today's Visits<br/><span
                                         class="Fs24 red">2.280</span></div>
                                 <div class="Fs12 Fright leaden Wid100 TexAlCenter">Online Visitors<br/><span
-                                        class="Fs24 hardblue">134</span></div>
+                                        class="Fs24 hardblue">#{anasayfaMB.onlineVisitors}</span></div>
                                 <div class="EmptyBox10"></div>
                                 <p:separator styleClass="Wid100"></p:separator>
                                 <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i
@@ -126,12 +126,12 @@
 
                                     <div class="Fs24 Fright MarTop10 leaden Wid70">#{lbl.lbl_finans_durumu}</div>
                                     <div class="Fs18 Fright leaden Wid70">#{lbl.lbl_bakiye_bilgisi}
-                                        <h:outputText value="#{anasayfaMB.getBorcTutariForGenel()}"
+                                        <h:outputText value="#{-anasayfaMB.getBorcTutariForGenel()}"
                                                       style="font-weight:bold; color: red;"
                                                       rendered="#{anasayfaMB.getBorcTutariForGenel() gt 0.0}">
                                             <f:convertNumber pattern="#,###,##0.00"/>
                                         </h:outputText>
-                                        <h:outputText value="#{-anasayfaMB.getBorcTutariForGenel()}"
+                                        <h:outputText value="#{anasayfaMB.getBorcTutariForGenel()}"
                                                       style="font-weight:bold; color: green;"
                                                       rendered="#{anasayfaMB.getBorcTutariForGenel() lt 0.0}">
                                             <f:convertNumber pattern="#,###,##0.00"/>

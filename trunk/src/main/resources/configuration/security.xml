@@ -49,7 +49,9 @@
           <logout invalidate-session="true" logout-success-url="/loginPage.jsf"
                   logout-url="/logout" delete-cookies="JSESSIONID"/>
 
-        <session-management invalid-session-url="/loginPage.jsf"/>
+        <session-management invalid-session-url="/loginPage.jsf">
+            <concurrency-control max-sessions="10" session-registry-alias="sessionRegistry"/>
+        </session-management>
 
           <!-- <custom-filter ref="captchaCaptureFilter" before="FORM_LOGIN_FILTER"/>
       <custom-filter ref="captchaVerifierFilter" after="FORM_LOGIN_FILTER"/>  -->

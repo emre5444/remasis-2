@@ -349,7 +349,7 @@
                                             </p:menuitem>
 
                                             <p:menuitem id="deleteAidat" value="#{lbl.aidat_silme}"
-                                                        icon="ui-icon-trash"
+                                                        icon="ui-icon-trash" update="@([id$=sorguSonucuPanel])"
                                                         rendered="#{sessionInfo.adminMi}"
                                                         action="#{aidatMB.delete(varAidat)}">
                                             </p:menuitem>

@@ -153,13 +153,16 @@ public class FinansalIslemlerDao implements IFinansalIslemlerDao {
                     sql = "from DaireBorc db " +
                             "join fetch db.daire d " +
                             "join fetch d.blok b " +
+                            "join fetch db.borc bb " +
                             "where d.id = ? " +
-                            "and b.sirket.id = ? ";
+                            "and b.sirket.id = ? " +
+                            "and bb.durum = ?";
 
                     list = getSessionFactory().getCurrentSession()
                             .createQuery(sql)
                             .setParameter(0, kd.getDaire().getId())
                             .setParameter(1, sessionInfo.getSirket().getId())
+                            .setParameter(2, Durum.getAktifObject())
                             .list();
                 }
 
@@ -169,12 +172,12 @@ public class FinansalIslemlerDao implements IFinansalIslemlerDao {
                         alacak += db.getBorc().getOdenenTutar();
                     }
                 }
-                Double toplam = borc + alacak;
-                Double borcRate = (borc / toplam) * 100;
-                Double alacakRate = (alacak / toplam) * 100;
-                borcAlacakList.add(new BorcAlacakViewBean(kd.getDaire(), new BorcTipi(BorcTipi.ENUM.BORC), borc, borcRate));
-                borcAlacakList.add(new BorcAlacakViewBean(kd.getDaire(), new BorcTipi(BorcTipi.ENUM.ALACAK), alacak, alacakRate));
             }
+            Double toplam = borc + alacak;
+            Double borcRate = (borc / toplam) * 100;
+            Double alacakRate = (alacak / toplam) * 100;
+            borcAlacakList.add(new BorcAlacakViewBean(new BorcTipi(BorcTipi.ENUM.BORC), borc, borcRate));
+            borcAlacakList.add(new BorcAlacakViewBean(new BorcTipi(BorcTipi.ENUM.ALACAK), alacak, alacakRate));
         }
         return borcAlacakList;
     }

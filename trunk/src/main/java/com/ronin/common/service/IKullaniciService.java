@@ -48,4 +48,6 @@ public interface IKullaniciService {
     public void addKullaniciSirket(KullaniciSirket kullaniciSirket);
 
     public void sifreHatirlatmaIstekGonder(SifreHatirlatma sifreHatirlatma);
+
+    public int getActiveUsersCount(SessionInfo sessionInfo);
 }
