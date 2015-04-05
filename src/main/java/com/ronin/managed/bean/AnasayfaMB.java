@@ -211,7 +211,7 @@ public class AnasayfaMB implements Serializable {
     }
 
     private void createPieModel1() {
-        pieModel1 = new PieChartModelHelper();
+        pieModel1 = new PieChartModelHelper(false);
         borcAlacakViewBeanList = finansalIslemlerService.getBorcAlacakDurumu(sessionInfo, null);
         for (BorcAlacakViewBean bav : borcAlacakViewBeanList) {
             if (!sessionInfo.isAdminMi()) {
@@ -292,6 +292,43 @@ public class AnasayfaMB implements Serializable {
             JsfUtil.addSuccessMessage("error reading file " + e);
         }
 
+    }
+
+    public String navigateToBelgeEkle() {
+        storeFlashObjects();
+        return "pages/sitePaylasimIslemleri/belgeEkleme.xhtml";
+    }
+
+    public String navigateToDuyuruEkle() {
+        storeFlashObjects();
+        return "pages/sitePaylasimIslemleri/duyuruEkleme.xhtml";
+    }
+
+    public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/dashboard.xhtml");
+    }
+
+    public String duyuruGoruntule(Duyuru selected) {
+        setSelected(selected);
+        storeFlashObjectsForDuyuru();
+        return "pages/sitePaylasimIslemleri/duyuruGoruntuleme.xhtml";
+    }
+
+    public void storeFlashObjectsForDuyuru() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDuyuruObject", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/dashboard.xhtml");
+    }
+
+    //page navigations
+    public String anketGoruntule(Anket selectedAnket) {
+        setSelectedAnket(selectedAnket);
+        storeFlashObjectsForAnket();
+        return "pages/sitePaylasimIslemleri/anketOyKullanma.xhtml";
+    }
+
+    public void storeFlashObjectsForAnket() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedAnketObject", selectedAnket);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/dashboard.xhtml");
     }
 
     public void clearBelgeYuklemeObject() {
@@ -457,10 +494,6 @@ public class AnasayfaMB implements Serializable {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('iletisimBilgisiEklePopup').hide()");
         JsfUtil.addSuccessMessage(message.getString("iletisim_ekleme_basarili"));
-    }
-
-    public String duyuruGoruntule() {
-        return "duyuruGoruntule";
     }
 
     public String doubleFormatter(Double deger) {

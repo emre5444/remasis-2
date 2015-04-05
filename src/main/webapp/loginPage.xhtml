@@ -47,57 +47,62 @@
                 </div>
                 <div class="Container50 TexAlCenter Animated05 BoxSizeBorder TabBtn right" role="2">
                     <div class="Container80 Fnone MarAuto FontBold"><i
-                            class="icon-key-1"></i> #{lbl.label_sifremi_unutdum} </div>
+                            class="icon-key-1"></i> #{lbl.label_sifremi_unuttum} </div>
                 </div>
 
-                <div class="Container90 Fnone MarAuto TexAlCenter TabContent" id="TAB1">
-                    <h:form
-                            id="loginForm"
-                            prependId="false">
+                <h:form id="loginForm"
+                        prependId="false">
+
+                    <div class="Container90 Fnone MarAuto TexAlCenter TabContent" id="TAB1">
+
                         <div class="EmptyBox30"></div>
-                        <p:messages id="hataliDenemeMsg" closable="true" showIcon="false" globalOnly="true"/>
-                        <p:messages id="hataliDenemeMsgU" closable="true" showIcon="false" for="j_username"/>
-                        <p:messages id="hataliDenemeMsgP" closable="true" showIcon="false" for="j_password"/>
+                        <p:messages id="hataliDenemeMsg" closable="true" showIcon="false"/>
+
                         <p:inputText
-                                id="j_username"
+                                id="j_username" label="#{lbl.kullanici_adi}"
                                 required="true" styleClass="Container80 Fnone MarAuto Fs18"
-                                placeholder="#{lbl.kullanici_adi}"
-                                requiredMessage="#{msg.login_kullanciAdi_required}">
+                                placeholder="#{lbl.kullanici_adi}">
                         </p:inputText>
 
                         <div class="EmptyBox10"></div>
                         <p:password
-                                id="j_password"
+                                id="j_password" label="#{lbl.sifre}"
                                 required="true" styleClass="Container80 Fnone MarAuto Fs18" feedback="false"
-                                placeholder="#{lbl.sifre}"
-                                requiredMessage="#{msg.login_sifre_required}">
+                                placeholder="#{lbl.sifre}">
                         </p:password>
 
                         <div class="EmptyBox10"></div>
 
                         <div class="EmptyBox30"></div>
                         <p:commandButton
-                                id="login"
+                                id="login" process="@form" ajax="false"
                                 action="#{loginMB.doLogin}"
                                 value="#{lbl.label_giris}" styleClass="Fs16"
-                                update="hataliDenemeMsg" ajax="false"/>
+                                update=":hataliDenemeMsg"/>
 
                         <div class="EmptyBox50"></div>
-                    </h:form>
-                </div>
+                    </div>
+                </h:form>
 
-                <div class="Container90 Fnone MarAuto DispNone TexAlCenter TabContent" id="TAB2">
-                    <h:form id="sifremiUnuttumForm" prependId="false">
-                        <div class="EmptyBox50"></div>
-                        <p:messages id="sifreHatirlatMsg" closable="true" showIcon="false" for="sifreUnuttumEmail"/>
-                        <p:inputText id="sifreUnuttumEmail" required="true" value="#{loginMB.email}" placeholder="#{lbl.label_mail_adres_gir}" requiredMessage="#{msg.login_email_required}"
+                <h:form id="sifreForm"
+                        prependId="false">
+                    <div class="Container90 Fnone MarAuto DispNone TexAlCenter TabContent" id="TAB2">
+
+                        <div class="EmptyBox30"></div>
+                        <p:messages id="hataliDenemeMsgS" closable="true" showIcon="false"/>
+                        <p:inputText id="sifreUnuttumEmail" required="true"
+                                     value="#{loginMB.email}" label="#{lbl.label_email}"
+                                     placeholder="#{lbl.label_mail_adres_gir}"
                                      styleClass="Container80 Fnone MarAuto Fs18"/>
 
                         <div class="EmptyBox20"></div>
-                        <p:commandButton styleClass="Fs16" update="sifreHatirlatMsg"  value="#{lbl.label_btn_gonder}" actionListener="#{loginMB.sifreHatirlatmaIstekGonder()}"/>
+                        <p:commandButton styleClass="Fs16" update=":hataliDenemeMsgS"
+                                         value="#{lbl.label_btn_gonder}" process="@form"
+                                         actionListener="#{loginMB.sifreHatirlatmaIstekGonder()}"/>
+
                         <div class="EmptyBox50"></div>
-                    </h:form>
-                </div>
+                    </div>
+                </h:form>
             </div>
         </div>
         <!-- LOGIN BOX COVER END -->

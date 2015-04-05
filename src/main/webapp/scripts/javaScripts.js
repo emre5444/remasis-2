@@ -75,3 +75,30 @@ function chartJS() {
         location: 'e'
     };
 }
+
+function chartJSWithoutDetay() {
+    this.cfg.seriesColors = ['#dae8ef','#27aae1','#33ccff','#9fadb5'];
+    this.cfg.grid = {
+        drawBorder: false,
+        drawGridlines: false,
+        background: '#ffffff',
+        shadow: false,
+        borderWidth: 0
+    };
+    this.cfg.seriesDefaults = {
+        renderer: $.jqplot.PieRenderer,
+        shadow: false,
+        rendererOptions: {
+            startAngle: 180,
+            sliceMargin: 3,
+            showDataLabels: true
+        }
+    };
+    this.cfg.legend = {
+        show: false,
+        rendererOptions: {
+            numberColumns: 1
+        },
+        location: 'w'
+    };
+}
