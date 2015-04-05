@@ -10,4 +10,8 @@ public class PieChartModelHelper extends PieChartModel {
     public PieChartModelHelper() {
         this.setExtender("chartJS");
     }
+
+    public PieChartModelHelper(Boolean detayOlsunMu) {
+        this.setExtender("chartJSWithoutDetay");
+    }
 }
