@@ -482,8 +482,19 @@
                                             <div class="ContainerIndent">
                                                 <div class="Container100 Responsive Fs20 hardblue">
                                                     <i class="icon-doc orange"></i> #{lbl.label_belge_list}
-                                                </div>
 
+                                                    <p:menuButton value="#{lbl.label_islemler}"
+                                                                  styleClass="Fright GreenButton">
+                                                        <p:menuitem id="belgeEkleme"
+                                                                    value="#{lbl.label_belge_ekle}"
+                                                                    icon="ui-icon-disk"
+                                                                    action="#{daireGoruntuleMB.navigateToBelgeEkle()}"
+                                                                >
+                                                        </p:menuitem>
+
+                                                    </p:menuButton>
+                                                </div>
+                                                <div class="EmptyBox5"></div>
                                                 <p:dataTable value="#{daireGoruntuleMB.belgeDataModel}"
                                                              var="varDaireBelge"
                                                              paginatorPosition="bottom"
@@ -528,31 +539,22 @@
                                                               style="width:20%">
                                                         <h:outputText value="#{varDaireBelge.belge.aciklama}"/>
                                                     </p:column>
-                                                    <p:column style="width:4%">
-                                                        <h:panelGrid columns="4">
-                                                            <p:commandLink ajax="false" update=":main_form"
-                                                                           id="downloadLink"
-                                                                    >
-                                                                <p:graphicImage value="/images/download_icon.png"/>
-                                                                <f:setPropertyActionListener value="#{varDaireBelge}"
-                                                                                             target="#{daireGoruntuleMB.selectedDaireBelge}"/>
-                                                                <p:fileDownload value="#{daireGoruntuleMB.download}"/>
-                                                            </p:commandLink>
+                                                    <p:column style="width:10%">
+                                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
+                                                            <p:menuitem id="downloadLink" value="#{lbl.indir}"
+                                                                        icon="fa fa-thumbs-o-up" ajax="false">
+                                                                <p:fileDownload value="#{daireGoruntuleMB.download(varDaireBelge)}"/>
+                                                            </p:menuitem>
 
-
-                                                            <p:commandButton id="deleteBelge1" immediate="true"
-                                                                             icon="ui-icon-trash"
-                                                                             action="#{daireGoruntuleMB.deleteBelge}"
-                                                                             update="@([id$=pnl_belgeler])"
-                                                                    >
-
-                                                                <f:setPropertyActionListener value="#{varDaireBelge}"
-                                                                                             target="#{daireGoruntuleMB.selectedDaireBelge}"/>
-                                                                <p:confirm header="#{lbl.label_belge_silme}"
-                                                                           message="#{msg.islemi_onayliyormusunuz}"/>
-                                                            </p:commandButton>
-                                                        </h:panelGrid>
+                                                            <p:menuitem id="deleteBelge1" value="#{lbl.sil}"
+                                                                        icon="fa fa-trash-o" immediate="true"
+                                                                        rendered="#{sessionInfo.adminMi}"
+                                                                        action="#{daireGoruntuleMB.deleteBelge(varDaireBelge)}"
+                                                                        update="@([id$=pnl_belgeler])">
+                                                            </p:menuitem>
+                                                        </p:menuButton>
                                                     </p:column>
+
                                                     <f:facet name="footer">
                                                         <p:commandButton id="yeniBelgeEkleme"
                                                                          value="#{lbl.label_belge_ekle}"
@@ -841,8 +843,6 @@
 
         <ui:include src="duyuruGoruntuleme.xhtml"/>
         <ui:include src="duyuruEkleme.xhtml"/>
-        <ui:include src="daireBelgeEkleme.xhtml"/>
-
     </ui:define>
 
     <ui:define name="body">

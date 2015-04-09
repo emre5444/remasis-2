@@ -4,6 +4,7 @@ import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.DaireBelgeDataModel;
+import com.ronin.model.Daire;
 import com.ronin.model.DaireBelge;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.Belge;
@@ -52,6 +53,7 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
     private DaireBelge selected;
 
     private DaireBelgeDataModel dataModel;
+    private Daire selectedDaire;
 
     //combolar
     private List<IAbstractEntity> belgeTipiList;
@@ -73,6 +75,7 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
 
     public void getFlushObjects() {
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
+        selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaire");
     }
 
     public void getBelgeListBySorguKriteri() {
@@ -135,7 +138,11 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
         }
         try {
             UploadedFile uploadedFile = event.getFile();
-            fileUploadService.belgeEkle(sessionInfo, uploadedFile, yeniBelge);
+            if (selectedDaire != null) {
+                fileUploadService.daireBelgeEkle(sessionInfo, selectedDaire, uploadedFile, yeniBelge);
+            } else {
+                fileUploadService.belgeEkle(sessionInfo, uploadedFile, yeniBelge);
+            }
             JsfUtil.addSuccessMessage(message.getString("belge_ekleme_basarili"));
         } catch (Exception e) {
             JsfUtil.addSuccessMessage("error reading file " + e);
@@ -143,7 +150,13 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
     }
 
     public String geriDon() {
+        storeFlashObjects();
         return getBackPage();
+    }
+
+    public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selectedDaire);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
     }
 
     public boolean isSkip() {
@@ -256,5 +269,13 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
 
     public void setBelgeTipiList(List<IAbstractEntity> belgeTipiList) {
         this.belgeTipiList = belgeTipiList;
+    }
+
+    public Daire getSelectedDaire() {
+        return selectedDaire;
+    }
+
+    public void setSelectedDaire(Daire selectedDaire) {
+        this.selectedDaire = selectedDaire;
     }
 }
