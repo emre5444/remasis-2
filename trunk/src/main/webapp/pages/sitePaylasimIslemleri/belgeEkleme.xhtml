@@ -36,6 +36,9 @@
                                             <f:converter binding="#{belgeTipiConverter}"/>
                                         </p:selectOneMenu>
 
+                                        <h:outputText value="#{lbl.label_belge_adi} (*)"/>
+                                        <p:inputText value="#{belgeIslemleriMB.yeniBelge.dataName}" size="100" required="true" label="#{lbl.label_belge_adi}"/>
+
                                         <h:outputText value="#{lbl.ortak_aciklama}"/>
                                         <p:inputTextarea value="#{belgeIslemleriMB.yeniBelge.aciklama}" cols="100" rows="7"
                                                          label="#{lbl.ortak_aciklama}"/>

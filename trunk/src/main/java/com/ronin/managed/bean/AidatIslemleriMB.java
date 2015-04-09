@@ -181,6 +181,7 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
     }
 
     public void getFlushObjects() {
+        selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaire");
         selected = (DaireBorc) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireBorcObject");
         sorguKriteri = (AidatSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
@@ -192,6 +193,7 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
     }
 
     public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selectedDaire);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
     }
 

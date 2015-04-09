@@ -185,10 +185,16 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     }
 
     public String borcDetayGoruntuleme(DaireBorc daireBorc){
-        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedBorc", daireBorc);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireBorcObject", daireBorc);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
         return "daireBorcKalemGoruntuleme.xhtml";
+    }
+
+    public String navigateToBelgeEkle() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "pages/sitePaylasimIslemleri/belgeEkleme.xhtml";
     }
 
     public void onTabChange(TabChangeEvent event) {
@@ -289,7 +295,8 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     }
 
     //belge islemleri
-    public DefaultStreamedContent getDownload() {
+    public DefaultStreamedContent getDownload(DaireBelge daireBelge) {
+        setSelectedDaireBelge(daireBelge);
         try {
             InputStream input = selectedDaireBelge.getBelge().getContent().getBinaryStream();
             ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -326,7 +333,8 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
 
     }
 
-    public void deleteBelge() {
+    public void deleteBelge(DaireBelge daireBelge) {
+        setSelectedDaireBelge(daireBelge);
         try {
             fileUploadService.belgeSil(selectedDaireBelge);
             JsfUtil.addSuccessMessage(message.getString("belge_silme_basarili"));

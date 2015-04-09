@@ -26,54 +26,54 @@
 
                                     <h:outputLabel for="donem" value="#{lbl.daire_borc_detay_donem}"
                                                    style="font-weight:bold; color: #0b4170"
-                                                   rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   rendered="#{aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
                                     <p:outputLabel id="donem"
-                                                   value="#{daireGoruntuleMB.selectedBorc.borc.islemTarihi}"
-                                                   rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}">
+                                                   value="#{aidatIslemleriMB.selected.borc.islemTarihi}"
+                                                   rendered="#{aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}">
                                         <f:convertDateTime pattern="dd/MM/yyyy"/>
                                     </p:outputLabel>
 
                                     <h:outputLabel for="toplam_borc" value="#{lbl.borc_tutari}"
                                                    style="font-weight:bold; color: #0b4170"
-                                                   rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   rendered="#{aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
                                     <p:outputLabel id="toplam_borc"
-                                                   value="#{daireGoruntuleMB.selectedBorc.borc.borc}"
-                                                   rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   value="#{aidatIslemleriMB.selected.borc.borc}"
+                                                   rendered="#{aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
 
                                     <h:outputLabel for="aciklama" value="#{lbl.ortak_aciklama}"
                                                    style="font-weight:bold; color: #0b4170"
-                                                   rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   rendered="#{aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
                                     <p:outputLabel id="aciklama"
-                                                   value="#{daireGoruntuleMB.selectedBorc.borc.aciklama}"
-                                                   rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   value="#{aidatIslemleriMB.selected.borc.aciklama}"
+                                                   rendered="#{aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
 
                                     <h:outputLabel for="odenen_borc" value="#{lbl.odenen_tutar}"
                                                    style="font-weight:bold; color: #0b4170"
-                                                   rendered="#{not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   rendered="#{not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
                                     <p:outputLabel id="odenen_borc"
-                                                   value="#{daireGoruntuleMB.selectedBorc.borc.odenenTutar}"
-                                                   rendered="#{ not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   value="#{aidatIslemleriMB.selected.borc.odenenTutar}"
+                                                   rendered="#{ not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
 
                                     <h:outputLabel for="odeme_aciklama" value="#{lbl.daire_borc_odeme_aciklama}"
                                                    style="font-weight:bold; color: #0b4170"
-                                                   rendered="#{ not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   rendered="#{ not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
                                     <p:outputLabel id="odeme_aciklama"
-                                                   value="#{daireGoruntuleMB.selectedBorc.borc.odemeAciklama}"
-                                                   rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   value="#{aidatIslemleriMB.selected.borc.odemeAciklama}"
+                                                   rendered="#{  not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
 
                                     <h:outputLabel for="banka" value="#{lbl.banka}"
                                                    style="font-weight:bold; color: #0b4170"
-                                                   rendered="#{ not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   rendered="#{ not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
                                     <p:outputLabel id="banka"
-                                                   value="#{daireGoruntuleMB.selectedBorc.borc.banka.aciklama}"
-                                                   rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   value="#{aidatIslemleriMB.selected.borc.banka.aciklama}"
+                                                   rendered="#{  not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
 
                                     <h:outputLabel for="odeme_tipi" value="#{lbl.odeme_tipi}"
                                                    style="font-weight:bold; color: #0b4170"
-                                                   rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   rendered="#{  not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
                                     <p:outputLabel id="odeme_tipi"
-                                                   value="#{daireGoruntuleMB.selectedBorc.borc.odemeTipi.aciklama}"
-                                                   rendered="#{  not daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}"/>
+                                                   value="#{aidatIslemleriMB.selected.borc.odemeTipi.aciklama}"
+                                                   rendered="#{  not aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}"/>
 
                                 </h:panelGrid>
                             </div>
@@ -82,7 +82,7 @@
 
                     <div style="height:10px"></div>
 
-                    <p:panel rendered="#{daireGoruntuleMB.selectedBorc.borc.islemTipi.isBorcDekontuMu()}">
+                    <p:panel rendered="#{aidatIslemleriMB.selected.borc.islemTipi.isBorcDekontuMu()}">
                         <div class="Container100 Responsive">
                             <div class="ContainerIndent">
                                 <div class="Container100 Responsive Fs20 hardblue">
@@ -91,7 +91,7 @@
                                 <h:panelGrid id="aidatDetayDetailPanel" columns="1" cellpadding="5">
 
                                     <p:dataTable id="borcKalemListesiOfDaire"
-                                                 value="#{daireGoruntuleMB.selectedBorc.daireBorcKalems}"
+                                                 value="#{aidatIslemleriMB.selected.daireBorcKalems}"
                                                  var="varBorcKalem"
                                                  emptyMessage="#{msg.no_record_found}"
                                                  paginatorPosition="bottom"
@@ -112,7 +112,7 @@
 
                     <h:panelGrid columns="3">
                         <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
-                                         action="#{talepIslemMB.geriDon}"/>
+                                         action="#{aidatIslemleriMB.geriDon}"/>
                     </h:panelGrid>
                 </div>
             </div>

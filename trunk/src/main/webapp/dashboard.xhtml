@@ -31,7 +31,7 @@
 
                     <div class="Container25 Responsive">
                         <div class="ContainerIndent">
-                            <p:panel style="min-height: 260px;">
+                            <p:panel style="min-height: 270px;">
                                 <i class="icon-user-2 Fs50 Fleft Wid25 hardblue TexAlCenter"></i>
 
                                 <div class="Fs24 Fright MarTop10 leaden Wid70"><span class="hardblue"><h:outputText
@@ -86,7 +86,7 @@
 
                     <div class="Container25 Responsive">
                         <div class="ContainerIndent">
-                            <p:panel style="min-height: 260px;">
+                            <p:panel style="min-height: 270px;">
                                 <i class=" icon-data-science-inv Fs50 Fleft Wid25 orange TexAlCenter"></i>
 
                                 <div class="Fs24 Fright MarTop10 leaden Wid70">Visitors Report</div>
@@ -115,12 +115,12 @@
 
                     <div class="Container30 Responsive">
                         <div class="ContainerIndent">
-                            <h:panelGroup id="anasayfa_borc_alacak_durum" style="min-height: 260px;">
+                            <h:panelGroup id="anasayfa_borc_alacak_durum" style="min-height: 270px;">
                                 <h:panelGroup rendered="#{not anasayfaMB.finansLoaded}">
                                     <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
                                          style="display:block;margin: 0 auto;" alt=""/>
                                 </h:panelGroup>
-                                <p:panel rendered="#{anasayfaMB.finansLoaded}">
+                                <p:panel rendered="#{anasayfaMB.finansLoaded}" style="min-height: 270px;">
 
                                     <i class="icon-try Fs50 Fleft Wid25 red TexAlCenter"></i>
 
@@ -166,12 +166,12 @@
 
                     <div class="Container20 Responsive">
                         <div class="ContainerIndent">
-                            <h:panelGroup id="anasayfa_borc_alacak_durum_pie" style="min-height: 260px;">
+                            <h:panelGroup id="anasayfa_borc_alacak_durum_pie" style="min-height: 270px;">
                                 <h:panelGroup rendered="#{not anasayfaMB.finansLoaded}">
                                     <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
                                          style="display:block;margin: 0 auto;" alt=""/>
                                 </h:panelGroup>
-                                <p:panel rendered="#{anasayfaMB.finansLoaded}">
+                                <p:panel rendered="#{anasayfaMB.finansLoaded}" style="min-height: 270px;">
                                     <div class="Fs24 MarTop10 leaden Wid100 TexAlCenter">Customer Report</div>
                                     <p:separator styleClass="Wid100"></p:separator>
                                     <p:chart type="pie" model="#{anasayfaMB.pieModel1}" style="height:200px"
