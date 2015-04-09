@@ -136,4 +136,8 @@
         <param-value>true</param-value>
     </context-param>
 
+    <listener>
+        <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+    </listener>
+
 </web-app>
