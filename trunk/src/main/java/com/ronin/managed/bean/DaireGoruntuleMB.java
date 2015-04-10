@@ -145,7 +145,9 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     }
 
     public void getFlushObjects() {
-        sorguKriteri = (DaireSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        Object objSorguKriteri = FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        if (objSorguKriteri instanceof DaireSorguKriteri)
+            sorguKriteri = (DaireSorguKriteri) objSorguKriteri;
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
         selected = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireObject");
     }
@@ -159,32 +161,32 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         return "daireSorgula.xhtml";
     }
 
-    public String arzaTalebiGiris(){
+    public String arzaTalebiGiris() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
         return "/pages/talepIslemleri/arizaTalebiGiris.xhtml";
     }
 
-    public String itirazTalebiGiris(DaireBorc daireBorc){
+    public String itirazTalebiGiris(DaireBorc daireBorc) {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedBorc", daireBorc);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
         return "/pages/talepIslemleri/aidatItirazTalebiGiris.xhtml";
     }
 
-    public String sikayetTalebiGiris(){
+    public String sikayetTalebiGiris() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
         return "/pages/talepIslemleri/sikayetTalebiGiris.xhtml";
     }
 
-    public String belgeTalebiGiris(){
+    public String belgeTalebiGiris() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
         return "/pages/talepIslemleri/belgeTalebiGiris.xhtml";
     }
 
-    public String borcDetayGoruntuleme(DaireBorc daireBorc){
+    public String borcDetayGoruntuleme(DaireBorc daireBorc) {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireBorcObject", daireBorc);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
@@ -194,7 +196,7 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     public String navigateToBelgeEkle() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
-        return "pages/sitePaylasimIslemleri/belgeEkleme.xhtml";
+        return "/pages/sitePaylasimIslemleri/belgeEkleme.xhtml";
     }
 
     public void onTabChange(TabChangeEvent event) {
@@ -258,7 +260,7 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     }
 
     public List<Kullanici> completePlayer(String query) {
-        List<Kullanici> suggestions = ortakService.getKullaniciByName(query , sessionInfo);
+        List<Kullanici> suggestions = ortakService.getKullaniciByName(query, sessionInfo);
         return suggestions;
     }
 
@@ -271,8 +273,8 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
             yeniDuyuru.setTanitimZamani(new Date());
             yeniDuyuru.setDurum(Durum.getAktifObject());
             ortakService.yeniDuyuruEkle(sessionInfo, yeniDuyuru);
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), BilgilendirmeTipi.ENUM.Notification);
             getDuyuruTabInfos();
             JsfUtil.addSuccessMessage(message.getString("duyuru_ekleme_basarili"));
             RequestContext requestContext = RequestContext.getCurrentInstance();
