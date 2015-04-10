@@ -196,6 +196,17 @@
                             <p:panel id="anasayfa_belgeler" style="min-height:400px;">
                                 <div class="Container100 Responsive Fs20 hardblue">
                                     <i class="icon-doc-text orange"></i> #{lbl.label_belge_list}
+
+                                    <p:menuButton value="#{lbl.label_belge_islemleri}"
+                                                  styleClass="Fright">
+                                        <p:menuitem id="belgeEkleme"
+                                                    value="#{lbl.label_belge_ekle}"
+                                                    icon="ui-icon-disk"
+                                                    action="#{anasayfaMB.navigateToBelgeEkle}"
+                                                >
+                                        </p:menuitem>
+
+                                    </p:menuButton>
                                 </div>
 
                                 <div class="EmptyBox10"></div>
@@ -253,12 +264,7 @@
                                             </p:menuButton>
 
                                         </p:column>
-                                        <f:facet name="footer">
-                                            <div class="EmptyBox10"></div>
-                                            <p:commandButton id="yeniBelgeEkleme" value="#{lbl.label_belge_ekle}"
-                                                             icon="ui-icon-plus" rendered="#{sessionInfo.adminMi}"
-                                                             action="#{anasayfaMB.navigateToBelgeEkle}"/>
-                                        </f:facet>
+
                                     </p:dataTable>
 
                                 </h:panelGroup>
