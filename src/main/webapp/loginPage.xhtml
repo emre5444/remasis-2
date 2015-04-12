@@ -96,7 +96,7 @@
                                      styleClass="Container80 Fnone MarAuto Fs18"/>
 
                         <div class="EmptyBox20"></div>
-                        <p:commandButton styleClass="Fs16" update=":hataliDenemeMsgS"
+                        <p:commandButton styleClass="Fs16" update="@([id$=hataliDenemeMsgS])"
                                          value="#{lbl.label_btn_gonder}" process="@form"
                                          actionListener="#{loginMB.sifreHatirlatmaIstekGonder()}"/>
 
