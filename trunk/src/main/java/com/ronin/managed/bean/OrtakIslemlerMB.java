@@ -41,13 +41,6 @@ public class OrtakIslemlerMB implements Serializable {
     public void init() {
     }
 
-
-    public void createHataLog(String message , String stachTrace){
-        ortakService.createHataLog(sessionInfo , message , stachTrace);
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("PF('sistemHataPopup').hide()");
-    }
-
     public SessionInfo getSessionInfo() {
         return sessionInfo;
     }
