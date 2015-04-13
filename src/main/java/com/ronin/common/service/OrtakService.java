@@ -283,7 +283,6 @@ public class OrtakService implements IOrtakService {
         }
     }
 
-    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void createErisimLog(SessionInfo sessionInfo ,Kullanici kullanici, LogTipi logTipi, String aciklama) {
         iOrtakDao.createErisimLog(sessionInfo ,kullanici, logTipi, aciklama);
     }
