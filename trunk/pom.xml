@@ -168,6 +168,12 @@
             <version>5.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
         <!-- Hibernate library -->
         <dependency>
             <groupId>org.hibernate</groupId>

@@ -27,6 +27,9 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.RowEditEvent;
+import org.primefaces.extensions.component.gchart.model.GChartModel;
+import org.primefaces.extensions.component.gchart.model.GChartModelBuilder;
+import org.primefaces.extensions.component.gchart.model.GChartType;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.UploadedFile;
 import org.primefaces.model.chart.PieChartModel;
@@ -96,8 +99,8 @@ public class AnasayfaMB implements Serializable {
     private Belge yeniBelge = new Belge();
 
 
-
-    private PieChartModel pieModel1;
+    private GChartType chartType = GChartType.PIE;
+    private GChartModel pieModel1 = null;
     private PieChartModel pieModel2;
     private PieChartModel pieModelAnket;
 
@@ -213,19 +216,23 @@ public class AnasayfaMB implements Serializable {
     }
 
     private void createPieModel1() {
-        pieModel1 = new PieChartModelHelper(false);
         borcAlacakViewBeanList = finansalIslemlerService.getBorcAlacakDurumu(sessionInfo, null);
+        Double borc = 0.0;
+        Double alacak = 0.0;
         for (BorcAlacakViewBean bav : borcAlacakViewBeanList) {
-            if (!sessionInfo.isAdminMi()) {
-                pieModel1.set((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")), bav.getTutar());
-                bav.setAciklama((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")));
+            if (bav.getBorcTipi().isBorclumu()) {
+                borc += bav.getTutar();
+                bav.setAciklama(label.getString("label_toplam_borc"));
             } else {
-                pieModel1.set((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")), bav.getTutar());
-                bav.setAciklama((bav.getBorcTipi().isBorclumu() ? label.getString("label_toplam_borc") : label.getString("label_toplam_odenen")));
-
+                alacak += bav.getTutar();
+                bav.setAciklama(label.getString("label_toplam_odenen"));
             }
         }
+        pieModel1 = new GChartModelBuilder().setChartType(getChartType())
+                .addColumns("Topping", "Slices").addRow(label.getString("label_toplam_borc"), borc.intValue())
+                        .addRow(label.getString("label_toplam_odenen"), alacak.intValue()).addOption("is3D","true").addOption("legend","bottom").build();
     }
+
 
     private void createPieModel2() {
         pieModel2 = new PieChartModelHelper();
@@ -504,6 +511,10 @@ public class AnasayfaMB implements Serializable {
         return df.format(deger);
     }
 
+    public GChartModel getChart(){
+        return pieModel1;
+    }
+
     public Date getCurrentDate(){
         return DateUtils.getNow();
     }
@@ -627,14 +638,6 @@ public class AnasayfaMB implements Serializable {
 
     public void setSkip(boolean skip) {
         this.skip = skip;
-    }
-
-    public PieChartModel getPieModel1() {
-        return pieModel1;
-    }
-
-    public void setPieModel1(PieChartModel pieModel1) {
-        this.pieModel1 = pieModel1;
     }
 
     public List<BorcAlacakViewBean> getBorcAlacakViewBeanList() {
@@ -851,5 +854,13 @@ public class AnasayfaMB implements Serializable {
 
     public void setOnlineVisitors(int onlineVisitors) {
         this.onlineVisitors = onlineVisitors;
+    }
+
+    public GChartType getChartType() {
+        return chartType;
+    }
+
+    public void setChartType(GChartType chartType) {
+        this.chartType = chartType;
     }
 }
