@@ -100,7 +100,7 @@ public class KullaniciDAO implements IKullaniciDAO {
         return (List<Kullanici>) criteria.prepareResult();
     }
 
-    public void updateKullaniciDaire(List<KullaniciDaire> kullaniciDaireList , Kullanici kullanici){
+    public void updateKullaniciDaire(List<KullaniciDaire> kullaniciDaireList, Kullanici kullanici) {
         //kullanicinin eski daireleri silinir
         Query query = getSessionFactory().getCurrentSession().createQuery("delete KullaniciDaire kd where kd.kullanici.id = :id");
         query.setParameter("id", kullanici.getId());
@@ -108,10 +108,22 @@ public class KullaniciDAO implements IKullaniciDAO {
 
         //yeni yetkiler eklenir.
         for (KullaniciDaire kullaniciDaire : kullaniciDaireList) {
-            if(kullaniciDaireList.size() > 1 && kullaniciDaire.getKullaniciTipi().isEvsahibiMi())
-                kullaniciDaire.setVarsayilanMi(EvetHayir.getHayirObject());
-            else
+            List<KullaniciDaire> mevcutKullaniciDaireList = getKullaniciListByDaire(kullaniciDaire.getDaire());
+            if (mevcutKullaniciDaireList.isEmpty()) {
                 kullaniciDaire.setVarsayilanMi(EvetHayir.getEvetObject());
+            } else {
+                for (KullaniciDaire mevcutKullaniciDaire : mevcutKullaniciDaireList) {
+                    if (mevcutKullaniciDaire.getKullaniciTipi().isEvsahibiMi()) {
+                        mevcutKullaniciDaire.setVarsayilanMi(EvetHayir.getHayirObject());
+                        kullaniciDaire.setVarsayilanMi(EvetHayir.getEvetObject());
+                        getSessionFactory().getCurrentSession().save(mevcutKullaniciDaire);
+                    } else{
+                        mevcutKullaniciDaire.setVarsayilanMi(EvetHayir.getEvetObject());
+                        kullaniciDaire.setVarsayilanMi(EvetHayir.getHayirObject());
+                        getSessionFactory().getCurrentSession().save(mevcutKullaniciDaire);
+                    }
+                }
+            }
             getSessionFactory().getCurrentSession().save(kullaniciDaire);
         }
     }
