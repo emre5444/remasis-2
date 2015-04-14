@@ -199,6 +199,19 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         return "/pages/sitePaylasimIslemleri/belgeEkleme.xhtml";
     }
 
+    public String duyuruGoruntule(Duyuru selectedDuyuru) {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDuyuruObject", selectedDuyuru);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "/pages/sitePaylasimIslemleri/duyuruGoruntuleme.xhtml";
+    }
+
+    public String navigateToDuyuruEkle() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "/pages/sitePaylasimIslemleri/duyuruEkleme.xhtml";
+    }
+
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getId().equals("daire_detay")) {
             getDaireBilgileriTabInfos();
@@ -264,36 +277,11 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         return suggestions;
     }
 
-
-    public void yeniDuyuruEkle() {
-        try {
-            yeniDuyuru.setIlanMi(EvetHayir.getEvetObject());
-            yeniDuyuru.setDaire(getSelected());
-            yeniDuyuru.setKullanici(sessionInfo.getKullanici());
-            yeniDuyuru.setTanitimZamani(new Date());
-            yeniDuyuru.setDurum(Durum.getAktifObject());
-            ortakService.yeniDuyuruEkle(sessionInfo, yeniDuyuru);
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selected.getBlok().getAciklama() + " " + selected.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), BilgilendirmeTipi.ENUM.Notification);
-            getDuyuruTabInfos();
-            JsfUtil.addSuccessMessage(message.getString("duyuru_ekleme_basarili"));
-            RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.execute("PF('duyuruEklePopup').hide()");
-        } catch (Exception e) {
-            logger.error(e.getStackTrace());
-            JsfUtil.addSuccessMessage(e.toString());
-        }
-    }
-
-    public void deleteDuyuru() {
-        try {
-            ortakService.deleteDuyuru(selectedDuyuru);
-            getDuyuruTabInfos();
-            JsfUtil.addSuccessMessage(message.getString("duyuru_silme_basarili"));
-        } catch (Exception e) {
-            logger.error(e.getStackTrace());
-            JsfUtil.addSuccessMessage("Hata!");
-        }
+    public void deleteDuyuru(Duyuru selectedDuyuru) {
+        setSelectedDuyuru(selectedDuyuru);
+        ortakService.deleteDuyuru(selectedDuyuru);
+        getDuyuruTabInfos();
+        JsfUtil.addSuccessMessage(message.getString("duyuru_silme_basarili"));
     }
 
     //belge islemleri

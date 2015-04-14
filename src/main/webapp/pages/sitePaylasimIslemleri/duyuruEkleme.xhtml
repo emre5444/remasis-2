@@ -17,35 +17,71 @@
                 <h:form id="duyuruEkleme">
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                    <div class="Container100 Responsive">
-                        <div class="ContainerIndent">
-                            <h:panelGrid columns="2" cellpadding="5">
-                                <h:outputLabel for="yorum_konu" value="#{lbl.duyuru_konusu} (*)"
-                                               style="font-weight:bold; color: #0b4170"/>
-                                <p:inputTextarea rows="3" cols="50" autoResize="false"
-                                                 value="#{duyuruIslemleriMB.yeniDuyuru.kisaAciklama}"
-                                                 id="yorum_konu" required="true" label="#{lbl.duyuru_konusu}"/>
+                    <p:panel rendered="#{not empty duyuruIslemleriMB.selectedDaire}">
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
+                                </div>
+                                <h:panelGrid id="showDaireDetailBilgileri" columns="2" cellpadding="5">
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText id="daire_no" value="#{duyuruIslemleriMB.selectedDaire.daireNo}"/>
 
-                                <h:outputLabel for="yorum_aciklama" value="#{lbl.duyuru_aciklama} (*)"
-                                               style="font-weight:bold; color: #0b4170"/>
-                                <p:editor id="yorum_aciklama"
-                                          value="#{duyuruIslemleriMB.yeniDuyuru.aciklama}" required="true" width="450"/>
+                                    <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText id="blok_adi"
+                                                  value="#{duyuruIslemleriMB.selectedDaire.blok.aciklama}"/>
 
-                            </h:panelGrid>
-
-                            <p:commandButton id="btn_duyuru_ekle" value="#{lbl.ortak_kaydet}"
-                                             update="@([id$=duyuruEkleme])"
-                                             actionListener="#{duyuruIslemleriMB.yeniDuyuruEkle}">
-                                <p:confirm header="#{lbl.ortak_kaydet}"
-                                           message="#{msg.islemi_onayliyormusunuz}"/>
-                            </p:commandButton>
-
-                            <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
-                                             action="#{duyuruIslemleriMB.geriDon}"/>
-
-
+                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText id="kat" value="#{duyuruIslemleriMB.selectedDaire.kat}"/>
+                                </h:panelGrid>
+                            </div>
                         </div>
-                    </div>
+                    </p:panel>
+
+                    <div class="EmptyBox10"></div>
+
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-bell-alt orange"></i> #{lbl.ilan_bilgileri}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputLabel for="yorum_konu" value="#{lbl.duyuru_konusu} (*)"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputTextarea rows="3" cols="50" autoResize="false"
+                                                     value="#{duyuruIslemleriMB.yeniDuyuru.kisaAciklama}"
+                                                     id="yorum_konu" required="true" label="#{lbl.duyuru_konusu}"/>
+
+                                    <h:outputLabel for="yorum_aciklama" value="#{lbl.duyuru_aciklama} (*)"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:editor id="yorum_aciklama"
+                                              value="#{duyuruIslemleriMB.yeniDuyuru.aciklama}" required="true"
+                                              width="450"/>
+
+                                </h:panelGrid>
+
+                            </div>
+                        </div>
+                    </p:panel>
+
+                    <div class="EmptyBox10"></div>
+
+                    <h:panelGrid columns="3">
+                        <p:commandButton id="btn_duyuru_ekle" value="#{lbl.ortak_kaydet}"
+                                         update="@([id$=duyuruEkleme])"
+                                         action="#{duyuruIslemleriMB.duyuruKaydiYarat()}">
+                            <p:confirm header="#{lbl.ortak_kaydet}"
+                                       message="#{msg.islemi_onayliyormusunuz}"/>
+                        </p:commandButton>
+
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{duyuruIslemleriMB.geriDon}"/>
+
+                    </h:panelGrid>
                 </h:form>
             </div>
         </div>
