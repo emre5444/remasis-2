@@ -3,6 +3,7 @@ package com.ronin.model;
 
 import com.ronin.common.model.Kullanici;
 import com.ronin.model.constant.Durum;
+import com.ronin.model.constant.EvetHayir;
 import com.ronin.model.constant.KullaniciTipi;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.springframework.security.core.userdetails.User;
@@ -35,6 +36,10 @@ public class KullaniciDaire {
     @JoinColumn(name = "kallanici_tipi_id", referencedColumnName = "id")
     @ManyToOne
     private KullaniciTipi kullaniciTipi;
+
+    @JoinColumn(name = "varsayilan_mi", referencedColumnName = "id")
+    @ManyToOne
+    private EvetHayir varsayilanMi;
 
     @JoinColumn(name = "durum_id", referencedColumnName = "id")
     @ManyToOne
@@ -78,5 +83,13 @@ public class KullaniciDaire {
 
     public void setKullanici(Kullanici kullanici) {
         this.kullanici = kullanici;
+    }
+
+    public EvetHayir getVarsayilanMi() {
+        return varsayilanMi;
+    }
+
+    public void setVarsayilanMi(EvetHayir varsayilanMi) {
+        this.varsayilanMi = varsayilanMi;
     }
 }

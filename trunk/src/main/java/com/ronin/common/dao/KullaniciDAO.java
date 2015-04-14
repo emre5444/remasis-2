@@ -8,6 +8,8 @@ import com.ronin.model.KullaniciDaire;
 import com.ronin.model.KullaniciSirket;
 import com.ronin.model.SifreHatirlatma;
 import com.ronin.model.constant.Durum;
+import com.ronin.model.constant.EvetHayir;
+import com.ronin.model.constant.KullaniciTipi;
 import com.ronin.model.criteria.KullaniciCriteria;
 import com.ronin.model.kriter.KullaniciSorguKriteri;
 import org.hibernate.Query;
@@ -106,6 +108,10 @@ public class KullaniciDAO implements IKullaniciDAO {
 
         //yeni yetkiler eklenir.
         for (KullaniciDaire kullaniciDaire : kullaniciDaireList) {
+            if(kullaniciDaireList.size() > 1 && kullaniciDaire.getKullaniciTipi().isEvsahibiMi())
+                kullaniciDaire.setVarsayilanMi(EvetHayir.getHayirObject());
+            else
+                kullaniciDaire.setVarsayilanMi(EvetHayir.getEvetObject());
             getSessionFactory().getCurrentSession().save(kullaniciDaire);
         }
     }
@@ -129,6 +135,19 @@ public class KullaniciDAO implements IKullaniciDAO {
         }
         return null;
     }
+
+    public List<KullaniciDaire> getKullaniciListByDaire(Daire daire , KullaniciTipi kullaniciTipi){
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("from KullaniciDaire kd where kd.daire=? and kd.kullaniciTipi.id=?")
+                .setParameter(0, daire)
+                .setParameter(1, kullaniciTipi.getId())
+                .list();
+        if(list.size()>0){
+            return (List<KullaniciDaire>) list;
+        }
+        return null;
+    }
+
 
     public void addKullaniciSirket(KullaniciSirket kullaniciSirket) {
         getSessionFactory().getCurrentSession().save(kullaniciSirket);
