@@ -18,22 +18,63 @@
                     <div class="Container100 Responsive">
                         <div class="ContainerIndent">
 
-                            <h:panelGrid id="showDuyuruDetail" columns="2" cellpadding="5">
-                                <h:outputLabel for="yorum_konu_v" value="#{lbl.duyuru_konusu}"
-                                               style="font-weight:bold; color: #0b4170"/>
-                                <h:outputText value="#{duyuruIslemleriMB.selected.kisaAciklama}"
-                                              id="yorum_konu_v"/>
+                            <p:panel rendered="#{not empty duyuruIslemleriMB.selectedDaire}">
+                                <div class="Container100 Responsive">
+                                    <div class="ContainerIndent">
+                                        <div class="Container100 Responsive Fs20 hardblue">
+                                            <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
+                                        </div>
+                                        <h:panelGrid id="showDaireDetailBilgileri" columns="2" cellpadding="5">
+                                            <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputText id="daire_no"
+                                                          value="#{duyuruIslemleriMB.selectedDaire.daireNo}"/>
 
-                                <h:outputLabel for="yorum_aciklama_v" value="#{lbl.duyuru_aciklama}"
-                                               style="font-weight:bold; color: #0b4170"/>
-                                <h:outputText rows="6" cols="33" value="#{duyuruIslemleriMB.selected.aciklama}"
-                                              id="yorum_aciklama_v" escape="false"
-                                        />
+                                            <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputText id="blok_adi"
+                                                          value="#{duyuruIslemleriMB.selectedDaire.blok.aciklama}"/>
 
+                                            <h:outputLabel for="kat" value="#{lbl.daire_kat}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputText id="kat" value="#{duyuruIslemleriMB.selectedDaire.kat}"/>
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
+                            </p:panel>
+
+                            <div class="EmptyBox10"></div>
+
+                            <p:panel>
+                                <div class="Container100 Responsive">
+                                    <div class="ContainerIndent">
+                                        <div class="Container100 Responsive Fs20 hardblue">
+                                            <i class="icon-bell-alt orange"></i> #{lbl.ilan_bilgileri}
+                                        </div>
+                                        <h:panelGrid id="showDuyuruDetail" columns="2" cellpadding="5">
+                                            <h:outputLabel for="yorum_konu_v" value="#{lbl.duyuru_konusu}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputText value="#{duyuruIslemleriMB.selected.kisaAciklama}"
+                                                          id="yorum_konu_v"/>
+
+                                            <h:outputLabel for="yorum_aciklama_v" value="#{lbl.duyuru_aciklama}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputText rows="6" cols="33"
+                                                          value="#{duyuruIslemleriMB.selected.aciklama}"
+                                                          id="yorum_aciklama_v" escape="false"
+                                                    />
+
+                                        </h:panelGrid>
+                                    </div>
+                                </div>
+                            </p:panel>
+
+                            <div class="EmptyBox10"></div>
+
+                            <h:panelGrid columns="1">
+                                <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                                 action="#{duyuruIslemleriMB.geriDon}"/>
                             </h:panelGrid>
-
-                            <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
-                                             action="#{duyuruIslemleriMB.geriDon}"/>
 
                         </div>
                     </div>

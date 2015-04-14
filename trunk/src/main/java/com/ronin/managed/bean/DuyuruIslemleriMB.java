@@ -4,6 +4,7 @@ import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.DuyuruDataModel;
+import com.ronin.model.Daire;
 import com.ronin.model.Duyuru;
 import com.ronin.model.constant.BildirimTipi;
 import com.ronin.model.constant.BilgilendirmeTipi;
@@ -49,6 +50,8 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
 
     private Duyuru yeniDuyuru = new Duyuru();
 
+    private Daire selectedDaire;
+
 
     @PostConstruct
     public void init() {
@@ -57,10 +60,17 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
 
     public void getFlushObjects() {
         selected = (Duyuru) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDuyuruObject");
+        selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaire");
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
     }
 
+    public void storeFlashObjects() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selectedDaire);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
+    }
+
     public String geriDon() {
+        storeFlashObjects();
         return getBackPage();
     }
 
@@ -82,20 +92,37 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
         }
     }
 
-    public void yeniDuyuruEkle() {
-        try {
-            yeniDuyuru.setIlanMi(EvetHayir.getHayirObject());
-            yeniDuyuru.setKullanici(sessionInfo.getKullanici());
-            yeniDuyuru.setTanitimZamani(new Date());
-            yeniDuyuru.setDurum(Durum.getAktifObject());
-            ortakService.yeniDuyuruEkle(sessionInfo, yeniDuyuru);
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
-            JsfUtil.addSuccessMessage(message.getString("duyuru_ekleme_basarili"));
-        } catch (Exception e) {
-            logger.error(e.getStackTrace());
-            JsfUtil.addSuccessMessage("Hata!");
+   public String duyuruKaydiYarat() {
+        if (selectedDaire != null) {
+            return yeniIlanEkle();
+        } else {
+            return yeniDuyuruEkle();
         }
+    }
+
+   public String yeniDuyuruEkle() {
+        yeniDuyuru.setIlanMi(EvetHayir.getHayirObject());
+        yeniDuyuru.setKullanici(sessionInfo.getKullanici());
+        yeniDuyuru.setTanitimZamani(new Date());
+        yeniDuyuru.setDurum(Durum.getAktifObject());
+        ortakService.yeniDuyuruEkle(sessionInfo, yeniDuyuru);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
+        JsfUtil.addSuccessMessage(message.getString("duyuru_ekleme_basarili"));
+        return geriDon();
+    }
+
+    public String yeniIlanEkle() {
+        yeniDuyuru.setIlanMi(EvetHayir.getEvetObject());
+        yeniDuyuru.setDaire(getSelectedDaire());
+        yeniDuyuru.setKullanici(sessionInfo.getKullanici());
+        yeniDuyuru.setTanitimZamani(new Date());
+        yeniDuyuru.setDurum(Durum.getAktifObject());
+        ortakService.yeniDuyuruEkle(sessionInfo, yeniDuyuru);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ILAN_EKLEME, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ilan_ekleme_bildirim") + yeniDuyuru.getAciklama(), BilgilendirmeTipi.ENUM.Notification);
+        JsfUtil.addSuccessMessage(message.getString("duyuru_ekleme_basarili"));
+        return geriDon();
     }
 
 
@@ -161,5 +188,13 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
 
     public void setYeniDuyuru(Duyuru yeniDuyuru) {
         this.yeniDuyuru = yeniDuyuru;
+    }
+
+    public Daire getSelectedDaire() {
+        return selectedDaire;
+    }
+
+    public void setSelectedDaire(Daire selectedDaire) {
+        this.selectedDaire = selectedDaire;
     }
 }
