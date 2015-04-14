@@ -260,9 +260,9 @@ public class KullaniciIslemleriMB extends AbstractMB implements Serializable {
 
     public void handleSorun(Sorun sorun){
         if(sorun.equals(Sorun.MALIZ_ZATEN_VAR)){
-            JsfUtil.addSuccessMessage(message.getString("error.dairede.birden.fazla.malik.olamaz"));
+            JsfUtil.addErrorMessage(message.getString("error.dairede.birden.fazla.malik.olamaz"));
         } else   if(sorun.equals(Sorun.SAKIN_ZATEN_VAR)){
-            JsfUtil.addSuccessMessage(message.getString("error.dairede.birden.fazla.sakin.olamaz"));
+            JsfUtil.addErrorMessage(message.getString("error.dairede.birden.fazla.sakin.olamaz"));
         }
     }
 
