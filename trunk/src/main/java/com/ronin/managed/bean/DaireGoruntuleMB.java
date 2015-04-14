@@ -73,6 +73,8 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     @ManagedProperty("#{finansalIslemlerService}")
     private IFinansalIslemlerService finansalIslemlerService;
 
+    private KullaniciDaire varsayilanKullaniciDaire;
+
     //sorgu kriterleri
     private DaireSorguKriteri sorguKriteri = new DaireSorguKriteri();
     private TalepSorguKriteri talepSorguKriteri = new TalepSorguKriteri();
@@ -129,6 +131,7 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         getFlushObjects();
         setUserRolInfos();
         createPieModels();
+        getDaireBilgileriTabInfos();
         belgeTipiList = ortakService.getListByNamedQuery("BelgeTipi.findAll");
     }
 
@@ -255,6 +258,12 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     public void getDaireBilgileriTabInfos() {
         List<KullaniciDaire> dataList = daireService.getKullaniciListByDaire(selected);
         kullaniciDaireDataModel = new KullaniciDaireDataModel(dataList);
+        for(KullaniciDaire kullaniciDaire : dataList){
+            if(kullaniciDaire.getVarsayilanMi().isEvetMi()) {
+                varsayilanKullaniciDaire = kullaniciDaire;
+                break;
+            }
+        }
     }
 
     public void getBelgelerTabInfos() {
@@ -698,4 +707,11 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         this.daireSorguSonucu = daireSorguSonucu;
     }
 
+    public KullaniciDaire getVarsayilanKullaniciDaire() {
+        return varsayilanKullaniciDaire;
+    }
+
+    public void setVarsayilanKullaniciDaire(KullaniciDaire varsayilanKullaniciDaire) {
+        this.varsayilanKullaniciDaire = varsayilanKullaniciDaire;
+    }
 }
