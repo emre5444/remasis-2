@@ -123,8 +123,6 @@ public class AnasayfaMB implements Serializable {
     private List<IAbstractEntity> belgeTipiList;
     private List<IAbstractEntity> anketAktifPasifList;
 
-    private boolean openDialog;
-
     private int onlineVisitors;
 
     //loading booleans
@@ -190,21 +188,7 @@ public class AnasayfaMB implements Serializable {
             anket.setAnketeKatinildiMi(isAnketeKtinildiMi(anket));
         }
         anketDataModel = new AnketDataModel(anketList);
-        openDialog = false;
         anketLoaded = true;
-        if (anketList != null && anketList.size() > 0) {
-            for (Anket anket : anketList) {
-                if (anket.getAnketeKatinildiMi().isHayirMi()) {
-                    openDialog = true;
-                    setSelectedAnket(anket);
-                    prepareAnketDetailForKatilim();
-                    RequestContext requestContext = RequestContext.getCurrentInstance();
-                    requestContext.execute("PF('anketeKatilimEklemePopup').show()");
-                    break;
-                }
-            }
-        }
-
     }
 
     private void createPieModelForAnket() {
@@ -758,14 +742,6 @@ public class AnasayfaMB implements Serializable {
 
     public void setYeniAnket(Anket yeniAnket) {
         this.yeniAnket = yeniAnket;
-    }
-
-    public boolean isOpenDialog() {
-        return openDialog;
-    }
-
-    public void setOpenDialog(boolean openDialog) {
-        this.openDialog = openDialog;
     }
 
     public IletisimBilgileri getYeniIletisimBilgisi() {
