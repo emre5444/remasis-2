@@ -8,6 +8,7 @@ import com.ronin.model.Daire;
 import com.ronin.model.KullaniciDaire;
 import com.ronin.model.KullaniciSirket;
 import com.ronin.model.SifreHatirlatma;
+import com.ronin.model.constant.KullaniciTipi;
 import com.ronin.model.kriter.KullaniciSorguKriteri;
 
 public interface IKullaniciDAO {
@@ -35,6 +36,8 @@ public interface IKullaniciDAO {
     void updateKullaniciDaire(List<KullaniciDaire> kullaniciDaireList , Kullanici kullanici);
 
     public List<KullaniciDaire> getKullaniciListByDaire(Daire daire);
+
+     List<KullaniciDaire> getKullaniciListByDaire(Daire daire , KullaniciTipi kullaniciTipi);
 
     void addKullaniciSirket(KullaniciSirket kullaniciSirket);
 

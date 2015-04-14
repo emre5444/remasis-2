@@ -15,6 +15,7 @@ import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.KullaniciDaire;
 import com.ronin.model.KullaniciSirket;
 import com.ronin.model.constant.Durum;
+import com.ronin.model.enums.Sorun;
 import com.ronin.model.kriter.DaireSorguKriteri;
 import com.ronin.model.kriter.KullaniciSorguKriteri;
 import com.ronin.service.IDaireService;
@@ -168,10 +169,17 @@ public class KullaniciIslemleriMB extends AbstractMB implements Serializable {
     }
 
     public String updateKullaniciDaireList() {
-        kullaniciService.updateKullaniciDaire((List<KullaniciDaire>) kullaniciDaireDataModel.getWrappedData(), selected);
-        JsfUtil.addSuccessMessage(message.getString("kullanici_daire_iliskilendirme_basarili"));
-        storeFlashObjects();
-        return getBackPage();
+        //ilk once kontroller yap?l?yor.
+        Sorun sorun = kullaniciService.kullaniciDaireIliskilendirmeKontrol((List<KullaniciDaire>) kullaniciDaireDataModel.getWrappedData());
+        if(sorun == null){
+            kullaniciService.updateKullaniciDaire((List<KullaniciDaire>) kullaniciDaireDataModel.getWrappedData(), selected);
+            JsfUtil.addSuccessMessage(message.getString("kullanici_daire_iliskilendirme_basarili"));
+            storeFlashObjects();
+            return getBackPage();
+        } else {
+             handleSorun(sorun);
+        }
+        return null;
     }
 
     public List<Rol> getDifferenceOfRolLists(List<Rol> list1, List<Rol> list2) {

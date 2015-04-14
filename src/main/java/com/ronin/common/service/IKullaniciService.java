@@ -10,6 +10,7 @@ import com.ronin.model.Daire;
 import com.ronin.model.KullaniciDaire;
 import com.ronin.model.KullaniciSirket;
 import com.ronin.model.SifreHatirlatma;
+import com.ronin.model.enums.Sorun;
 import com.ronin.model.kriter.KullaniciSorguKriteri;
 
 import java.util.List;
@@ -48,6 +49,8 @@ public interface IKullaniciService {
     public void addKullaniciSirket(KullaniciSirket kullaniciSirket);
 
     public void sifreHatirlatmaIstekGonder(SifreHatirlatma sifreHatirlatma);
+
+    Sorun kullaniciDaireIliskilendirmeKontrol(List<KullaniciDaire> kullaniciDaireList);
 
     public int getActiveUsersCount(SessionInfo sessionInfo);
 }
