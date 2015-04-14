@@ -190,7 +190,7 @@ public class KullaniciService implements IKullaniciService {
         //birden fazla malik yada sakin varm? die bak?l?r
         for (KullaniciDaire kullaniciDaire : kullaniciDaireList) {
               List<KullaniciDaire> tempKdList = kullaniciDAO.getKullaniciListByDaire(kullaniciDaire.getDaire() , kullaniciDaire.getKullaniciTipi());
-              if(tempKdList.size() > 0){
+              if(tempKdList != null && tempKdList.size() > 0){
                   if(kullaniciDaire.getKullaniciTipi().isEvsahibiMi()){
                       return Sorun.MALIZ_ZATEN_VAR;
                   } else {
