@@ -258,6 +258,14 @@ public class KullaniciIslemleriMB extends AbstractMB implements Serializable {
         JsfUtil.addSuccessMessage(message.getString("sifre_sifirlama_basarili"));
     }
 
+    public void handleSorun(Sorun sorun){
+        if(sorun.equals(Sorun.MALIZ_ZATEN_VAR)){
+            JsfUtil.addSuccessMessage(message.getString("error.dairede.birden.fazla.malik.olamaz"));
+        } else   if(sorun.equals(Sorun.SAKIN_ZATEN_VAR)){
+            JsfUtil.addSuccessMessage(message.getString("error.dairede.birden.fazla.sakin.olamaz"));
+        }
+    }
+
     public Kullanici getSelected() {
         return selected;
     }

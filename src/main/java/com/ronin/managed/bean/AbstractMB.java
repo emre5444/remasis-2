@@ -20,22 +20,8 @@ import java.util.ResourceBundle;
 @ViewScoped
 public class AbstractMB<T> {
 
-    @ManagedProperty("#{msg}")
-    private ResourceBundle message;
-    
     private T selected;
     private String backPage;
-
-
-    public void handleSorun(Sorun sorun){
-        if(sorun.equals(Sorun.MALIZ_ZATEN_VAR)){
-            JsfUtil.addSuccessMessage(message.getString("error.dairede.birden.fazla.malik.olamaz"));
-        } else   if(sorun.equals(Sorun.SAKIN_ZATEN_VAR)){
-            JsfUtil.addSuccessMessage(message.getString("error.dairede.birden.fazla.sakin.olamaz"));
-        }
-    }
-
-
 
 
     public T getSelected() {
@@ -54,11 +40,4 @@ public class AbstractMB<T> {
         this.backPage = backPage;
     }
 
-    public ResourceBundle getMessage() {
-        return message;
-    }
-
-    public void setMessage(ResourceBundle message) {
-        this.message = message;
-    }
 }
