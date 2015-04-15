@@ -128,7 +128,7 @@
                                                   value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
 
 
-                                    <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge"
+                                    <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge"  reflow="true"
                                                  rows="20" emptyMessage="#{msg.no_record_found}">
 
                                         <p:column headerText="#{lbl.label_belge_adi}" sortBy="belge.dataName"
@@ -210,7 +210,7 @@
                                              rendered="#{talepIslemMB.selected.talep.talepTipi.itirazTalebiMi}">
 
                                     <p:dataTable value="#{talepIslemMB.getItirazEdilenDaireBorcAsList()}" var="varBorc"
-                                                 style="width:100%;"
+                                                 reflow="true"
                                                  paginatorPosition="bottom"
                                                  paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

@@ -109,7 +109,7 @@
                             </div>
 
                             <p:dataTable id="daireSorguSonucu" value="#{daireMB.dataModel}" var="varDaire"
-                                         paginatorPosition="bottom"
+                                         paginatorPosition="bottom" reflow="true"
                                          paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
                                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                          rowsPerPageTemplate="5,10,15">
@@ -170,7 +170,7 @@
                                         </div>
                                         <p:dataTable id="kullaniciListesiOfDaire"
                                                      value="#{varDaire.kullaniciSakimList}"
-                                                     var="varkullaniciDaire"
+                                                     var="varkullaniciDaire"  reflow="true"
                                                      emptyMessage="#{msg.no_record_found}"
                                                      paginatorPosition="bottom" styleClass="noheader"
                                                      rows="3">

@@ -217,7 +217,7 @@
                     <i class="icon-users-2 orange"></i> #{lbl.sakin_listesi}
                 </div>
                 <p:dataTable value="#{daireGoruntuleMB.kullaniciDaireDataModel}"
-                             var="varKullanici"
+                             var="varKullanici"  reflow="true"
                              emptyMessage="#{msg.no_record_found}">
                     <p:column style="width:16px">
                         <p:rowToggler/>
@@ -311,7 +311,7 @@
 
 <p:dataTable id="daireAidatSorguSonucu"
              value="#{daireGoruntuleMB.borcDataModel}"
-             var="varBorc"
+             var="varBorc"  reflow="true"
              paginatorPosition="bottom"
              paginator="true" rows="10"
              emptyMessage="#{msg.no_record_found}"
@@ -491,7 +491,7 @@
 
                     <p:dataTable id="borcKalemListesiOfDaire"
                                  value="#{varBorc.daireBorcKalems}"
-                                 var="varBorcKalem"
+                                 var="varBorcKalem"  reflow="true"
                                  emptyMessage="#{msg.no_record_found}"
                                  paginatorPosition="bottom"
                                  style="width:100%" rows="30">
@@ -555,7 +555,7 @@
                 </div>
                 <div class="EmptyBox5"></div>
                 <p:dataTable value="#{daireGoruntuleMB.belgeDataModel}"
-                             var="varDaireBelge"
+                             var="varDaireBelge"  reflow="true"
                              paginatorPosition="bottom"
                              selection="#{daireGoruntuleMB.selectedDaireBelge}"
                              paginator="true" rows="10"
@@ -641,7 +641,7 @@
 
                 <p:dataTable value="#{daireGoruntuleMB.duyuruDataModel}" var="varDuyuru"
                              selection="#{daireGoruntuleMB.selectedDuyuru}"
-                             paginatorPosition="bottom"
+                             paginatorPosition="bottom"  reflow="true"
                              paginator="true" rows="10"
                              emptyMessage="#{msg.no_record_found}"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -702,7 +702,7 @@
                 </div>
                 <p:dataTable id="talepSorguSonucu"
                              value="#{daireGoruntuleMB.talepDatamodel}" var="varTalep"
-                             paginatorPosition="bottom"
+                             paginatorPosition="bottom"  reflow="true"
                              emptyMessage="#{msg.no_record_found}"
                              paginator="true" rows="10"
                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"

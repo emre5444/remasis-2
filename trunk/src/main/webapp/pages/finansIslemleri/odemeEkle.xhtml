@@ -79,7 +79,7 @@
         <p:panel header="#{lbl.daire_listesi}" rendered="#{not empty odemeIslemleriMB.daireList}">
             <h:panelGrid id="daireList" columns="1" cellpadding="5" cellspacing="5">
 
-                <p:dataTable id="daireSorguSonucu" value="#{odemeIslemleriMB.daireList}" var="varDaire"
+                <p:dataTable id="daireSorguSonucu" value="#{odemeIslemleriMB.daireList}" var="varDaire"  reflow="true"
                              selection="#{odemeIslemleriMB.tempSelectedDaireList}" rowKey="#{varDaire.id}"
                              scrollable="true" scrollHeight="180" emptyMessage="#{msg.no_record_found}">
                     <p:column selectionMode="multiple" style="text-align:center;width:6%"/>
@@ -112,7 +112,7 @@
             <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
 
                 <p:dataTable id="selectedDaireList" value="#{odemeIslemleriMB.selectedDaireList}"
-                             var="vardaire1" scrollable="true" scrollHeight="150"
+                             var="vardaire1" scrollable="true" scrollHeight="150"   reflow="true"
                              emptyMessage="#{msg.no_record_found}">
                     <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
                         <h:outputText value="#{vardaire1.daireKodu}"/>
@@ -164,7 +164,7 @@
                 <h:panelGrid id="toplu_daireList" columns="1" cellpadding="5">
 
                     <p:dataTable id="toplu_daireSorguSonucu" value="#{odemeIslemleriMB.daireDataModel}"
-                                 var="varDaireModel"
+                                 var="varDaireModel"  reflow="true"
                                  scrollable="true" scrollHeight="250" emptyMessage="#{msg.no_record_found}">
 
                         <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
@@ -217,7 +217,7 @@
         <h:panelGrid id="borcAlacakGrid">
 
             <p:dataTable id="borcAlacakTable" value="#{odemeIslemleriMB.daireBorcAlacakViewList}"
-                         var="daireBorcAlacak" widgetVar="borcAlacakTable"
+                         var="daireBorcAlacak" widgetVar="borcAlacakTable"  reflow="true"
                          scrollable="true" scrollHeight="400" emptyMessage="#{msg.no_record_found}">
 
 
@@ -250,7 +250,7 @@
         <h:panelGrid id="c_borcAlacakGrid">
 
             <p:dataTable id="c_borcAlacakTable" value="#{odemeIslemleriMB.daireBorcAlacakViewList}"
-                         var="c_daireBorcAlacak"
+                         var="c_daireBorcAlacak"  reflow="true"
                          scrollable="true" scrollHeight="300" emptyMessage="#{msg.no_record_found}">
 
                 <p:column headerText="#{lbl.daire_kodu}" sortBy="daire.daireKodu" style="width:10%">

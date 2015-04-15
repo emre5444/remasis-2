@@ -130,7 +130,7 @@
             <p:dataTable id="kullaniciList" value="#{kullaniciController.dataModel}" var="varKullanici"
                          emptyMessage="#{msg.no_record_found}"
                          paginatorPosition="bottom" sortMode="multiple"
-                         paginator="true" rows="20"
+                         paginator="true" rows="20" reflow="true"
                          selection="#{kullaniciController.selected}"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15">
@@ -162,7 +162,7 @@
                         <p:dataTable id="kullaniciListesiOfDaire"
                                      value="#{varKullanici.kullaniciDaireList}" var="varkullaniciDaire"
                                      emptyMessage="#{msg.no_record_found}"
-                                     paginatorPosition="bottom"
+                                     paginatorPosition="bottom"     reflow="true"
                                      rows="3">
                             <p:column headerText="#{lbl.daire_kodu}">
                                 <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>

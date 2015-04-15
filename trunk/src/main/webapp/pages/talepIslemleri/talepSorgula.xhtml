@@ -129,7 +129,7 @@
 
             <p:dataTable id="talepSorguSonucu" value="#{talepMB.dataModel}" var="varTalep"
                          paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
-                         paginator="true" rows="10"
+                         paginator="true" rows="10"  reflow="true"
                          rendered="#{talepMB.sorguSonucuLoaded}"
                          paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          rowsPerPageTemplate="5,10,15">

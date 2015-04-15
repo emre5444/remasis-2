@@ -98,7 +98,7 @@
                                 <h:panelGrid columns="2" cellpadding="5">
 
                                     <p:dataTable id="daireSorguSonucu" value="#{daireIslemleriMB.daireDataModel}"
-                                                 var="varDaire"
+                                                 var="varDaire"  reflow="true"
                                                  paginatorPosition="bottom"
                                                  paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
                                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
