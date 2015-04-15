@@ -58,7 +58,7 @@
                                     <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
                                 </div>
                                 <p:dataTable value="#{bildirimMB.bildirimTipiDataModel}" var="varBildirimTipi"
-                                             paginatorPosition="bottom"
+                                             paginatorPosition="bottom"  reflow="true"
                                              selection="#{rolController.selected}"
                                              paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -85,7 +85,7 @@
                                                     <div class="EmptyBox5"></div>
                                                     <p:dataTable id="kullaniciListesiOfDaire"
                                                                  value="#{varBildirimTipi.bildirimTipiRolList}"
-                                                                 var="varHedefKitle"
+                                                                 var="varHedefKitle"  reflow="true"
                                                                  emptyMessage="#{msg.no_record_found}"
                                                                  paginatorPosition="bottom"
                                                                  rows="3">

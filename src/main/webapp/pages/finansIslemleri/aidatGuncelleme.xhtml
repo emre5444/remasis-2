@@ -122,7 +122,7 @@
                             <i class="icon-money orange"></i> #{lbl.borc_kalem_guncelleme}
                         </div>
                         <p:dataTable id="borcKalems" var="borcKalems" value="#{aidatIslemleriMB.selected.daireBorcKalems}"
-                                     editable="#{sessionInfo.adminMi}" emptyMessage="#{msg.no_record_found}">
+                                     reflow="true" editable="#{sessionInfo.adminMi}" emptyMessage="#{msg.no_record_found}">
 
                             <p:ajax event="rowEdit" listener="#{aidatIslemleriMB.onDaireBorcKalemRowEdit}" update="@([id$=daire_borc_kalem])"/>
                             <p:ajax event="rowEditCancel"

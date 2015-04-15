@@ -77,7 +77,7 @@
                         <div class="fontRegular white-back Container100 Responsive">
                             <div class="ContainerIndent">
                                 <p:dataTable id="kullaniciSirketTable" value="#{preLoginMB.dataModel}" var="varSirket"
-                                             paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
+                                             reflow="true" paginatorPosition="bottom" emptyMessage="#{msg.no_record_found}"
                                              selection="#{preLoginMB.selected}" selectionMode="single" rowKey="#{varSirket.sirket.id}">
 
                                     <p:column headerText="Şirket Adı">

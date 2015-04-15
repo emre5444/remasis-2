@@ -15,7 +15,7 @@
                 <f:facet name="header">  
 			 <h:outputText value="Kullanici Islemleri"/> 		           
 		 </f:facet> 
-                <p:dataTable value="#{kullaniciMB.kullaniciList}" var="kullanici">
+                <p:dataTable value="#{kullaniciMB.kullaniciList}" var="kullanici"  reflow="true">
                     <p:column headerText="#{lbl.kullanici_adi}">
                         <h:outputText value="#{kullanici.ad}"/>
                     </p:column>

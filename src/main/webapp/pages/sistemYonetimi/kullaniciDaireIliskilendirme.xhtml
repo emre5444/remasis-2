@@ -85,7 +85,7 @@
 
                                 <p:dataTable id="daireSorguSonucuForKullanici"
                                              value="#{kullaniciIslemleri.daireDataModel}" var="varDaire"
-                                             paginatorPosition="bottom"
+                                             paginatorPosition="bottom"  reflow="true"
                                              selection="#{kullaniciIslemleri.selectedDaire}"
                                              paginator="true" rows="10" emptyMessage="#{msg.no_record_found}"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -138,11 +138,11 @@
 
                                 <p:dataTable id="kullaniciListesiOfDaire"
                                              value="#{kullaniciIslemleri.kullaniciDaireDataModel}"
-                                             var="varkullaniciDaire"
+                                             var="varkullaniciDaire"  reflow="true"
                                              emptyMessage="#{msg.no_record_found}"
                                              selection="#{kullaniciIslemleri.selectedKullaniciDaire}"
                                              paginatorPosition="bottom" paginator="true"
-                                             style="width:100%" rows="3">
+                                             rows="3">
                                     <p:column headerText="#{lbl.daire_kodu}">
                                         <h:outputText value="#{varkullaniciDaire.daire.daireKodu}"/>
                                     </p:column>
