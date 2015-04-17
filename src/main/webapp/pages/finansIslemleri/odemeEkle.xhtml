@@ -129,7 +129,6 @@
                     <p:column style="width:4%" exportable="false">
                         <h:panelGrid columns="4">
                             <p:commandButton id="deleteButton1" icon="ui-icon-trash" immediate="true"
-                                             rendered="#{sessionInfo.adminMi}"
                                              action="#{odemeIslemleriMB.deleteTempDaireToList}"
                                              update="@([id$=main_form])">
                                 <f:setPropertyActionListener value="#{vardaire1}"

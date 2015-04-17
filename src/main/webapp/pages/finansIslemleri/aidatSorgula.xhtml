@@ -344,13 +344,13 @@
 
                                             <p:menuitem id="viewButtonAidatGuncelle" value="#{lbl.ortak_guncelle}"
                                                         icon="ui-icon-search"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('aidat_guncelleme')}"
                                                         action="#{aidatMB.guncelleme(varAidat)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="deleteAidat" value="#{lbl.aidat_silme}"
                                                         icon="ui-icon-trash" update="@([id$=sorguSonucuPanel])"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('aidat_silme')}"
                                                         action="#{aidatMB.delete(varAidat)}">
                                             </p:menuitem>
 

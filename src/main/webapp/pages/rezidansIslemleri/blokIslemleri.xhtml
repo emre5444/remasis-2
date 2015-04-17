@@ -63,12 +63,14 @@
                                     <p:column style="width:10%">
                                         <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
                                             <p:menuitem id="viewButtonBlokGuncelle" value="#{lbl.blok_guncelleme}"
-                                                        icon="ui-icon-wrench" rendered="#{sessionInfo.adminMi}"
+                                                        icon="ui-icon-wrench"
+                                                        rendered="#{sessionInfo.isYetkili('blok_guncelleme')}"
                                                         action="#{blokMB.blokGuncelleme(varBlok)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="deleteBlok" value="#{lbl.label_blok_silme}"
-                                                        icon="ui-icon-trash" rendered="#{sessionInfo.adminMi}"
+                                                        icon="ui-icon-trash"
+                                                        rendered="#{sessionInfo.isYetkili('blok_silme')}"
                                                         update="@([id$=main_form])"
                                                         action="#{blokMB.delete(varBlok)}">
                                             </p:menuitem>

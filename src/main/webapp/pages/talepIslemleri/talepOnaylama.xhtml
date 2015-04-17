@@ -96,7 +96,8 @@
                                              rendered="#{talepIslemMB.selected.talep.talepTipi.belgeTalebiMi}">
 
                                     <p:commandButton id="yeniBelgeEkleme" value="#{lbl.label_belge_ekle}"
-                                                     icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
+                                                     icon="ui-icon-search"
+                                                     rendered="#{sessionInfo.isYetkili('belge_ekleme')}"
                                                      update="@([id$=belgeEkleme])" immediate="true"
                                                      action="#{talepIslemMB.clearBelgeYuklemeObject}"
                                                      oncomplete="belge_yukle.loadStep(belge_yukle.cfg.steps[0], true);PF('belgeEklePopup').show()"/>

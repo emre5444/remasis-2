@@ -186,28 +186,30 @@
                     <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
                         <p:menuitem id="viewButtonKullaniciGoruntule" value="#{lbl.label_goruntule}"
                                     icon="ui-icon-search"
+                                    rendered="#{sessionInfo.isYetkili('kullanici_goruntuleme')}"
                                     action="#{kullaniciController.kullaniciGoruntuleme(varKullanici)}">
                         </p:menuitem>
 
                         <p:menuitem id="viewButtonKullaniciGuncelle" value="#{lbl.ortak_guncelle}"
                                     icon="ui-icon-wrench"
+                                    rendered="#{sessionInfo.isYetkili('kullanici_guncelleme')}"
                                     action="#{kullaniciController.kullaniciGuncelleme(varKullanici)}">
                         </p:menuitem>
 
                         <p:menuitem id="viewButtonKullaniciRol" value="#{lbl.label_rol_ata}"
-                                    rendered="#{sessionInfo.adminMi}"
+                                    rendered="#{sessionInfo.isYetkili('kullanici_rol_atama')}"
                                     icon="ui-icon-locked"
                                     action="#{kullaniciController.kullaniciRolIliskilendir(varKullanici)}">
                         </p:menuitem>
 
                         <p:menuitem id="viewButtonKullaniciDaire" value="#{lbl.label_daire_iliskilendir}"
-                                    rendered="#{sessionInfo.adminMi}"
+                                    rendered="#{sessionInfo.isYetkili('kullanici_daire_iliskilendirme')}"
                                     icon="ui-icon-home"
                                     action="#{kullaniciController.kullaniciDaireIliskilendir(varKullanici)}">
                         </p:menuitem>
 
                         <p:menuitem id="resetUserPassword" value="#{lbl.label_sifre_sifirla}"
-                                    rendered="#{sessionInfo.adminMi}"
+                                    rendered="#{sessionInfo.isYetkili('kullanici_sifre_sifirlama')}"
                                     icon="ui-icon-key"
                                     action="#{kullaniciController.resetPassword(varKullanici)}">
                         </p:menuitem>

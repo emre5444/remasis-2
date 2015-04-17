@@ -119,8 +119,7 @@
 
                             <p:commandButton id="rol_kaydet" value="#{lbl.ortak_guncelle}"
                                              update="@([id$=main_form]) , updateEnvanter"
-                                             actionListener="#{envanterIslemleriMB.updateEnvanter}"
-                                             rendered="#{sessionInfo.isAdminMi()}">
+                                             actionListener="#{envanterIslemleriMB.updateEnvanter}">
                                 <p:confirm header="#{lbl.ortak_guncelle}" message="#{msg.islemi_onayliyormusunuz}"/>
                             </p:commandButton>
 

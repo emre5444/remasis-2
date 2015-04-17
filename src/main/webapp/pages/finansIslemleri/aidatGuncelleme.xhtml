@@ -151,14 +151,14 @@
                                                                        value="#{borcKalems.tutar}" style="width:95%"/></f:facet>
                                 </p:cellEditor>
                             </p:column>
-                            <p:column rendered="#{sessionInfo.adminMi}">
+                            <p:column>
                                 <p:rowEditor id="rowEditor"/>
                                 <p:tooltip for="rowEditor" value="#{lbl.ortak_guncelle}" trackMouse="true"/>
                             </p:column>
                             <f:facet name="footer">
                                 <p:commandButton id="yeniBorcKalemEkle"
                                                  value="#{lbl.borc_kalem_ekle}" styleClass="GreenButton"
-                                                 icon="ui-icon-plus" rendered="#{sessionInfo.adminMi}"
+                                                 icon="ui-icon-plus"
                                                  update="@([id$=daire_borc_kalem])"
                                                  action="#{aidatIslemleriMB.addNewBorcKalem()}"/>
                             </f:facet>

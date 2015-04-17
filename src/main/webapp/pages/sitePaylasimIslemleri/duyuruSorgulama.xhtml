@@ -103,7 +103,7 @@
 
                                             <p:menuitem id="deleteButton1" value="#{lbl.sil}"
                                                         icon="fa fa-trash-o" immediate="true"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('duyuru_silme')}"
                                                         action="#{duyuruMB.deleteDuyuru(varDuyuru)}"
                                                         update="@([id$=main_form])">
                                             </p:menuitem>
