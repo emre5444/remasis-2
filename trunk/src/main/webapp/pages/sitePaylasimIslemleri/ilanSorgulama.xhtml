@@ -152,7 +152,7 @@
 
                                             <p:menuitem id="deleteButton1" value="#{lbl.sil}"
                                                         icon="fa fa-trash-o" immediate="true"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.adminMi ? sessionInfo.isYetkili('ilan_silme') : sessionInfo.isYetkili('ilan_silme') and varDuyuru.kullanici.id == sessionInfo.kullanici.id}"
                                                         action="#{ilanMB.deleteDuyuru(varDuyuru)}"
                                                         update="@([id$=main_form])">
                                             </p:menuitem>

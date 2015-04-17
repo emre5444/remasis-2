@@ -62,7 +62,7 @@
 
                                             <p:menuitem id="deleteButton1" value="#{lbl.sil}"
                                                         icon="fa fa-trash-o" immediate="true"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('kategori_silme')}"
                                                         action="#{kategoriMB.deleteKategori(varData)}"
                                                         update="@([id$=main_form])">
                                             </p:menuitem>

@@ -168,22 +168,22 @@
 
                     <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
                         <p:menuitem id="viewButtonTalepGoruntule" value="#{lbl.label_talep_detay_goruntule}"
-                                    icon="ui-icon-search" rendered="#{sessionInfo.adminMi}"
+                                    icon="ui-icon-search"
                                     action="#{talepMB.talepGoruntuleme(varTalep)}">
                         </p:menuitem>
 
                         <p:menuitem id="talepOnaylaButton" value="#{lbl.label_talebi_onayla}"
-                                    icon="ui-icon-check" rendered="#{sessionInfo.adminMi}"
+                                    icon="ui-icon-check" rendered="#{sessionInfo.isYetkili('talep_onaylama')}"
                                     action="#{talepMB.talepOnaylama(varTalep)}">
                         </p:menuitem>
 
                         <p:menuitem id="talepReddetButton" value="#{lbl.label_talebi_reddet}"
-                                    icon="ui-icon-bullet" rendered="#{sessionInfo.adminMi}"
+                                    icon="ui-icon-bullet" rendered="#{sessionInfo.isYetkili('talep_reddetme')}"
                                     action="#{talepMB.talepReddetme(varTalep)}">
                         </p:menuitem>
 
                         <p:menuitem id="talepIptalButton" value="#{lbl.label_talebi_sil}"
-                                    icon="ui-icon-circle-close" rendered="#{sessionInfo.adminMi}"
+                                    icon="ui-icon-circle-close" rendered="#{sessionInfo.isYetkili('talep_iptali')}"
                                     action="#{talepMB.talepIptalEt(varTalep)}">
                         </p:menuitem>
                     </p:menuButton>

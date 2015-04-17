@@ -154,7 +154,7 @@
 
                                             <p:menuitem id="deleteBelge1" value="#{lbl.sil}"
                                                         icon="fa fa-trash-o" immediate="true"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.adminMi ? sessionInfo.isYetkili('belge_silme') : sessionInfo.isYetkili('belge_silme') and varDaireBelge.belge.kullanici.id == sessionInfo.kullanici.id}"
                                                         action="#{belgeMB.deleteBelge(varDaireBelge)}"
                                                         update="@([id$=main_form])">
                                             </p:menuitem>

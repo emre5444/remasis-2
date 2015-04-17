@@ -125,24 +125,26 @@
 
                                             <p:menuitem value="#{lbl.katil}"
                                                         action="#{anketMB.goruntule(varAnket)}"
+                                                        rendered="#{sessionInfo.isYetkili('anket_katilma')}"
                                                         icon="fa fa-thumbs-o-up"/>
 
                                             <p:menuitem id="viewButtonAnketGoruntule"
                                                         value="#{lbl.label_goruntule}"
+                                                        rendered="#{sessionInfo.isYetkili('anket_goruntuleme')}"
                                                         icon="fa fa-search"
                                                         action="#{anketMB.goruntule(varAnket)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="viewButtonAnketGuncelle"
                                                         value="#{lbl.ortak_guncelle}"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('anket_guncelleme')}"
                                                         icon="fa fa-wrench"
                                                         action="#{anketMB.guncelle(varAnket)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="viewButtonAnketSil" value="#{lbl.sil}"
                                                         icon="fa fa-trash-o" immediate="true"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('anket_silme')}"
                                                         action="#{anketMB.delete(varAnket)}"
                                                         update="@([id$=main_form])">
                                             </p:menuitem>

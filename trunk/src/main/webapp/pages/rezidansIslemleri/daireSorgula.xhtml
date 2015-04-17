@@ -148,16 +148,19 @@
                                         <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
                                             <p:menuitem id="viewButton1" value="#{lbl.daire_goruntuleme}"
                                                         icon="ui-icon-search"
+                                                        rendered="#{sessionInfo.isYetkili('daire_goruntuleme')}"
                                                         action="#{daireMB.daireGoruntule(varDaire)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="viewButtonDaireGuncelle" value="#{lbl.daire_guncelleme}"
-                                                        icon="ui-icon-wrench" rendered="#{sessionInfo.adminMi}"
+                                                        icon="ui-icon-wrench"
+                                                        rendered="#{sessionInfo.isYetkili('daire_guncelleme')}"
                                                         action="#{daireMB.daireGuncelleme(varDaire)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="deleteDaire" value="#{lbl.daire_sil}"
-                                                        icon="ui-icon-trash" rendered="#{sessionInfo.adminMi}"
+                                                        icon="ui-icon-trash"
+                                                        rendered="#{sessionInfo.isYetkili('daire_silme')}"
                                                         action="#{daireMB.delete(varDaire)}">
                                             </p:menuitem>
                                         </p:menuButton>

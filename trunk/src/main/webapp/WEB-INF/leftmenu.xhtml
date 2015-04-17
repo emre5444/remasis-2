@@ -30,19 +30,19 @@
                            rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}">
                     <p:menuitem value="#{lbl.kullanici_islemleri}" url="/pages/sistemYonetimi/kullaniciSorgula.jsf"
                                 icon="icon-vcard"
-                                rendered="#{sessionInfo.isYetkili('kullanici_islemleri')}"/>
+                                rendered="#{sessionInfo.isYetkili('kullanici_sorgulama')}"/>
                     <p:menuitem value="#{lbl.kullanici_ekleme_islemleri}" url="/pages/sistemYonetimi/kullaniciEkle.jsf"
                                 icon="icon-user-add"
                                 rendered="#{sessionInfo.isYetkili('kullanici_ekleme')}"/>
                 </p:submenu>
 
                 <p:submenu label="#{lbl.rol_yonetimi}" icon="icon-lock-2"
-                           rendered="#{sessionInfo.isYetkili('rol_sorgulama')}">
+                           rendered="#{sessionInfo.isYetkili('rol_yetki_islemleri')}">
                     <p:menuitem value="#{lbl.rol_islemleri}" url="/pages/sistemYonetimi/rolSorgula.jsf"
                                 icon="icon-building"
                                 rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
                     <p:menuitem value="#{lbl.rol_ekleme}" url="/pages/sistemYonetimi/rolEkleme.jsf" icon="icon-plus"
-                                rendered="#{sessionInfo.isYetkili('rol_sorgulama')}"/>
+                                rendered="#{sessionInfo.isYetkili('rol_ekleme')}"/>
                 </p:submenu>
 
                 <p:submenu label="#{lbl.menu_bildirim_islemleri}" icon="icon-share"
@@ -59,19 +59,19 @@
 
             <p:submenu label="#{lbl.residence_islemleri}" icon="icon-home"
                        rendered="#{sessionInfo.isYetkili('rezidans_yonetimi')}">
-                <p:submenu label="#{lbl.blok_yonetimi}" icon="icon-building" >
+                <p:submenu label="#{lbl.blok_yonetimi}" icon="icon-building"  rendered="#{sessionInfo.isYetkili('blok_islemleri')}">
                     <p:menuitem value="#{lbl.blok_islemleri}" url="/pages/rezidansIslemleri/blokIslemleri.jsf"
-                                icon="icon-building-filled" />
+                                icon="icon-building-filled"  rendered="#{sessionInfo.isYetkili('blok_sorgulama')}" />
                     <p:menuitem value="#{lbl.blok_ekleme}" url="/pages/rezidansIslemleri/blokEkleme.jsf"
-                                icon="icon-plus-squared" />
+                                icon="icon-plus-squared"  rendered="#{sessionInfo.isYetkili('blok_ekleme')}" />
                 </p:submenu>
 
-                <p:submenu label="#{lbl.daire_yonetimi}" icon="icon-home">
+                <p:submenu label="#{lbl.daire_yonetimi}" icon="icon-home"  rendered="#{sessionInfo.isYetkili('daire_islemleri')}">
                     <p:menuitem url="/pages/rezidansIslemleri/daireSorgula.jsf" icon="icon-logout-1"
                                 rendered="#{sessionInfo.isYetkili('daire_sorgula')}"
                                 value="#{lbl.hizli_menu_daireme_git}"/>
                     <p:menuitem url="/pages/rezidansIslemleri/daireEkleme.jsf" icon="icon-plus-squared"
-                                rendered="#{sessionInfo.isYetkili('daire_sorgula') and sessionInfo.adminMi}"
+                                rendered="#{sessionInfo.isYetkili('daire_ekleme') and sessionInfo.adminMi}"
                                 value="#{lbl.daire_ekleme}"/>
                 </p:submenu>
             </p:submenu>
@@ -91,19 +91,18 @@
                 </p:submenu>
             </p:submenu>
 
-            <p:submenu label="#{lbl.label_site_ici_paylasim_islem}" icon="icon-share-squared"
+            <p:submenu label="#{lbl.label_anket_yonetimi}" icon="icon-users"
                        rendered="#{sessionInfo.isYetkili('anket_islemleri')}">
+                <p:menuitem value="#{lbl.label_anket_sorgulama}" url="/pages/sitePaylasimIslemleri/anketSorgulama.jsf"
+                            icon="icon-vcard"
+                            rendered="#{sessionInfo.isYetkili('anket_sorgulama')}"/>
+                <p:menuitem value="#{lbl.label_yeni_anket_ekleme}" url="/pages/sitePaylasimIslemleri/anketEkleme.jsf"
+                            icon="icon-plus-outline"
+                            rendered="#{sessionInfo.isYetkili('anket_ekleme')}"/>
+            </p:submenu>
 
-                <p:submenu label="#{lbl.label_anket_yonetimi}" icon="icon-users"
-                           rendered="#{sessionInfo.isYetkili('anket_islemleri')}">
-                    <p:menuitem value="#{lbl.label_anket_sorgulama}" url="/pages/sitePaylasimIslemleri/anketSorgulama.jsf"
-                                icon="icon-vcard"
-                                rendered="#{sessionInfo.isYetkili('anket_islemleri')}"/>
-                    <p:menuitem value="#{lbl.label_yeni_anket_ekleme}" url="/pages/sitePaylasimIslemleri/anketEkleme.jsf"
-                                icon="icon-plus-outline"
-                                rendered="#{sessionInfo.isYetkili('anket_islemleri')}"/>
-                </p:submenu>
-
+            <p:submenu label="#{lbl.label_site_ici_paylasim_islem}" icon="icon-share-squared"
+                       rendered="#{sessionInfo.isYetkili('site_ici_paylasim_islemleri')}">
 
                 <p:menuitem value="#{lbl.label_belge_sorgulama}"
                             url="/pages/sitePaylasimIslemleri/belgeSorgulama.jsf"
@@ -135,10 +134,10 @@
                            rendered="#{sessionInfo.isYetkili('kategori_islemleri')}">
                     <p:menuitem value="#{lbl.menu_envanter_kategori_sorgulama}" url="/pages/envanterIslemleri/kategoriIslemleri.jsf"
                                 icon="icon-vcard"
-                                rendered="#{sessionInfo.isYetkili('kategori_islemleri')}"/>
+                                rendered="#{sessionInfo.isYetkili('kategori_sorgulama')}"/>
                     <p:menuitem value="#{lbl.label_yeni_kategori_ekleme}" url="/pages/envanterIslemleri/kategoriEkleme.jsf"
                                 icon="icon-plus-outline"
-                                rendered="#{sessionInfo.isYetkili('kategori_islemleri')}"/>
+                                rendered="#{sessionInfo.isYetkili('kategori_ekleme')}"/>
                 </p:submenu>
 
             </p:submenu>

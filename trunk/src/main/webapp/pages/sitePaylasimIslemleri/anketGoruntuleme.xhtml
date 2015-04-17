@@ -94,7 +94,8 @@
                             <div class="EmptyBox10"/>
 
                             <p:panel id="ankete_katilan_kullanicilar11"
-                                     rendered="#{sessionInfo.adminMi}">
+                                     rendered="#{sessionInfo.isYetkili('anket_detay_goruntule')}">
+
 
                                 <i class="icon-list-alt orange"></i> <h:outputText
                                     value=" #{lbl.label_anket_katilim_listesi}"

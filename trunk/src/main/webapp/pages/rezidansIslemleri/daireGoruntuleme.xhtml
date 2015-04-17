@@ -22,6 +22,7 @@
     <p:submenu label="#{lbl.label_belge_islemleri}" icon="ui-icon-comment" style="width: auto">
 
         <p:menuitem id="menuBelgeGirisi" value="#{lbl.label_belge_ekle}"
+                    rendered="#{sessionInfo.isYetkili('belge_ekleme')}"
                     action="#{daireGoruntuleMB.navigateToBelgeEkle()}">
         </p:menuitem>
 
@@ -29,6 +30,7 @@
 
     <p:submenu label="#{lbl.label_ilan_sorgulama}" icon="ui-icon-comment" style="width: auto">
         <p:menuitem id="enuIlanGirisi" value="#{lbl.ilan_ekleme}"
+                    rendered="#{sessionInfo.isYetkili('ilan_ekleme')}"
                     action="#{daireGoruntuleMB.navigateToDuyuruEkle()}">
         </p:menuitem>
     </p:submenu>
@@ -36,15 +38,15 @@
     <p:submenu label="#{lbl.talep_islemleri}" icon="ui-icon-comment" style="width: auto">
 
         <p:menuitem id="arizaTalebiGiris" value="#{lbl.daire_islemler_ariza_talebi_giris}"
-
+                    rendered="#{sessionInfo.isYetkili('yetki_ariza_talep')}"
                     action="#{daireGoruntuleMB.arzaTalebiGiris()}">
         </p:menuitem>
         <p:menuitem id="sikayetTalebiGiris" value="#{lbl.daire_islemler_sikayet_talebi_giris}"
-
+                    rendered="#{sessionInfo.isYetkili('yetki_sikayet_talep')}"
                     action="#{daireGoruntuleMB.sikayetTalebiGiris()}">
         </p:menuitem>
         <p:menuitem id="belgeTalebiGiris" value="#{lbl.daire_islemleri_belge_talebi_giris}"
-
+                    rendered="#{sessionInfo.isYetkili('yetki_belge_talep')}"
                     action="#{daireGoruntuleMB.belgeTalebiGiris()}">
         </p:menuitem>
 
@@ -400,6 +402,7 @@
 
         <p:menuitem id="aidatItirazEt" value="#{lbl.itiraz_et}"
                     icon="ui-icon-wrench"
+                    rendered="#{sessionInfo.isYetkili('yetki_aidat_itiraz_talep')}"
                     action="#{daireGoruntuleMB.itirazTalebiGiris(varBorc)}">
         </p:menuitem>
 
@@ -546,6 +549,7 @@
                                   styleClass="Fright">
                         <p:menuitem id="belgeEkleme"
                                     value="#{lbl.label_belge_ekle}"
+                                    rendered="#{sessionInfo.isYetkili('belge_ekleme')}"
                                     icon="ui-icon-disk"
                                     action="#{daireGoruntuleMB.navigateToBelgeEkle()}"
                                 >
@@ -601,13 +605,14 @@
                     <p:column style="width:10%">
                         <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
                             <p:menuitem id="downloadLink" value="#{lbl.indir}"
+                                        rendered="#{sessionInfo.isYetkili('belge_indirme')}"
                                         icon="fa fa-thumbs-o-up" ajax="false">
                                 <p:fileDownload value="#{daireGoruntuleMB.download(varDaireBelge)}"/>
                             </p:menuitem>
 
                             <p:menuitem id="deleteBelge1" value="#{lbl.sil}"
                                         icon="fa fa-trash-o" immediate="true"
-                                        rendered="#{sessionInfo.adminMi}"
+                                        rendered="#{sessionInfo.isYetkili('belge_silme')}"
                                         action="#{daireGoruntuleMB.deleteBelge(varDaireBelge)}"
                                         update="@([id$=pnl_belgeler])">
                             </p:menuitem>
@@ -632,6 +637,7 @@
                                   styleClass="Fright">
                         <p:menuitem id="ilanEkleme"
                                     value="#{lbl.ilan_ekleme}"
+                                    rendered="#{sessionInfo.isYetkili('ilan_ekleme')}"
                                     icon="ui-icon-disk"
                                     action="#{daireGoruntuleMB.navigateToDuyuruEkle()}"
                                 >
@@ -673,12 +679,13 @@
                         <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
                             <p:menuitem id="ilanGoruntuleme"
                                         value="#{lbl.ilan_goruntuleme}"
+                                        rendered="#{sessionInfo.isYetkili('ilan_goruntuleme')}"
                                         icon="ui-icon-disk"
                                         action="#{daireGoruntuleMB.duyuruGoruntule(varDuyuru)}"/>
 
                             <p:menuitem id="deleteBelge1" value="#{lbl.ilan_sil}"
                                         icon="fa fa-trash-o" immediate="true"
-                                        rendered="#{sessionInfo.adminMi}"
+                                        rendered="#{sessionInfo.isYetkili('ilan_silme')}"
                                         action="#{daireGoruntuleMB.deleteDuyuru(varDuyuru)}"
                                         update="@([id$=pnl_ilanlar])">
                             </p:menuitem>

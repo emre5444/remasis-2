@@ -214,20 +214,20 @@
 
                                             <p:menuitem id="viewButtonEnvanterGoruntule" value="#{lbl.ortak_goruntule}"
                                                         icon="fa fa-search"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('envanter_goruntuleme')}"
                                                         action="#{envanterMB.goruntule(varData)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="viewButtonAnketGuncelle"
                                                         value="#{lbl.ortak_guncelle}"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('envanter_guncelleme')}"
                                                         icon="fa fa-wrench"
                                                         action="#{envanterMB.guncelle(varData)}">
                                             </p:menuitem>
 
                                             <p:menuitem id="viewButtonEnvanterSil" value="#{lbl.sil}"
                                                         icon="fa fa-trash-o" immediate="true"
-                                                        rendered="#{sessionInfo.adminMi}"
+                                                        rendered="#{sessionInfo.isYetkili('envanter_silme')}"
                                                         action="#{envanterMB.deleteEnvanter(varData)}"
                                                         update="@([id$=main_form])">
                                             </p:menuitem>
