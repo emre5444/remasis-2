@@ -316,6 +316,25 @@ public class OrtakDao implements IOrtakDao {
         getSessionFactory().getCurrentSession().save(erisimLog);
     }
 
+    public Integer numberOfVisitors(SessionInfo sessionInfo, Date baslangicTarihi) {
+        if (baslangicTarihi == null) {
+            List list = getSessionFactory().getCurrentSession()
+                    .createQuery("select distinct(E.kullanici.id) from ErisimLog E where E.sirket.id = ? and E.logTipi = ?")
+                    .setParameter(0, sessionInfo.getSirket().getId())
+                    .setParameter(1, LogTipi.getLoginObject())
+                    .list();
+            return list.size();
+        } else {
+            List list = getSessionFactory().getCurrentSession()
+                    .createQuery("select distinct(E.kullanici.id) from ErisimLog E where E.sirket.id = ? and E.logTipi = ? and E.tanitimZamani >= ?")
+                    .setParameter(0, sessionInfo.getSirket().getId())
+                    .setParameter(1, LogTipi.getLoginObject())
+                    .setParameter(2, baslangicTarihi)
+                    .list();
+            return list.size();
+        }
+    }
+
     public void deleteDuyuru(Duyuru duyuru) {
         duyuru.setDurum(Durum.getSilinmisObject());
         this.update(duyuru);

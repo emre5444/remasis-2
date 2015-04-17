@@ -16,6 +16,7 @@ import com.ronin.model.kriter.DuyuruSorguKriteri;
 import com.ronin.model.kriter.IlanSorguKriteri;
 import com.ronin.model.sorguSonucu.AnketSonucViewBean;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -88,6 +89,8 @@ public interface IOrtakService {
     void bildirimIstekOlustur(SessionInfo sessionInfo, Kullanici kullanici, BildirimTipi.ENUM bildirimTipiEnum, String message, String kisaAciklama,BilgilendirmeTipi.ENUM bilgilendirmeTipiEnum);
 
     void createErisimLog(SessionInfo sessionInfo ,Kullanici kullanici, LogTipi logTipi, String aciklama);
+
+    Integer numberOfVisitors(SessionInfo sessionInfo ,Date baslangicTarihi);
 
     List<Duyuru> getDuyuruListBySorguSonucu(int first, int pageSize, DuyuruSorguKriteri sorguKriteri ,SessionInfo sessionInfo);
 

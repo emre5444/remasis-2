@@ -1,25 +1,27 @@
-<ui:composition 
+<ui:composition
 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets">
-    
-    
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:p="http://java.sun.com/jsf/html">
+
+	<h:form>
     <div id="layout-header" class="Unselectable fontRegular">
-        <a href="dashboard.xhtml" id="layout-logo">
+        <a href="#{request.contextPath}/dashboard.xhtml" id="layout-logo">
             <h:graphicImage name="images/LOGO.svg" styleClass="Fleft" library="sentinel-layout"/>
             <span class="Fs19 FontTitilliumSemiBoldItalic Fleft"><span class="softblue">REMA</span><span class="hardblue">SIS</span></span>
         </a>
     	<ul id="sm-topmenu" class="layout-header-widgets white Fs14">
     		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-user-male"></i>
     			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
-    				<li class="Animated05"><a class="white Unselectable"><i class="icon-user-male Fs26 OvHidden"></i><span class="Fs18">Walter White<br/><span class="Fs10">Last Login - 18.08.2014</span></span></a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-stopwatch-1"></i>User Tasks</a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-users-2"></i>Create New User</a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-sliders"></i>User Preferences</a></li>
+    				<li class="Animated05"><a class="white Unselectable"><i class="icon-user-male Fs26 OvHidden"></i><span class="Fs18">#{sessionInfo.kullanici.ad} #{sessionInfo.kullanici.soyad}<br/><span class="Fs12"><br/> <h:outputText
+							value="#{lbl.label_sisteme_son_giris_tarihi}"/> - <h:outputText value="#{sessionInfo.lastLoginDate}">
+						<f:convertDateTime pattern="dd/MM/yyyy-HH:mm:ss"/>
+					</h:outputText></span></span></a></li>
+    				<li class="Animated05"><i class="icon-cog-alt"></i> <p:commandLink value="#{lbl.label_profil_ayarlari}" action="#{anasayfaMB.kullaniciGuncelleme()}" styleClass="white Unselectable TexAlCenter"/></li>
     			</ul>
     		</li>
+			<ui:remove>
     		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-mail"></i><span class="alertBubble BordRad10 Fs9">166</span>
     			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
     				<li class="Animated05"><a href="#" class="white Unselectable TexAlRight"><i class="icon-chat-empty yellow"></i>Gustavo Fring<br/><span class="Fs10">What does a man do Walter?</span></a></li>
@@ -29,19 +31,24 @@
     				<li class="Animated05"><a href="#" class="white Unselectable TexAlRight"><i class="icon-chat-empty"></i>Heisenberg<br/><span class="Fs10">I am the one who knocks.</span></a></li>
     			</ul>
     		</li>
-    		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-bell"></i><span class="alertBubble BordRad10 Fs9">#{notificationMB.aktifNotificationsCount()}</span>
-    			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
-    				<li class="Animated05"><a href="#" class="white Unselectable TexAlRight"><i class="icon-flag red"></i>New Products</a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable TexAlRight"><i class="icon-flag yellow"></i>Today Sales Reports</a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable TexAlRight"><i class="icon-flag red"></i>Visit Reports</a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable TexAlRight"><i class="icon-flag red"></i>Sales Reports</a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable TexAlRight"><i class="icon-flag"></i>Task Alerts</a></li>
-    			</ul>
-    		</li>
+			</ui:remove>
+			<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-bell"></i><p:commandLink id="btn"
+																							  value="#{notificationMB.aktifNotificationsCount()}"
+																							  action="#{notificationMB.updateStatus()}"
+																							  global="false"
+																							  update="btn"
+																							  styleClass="alertBubble BordRad10 Fs9"/>
+				<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
+					<ui:repeat value="#{notificationMB.notificationDataModel}" var="notification">
+						<li class="Animated05"><i
+								class="icon-flag red"></i><p:commandLink value="#{notification.notification}" action="#{notificationMB.onRowSelect(notification)}" styleClass="white Unselectable TexAlRight"/></li>
+					</ui:repeat>
+				</ul>
+			</li>
     		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-wrench-1"></i>
     			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
-    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-sun"></i>System Settings</a></li>
-    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-lifebuoy"></i>Help Desk</a></li>
+    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-sun"></i>#{lbl.lbl_ayarlar}</a></li>
+    				<li class="Animated05"><a href="#" class="white Unselectable"><i class="icon-help"></i>#{lbl.lbl_help_desk}</a></li>
     			</ul>
     		</li>
     		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-power"></i>
@@ -56,5 +63,6 @@
     	</ul>
     	<!-- ****** -->
    	</div>
+	</h:form>
     
 </ui:composition>

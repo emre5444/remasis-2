@@ -68,7 +68,7 @@ public class OrtakService implements IOrtakService {
 
     @Transactional(readOnly = false)
     public List<IAbstractEntity> getListByNamedQueryWithSirket(String namedQuery,SessionInfo sessionInfo) {
-        return iOrtakDao.getListByNamedQueryWithSirket(namedQuery,sessionInfo);
+        return iOrtakDao.getListByNamedQueryWithSirket(namedQuery, sessionInfo);
     }
 
     @Transactional(readOnly = false)
@@ -118,12 +118,12 @@ public class OrtakService implements IOrtakService {
 
     @Transactional(readOnly = false)
     public List<Duyuru> getIlanListBySorguSonucu(int first, int pageSize, IlanSorguKriteri sorguKriteri ,SessionInfo sessionInfo) {
-        return iOrtakDao.getIlanListBySorguSonucu(first,pageSize,sorguKriteri,sessionInfo);
+        return iOrtakDao.getIlanListBySorguSonucu(first, pageSize, sorguKriteri, sessionInfo);
     }
 
     @Transactional(readOnly = false)
     public List<Anket> getAnketListBySorguSonucu(int first, int pageSize, AnketSorguKriteri sorguKriteri ,SessionInfo sessionInfo){
-        return iOrtakDao.getAnketListBySorguSonucu(first,pageSize,sorguKriteri,sessionInfo);
+        return iOrtakDao.getAnketListBySorguSonucu(first, pageSize, sorguKriteri, sessionInfo);
     }
 
     @Transactional(readOnly = false)
@@ -207,7 +207,7 @@ public class OrtakService implements IOrtakService {
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public EvetHayir isAnketeKatinildiMi(SessionInfo sessionInfo , Anket anket){
-          return iOrtakDao.isAnketeKatinildiMi(sessionInfo,anket);
+          return iOrtakDao.isAnketeKatinildiMi(sessionInfo, anket);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -286,6 +286,11 @@ public class OrtakService implements IOrtakService {
     @Transactional(readOnly = false)
     public void createErisimLog(SessionInfo sessionInfo ,Kullanici kullanici, LogTipi logTipi, String aciklama) {
         iOrtakDao.createErisimLog(sessionInfo ,kullanici, logTipi, aciklama);
+    }
+
+    @Transactional(readOnly = false)
+    public Integer numberOfVisitors(SessionInfo sessionInfo ,Date baslangicTarihi){
+        return iOrtakDao.numberOfVisitors(sessionInfo,baslangicTarihi);
     }
 
     public IOrtakDao getiOrtakDao() {

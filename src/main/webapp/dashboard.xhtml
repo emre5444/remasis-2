@@ -22,6 +22,8 @@
                              update="anasayfa_belgeler"/>
             <p:remoteCommand global="false" name="onload6" action="#{anasayfaMB.createPieModels()}" autoRun="true"
                              update="anasayfa_borc_alacak_durum , anasayfa_borc_alacak_durum_pie"/>
+            <p:remoteCommand global="false" name="onload7" action="#{anasayfaMB.loadVisitorsReport()}" autoRun="true"
+                             update="visitors_report"/>
 
             <!-- SECTION 1 -->
             <div class="Container100">
@@ -37,10 +39,13 @@
                                         value="#{sessionInfo.kullanici.ad} #{sessionInfo.kullanici.soyad}"/> </span>
                                     <h:outputText
                                             value="#{lbl.label_hosgeldiniz}"/></div>
-                                <div class="Fs12 Fright leaden Wid70"><h:outputText
-                                        value="#{lbl.label_okunmamis}"/> <span
-                                        class="red"> <h:outputText value="#{lbl.label_mesaj_var}"/> </span></div>
-                                <div class="EmptyBox10"></div>
+                                <h:panelGrid rendered="#{notificationMB.aktifNotificationsCount()> 0}" styleClass="Fs12 leaden Fright Wid70">
+                                    <h:outputText
+                                            value="#{lbl.label_okunmamis}"/><h:outputText
+                                        value="#{notificationMB.aktifNotificationsCount()} #{lbl.label_mesaj_var}"
+                                        styleClass="red"/>
+                                </h:panelGrid>
+                                <div class="EmptyBox5"></div>
                                 <p:separator styleClass="Wid100"></p:separator>
 
                                 <div class="EmptyBox10"></div>
@@ -68,12 +73,9 @@
                                 <div class="EmptyBox10"></div>
                                 <i class="icon-key softgray MarRight10 Fs14 Fright"> <h:outputText
                                         value="#{lbl.label_sisteme_son_giris_tarihi}"/> -
-                                    <h:outputText value="#{anasayfaMB.currentDate}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy-hh:mm:ss"/>
+                                    <h:outputText value="#{sessionInfo.lastLoginDate}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy-HH:mm:ss"/>
                                     </h:outputText> </i>
-
-                                <div class="EmptyBox10"></div>
-                                <p:separator styleClass="Wid100"></p:separator>
 
                             </p:panel>
                         </div>
@@ -81,29 +83,33 @@
 
                     <div class="Container20 Responsive">
                         <div class="ContainerIndent">
-                            <p:panel style="min-height: 270px;">
-                                <i class=" icon-data-science-inv Fs50 Fleft Wid25 orange TexAlCenter"></i>
+                            <h:panelGroup id="visitors_report" style="min-height: 270px;">
+                                <h:panelGroup rendered="#{not anasayfaMB.visitorsReportLoaded}">
+                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                         style="display:block;margin: 0 auto;" alt=""/>
+                                </h:panelGroup>
+                                <p:panel style="min-height: 270px;" rendered="#{anasayfaMB.visitorsReportLoaded}">
+                                    <i class=" icon-data-science-inv Fs50 Fleft Wid25 orange TexAlCenter"></i>
 
-                                <div class="Fs24 Fright MarTop10 leaden Wid70">Visitors Report</div>
-                                <div class="Fs12 Fright leaden Wid70">Today <span
-                                        class="red">2.280</span> visitors,<span
-                                        class="red">15%</span> higher than last week
-                                </div>
-                                <div class="EmptyBox10"></div>
-                                <p:separator styleClass="Wid100"></p:separator>
+                                    <div class="Fs24 Fright MarTop10 leaden Wid70">#{lbl.lbl_visitors_report}</div>
 
-                                <div class="EmptyBox10"></div>
-                                <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">Overall Visits<br/><span
-                                        class="Fs24 orange">13.760</span></div>
-                                <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">Today's Visits<br/><span
-                                        class="Fs24 red">2.280</span></div>
-                                <div class="Fs12 Fright leaden Wid100 TexAlCenter">Online Visitors<br/><span
-                                        class="Fs24 hardblue">#{anasayfaMB.onlineVisitors}</span></div>
-                                <div class="EmptyBox10"></div>
-                                <p:separator styleClass="Wid100"></p:separator>
-                                <a href="#" class="DispInlBlock Fs14 Fright MarRight10"><i
-                                        class="icon-doc-1 orange"> Get Full Report</i></a>
-                            </p:panel>
+                                    <div class="EmptyBox10"></div>
+                                    <p:separator styleClass="Wid100"></p:separator>
+
+                                    <div class="EmptyBox10"></div>
+                                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">#{lbl.lbl_todays_visitors}<br/><span
+                                            class="Fs24 red">#{anasayfaMB.todaysVisitors}</span></div>
+                                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">#{lbl.lbl_total_visitors}<br/><span
+                                            class="Fs24 orange">#{anasayfaMB.totalVisitors}</span></div>
+
+                                    <div class="EmptyBox10"></div>
+
+                                    <div class="Fs12 Fright leaden Wid100 TexAlCenter">#{lbl.lbl_online_visitors}<br/><span
+                                            class="Fs24 hardblue">#{anasayfaMB.onlineVisitors}</span></div>
+                                    <div class="EmptyBox10"></div>
+                                </p:panel>
+                            </h:panelGroup>
+
                         </div>
                     </div>
 
