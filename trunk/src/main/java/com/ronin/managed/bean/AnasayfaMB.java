@@ -337,25 +337,6 @@ public class AnasayfaMB implements Serializable {
         }
     }
 
-
-    public void updateKullanici() {
-        Kullanici selectedKullanici = sessionInfo.getKullanici();
-        if (selectedKullanici.getPassword().equals(getOrtakService().getMD5String(eskiSifre))) {
-            try {
-                selectedKullanici.setPassword(yeniSifre);
-                kullaniciService.updateKullaniciWithPasword(selectedKullanici);
-                JsfUtil.addSuccessMessage(message.getString("sifre_guncelleme_basarili"));
-                RequestContext requestContext = RequestContext.getCurrentInstance();
-                requestContext.execute("PF('sifreDegistirmePopup').hide()");
-            } catch (Exception e) {
-                logger.error(e.getStackTrace());
-                JsfUtil.addSuccessMessage(e.toString());
-            }
-        } else {
-            JsfUtil.addErrorMessage(message.getString("error_sifreler_farkli_olamaz"));
-        }
-    }
-
     public void prepareDummyLoadObjects() {
         belgeTipiList = ortakService.getListByNamedQuery("BelgeTipi.findAll");
         anketAktifPasifList = ortakService.getListByNamedQuery("EvetHayir.findAll");
@@ -436,8 +417,6 @@ public class AnasayfaMB implements Serializable {
             getOrtakService().bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
             getOrtakService().bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
             JsfUtil.addSuccessMessage(message.getString("duyuru_ekleme_basarili"));
-            RequestContext requestContext = RequestContext.getCurrentInstance();
-            requestContext.execute("PF('duyuruEklePopup').hide()");
             getDuyuruData();
         } catch (Exception e) {
             logger.error(e.getStackTrace());
@@ -488,6 +467,27 @@ public class AnasayfaMB implements Serializable {
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("PF('iletisimBilgisiEklePopup').hide()");
         JsfUtil.addSuccessMessage(message.getString("iletisim_ekleme_basarili"));
+    }
+
+    public String kullaniciGuncelleme() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedKullaniciObject", sessionInfo.getKullanici());
+        storeFlashObjects();
+        return "pages/sistemYonetimi/kullaniciGuncelleme.xhtml";
+    }
+
+    public String dairemeGit(){
+        if(sessionInfo.hasOneDaire()){
+            if(sessionInfo.isYetkili("daire_goruntuleme")){
+                storeFlashObjects();
+                return "pages/rezidansIslemleri/daireGoruntuleme.xhtml";
+            }
+        } else {
+            if(sessionInfo.isYetkili("daire_sorgula")){
+                storeFlashObjects();
+                return "pages/rezidansIslemleri/daireSorgula.xhtml";
+            }
+        }
+       return "";
     }
 
     public String doubleFormatter(Double deger) {

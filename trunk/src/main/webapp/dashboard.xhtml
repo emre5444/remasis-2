@@ -24,7 +24,6 @@
                              update="anasayfa_borc_alacak_durum , anasayfa_borc_alacak_durum_pie"/>
 
             <!-- SECTION 1 -->
-
             <div class="Container100">
                 <div class="ContainerIndent">
                     <div class="EmptyBox20"></div>
@@ -49,7 +48,7 @@
 
                                     <p:commandLink styleClass="DispInlBlock Fleft Fs16 MarRight20 icon-home hardblue"
                                                    value="#{lbl.label_daireme_git}"
-                                            >
+                                                   action="#{anasayfaMB.dairemeGit()}">
                                     </p:commandLink>
                                     <br/>
                                     <p:commandLink styleClass="DispInlBlock Fleft Fs16 MarRight20 icon-key hardblue"
@@ -59,12 +58,8 @@
                                     </p:commandLink>
 
                                     <p:commandLink styleClass="DispInlBlock Fleft Fs16 MarRight20 icon-cog-alt hardblue"
-                                                   update="@([id$=profilGuncelleme])"
                                                    value="#{lbl.label_profil_ayarlari}"
-                                                   action="#{kullaniciController.getDaireListByKullanici}"
-                                                   oncomplete="PF('kullaniciGuncellemePopup').show();">
-                                        <f:setPropertyActionListener value="#{sessionInfo.kullanici}"
-                                                                     target="#{profilMB.selected}"/>
+                                                   action="#{anasayfaMB.kullaniciGuncelleme()}">
                                     </p:commandLink>
                                 </div>
                                 <div class="EmptyBox10"></div>
