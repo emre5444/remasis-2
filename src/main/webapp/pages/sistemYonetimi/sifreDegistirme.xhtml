@@ -5,16 +5,16 @@
 <h:body>
 
     <h:form id="sifreDegistirme">
-        <p:dialog header="#{lbl.sifre_degistirme}" widgetVar="sifreDegistirmePopup" closeOnEscape="true" height="auto" width="auto">
+        <p:dialog header="#{lbl.sifre_degistirme}" widgetVar="sifreDegistirmePopup" closeOnEscape="true" height="auto" width="auto"  modal="true">
             <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
                     <h:panelGrid columns="2" cellpadding="5">
 
-                        <h:outputLabel for="passwordOld" value="#{lbl.eski_sifre}" style="font-weight:bold; color: #0b4170"/>
-                        <p:password id="passwordOld" value="#{profilMB.eskiSifre}" feedback="true"/>
+                        <h:outputLabel for="passwordOld" value="#{lbl.eski_sifre} (*)" style="font-weight:bold; color: #0b4170"/>
+                        <p:password id="passwordOld" value="#{profilMB.eskiSifre}" feedback="true" required="true" label="#{lbl.eski_sifre}"/>
 
-                        <h:outputLabel for="passwordNew" value="#{lbl.yeni_sifre}" style="font-weight:bold; color: #0b4170"/>
-                        <p:password id="passwordNew" value="#{profilMB.yeniSifre}" feedback="true"/>
+                        <h:outputLabel for="passwordNew" value="#{lbl.yeni_sifre} (*)" style="font-weight:bold; color: #0b4170"/>
+                        <p:password id="passwordNew" value="#{profilMB.yeniSifre}" feedback="true" required="true" label="#{lbl.yeni_sifre}"/>
 
                         <f:facet name="footer">
                             <p:commandButton id="btn_sifre_guncelle" value="#{lbl.ortak_guncelle}"
