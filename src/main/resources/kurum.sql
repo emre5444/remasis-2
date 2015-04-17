@@ -1,3 +1,19 @@
+
+delete from rol_yetki;
+
+update yetki y
+set y.bagli_oldugu_yetki_id = null;
+
+delete from yetki;
+
+ALTER TABLE `yetki`
+AUTO_INCREMENT = 1 ;
+
+ALTER TABLE `rol_yetki`
+AUTO_INCREMENT = 1 ;
+
+
+
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (9999,'Tum Kullan?c?larda olmas? gereken yetki',1,'root_yetki',NULL);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (1,'Sistem Yönetimi ??lemleri',1,'sistem_yonetimi',9999);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (2,'Rezidans Yönetimi ??lemleri',1,'rezidans_yonetimi',9999);
