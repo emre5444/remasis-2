@@ -19,6 +19,7 @@ import com.ronin.model.kriter.IlanSorguKriteri;
 import com.ronin.model.kriter.RolSorguKriteri;
 import com.ronin.model.sorguSonucu.AnketSonucViewBean;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -86,6 +87,8 @@ public interface IOrtakDao {
     void mailGonder(Object mailSender);
 
     public void createErisimLog(SessionInfo sessionInfo ,Kullanici kullanici , LogTipi logTipi , String aciklama);
+
+    Integer numberOfVisitors(SessionInfo sessionInfo ,Date baslangicTarihi);
 
     List<Duyuru> getDuyuruListBySorguSonucu(int first, int pageSize, DuyuruSorguKriteri sorguKriteri ,SessionInfo sessionInfo);
 

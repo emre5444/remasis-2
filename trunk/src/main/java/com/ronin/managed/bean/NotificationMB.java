@@ -37,7 +37,7 @@ public class NotificationMB implements Serializable {
 
     @PostConstruct
     public void init() {
-        notificationList = ortakService.getAllNotificationList(sessionInfo, 10);
+        notificationList = ortakService.getAllNotificationList(sessionInfo, 5);
         notificationDataModel = new NotificationDataModel(notificationList);
     }
 
@@ -81,24 +81,24 @@ public class NotificationMB implements Serializable {
         this.selected = selected;
     }
 
-    public void onRowSelect() throws IOException {
-        if (selected != null && selected.getBildirimTipi() != null) {
+    public void onRowSelect(Notification notification) throws IOException {
+        if (notification != null && notification.getBildirimTipi() != null) {
            String pathRoot =  FacesContext.getCurrentInstance().getExternalContext().getRequestContextPath();
-            if (selected.getBildirimTipi().isAidatMi()) {
+            if (notification.getBildirimTipi().isAidatMi()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot +"/pages/rezidansIslemleri/daireSorgula.jsf?faces-redirect=true");
-            } else if (selected.getBildirimTipi().isAidatItirazMi()) {
+            } else if (notification.getBildirimTipi().isAidatItirazMi()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot +"/pages/talepIslemleri/talepSorgula.jsf?faces-redirect=true");
-            } else if (selected.getBildirimTipi().isAnketMi()) {
+            } else if (notification.getBildirimTipi().isAnketMi()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot +"/pages/sitePaylasimIslemleri/anketSorgulama.jsf?faces-redirect=true");
-            } else if (selected.getBildirimTipi().isArizaMi()) {
+            } else if (notification.getBildirimTipi().isArizaMi()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot +"/pages/talepIslemleri/talepSorgula.jsf?faces-redirect=true");
-            } else if (selected.getBildirimTipi().isBelgeTalepMi()) {
+            } else if (notification.getBildirimTipi().isBelgeTalepMi()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot +"/pages/talepIslemleri/talepSorgula.jsf?faces-redirect=true");
-            } else if (selected.getBildirimTipi().isDuyuruMu()) {
+            } else if (notification.getBildirimTipi().isDuyuruMu()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot +"/pages/sitePaylasimIslemleri/duyuruSorgulama.jsf?faces-redirect=true");
-            } else if (selected.getBildirimTipi().isIlanEklemeMi()) {
+            } else if (notification.getBildirimTipi().isIlanEklemeMi()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot + "/pages/sitePaylasimIslemleri/ilanSorgulama.jsf?faces-redirect=true");
-            } else if (selected.getBildirimTipi().isSikayetMi()) {
+            } else if (notification.getBildirimTipi().isSikayetMi()) {
                 FacesContext.getCurrentInstance().getExternalContext().redirect(pathRoot +"/pages/talepIslemleri/talepSorgula.jsf?faces-redirect=true");
             }
         }

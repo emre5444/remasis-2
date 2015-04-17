@@ -2,11 +2,13 @@ package com.ronin.managed.bean;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
+import com.ronin.common.model.Kullanici;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.KullaniciSirketDataModel;
 import com.ronin.model.KullaniciSirket;
 import com.ronin.model.Sirket;
 import com.ronin.model.constant.LogTipi;
+import com.ronin.utils.DateUtils;
 import org.apache.log4j.Logger;
 
 import javax.annotation.PostConstruct;
@@ -46,6 +48,7 @@ public class PreLoginMB implements Serializable {
 
     @PostConstruct
     public void init() {
+        lastLoginDateSetter();
         if (sessionInfo.getSirket() != null) {
             FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "dashboard.xhtml?faces-redirect=true");
         } else {
@@ -58,6 +61,12 @@ public class PreLoginMB implements Serializable {
                 FacesContext.getCurrentInstance().getApplication().getNavigationHandler().handleNavigation(FacesContext.getCurrentInstance(), null, "dashboard.xhtml?faces-redirect=true");
             }
         }
+    }
+
+    private void lastLoginDateSetter() {
+        Kullanici kullanici = sessionInfo.getKullanici();
+        kullanici.setLastLogin(DateUtils.getNow());
+        ortakService.update(kullanici);
     }
 
     public SessionInfo getSessionInfo() {

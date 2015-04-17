@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -76,6 +77,9 @@ public class Kullanici implements Serializable {
 
     @Column(name = "adres")
     private String adres;
+
+    @Column(name = "last_login")
+    private Date lastLogin;
 
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "kullanici",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -257,6 +261,14 @@ public class Kullanici implements Serializable {
 
     public void setKullaniciSirketList(List<KullaniciSirket> kullaniciSirketList) {
         this.kullaniciSirketList = kullaniciSirketList;
+    }
+
+    public Date getLastLogin() {
+        return lastLogin;
+    }
+
+    public void setLastLogin(Date lastLogin) {
+        this.lastLogin = lastLogin;
     }
 
     @Override

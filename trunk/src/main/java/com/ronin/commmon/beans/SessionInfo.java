@@ -4,6 +4,7 @@ import com.ronin.common.model.*;
 import com.ronin.common.service.IKullaniciService;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.model.Sirket;
+import com.ronin.utils.DateUtils;
 import org.primefaces.context.RequestContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -33,11 +34,14 @@ public class SessionInfo implements Serializable {
     @ManagedProperty("#{ortakService}")
     private IOrtakService ortakService;
 
+    private Date lastLoginDate;
+
     @PostConstruct
     public void initial() {
         User user = null;
         user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         kullanici = kullaniciService.getKullaniciByUsername(user.getUsername());
+        lastLoginTimeSetter(kullanici);
         rolList = getRolList();
         yetkiList = getYetkiList();
     }
@@ -95,6 +99,14 @@ public class SessionInfo implements Serializable {
         requestContext.execute("window.location.replace(window.location.href);");
     }
 
+    private void lastLoginTimeSetter(Kullanici kullanici){
+        if(kullanici == null || kullanici.getLastLogin() == null){
+            setLastLoginDate(DateUtils.getNow());
+        } else{
+            setLastLoginDate(kullanici.getLastLogin());
+        }
+    }
+
     public Kullanici getKullanici() {
         return kullanici;
     }
@@ -125,5 +137,13 @@ public class SessionInfo implements Serializable {
 
     public void setOrtakService(IOrtakService ortakService) {
         this.ortakService = ortakService;
+    }
+
+    public Date getLastLoginDate() {
+        return lastLoginDate;
+    }
+
+    public void setLastLoginDate(Date lastLoginDate) {
+        this.lastLoginDate = lastLoginDate;
     }
 }

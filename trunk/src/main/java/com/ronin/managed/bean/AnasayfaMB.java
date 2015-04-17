@@ -124,6 +124,8 @@ public class AnasayfaMB implements Serializable {
     private List<IAbstractEntity> anketAktifPasifList;
 
     private int onlineVisitors;
+    private int todaysVisitors;
+    private int totalVisitors;
 
     //loading booleans
 
@@ -133,6 +135,7 @@ public class AnasayfaMB implements Serializable {
     boolean anketLoaded = false;
     boolean iletisimLoaded = false;
     boolean finansLoaded = false;
+    boolean visitorsReportLoaded = false;
 
 
 
@@ -145,6 +148,13 @@ public class AnasayfaMB implements Serializable {
         createPieModel1();
         //createPieModel2();
         finansLoaded = true;
+    }
+
+    public void loadVisitorsReport(){
+        onlineVisitors = kullaniciService.getActiveUsersCount(sessionInfo);
+        totalVisitors = ortakService.numberOfVisitors(sessionInfo, null);
+        todaysVisitors = ortakService.numberOfVisitors(sessionInfo,DateUtils.getToday());
+        visitorsReportLoaded = true;
     }
 
     public void prepareAnketDetailInfo() {
@@ -340,13 +350,13 @@ public class AnasayfaMB implements Serializable {
     public void prepareDummyLoadObjects() {
         belgeTipiList = ortakService.getListByNamedQuery("BelgeTipi.findAll");
         anketAktifPasifList = ortakService.getListByNamedQuery("EvetHayir.findAll");
-        onlineVisitors = kullaniciService.getActiveUsersCount(sessionInfo);
         duyuruLoaded = false;
         ilanLoaded = false;
         belgeLoaded = false;
         anketLoaded = false;
         iletisimLoaded = false;
         finansLoaded = false;
+        visitorsReportLoaded = false;
     }
 
     public void getDuyuruData() {
@@ -760,6 +770,14 @@ public class AnasayfaMB implements Serializable {
         this.finansLoaded = finansLoaded;
     }
 
+    public boolean isVisitorsReportLoaded() {
+        return visitorsReportLoaded;
+    }
+
+    public void setVisitorsReportLoaded(boolean visitorsReportLoaded) {
+        this.visitorsReportLoaded = visitorsReportLoaded;
+    }
+
     public boolean isIletisimLoaded() {
         return iletisimLoaded;
     }
@@ -830,6 +848,22 @@ public class AnasayfaMB implements Serializable {
 
     public void setOnlineVisitors(int onlineVisitors) {
         this.onlineVisitors = onlineVisitors;
+    }
+
+    public int getTodaysVisitors() {
+        return todaysVisitors;
+    }
+
+    public void setTodaysVisitors(int todaysVisitors) {
+        this.todaysVisitors = todaysVisitors;
+    }
+
+    public int getTotalVisitors() {
+        return totalVisitors;
+    }
+
+    public void setTotalVisitors(int totalVisitors) {
+        this.totalVisitors = totalVisitors;
     }
 
     public GChartType getChartType() {
