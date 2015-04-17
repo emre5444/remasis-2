@@ -88,7 +88,7 @@
                                         <h:panelGrid columns="1" cellpadding="5">
 
 
-                                            <p:fileUpload label="#{lbl.dosya_sec}"
+                                            <p:fileUpload label="#{lbl.dosya_sec}" process="belgeEkleme"
                                                           fileUploadListener="#{belgeIslemleriMB.belgeUpload}"
                                                           mode="advanced" dragDropSupport="true" style="width:100%"
                                                           uploadLabel="#{lbl.yukle}" cancelLabel="#{lbl.iptal}"
@@ -103,6 +103,11 @@
                             <div class="EmptyBox10"></div>
 
                             <h:panelGrid columns="3">
+                                <p:commandButton id="btn_belge_ekleme" value="#{lbl.kaydet}"
+                                                 action="#{belgeIslemleriMB.belgeKadet()}">
+                                    <p:confirm header="#{lbl.label_belge_ekle}" message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
+                                </p:commandButton>
+
                                 <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
                                                  action="#{belgeIslemleriMB.geriDon}"/>
                             </h:panelGrid>

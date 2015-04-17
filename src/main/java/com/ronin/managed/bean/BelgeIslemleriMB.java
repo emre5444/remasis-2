@@ -65,6 +65,7 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
     public boolean istamamlandiMi;
     private Belge yeniBelge = new Belge();
     private boolean skip;
+    private UploadedFile uploadedFile;
 
 
     @PostConstruct
@@ -137,16 +138,21 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
             JsfUtil.addSuccessMessage("file is null");
         }
         try {
-            UploadedFile uploadedFile = event.getFile();
-            if (selectedDaire != null) {
-                fileUploadService.daireBelgeEkle(sessionInfo, selectedDaire, uploadedFile, yeniBelge);
-            } else {
-                fileUploadService.belgeEkle(sessionInfo, uploadedFile, yeniBelge);
-            }
-            JsfUtil.addSuccessMessage(message.getString("belge_ekleme_basarili"));
+            uploadedFile = event.getFile();
+            belgeKadet();
         } catch (Exception e) {
             JsfUtil.addSuccessMessage("error reading file " + e);
         }
+    }
+
+    public String belgeKadet() {
+        if (selectedDaire != null) {
+            fileUploadService.daireBelgeEkle(sessionInfo, selectedDaire, uploadedFile, yeniBelge);
+        } else {
+            fileUploadService.belgeEkle(sessionInfo, uploadedFile, yeniBelge);
+        }
+        JsfUtil.addSuccessMessage(message.getString("belge_ekleme_basarili"));
+        return geriDon();
     }
 
     public String geriDon() {
@@ -277,5 +283,13 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
 
     public void setSelectedDaire(Daire selectedDaire) {
         this.selectedDaire = selectedDaire;
+    }
+
+    public UploadedFile getUploadedFile() {
+        return uploadedFile;
+    }
+
+    public void setUploadedFile(UploadedFile uploadedFile) {
+        this.uploadedFile = uploadedFile;
     }
 }
