@@ -43,7 +43,7 @@
 
                     <div class="EmptyBox10"></div>
 
-                    <p:panel>
+                    <p:panel id="main_panel">
                         <div class="Container100 Responsive">
                             <div class="ContainerIndent">
                                 <div class="Container100 Responsive Fs20 hardblue">
@@ -62,6 +62,9 @@
                                               value="#{duyuruIslemleriMB.yeniDuyuru.aciklama}" required="true"
                                               width="450"/>
 
+                                    <h:column/>
+                                    <h:column/>
+
                                 </h:panelGrid>
 
                             </div>
@@ -69,6 +72,44 @@
                     </p:panel>
 
                     <div class="EmptyBox10"></div>
+
+                    <p:panel id="bilgPnl">
+
+                        <h:panelGrid columns="2" cellpadding="3">
+                            <h:outputText value="#{lbl.bilgilendirme_var}" styleClass="red"/>
+                            <p:selectBooleanCheckbox value="#{duyuruIslemleriMB.bilgilendirmeVarMi}">
+                                <p:ajax update="@([id$=bilgPnl])"/>
+                            </p:selectBooleanCheckbox>
+                        </h:panelGrid>
+
+                        <h:panelGrid rendered="#{duyuruIslemleriMB.bilgilendirmeVarMi}">
+
+                            <div class="Container100 Responsive Fs20 hardblue">
+                                Hedef kitle
+                            </div>
+
+                            <div class="EmptyBox5"/>
+
+                            <h:panelGrid columns="2" cellpadding="3">
+
+                                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}"
+                                               style="font-weight:bold; color: #0b4170"/>
+                                <p:selectOneMenu id="blok"
+                                                 value="#{duyuruIslemleriMB.bildirimHedefKitle.blok}"
+                                                 style="font-weight:bold; color: #0b4170">
+                                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                    <f:selectItems value="#{duyuruIslemleriMB.blokList}" var="blokList"
+                                                   itemValue="#{blokList}"
+                                                   itemLabel="#{blokList.aciklama}"/>
+                                    <f:converter binding="#{blokConverter}"/>
+                                </p:selectOneMenu>
+
+                            </h:panelGrid>
+                        </h:panelGrid>
+
+                    </p:panel>
+
+                    <div class="EmptyBox5"/>
 
                     <h:panelGrid columns="3">
                         <p:commandButton id="btn_duyuru_ekle" value="#{lbl.ortak_kaydet}"

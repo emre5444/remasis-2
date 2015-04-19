@@ -2,15 +2,20 @@ package com.ronin.managed.bean;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
+import com.ronin.common.model.Kullanici;
+import com.ronin.common.service.IKullaniciService;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.DuyuruDataModel;
 import com.ronin.model.Daire;
 import com.ronin.model.Duyuru;
+import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.constant.BildirimTipi;
 import com.ronin.model.constant.BilgilendirmeTipi;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.constant.EvetHayir;
 import com.ronin.model.kriter.DuyuruSorguKriteri;
+import com.ronin.model.kriter.HedefKitle;
+import com.ronin.service.IBildirimService;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 
@@ -36,6 +41,9 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
     @ManagedProperty("#{ortakService}")
     private IOrtakService ortakService;
 
+    @ManagedProperty("#{bildirimService}")
+    private IBildirimService bildirimService;
+
     @ManagedProperty("#{msg}")
     private ResourceBundle message;
 
@@ -43,6 +51,8 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
     private ResourceBundle label;
 
     private DuyuruSorguKriteri sorguKriteri = new DuyuruSorguKriteri();
+
+    private HedefKitle bildirimHedefKitle = new HedefKitle();
 
     private Duyuru selected;
 
@@ -52,10 +62,15 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
 
     private Daire selectedDaire;
 
+    private boolean bilgilendirmeVarMi;
+
+    //combos
+    private List<IAbstractEntity> blokList;
 
     @PostConstruct
     public void init() {
         getFlushObjects();
+        blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket", sessionInfo);
     }
 
     public void getFlushObjects() {
@@ -106,10 +121,25 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
         yeniDuyuru.setTanitimZamani(new Date());
         yeniDuyuru.setDurum(Durum.getAktifObject());
         ortakService.yeniDuyuruEkle(sessionInfo, yeniDuyuru);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
+        bilgilendirmeIslemi();
         JsfUtil.addSuccessMessage(message.getString("duyuru_ekleme_basarili"));
         return geriDon();
+    }
+
+    private void bilgilendirmeIslemi() {
+        if (!bilgilendirmeVarMi) {
+            return;
+        }
+        if (bildirimHedefKitle.getBlok() == null) {
+            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
+            return;
+        }
+        List<Kullanici> kullaniciList = bildirimService.getKullaniciListForBildirim(bildirimHedefKitle, sessionInfo);
+        for (Kullanici k : kullaniciList) {
+            ortakService.bildirimIstekOlustur(sessionInfo, k, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, k, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
+        }
     }
 
     public String yeniIlanEkle() {
@@ -142,6 +172,14 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
         this.ortakService = ortakService;
     }
 
+    public IBildirimService getBildirimService() {
+        return bildirimService;
+    }
+
+    public void setBildirimService(IBildirimService bildirimService) {
+        this.bildirimService = bildirimService;
+    }
+
     public ResourceBundle getMessage() {
         return message;
     }
@@ -164,6 +202,14 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
 
     public void setSorguKriteri(DuyuruSorguKriteri sorguKriteri) {
         this.sorguKriteri = sorguKriteri;
+    }
+
+    public HedefKitle getBildirimHedefKitle() {
+        return bildirimHedefKitle;
+    }
+
+    public void setBildirimHedefKitle(HedefKitle bildirimHedefKitle) {
+        this.bildirimHedefKitle = bildirimHedefKitle;
     }
 
     public Duyuru getSelected() {
@@ -196,5 +242,21 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
 
     public void setSelectedDaire(Daire selectedDaire) {
         this.selectedDaire = selectedDaire;
+    }
+
+    public boolean isBilgilendirmeVarMi() {
+        return bilgilendirmeVarMi;
+    }
+
+    public void setBilgilendirmeVarMi(boolean bilgilendirmeVarMi) {
+        this.bilgilendirmeVarMi = bilgilendirmeVarMi;
+    }
+
+    public List<IAbstractEntity> getBlokList() {
+        return blokList;
+    }
+
+    public void setBlokList(List<IAbstractEntity> blokList) {
+        this.blokList = blokList;
     }
 }
