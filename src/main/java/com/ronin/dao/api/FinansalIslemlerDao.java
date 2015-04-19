@@ -168,8 +168,8 @@ public class FinansalIslemlerDao implements IFinansalIslemlerDao {
 
                 for (DaireBorc db : (List<DaireBorc>) list) {
                     if (db!=null && db.getBorc() != null) {
-                        borc += db.getBorc().getBorc();
-                        alacak += db.getBorc().getOdenenTutar();
+                        borc += db.getBorc().getBorc() != null ? db.getBorc().getBorc() : 0.0;
+                        alacak += db.getBorc().getOdenenTutar() != null ? db.getBorc().getOdenenTutar() : 0.0;
                     }
                 }
             }
