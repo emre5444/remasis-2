@@ -4,15 +4,14 @@ import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.model.Envanter;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.kriter.EnvanterSorguKriteri;
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
-/**
- * Created by msevim on 19.03.2014.
- */
+
 public class EnvanterCriteria {
 
     EnvanterSorguKriteri sorguKriteri;
@@ -30,7 +29,7 @@ public class EnvanterCriteria {
 
         cr.add(Restrictions.eq("e.durum.id", Durum.getAktifObject().getId()));
 
-        if (sorguKriteri.getBarkodNo() != null) {
+        if (StringUtils.isNotEmpty(sorguKriteri.getBarkodNo())) {
             cr.add(Restrictions.eq("e.barkodNo", sorguKriteri.getBarkodNo()));
         }
 
@@ -42,15 +41,15 @@ public class EnvanterCriteria {
             cr.add(Restrictions.le("e.alimTarihi", sorguKriteri.getBitisIlimTarihi()));
         }
 
-        if (sorguKriteri.getMarka() != null) {
+        if (StringUtils.isNotEmpty(sorguKriteri.getMarka())) {
             cr.add(Restrictions.like("e.marka", "%" + sorguKriteri.getMarka() + "%"));
         }
 
-        if (sorguKriteri.getModel() != null) {
+        if (StringUtils.isNotEmpty(sorguKriteri.getModel())) {
             cr.add(Restrictions.like("e.model", "%" + sorguKriteri.getModel() + "%"));
         }
 
-        if (sorguKriteri.getUrunAdi() != null) {
+        if (StringUtils.isNotEmpty(sorguKriteri.getUrunAdi())) {
             cr.add(Restrictions.like("e.urunAdi", "%" + sorguKriteri.getUrunAdi() + "%"));
         }
 
@@ -58,11 +57,11 @@ public class EnvanterCriteria {
             cr.add(Restrictions.eq("e.kategori.id", sorguKriteri.getKategori().getId()));
         }
 
-        if (sorguKriteri.getSaticiFirma() != null) {
+        if (StringUtils.isNotEmpty(sorguKriteri.getSaticiFirma())) {
             cr.add(Restrictions.like("e.saticiFirma", "%" + sorguKriteri.getSaticiFirma() + "%"));
         }
 
-        if (sorguKriteri.getZimmetliPersonel() != null) {
+        if (StringUtils.isNotEmpty(sorguKriteri.getZimmetliPersonel())) {
             cr.add(Restrictions.like("e.zimmetliPersonel", "%" + sorguKriteri.getZimmetliPersonel() + "%"));
         }
 

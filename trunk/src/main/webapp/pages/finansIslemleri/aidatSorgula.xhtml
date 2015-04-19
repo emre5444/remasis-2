@@ -169,7 +169,7 @@
                                              paginator="true" rows="10"
                                              paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                              rowsPerPageTemplate="5,10,15">
-                                    <p:column headerText="#{lbl.row_toggler_detay}">
+                                    <p:column style="width:16px" exportable="false">
                                         <p:rowToggler/>
                                     </p:column>
 
@@ -339,7 +339,7 @@
 
                                     </p:rowExpansion>
 
-                                    <p:column>
+                                    <p:column exportable="false">
                                         <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
 
                                             <p:menuitem id="viewButtonAidatGuncelle" value="#{lbl.ortak_guncelle}"

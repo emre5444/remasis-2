@@ -60,7 +60,6 @@ public class KategoriMB implements Serializable {
     public void yeniKategoriEkleme() {
         try {
             envanterService.kategoriEkleme(sessionInfo, yeniKategori);
-            getKategoriListBySorguKriteri();
             JsfUtil.addSuccessMessage(message.getString("kategori_ekleme_basarili"));
             yeniKategori = new Kategori();
         } catch (Exception e) {

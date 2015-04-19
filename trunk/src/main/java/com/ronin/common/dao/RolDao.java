@@ -98,9 +98,6 @@ public class RolDao implements IRolDao {
         query.setParameter("id", rol.getId());
         int result = query.executeUpdate();
 
-        Yetki defaultYetki = new Yetki();
-        defaultYetki.setId(new Long(0));
-        addRolYetki(defaultYetki, rol);
         //yeni yetkiler eklenir.
         for (Yetki yetki : yetkiList) {
             addRolYetki(yetki, rol);

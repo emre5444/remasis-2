@@ -18,6 +18,7 @@ import com.ronin.model.sorguSonucu.DaireBorcAlacakView;
 import com.ronin.service.IDaireService;
 import com.ronin.service.IFinansalIslemlerService;
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.springframework.util.StringUtils;
 
@@ -78,6 +79,8 @@ public class OdemeIslemleriMB implements Serializable {
     private List<Daire> tempSelectedDaireList;
     private List<DaireBorcAlacakView> daireBorcAlacakViewList;
 
+    private String currentStep;
+
     @PostConstruct
     public void init() {
         prepareCombos();
@@ -96,7 +99,7 @@ public class OdemeIslemleriMB implements Serializable {
     }
 
     public List<Kullanici> completePlayer(String query) {
-        return ortakService.getKullaniciByName(query , sessionInfo);
+        return ortakService.getKullaniciByName(query, sessionInfo);
     }
 
     public void deleteTempDaireToList() {
@@ -147,9 +150,12 @@ public class OdemeIslemleriMB implements Serializable {
                 (((selectedDaireList == null || selectedDaireList.isEmpty()) && radioButtonSelection.equals("normal"))
                         || (daireDataModel == null) && radioButtonSelection.equals("toplu"))) {
             JsfUtil.addWarnMessage(message.getString("selected_daire_bos_olamaz"));
+            setCurrentStep("daire_secimi");
+            RequestContext.getCurrentInstance().update("main_form:steps");
             return "daire_secimi";
         }
-
+        setCurrentStep(event.getNewStep());
+        RequestContext.getCurrentInstance().update("main_form:steps");
         return event.getNewStep();
     }
 
@@ -180,6 +186,22 @@ public class OdemeIslemleriMB implements Serializable {
             Thread.currentThread().interrupt();
         }
         return "aidatSorgula?faces-redirect=true";
+    }
+
+    public int activeIndexFinder() {
+        if (org.apache.commons.lang.StringUtils.isNotEmpty(currentStep)) {
+            if ("decision".equals(currentStep))
+                return 0;
+            else if ("daire_secimi".equals(currentStep))
+                return 1;
+            else if ("odeme_tanimlama".equals(currentStep))
+                return 2;
+            else if ("son_duzenleme".equals(currentStep))
+                return 3;
+            else if ("confirm".equals(currentStep))
+                return 4;
+        }
+        return 0;
     }
 
     public boolean isTopluIslem() {
@@ -344,5 +366,13 @@ public class OdemeIslemleriMB implements Serializable {
 
     public void setTempSelectedDaireList(List<Daire> tempSelectedDaireList) {
         this.tempSelectedDaireList = tempSelectedDaireList;
+    }
+
+    public String getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(String currentStep) {
+        this.currentStep = currentStep;
     }
 }
