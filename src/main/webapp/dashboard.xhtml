@@ -7,23 +7,22 @@
 
     <ui:define name="content">
         <h:form id="anasayfa_form">
-            <p:remoteCommand global="false" name="onload3" action="#{anasayfaMB.prepareIletisimBilgi()}" autoRun="true"
+            <p:remoteCommand global="false" name="onload1" action="#{anasayfaMB.loadVisitorsReport()}" autoRun="true"
+                             update="visitors_report"/>
+            <p:remoteCommand global="false" name="onload2" action="#{anasayfaMB.createPieModels()}" autoRun="true"
+                             update="anasayfa_borc_alacak_durum , anasayfa_borc_alacak_durum_pie"/>
+            <p:remoteCommand global="false" name="onload3" action="#{anasayfaMB.getBelgeData()}" autoRun="true"
+                             update="anasayfa_belgeler"/>
+            <p:remoteCommand global="false" name="onload4" action="#{anasayfaMB.prepareIletisimBilgi()}" autoRun="true"
                              update="@([id$=anasayfa_iletisim])"/>
-            <p:remoteCommand global="false" name="onload2" action="#{anasayfaMB.getDuyuruData()}" autoRun="true"
+            <p:remoteCommand global="false" name="onload5" action="#{anasayfaMB.getDuyuruData()}" autoRun="true"
                              update="@([id$=anasayfa_duyurular1])"/>
-            <p:remoteCommand global="false" name="onload5" action="#{anasayfaMB.getIlanData()}" autoRun="true"
+            <p:remoteCommand global="false" name="onload6" action="#{anasayfaMB.getIlanData()}" autoRun="true"
                              update="@([id$=anasayfa_ilanlar])"/>
-            <p:remoteCommand global="false" name="onload4" action="#{anasayfaMB.getAnketListBySorguKriteri()}"
+            <p:remoteCommand global="false" name="onload7" action="#{anasayfaMB.getAnketListBySorguKriteri()}"
                              autoRun="true"
                              update="@([id$=anasayfa_anket])"/>
-            <p:remoteCommand global="false" name="onload7" autoRun="true"
-                             update="@([id$=AnketeKatilimEkleme])"/>
-            <p:remoteCommand global="false" name="onload1" action="#{anasayfaMB.getBelgeData()}" autoRun="true"
-                             update="anasayfa_belgeler"/>
-            <p:remoteCommand global="false" name="onload6" action="#{anasayfaMB.createPieModels()}" autoRun="true"
-                             update="anasayfa_borc_alacak_durum , anasayfa_borc_alacak_durum_pie"/>
-            <p:remoteCommand global="false" name="onload7" action="#{anasayfaMB.loadVisitorsReport()}" autoRun="true"
-                             update="visitors_report"/>
+
 
             <!-- SECTION 1 -->
             <div class="Container100">
@@ -39,12 +38,14 @@
                                         value="#{sessionInfo.kullanici.ad} #{sessionInfo.kullanici.soyad}"/> </span>
                                     <h:outputText
                                             value="#{lbl.label_hosgeldiniz}"/></div>
-                                <h:panelGrid rendered="#{notificationMB.aktifNotificationsCount()> 0}" styleClass="Fs12 leaden Fright Wid70">
+                                <h:panelGrid rendered="#{notificationMB.aktifNotificationsCount()> 0}"
+                                             styleClass="Fs12 leaden Fright Wid70">
                                     <h:outputText
                                             value="#{lbl.label_okunmamis}"/><h:outputText
                                         value="#{notificationMB.aktifNotificationsCount()} #{lbl.label_mesaj_var}"
                                         styleClass="red"/>
                                 </h:panelGrid>
+
                                 <div class="EmptyBox5"></div>
                                 <p:separator styleClass="Wid100"></p:separator>
 
@@ -97,15 +98,18 @@
                                     <p:separator styleClass="Wid100"></p:separator>
 
                                     <div class="EmptyBox10"></div>
-                                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">#{lbl.lbl_todays_visitors}<br/><span
-                                            class="Fs24 red">#{anasayfaMB.todaysVisitors}</span></div>
-                                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">#{lbl.lbl_total_visitors}<br/><span
-                                            class="Fs24 orange">#{anasayfaMB.totalVisitors}</span></div>
+                                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">#{lbl.lbl_todays_visitors}
+                                        <br/><span
+                                                class="Fs24 red">#{anasayfaMB.todaysVisitors}</span></div>
+                                    <div class="Fs12 Fright leaden Wid50 TexAlCenter Responsive">#{lbl.lbl_total_visitors}
+                                        <br/><span
+                                                class="Fs24 orange">#{anasayfaMB.totalVisitors}</span></div>
 
                                     <div class="EmptyBox10"></div>
 
-                                    <div class="Fs12 Fright leaden Wid100 TexAlCenter">#{lbl.lbl_online_visitors}<br/><span
-                                            class="Fs24 hardblue">#{anasayfaMB.onlineVisitors}</span></div>
+                                    <div class="Fs12 Fright leaden Wid100 TexAlCenter">#{lbl.lbl_online_visitors}
+                                        <br/><span
+                                                class="Fs24 hardblue">#{anasayfaMB.onlineVisitors}</span></div>
                                     <div class="EmptyBox10"></div>
                                 </p:panel>
                             </h:panelGroup>
@@ -280,6 +284,92 @@
                     <div class="Container50 Responsive">
                         <div class="ContainerIndent">
 
+                            <p:panel id="anasayfa_iletisim" style="min-height:400px;">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-phone orange"></i> #{lbl.label_iletisim_bilgileri}
+
+                                    <p:menuButton value="#{lbl.label_iletisim_islemleri}"
+                                                  styleClass="Fright">
+                                        <p:menuitem id="yeniIletisimEkleme"
+                                                    value="#{lbl.label_iletisim_bilgisi_ekleme}"
+                                                    icon="ui-icon-plus"
+                                                    rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_ekleme')}"
+                                                    update="@([id$=iletisimBilgisiEkleme])"
+                                                    oncomplete="PF('iletisimBilgisiEklePopup').show()">
+                                        </p:menuitem>
+
+                                    </p:menuButton>
+                                </div>
+
+                                <div class="EmptyBox10"></div>
+
+                                <h:panelGroup rendered="#{not anasayfaMB.iletisimLoaded}">
+                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                         style="display:block;margin: 0 auto;" alt=""/>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{anasayfaMB.iletisimLoaded}">
+                                    <p:dataTable id="iletisimBilgi" var="iletisim"
+                                                 value="#{anasayfaMB.iletisimBilgiList}"
+                                                 rows="5" paginator="true" pageLinks="5"
+                                                 editable="#{sessionInfo.adminMi}"
+                                                 rendered="#{anasayfaMB.iletisimLoaded}" reflow="true">
+
+                                        <p:ajax event="rowEdit"
+                                                listener="#{anasayfaMB.onIletisimBilgileriRowEdit}"/>
+                                        <p:ajax event="rowEditCancel"
+                                                listener="#{anasayfaMB.onIletisimBilgileriRowCancel}"/>
+
+                                        <p:column headerText="#{lbl.label_gorevli_ismi}"
+                                                  sortBy="#{iletisim.bilgiTipi}">
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText
+                                                        value="#{iletisim.bilgiTipi}"/></f:facet>
+                                                <f:facet name="input"><p:inputText id="bilgiTipi"
+                                                                                   value="#{iletisim.bilgiTipi}"/></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.label_gorevli_unvan}"
+                                                  sortBy="#{iletisim.bilgiTipiAck}">
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText
+                                                        value="#{iletisim.bilgiTipiAck}"/></f:facet>
+                                                <f:facet name="input"><p:inputText id="bilgiTipiAck"
+                                                                                   value="#{iletisim.bilgiTipiAck}"/></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.label_iletisim_bilgisi}"
+                                                  sortBy="#{iletisim.iletisimBilgisi}">
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText
+                                                        value="#{iletisim.iletisimBilgisi}"/></f:facet>
+                                                <f:facet name="input"><p:inputText id="iletisim_aciklama"
+                                                                                   value="#{iletisim.iletisimBilgisi}"/></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column
+                                                rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_guncelleme')}">
+                                            <p:rowEditor/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
+
+                            </p:panel>
+
+                        </div>
+                    </div>
+
+
+                    <div class="EmptyBox10"></div>
+                </div>
+            </div>
+
+            <div class="Container100">
+                <div class="ContainerIndent">
+
+                    <div class="Container50 Responsive">
+                        <div class="ContainerIndent">
+
                             <p:panel id="anasayfa_duyurular1" style="min-height:400px;">
                                 <div class="Container100 Responsive Fs20 hardblue">
                                     <i class="icon-bell-alt orange"></i> #{lbl.daire_duyurular}
@@ -368,90 +458,6 @@
 
                             </p:panel>
 
-
-                        </div>
-                    </div>
-
-
-                    <div class="EmptyBox10"></div>
-                </div>
-            </div>
-
-            <div class="Container100">
-                <div class="ContainerIndent">
-
-                    <div class="Container50 Responsive">
-                        <div class="ContainerIndent">
-                            <p:panel id="anasayfa_anket" style="min-height:400px;">
-                                <div class="Container100 Responsive Fs20 hardblue">
-                                    <i class="icon-users orange"></i> #{lbl.label_anket_sorgulama}
-                                </div>
-
-                                <div class="EmptyBox10"></div>
-
-                                <h:panelGroup rendered="#{not anasayfaMB.anketLoaded}">
-                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                         style="display:block;margin: 0 auto;" alt=""/>
-                                </h:panelGroup>
-
-                                <h:panelGroup rendered="#{anasayfaMB.anketLoaded}">
-                                    <p:dataTable value="#{anasayfaMB.anketDataModel}" var="varAnket"
-                                                 emptyMessage="#{msg.no_record_found}"
-                                                 rows="5" paginator="true" pageLinks="5"
-                                                 rendered="#{anasayfaMB.anketLoaded}" reflow="true">
-
-                                        <p:column sortBy="#{varAnket.tanitimZamani}">
-                                            <f:facet name="header">
-                                                <h:outputText value="#{lbl.duyuru_zamani}"/>
-                                            </f:facet>
-                                            <h:outputText value="#{varAnket.tanitimZamani}">
-                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                            </h:outputText>
-                                        </p:column>
-
-                                        <p:column sortBy="#{varAnket.kullanici.adSoyad}">
-                                            <f:facet name="header">
-                                                <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
-                                            </f:facet>
-                                            <h:outputText value="#{varAnket.kullanici.adSoyad}"/>
-                                        </p:column>
-
-                                        <p:column sortBy="#{varAnket.anketKonusu}">
-                                            <f:facet name="header">
-                                                <h:outputText value="#{lbl.label_anket_konusu}"/>
-                                            </f:facet>
-                                            <h:outputText value="#{varAnket.anketKonusu}"/>
-                                        </p:column>
-                                        <p:column sortBy="#{varAnket.aktifMi.aciklama}">
-                                            <f:facet name="header">
-                                                <h:outputText value="#{lbl.label_anket_aktif_mi}"/>
-                                            </f:facet>
-                                            <h:outputText value="#{varAnket.aktifMi.aciklama}"/>
-
-                                        </p:column>
-
-                                        <p:column>
-                                            <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
-
-                                                <p:menuitem value="#{lbl.katil}"
-                                                            rendered="#{sessionInfo.isYetkili('anket_katilma')}"
-                                                            action="#{anasayfaMB.anketGoruntule(varAnket)}"
-                                                            icon="fa fa-thumbs-o-up"/>
-
-                                                <p:menuitem id="viewButtonAnketGoruntule"
-                                                            value="#{lbl.label_goruntule}"
-                                                            rendered="#{sessionInfo.isYetkili('anket_goruntuleme')}"
-                                                            icon="fa fa-search"
-                                                            action="#{anasayfaMB.anketGoruntule(varAnket)}">
-                                                </p:menuitem>
-                                            </p:menuButton>
-
-                                        </p:column>
-
-                                    </p:dataTable>
-                                </h:panelGroup>
-
-                            </p:panel>
                         </div>
                     </div>
 
@@ -461,7 +467,7 @@
                             <p:panel id="anasayfa_ilanlar" style="min-height:400px;">
 
                                 <div class="Container100 Responsive Fs20 hardblue">
-                                    <i class="icon-briefcase orange"></i> #{lbl.daire_ilanlar}
+                                    <i class="icon-docs orange"></i> #{lbl.daire_ilanlar}
                                 </div>
 
                                 <div class="EmptyBox10"></div>
@@ -544,81 +550,82 @@
             <div class="Container100">
                 <div class="ContainerIndent">
 
-
                     <div class="Container50 Responsive">
                         <div class="ContainerIndent">
 
-                            <p:panel id="anasayfa_iletisim" style="min-height:400px;">
+                            <p:panel id="anasayfa_anket" style="min-height:400px;">
                                 <div class="Container100 Responsive Fs20 hardblue">
-                                    <i class="icon-phone orange"></i> #{lbl.label_iletisim_bilgileri}
-
-                                    <p:menuButton value="#{lbl.label_iletisim_islemleri}"
-                                                  styleClass="Fright">
-                                        <p:menuitem id="yeniIletisimEkleme"
-                                                    value="#{lbl.label_iletisim_bilgisi_ekleme}"
-                                                    icon="ui-icon-plus"
-                                                    rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_ekleme')}"
-                                                    update="@([id$=iletisimBilgisiEkleme])"
-                                                    oncomplete="PF('iletisimBilgisiEklePopup').show()">
-                                        </p:menuitem>
-
-                                    </p:menuButton>
+                                    <i class="icon-users orange"></i> #{lbl.label_anket_sorgulama}
                                 </div>
 
                                 <div class="EmptyBox10"></div>
 
-                                <h:panelGroup rendered="#{not anasayfaMB.iletisimLoaded}">
+                                <h:panelGroup rendered="#{not anasayfaMB.anketLoaded}">
                                     <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
                                          style="display:block;margin: 0 auto;" alt=""/>
                                 </h:panelGroup>
 
-                                <h:panelGroup rendered="#{anasayfaMB.iletisimLoaded}">
-                                    <p:dataTable id="iletisimBilgi" var="iletisim"
-                                                 value="#{anasayfaMB.iletisimBilgiList}"
+                                <h:panelGroup rendered="#{anasayfaMB.anketLoaded}">
+                                    <p:dataTable value="#{anasayfaMB.anketDataModel}" var="varAnket"
+                                                 emptyMessage="#{msg.no_record_found}"
                                                  rows="5" paginator="true" pageLinks="5"
-                                                 editable="#{sessionInfo.adminMi}"
-                                                 rendered="#{anasayfaMB.iletisimLoaded}" reflow="true">
+                                                 rendered="#{anasayfaMB.anketLoaded}" reflow="true">
 
-                                        <p:ajax event="rowEdit" listener="#{anasayfaMB.onIletisimBilgileriRowEdit}"/>
-                                        <p:ajax event="rowEditCancel"
-                                                listener="#{anasayfaMB.onIletisimBilgileriRowCancel}"/>
+                                        <p:column sortBy="#{varAnket.tanitimZamani}">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{lbl.duyuru_zamani}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{varAnket.tanitimZamani}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </h:outputText>
+                                        </p:column>
 
-                                        <p:column headerText="#{lbl.label_gorevli_ismi}" sortBy="#{iletisim.bilgiTipi}">
-                                            <p:cellEditor>
-                                                <f:facet name="output"><h:outputText
-                                                        value="#{iletisim.bilgiTipi}"/></f:facet>
-                                                <f:facet name="input"><p:inputText id="bilgiTipi"
-                                                                                   value="#{iletisim.bilgiTipi}"/></f:facet>
-                                            </p:cellEditor>
+                                        <p:column sortBy="#{varAnket.kullanici.adSoyad}">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{lbl.duyuru_yayinlayan_kullanici}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{varAnket.kullanici.adSoyad}"/>
                                         </p:column>
-                                        <p:column headerText="#{lbl.label_gorevli_unvan}"
-                                                  sortBy="#{iletisim.bilgiTipiAck}">
-                                            <p:cellEditor>
-                                                <f:facet name="output"><h:outputText
-                                                        value="#{iletisim.bilgiTipiAck}"/></f:facet>
-                                                <f:facet name="input"><p:inputText id="bilgiTipiAck"
-                                                                                   value="#{iletisim.bilgiTipiAck}"/></f:facet>
-                                            </p:cellEditor>
+
+                                        <p:column sortBy="#{varAnket.anketKonusu}">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{lbl.label_anket_konusu}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{varAnket.anketKonusu}"/>
                                         </p:column>
-                                        <p:column headerText="#{lbl.label_iletisim_bilgisi}"
-                                                  sortBy="#{iletisim.iletisimBilgisi}">
-                                            <p:cellEditor>
-                                                <f:facet name="output"><h:outputText
-                                                        value="#{iletisim.iletisimBilgisi}"/></f:facet>
-                                                <f:facet name="input"><p:inputText id="iletisim_aciklama"
-                                                                                   value="#{iletisim.iletisimBilgisi}"/></f:facet>
-                                            </p:cellEditor>
+                                        <p:column sortBy="#{varAnket.aktifMi.aciklama}">
+                                            <f:facet name="header">
+                                                <h:outputText value="#{lbl.label_anket_aktif_mi}"/>
+                                            </f:facet>
+                                            <h:outputText value="#{varAnket.aktifMi.aciklama}"/>
+
                                         </p:column>
-                                        <p:column rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_guncelleme')}">
-                                            <p:rowEditor/>
+
+                                        <p:column>
+                                            <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
+
+                                                <p:menuitem value="#{lbl.katil}"
+                                                            rendered="#{sessionInfo.isYetkili('anket_katilma')}"
+                                                            action="#{anasayfaMB.anketGoruntule(varAnket)}"
+                                                            icon="fa fa-thumbs-o-up"/>
+
+                                                <p:menuitem id="viewButtonAnketGoruntule"
+                                                            value="#{lbl.label_goruntule}"
+                                                            rendered="#{sessionInfo.isYetkili('anket_goruntuleme')}"
+                                                            icon="fa fa-search"
+                                                            action="#{anasayfaMB.anketGoruntule(varAnket)}">
+                                                </p:menuitem>
+                                            </p:menuButton>
+
                                         </p:column>
+
                                     </p:dataTable>
                                 </h:panelGroup>
 
                             </p:panel>
-
                         </div>
                     </div>
+
                 </div>
             </div>
 

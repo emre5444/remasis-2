@@ -13,16 +13,15 @@ import com.ronin.model.constant.Durum;
 import com.ronin.model.constant.KaynakTipi;
 import com.ronin.model.kriter.AidatSorguKriteri;
 import com.ronin.model.kriter.DaireSorguKriteri;
-import com.ronin.model.kriter.TalepSorguKriteri;
 import com.ronin.model.sorguSonucu.DaireBorcAlacakView;
 import com.ronin.model.sorguSonucu.DaireBorcKalemView;
 import com.ronin.service.IDaireService;
 import com.ronin.service.IFinansalIslemlerService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
 import org.primefaces.event.RowEditEvent;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -88,6 +87,7 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
     private List<DaireBorcAlacakView> daireBorcAlacakViewList;
 
     private boolean skip;
+    private String currentStep;
 
     @PostConstruct
     public void init() {
@@ -95,6 +95,8 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
         daireBorcKalemViews = new ArrayList<DaireBorcKalemView>();
         daireBorcAlacakViewList = new ArrayList<>();
         borcKalemList = ortakService.getListByNamedQueryWithSirket("BorcKalem.findAllWithSirket", sessionInfo);
+        daireTipiList = ortakService.getListByNamedQuery("DaireTipi.findAll");
+        blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket", sessionInfo);
     }
 
     public List<Kullanici> completePlayer(String query) {
@@ -173,10 +175,16 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
         }
 
         if (skip && event.getOldStep().equals("son_duzenleme") && !event.getNewStep().equals("confirm")) {
+            setCurrentStep("aidat_tanimlama");
+            RequestContext.getCurrentInstance().update("main_form:steps");
             return "aidat_tanimlama";
         } else if (skip && event.getNewStep().equals("borc_kalem")) {
+            setCurrentStep("son_duzenleme");
+            RequestContext.getCurrentInstance().update("main_form:steps");
             return "son_duzenleme";
         }
+        setCurrentStep(event.getNewStep());
+        RequestContext.getCurrentInstance().update("main_form:steps");
         return event.getNewStep();
     }
 
@@ -281,6 +289,24 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
         return "aidatSorgula?faces-redirect=true";
     }
 
+    public int activeIndexFinder() {
+        if (StringUtils.isNotEmpty(currentStep)) {
+            if ("decision".equals(currentStep))
+                return 0;
+            else if ("daire_secimi".equals(currentStep))
+                return 1;
+            else if ("aidat_tanimlama".equals(currentStep))
+                return 2;
+            else if ("borc_kalem".equals(currentStep))
+                return 3;
+            else if ("son_duzenleme".equals(currentStep))
+                return 4;
+            else if ("confirm".equals(currentStep))
+                return 5;
+        }
+        return 0;
+    }
+
     public void onDaireBorcKalemRowEdit(RowEditEvent event) {
         DaireBorcKalem selectedDaireBorcKalem = (DaireBorcKalem) event.getObject();
         if (selectedDaireBorcKalem.getId() == null) {
@@ -296,7 +322,7 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
 
     public void onDaireBorcKalemRowCancel(RowEditEvent event) {
         DaireBorcKalem selectedDaireBorcKalem = (DaireBorcKalem) event.getObject();
-        if(selectedDaireBorcKalem.getId() == null){
+        if (selectedDaireBorcKalem.getId() == null) {
             selected.getDaireBorcKalems().remove(selectedDaireBorcKalem);
             return;
         }
@@ -520,5 +546,13 @@ public class AidatIslemleriMB extends AbstractMB implements Serializable {
 
     public void setTempSelectedDaireList(List<Daire> tempSelectedDaireList) {
         this.tempSelectedDaireList = tempSelectedDaireList;
+    }
+
+    public String getCurrentStep() {
+        return currentStep;
+    }
+
+    public void setCurrentStep(String currentStep) {
+        this.currentStep = currentStep;
     }
 }

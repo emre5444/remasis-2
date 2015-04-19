@@ -51,9 +51,20 @@ public class EnvanterMB implements Serializable {
 
     private List<IAbstractEntity> kategoriList;
 
+    private boolean tumKriterlerMi;
+
     @PostConstruct
     public void init() {
         kategoriList = ortakService.getListByNamedQuery("Kategori.findAll");
+        getFlushObjects();
+    }
+
+    public void getFlushObjects() {
+        EnvanterSorguKriteri sk = (EnvanterSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        if (sk != null) {
+            sorguKriteri = sk;
+            getEnvanterListBySorguKriteri();
+        }
     }
 
     //page navigations
@@ -197,6 +208,14 @@ public class EnvanterMB implements Serializable {
 
     public void setKategoriList(List<IAbstractEntity> kategoriList) {
         this.kategoriList = kategoriList;
+    }
+
+    public boolean isTumKriterlerMi() {
+        return tumKriterlerMi;
+    }
+
+    public void setTumKriterlerMi(boolean tumKriterlerMi) {
+        this.tumKriterlerMi = tumKriterlerMi;
     }
 
     private String generateBarkodNo(int lenght) {

@@ -20,10 +20,10 @@ import com.ronin.model.sorguSonucu.DaireBorcAlacakView;
 import com.ronin.model.sorguSonucu.DaireBorcKalemView;
 import com.ronin.service.IDaireService;
 import com.ronin.service.IFinansalIslemlerService;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.FlowEvent;
-import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -91,7 +91,6 @@ public class AidatMB extends AbstractMB implements Serializable {
 
     private boolean skip;
     private boolean tumKriterlerMi;
-    private String currentStep;
 
     @PostConstruct
     public void init() {
@@ -114,9 +113,7 @@ public class AidatMB extends AbstractMB implements Serializable {
 
     public void prepareCombos() {
         blokList = ortakService.getListByNamedQueryWithSirket("Blok.findAllWithSirket", sessionInfo);
-        borcKalemList = ortakService.getListByNamedQueryWithSirket("BorcKalem.findAllWithSirket", sessionInfo);
         kaynakTipiList = ortakService.getListByNamedQuery("KaynakTipi.findAll");
-        daireTipiList = ortakService.getListByNamedQuery("DaireTipi.findAll");
     }
 
     public List<Kullanici> completePlayer(String query) {
@@ -527,11 +524,4 @@ public class AidatMB extends AbstractMB implements Serializable {
         this.tumKriterlerMi = tumKriterlerMi;
     }
 
-    public String getCurrentStep() {
-        return currentStep;
-    }
-
-    public void setCurrentStep(String currentStep) {
-        this.currentStep = currentStep;
-    }
 }

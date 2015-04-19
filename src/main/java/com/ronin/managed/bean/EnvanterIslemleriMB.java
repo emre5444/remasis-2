@@ -86,7 +86,7 @@ public class EnvanterIslemleriMB extends AbstractMB implements Serializable {
             yeniEnvanter.setBarkodNo(generateBarkodNo(8));
             envanterService.save(yeniEnvanter);
             JsfUtil.addSuccessMessage(message.getString("envanter_ekleme_basarili"));
-
+            yeniEnvanter = new Envanter();
         } catch (Exception e) {
             JsfUtil.addFatalMessage(e.toString());
         }

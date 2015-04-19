@@ -1,303 +1,428 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition template="/sablon/sablon.xhtml"
-                xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui">
-
-<ui:define name="title">
-    <h:outputText value="#{lbl.odeme_ekleme}"/>
-</ui:define>
-
-<ui:define name="content">
-
-<p:fieldset legend="#{lbl.odeme_ekleme}">
-
-<div style="height:5px"></div>
-
-<h:form id="main_form" style="width: 60%;margin: auto;">
-<p:growl id="growl" sticky="true" showDetail="false"/>
-
-<p:wizard flowListener="#{odemeIslemleriMB.onFlowProcess}" nextLabel="#{lbl.nextLabel}" backLabel="#{lbl.backLabel}">
-
-<p:tab id="decision" title="#{lbl.aidat_decision}">
-    <p:panel header="#{lbl.aidat_ekle_secim}">
-        <p:messages showDetail="false"/>
-        <h:panelGrid>
-            <p:selectOneRadio id="radio_button" value="#{odemeIslemleriMB.radioButtonSelection}" required="true"
-                              requiredMessage="#{msg.secim_yapilmali}"
-                              layout="custom">
-                <f:selectItem itemLabel="#{lbl.lbl_toplu_islem} " itemValue="toplu"/>
-                <f:selectItem itemLabel="#{lbl.lbl_tekil_islem}" itemValue="normal"/>
-            </p:selectOneRadio>
-
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:radioButton id="opt1" for="radio_button" itemIndex="0"/>
-                <h:outputLabel for="opt1" value="#{lbl.lbl_toplu_islem}" style="font-weight:bold; color: #0b4170"/>
-            </h:panelGrid>
-            <p:outputLabel value="#{lbl.lbl_odeme_toplu_islem_desc}" style="color: red"/>
-            <h:panelGrid columns="2" cellpadding="5">
-                <p:radioButton id="opt2" for="radio_button" itemIndex="1"/>
-                <h:outputLabel for="opt2" value="#{lbl.lbl_tekil_islem}" style="font-weight:bold; color: #0b4170"/>
-            </h:panelGrid>
-            <p:outputLabel value="#{lbl.lbl_odeme_tekil_islem_desc}" style="color: red"/>
-        </h:panelGrid>
-    </p:panel>
-</p:tab>
-
-
-<p:tab id="daire_secimi" title="#{lbl.daire_secimi}">
-    <p:panel header="#{lbl.daire_secme_islemi}" rendered="#{!odemeIslemleriMB.isTopluIslem()}">
-        <p:messages showDetail="false"/>
-        <h:panelGrid columns="2" cellpadding="5" cellspacing="2">
-
-            <h:outputLabel for="blok_adi" value="#{lbl.blok_ad} (*)" style="font-weight:bold; color: #0b4170"/>
-            <p:selectOneMenu id="blok_adi" value="#{odemeIslemleriMB.daireSorguKriteri.blok}"
-                             style="font-weight:bold; color: #0b4170" required="true" label="#{lbl.blok_ad}">
-                <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
-                <f:selectItems value="#{odemeIslemleriMB.blokList}" var="blokList" itemValue="#{blokList}"
-                               itemLabel="#{blokList.aciklama}"/>
-                <f:converter binding="#{blokConverter}"/>
-            </p:selectOneMenu>
-
-            <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
-            <p:inputText id="daire_no" value="#{odemeIslemleriMB.daireSorguKriteri.daireNo}"/>
-            <p:message for="daire_no"/>
-
-            <f:facet name="footer">
-                <p:commandButton id="btn_kullanici_daire_bul" value="#{lbl.label_daireyi_bul}"
-                                 update="@([id$=main_form])"
-                                 actionListener="#{odemeIslemleriMB.getDaireListBySorguKriteri}"/>
-            </f:facet>
-
-        </h:panelGrid>
-
-        <div style="height:4px"></div>
-
-        <p:panel header="#{lbl.daire_listesi}" rendered="#{not empty odemeIslemleriMB.daireList}">
-            <h:panelGrid id="daireList" columns="1" cellpadding="5" cellspacing="5">
-
-                <p:dataTable id="daireSorguSonucu" value="#{odemeIslemleriMB.daireList}" var="varDaire"  reflow="true"
-                             selection="#{odemeIslemleriMB.tempSelectedDaireList}" rowKey="#{varDaire.id}"
-                             scrollable="true" scrollHeight="180" emptyMessage="#{msg.no_record_found}">
-                    <p:column selectionMode="multiple" style="text-align:center;width:6%"/>
-                    <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
-                        <h:outputText value="#{varDaire.daireKodu}"/>
-                    </p:column>
-
-                    <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
-                        <h:outputText value="#{varDaire.blok.aciklama}"/>
-                    </p:column>
-
-                    <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
-                        <h:outputText value="#{varDaire.daireNo}"/>
-                    </p:column>
-
-                    <f:facet name="footer">
-                        <h:commandButton process="daireSorguSonucu" value="#{lbl.daire_ekleme}"
-                                         action="#{odemeIslemleriMB.addTempDaire}"/>
-                    </f:facet>
-
-                </p:dataTable>
-
-
-            </h:panelGrid>
-        </p:panel>
-
-        <div style="height:10px"></div>
-
-        <p:panel header="#{lbl.secilmis_daire_listesi}" rendered="#{not empty odemeIslemleriMB.selectedDaireList}">
-            <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
-
-                <p:dataTable id="selectedDaireList" value="#{odemeIslemleriMB.selectedDaireList}"
-                             var="vardaire1" scrollable="true" scrollHeight="150"   reflow="true"
-                             emptyMessage="#{msg.no_record_found}">
-                    <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
-                        <h:outputText value="#{vardaire1.daireKodu}"/>
-                    </p:column>
-
-                    <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
-                        <h:outputText value="#{vardaire1.blok.aciklama}"/>
-                    </p:column>
-
-                    <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
-                        <h:outputText value="#{vardaire1.daireNo}"/>
-                    </p:column>
-
-                    <p:column style="width:4%" exportable="false">
-                        <h:panelGrid columns="4">
-                            <p:commandButton id="deleteButton1" icon="ui-icon-trash" immediate="true"
-                                             action="#{odemeIslemleriMB.deleteTempDaireToList}"
-                                             update="@([id$=main_form])">
-                                <f:setPropertyActionListener value="#{vardaire1}"
-                                                             target="#{odemeIslemleriMB.selectedDaire}"/>
-                            </p:commandButton>
-                        </h:panelGrid>
-                    </p:column>
-
-                </p:dataTable>
-            </h:panelGrid>
-        </p:panel>
-    </p:panel>
-
-
-    <p:panel header="#{lbl.odeme_ekleme_islemi}" rendered="#{odemeIslemleriMB.isTopluIslem()}">
-        <p:messages showDetail="false"/>
-        <h:panelGrid>
-
-            <h:panelGrid columns="2" cellpadding="5">
-
-                <f:facet name="footer">
-                    <p:commandButton id="btn_kullanici_daire_bul_toplu" value="#{lbl.label_butun_daireleri_bul}"
-                                     update="@([id$=main_form])"
-                                     actionListener="#{odemeIslemleriMB.getDaireListBySorguKriteri}"/>
-                </f:facet>
-
-            </h:panelGrid>
-
-            <div style="height:4px"></div>
-            <p:panel
-                    rendered="#{not empty odemeIslemleriMB.daireDataModel.wrappedData}">
-                <h:panelGrid id="toplu_daireList" columns="1" cellpadding="5">
-
-                    <p:dataTable id="toplu_daireSorguSonucu" value="#{odemeIslemleriMB.daireDataModel}"
-                                 var="varDaireModel"  reflow="true"
-                                 scrollable="true" scrollHeight="250" emptyMessage="#{msg.no_record_found}">
-
-                        <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
-                            <h:outputText value="#{varDaireModel.daireKodu}"/>
-                        </p:column>
-
-                        <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
-                            <h:outputText value="#{varDaireModel.blok.aciklama}"/>
-                        </p:column>
-
-                        <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
-                            <h:outputText value="#{varDaireModel.daireNo}"/>
-                        </p:column>
-
-                    </p:dataTable>
-
-
-                </h:panelGrid>
-            </p:panel>
-        </h:panelGrid>
-    </p:panel>
-</p:tab>
-
-<p:tab id="odeme_tanimlama" title="#{lbl.odeme_tanimlama}">
-    <p:panel>
-        <p:messages showDetail="false"/>
-        <h:panelGrid columns="2" cellspacing="5" cellpadding="5">
-
-            <h:outputLabel for="aciklama" value="#{lbl.ortak_aciklama}" style="font-weight:bold; color: #0b4170"/>
-            <p:inputText id="aciklama" value="#{odemeIslemleriMB.yeniBorc.odemeAciklama}"/>
-
-            <h:outputLabel for="odenenTutar" value="#{lbl.odenen_tutar} (*)" style="font-weight:bold; color: #0b4170"/>
-            <p:inputText id="odenenTutar" value="#{odemeIslemleriMB.yeniBorc.odenenTutar}" required="true"
-                         label="#{lbl.odenen_tutar}"/>
-
-            <h:outputLabel for="odeme_tarihi" value="#{lbl.odeme_tarihi} (*)" style="font-weight:bold; color: #0b4170"/>
-            <p:calendar id="odeme_tarihi" value="#{odemeIslemleriMB.yeniBorc.odemeVadesi}" mask="true"
-                        pattern="dd/MM/yyyy" required="true" label="#{lbl.odeme_tarihi}"/>
-
-
-        </h:panelGrid>
-    </p:panel>
-</p:tab>
-
-<p:tab id="son_duzenleme" title="#{lbl.son_duzenleme}">
-    <p:panel>
-        <p:messages showDetail="false"/>
-
-
-        <h:panelGrid id="borcAlacakGrid">
-
-            <p:dataTable id="borcAlacakTable" value="#{odemeIslemleriMB.daireBorcAlacakViewList}"
-                         var="daireBorcAlacak" widgetVar="borcAlacakTable"  reflow="true"
-                         scrollable="true" scrollHeight="400" emptyMessage="#{msg.no_record_found}">
-
-
-                <p:column headerText="#{lbl.daire_kodu}" style="width:10%">
-                    <h:outputText value="#{daireBorcAlacak.daire.daireKodu}" style="font-weight:bold; color: #0b4170"/>
-                </p:column>
-
-                <p:column headerText="#{lbl.ortak_aciklama}" style="width:12%">
-                    <p:inputText value="#{daireBorcAlacak.borc.odemeAciklama}"/>
-                </p:column>
-
-                <p:column headerText="#{lbl.odenen_tutar}" style="width:12%">
-                    <p:inputText value="#{daireBorcAlacak.borc.odenenTutar}"/>
-                </p:column>
-
-                <p:column headerText="#{lbl.son_odeme_tarihi}" style="width:12%">
-                    <p:calendar value="#{daireBorcAlacak.borc.odemeVadesi}" mask="true"
-                                pattern="dd/MM/yyyy"/>
-                </p:column>
-
-            </p:dataTable>
-
-        </h:panelGrid>
-
-    </p:panel>
-</p:tab>
-
-<p:tab id="confirm" title="#{lbl.islem_onayi}">
-    <p:panel>
-        <h:panelGrid id="c_borcAlacakGrid">
-
-            <p:dataTable id="c_borcAlacakTable" value="#{odemeIslemleriMB.daireBorcAlacakViewList}"
-                         var="c_daireBorcAlacak"  reflow="true"
-                         scrollable="true" scrollHeight="300" emptyMessage="#{msg.no_record_found}">
-
-                <p:column headerText="#{lbl.daire_kodu}" sortBy="daire.daireKodu" style="width:10%">
-                    <h:outputText value="#{c_daireBorcAlacak.daire.daireKodu}" style="font: bold"/>
-                </p:column>
-
-                <p:column headerText="#{lbl.ortak_aciklama}" style="width:12%">
-                    <h:outputText value="#{c_daireBorcAlacak.borc.odemeAciklama}"/>
-                </p:column>
-
-                <p:column headerText="#{lbl.odenen_tutar}" style="width:12%">
-                    <h:outputText value="#{c_daireBorcAlacak.borc.odenenTutar}"/>
-                </p:column>
-
-                <p:column headerText="#{lbl.son_odeme_tarihi}" style="width:12%">
-                    <h:outputText value="#{c_daireBorcAlacak.borc.odemeVadesi}">
-                        <f:convertDateTime pattern="dd/MM/yyyy"/>
-                    </h:outputText>
-                </p:column>
-
-            </p:dataTable>
-
-        </h:panelGrid>
-    </p:panel>
-
-    <p:commandButton value="#{lbl.ortak_onayla}" actionListener="#{odemeIslemleriMB.islemleriTamamla}"
-                     process="@this" style="color:#000000;font-weight:bold;"
-                     onsuccess="rc()">
-        <p:confirm header="Onay" message="#{msg.islemi_onayliyormusunuz}"/>
-        <p:remoteCommand name="rc" action="#{odemeIslemleriMB.redirectAfterWait}" onstart="PF('waitDialog').show()"
-                         oncomplete="PF('waitDialog').hide()" global="false"/>
-        <p:dialog widgetVar="waitDialog" resizable="false" width="400" closable="false" draggable="false"
-                  showEffect="fade" hideEffect="scale" modal="true">
-            <h:outputText value="#{msg.islem_basarili_yonlendirme}" style="font-weight:bold;"/>
-        </p:dialog></p:commandButton>
-
-</p:tab>
-
-</p:wizard>
-
-
-</h:form>
-
-</p:fieldset>
-
-</ui:define>
-
-<ui:define name="body">
-
-</ui:define>
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <style type="text/css">
+        .ui-steps {
+            margin-top: 20px !important;
+        }
+
+        .ui-steps .ui-steps-item {
+            width: 24%;
+        }
+
+        .ui-state-highlight {
+            text-shadow: none !important;
+        }
+
+        .ui-steps.custom {
+            margin-bottom: 30px;
+        }
+
+        .ui-steps.custom .ui-steps-item .ui-menuitem-link {
+            height: 10px;
+            padding: 0 1em;
+        }
+
+        .ui-steps.custom .ui-steps-item .ui-steps-number {
+            background-color: #0081c2;
+            color: #FFFFFF;
+            display: inline-block;
+            width: 30px;
+            border-radius: 10px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+    </style>
+
+    <ui:define name="title">
+        <h:outputText value="#{lbl.odeme_ekleme}"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+
+        <div class="Container100">
+            <div class="ContainerIndent">
+
+                <h:form id="main_form">
+
+                    <div class="Container100 Responsive">
+                        <div class="ContainerIndent">
+
+                            <p:steps id="steps" styleClass="custom"
+                                     activeIndex="#{odemeIslemleriMB.activeIndexFinder()}">
+                                <p:menuitem value="#{lbl.aidat_decision}"/>
+                                <p:menuitem value="#{lbl.daire_secimi}"/>
+                                <p:menuitem value="#{lbl.odeme_tanimlama}"/>
+                                <p:menuitem value="#{lbl.son_duzenleme}"/>
+                                <p:menuitem value="#{lbl.islem_onayi}"/>
+                            </p:steps>
+
+                            <div class="EmptyBox10"></div>
+
+                            <p:separator styleClass="Wid100"/>
+
+                            <div class="EmptyBox5"></div>
+
+                            <p:wizard id="wizard" flowListener="#{odemeIslemleriMB.onFlowProcess}"
+                                      nextLabel="#{lbl.nextLabel}"
+                                      backLabel="#{lbl.backLabel}"
+                                      showStepStatus="false">
+
+                                <p:tab id="decision">
+
+                                    <div class="EmptyBox10"></div>
+
+                                    <div class="Container100 Responsive Fs20 hardblue">
+                                        <i class="icon-money Fs25 Wid20 orange TexAlLeft"></i> #{lbl.aidat_ekle_secim}
+                                    </div>
+
+                                    <div class="EmptyBox10"></div>
+
+                                    <p:messages showDetail="false"/>
+                                    <h:panelGrid>
+                                        <p:selectOneRadio id="radio_button"
+                                                          value="#{odemeIslemleriMB.radioButtonSelection}"
+                                                          required="true"
+                                                          requiredMessage="#{msg.secim_yapilmali}"
+                                                          layout="custom">
+                                            <f:selectItem itemLabel="#{lbl.lbl_toplu_islem} " itemValue="toplu"/>
+                                            <f:selectItem itemLabel="#{lbl.lbl_tekil_islem}" itemValue="normal"/>
+                                        </p:selectOneRadio>
+
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <p:radioButton id="opt1" for="radio_button" itemIndex="0"/>
+                                            <h:outputLabel for="opt1" value="#{lbl.lbl_toplu_islem}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                        </h:panelGrid>
+                                        <p:outputLabel value="#{lbl.lbl_odeme_toplu_islem_desc}"
+                                                       styleClass="red"/>
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <p:radioButton id="opt2" for="radio_button" itemIndex="1"/>
+                                            <h:outputLabel for="opt2" value="#{lbl.lbl_tekil_islem}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                        </h:panelGrid>
+                                        <p:outputLabel value="#{lbl.lbl_odeme_tekil_islem_desc}"
+                                                       styleClass="red"/>
+                                    </h:panelGrid>
+                                </p:tab>
+
+
+                                <p:tab id="daire_secimi">
+                                    <p:panel styleClass="white-back"
+                                             rendered="#{!odemeIslemleriMB.isTopluIslem()}">
+                                        <p:messages showDetail="false"/>
+
+                                        <div class="EmptyBox10"></div>
+
+                                        <div class="Container100 Responsive Fs20 hardblue">
+                                            <i class="icon-money Fs25 Wid20 orange TexAlLeft"></i> #{lbl.daire_secimi}
+                                        </div>
+
+                                        <div class="EmptyBox10"></div>
+                                        <h:panelGrid columns="2" cellpadding="5" cellspacing="2">
+
+                                            <h:outputLabel for="blok_adi" value="#{lbl.blok_ad} (*)"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <p:selectOneMenu id="blok_adi"
+                                                             value="#{odemeIslemleriMB.daireSorguKriteri.blok}"
+                                                             style="font-weight:bold; color: #0b4170" required="true"
+                                                             label="#{lbl.blok_ad}">
+                                                <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                                <f:selectItems value="#{odemeIslemleriMB.blokList}" var="blokList"
+                                                               itemValue="#{blokList}"
+                                                               itemLabel="#{blokList.aciklama}"/>
+                                                <f:converter binding="#{blokConverter}"/>
+                                            </p:selectOneMenu>
+
+                                            <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <p:inputText id="daire_no"
+                                                         value="#{odemeIslemleriMB.daireSorguKriteri.daireNo}"/>
+                                            <p:message for="daire_no"/>
+
+                                            <f:facet name="footer">
+                                                <p:commandButton id="btn_kullanici_daire_bul" styleClass="GreenButton"
+                                                                 value="#{lbl.label_daireyi_bul}"
+                                                                 update="@([id$=main_form])"
+                                                                 actionListener="#{odemeIslemleriMB.getDaireListBySorguKriteri}"/>
+                                            </f:facet>
+
+                                        </h:panelGrid>
+
+                                        <div class="EmptyBox5"></div>
+
+                                        <p:separator styleClass="Wid100"
+                                                     rendered="#{not empty odemeIslemleriMB.daireList}"></p:separator>
+
+                                        <p:panel rendered="#{not empty odemeIslemleriMB.daireList}">
+                                            <div class="Fs20 MarTop10 red">#{lbl.daire_listesi}</div>
+
+                                            <h:panelGrid id="daireList" columns="1" cellpadding="5" cellspacing="5">
+
+                                                <p:dataTable id="daireSorguSonucu" value="#{odemeIslemleriMB.daireList}"
+                                                             var="varDaire" reflow="true"
+                                                             selection="#{odemeIslemleriMB.tempSelectedDaireList}"
+                                                             rowKey="#{varDaire.id}"
+                                                             scrollable="true" scrollHeight="180"
+                                                             emptyMessage="#{msg.no_record_found}">
+                                                    <p:column selectionMode="multiple"
+                                                              style="text-align:center;width:6%"/>
+                                                    <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
+                                                        <h:outputText value="#{varDaire.daireKodu}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
+                                                        <h:outputText value="#{varDaire.blok.aciklama}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
+                                                        <h:outputText value="#{varDaire.daireNo}"/>
+                                                    </p:column>
+
+                                                    <f:facet name="footer">
+                                                        <p:commandButton process="daireSorguSonucu"
+                                                                         styleClass="GreenButton"
+                                                                         value="#{lbl.daire_ekleme}"
+                                                                         action="#{odemeIslemleriMB.addTempDaire}"
+                                                                         update=":main_form"/>
+                                                    </f:facet>
+
+                                                </p:dataTable>
+
+
+                                            </h:panelGrid>
+                                        </p:panel>
+
+                                        <div class="EmptyBox5"></div>
+
+                                        <p:separator styleClass="Wid100"
+                                                     rendered="#{not empty odemeIslemleriMB.selectedDaireList}"></p:separator>
+
+                                        <p:panel rendered="#{not empty odemeIslemleriMB.selectedDaireList}">
+                                            <div class="Fs20 MarTop10 red">#{lbl.secilmis_daire_listesi}</div>
+
+                                            <h:panelGrid columns="2" cellpadding="5" cellspacing="5">
+
+                                                <p:dataTable id="selectedDaireList"
+                                                             value="#{odemeIslemleriMB.selectedDaireList}"
+                                                             var="vardaire1" scrollable="true" scrollHeight="150"
+                                                             reflow="true"
+                                                             emptyMessage="#{msg.no_record_found}">
+                                                    <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
+                                                        <h:outputText value="#{vardaire1.daireKodu}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="#{lbl.daire_blokAdi}" sortBy="blok.aciklama">
+                                                        <h:outputText value="#{vardaire1.blok.aciklama}"/>
+                                                    </p:column>
+
+                                                    <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
+                                                        <h:outputText value="#{vardaire1.daireNo}"/>
+                                                    </p:column>
+
+                                                    <p:column exportable="false">
+                                                        <p:commandButton id="deleteButton1"
+                                                                         value="#{lbl.lbl_listeden_cikar}"
+                                                                         immediate="true" styleClass="RedButton"
+                                                                         action="#{odemeIslemleriMB.deleteTempDaireToList}"
+                                                                         update="@([id$=main_form])">
+                                                            <f:setPropertyActionListener value="#{vardaire1}"
+                                                                                         target="#{odemeIslemleriMB.selectedDaire}"/>
+                                                        </p:commandButton>
+                                                    </p:column>
+
+                                                </p:dataTable>
+                                            </h:panelGrid>
+                                        </p:panel>
+                                    </p:panel>
+
+
+                                    <p:panel rendered="#{odemeIslemleriMB.isTopluIslem()}">
+                                        <p:messages showDetail="false"/>
+                                        <h:panelGrid>
+
+                                            <h:panelGrid columns="2" cellpadding="5">
+
+                                                <f:facet name="footer">
+                                                    <p:commandButton id="btn_kullanici_daire_bul_toplu"
+                                                                     value="#{lbl.label_butun_daireleri_bul}"
+                                                                     update="@([id$=main_form])"
+                                                                     styleClass="GreenButton"
+                                                                     actionListener="#{odemeIslemleriMB.getDaireListBySorguKriteri}"/>
+                                                </f:facet>
+
+                                            </h:panelGrid>
+
+                                            <div class="EmptyBox5"></div>
+                                            <p:panel styleClass="white-back"
+                                                     rendered="#{not empty odemeIslemleriMB.daireDataModel.wrappedData}">
+                                                <h:panelGrid id="toplu_daireList" columns="1" cellpadding="5">
+
+                                                    <p:dataTable id="toplu_daireSorguSonucu"
+                                                                 value="#{odemeIslemleriMB.daireDataModel}"
+                                                                 var="varDaireModel" reflow="true"
+                                                                 scrollable="true" scrollHeight="250"
+                                                                 emptyMessage="#{msg.no_record_found}">
+
+                                                        <p:column headerText="#{lbl.daire_kodu}" sortBy="daireKodu">
+                                                            <h:outputText value="#{varDaireModel.daireKodu}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="#{lbl.daire_blokAdi}"
+                                                                  sortBy="blok.aciklama">
+                                                            <h:outputText value="#{varDaireModel.blok.aciklama}"/>
+                                                        </p:column>
+
+                                                        <p:column headerText="#{lbl.daire_no}" sortBy="daireNo">
+                                                            <h:outputText value="#{varDaireModel.daireNo}"/>
+                                                        </p:column>
+
+                                                    </p:dataTable>
+
+
+                                                </h:panelGrid>
+                                            </p:panel>
+                                        </h:panelGrid>
+                                    </p:panel>
+                                </p:tab>
+
+                                <p:tab id="odeme_tanimlama">
+                                        <p:messages showDetail="false"/>
+                                        <h:panelGrid columns="2" cellspacing="5" cellpadding="5">
+
+                                            <h:outputLabel for="aciklama" value="#{lbl.ortak_aciklama}"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <p:inputText id="aciklama"
+                                                         value="#{odemeIslemleriMB.yeniBorc.odemeAciklama}"/>
+
+                                            <h:outputLabel for="odenenTutar" value="#{lbl.odenen_tutar} (*)"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <p:inputText id="odenenTutar"
+                                                         value="#{odemeIslemleriMB.yeniBorc.odenenTutar}"
+                                                         required="true"
+                                                         label="#{lbl.odenen_tutar}"/>
+
+                                            <h:outputLabel for="odeme_tarihi" value="#{lbl.odeme_tarihi} (*)"
+                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <p:calendar id="odeme_tarihi"
+                                                        value="#{odemeIslemleriMB.yeniBorc.odemeVadesi}" mask="true"
+                                                        pattern="dd/MM/yyyy" required="true"
+                                                        label="#{lbl.odeme_tarihi}"/>
+
+
+                                        </h:panelGrid>
+                                </p:tab>
+
+                                <p:tab id="son_duzenleme" title="#{lbl.son_duzenleme}">
+                                        <p:messages showDetail="false"/>
+
+
+                                        <h:panelGrid id="borcAlacakGrid">
+
+                                            <p:dataTable id="borcAlacakTable"
+                                                         value="#{odemeIslemleriMB.daireBorcAlacakViewList}"
+                                                         var="daireBorcAlacak" widgetVar="borcAlacakTable" reflow="true"
+                                                         scrollable="true" scrollHeight="400"
+                                                         emptyMessage="#{msg.no_record_found}">
+
+
+                                                <p:column headerText="#{lbl.daire_kodu}">
+                                                    <h:outputText value="#{daireBorcAlacak.daire.daireKodu}"
+                                                                  style="font-weight:bold;" styleClass="red"/>
+                                                </p:column>
+
+                                                <p:column headerText="#{lbl.ortak_aciklama}">
+                                                    <p:inputText value="#{daireBorcAlacak.borc.odemeAciklama}"/>
+                                                </p:column>
+
+                                                <p:column headerText="#{lbl.odenen_tutar}">
+                                                    <p:inputText value="#{daireBorcAlacak.borc.odenenTutar}"/>
+                                                </p:column>
+
+                                                <p:column headerText="#{lbl.son_odeme_tarihi}">
+                                                    <p:calendar value="#{daireBorcAlacak.borc.odemeVadesi}" mask="true"
+                                                                pattern="dd/MM/yyyy"/>
+                                                </p:column>
+
+                                            </p:dataTable>
+
+                                        </h:panelGrid>
+                                </p:tab>
+
+                                <p:tab id="confirm" title="#{lbl.islem_onayi}">
+                                    <h:panelGrid id="c_borcAlacakGrid">
+
+                                        <p:dataTable id="c_borcAlacakTable"
+                                                     value="#{odemeIslemleriMB.daireBorcAlacakViewList}"
+                                                     var="c_daireBorcAlacak" reflow="true"
+                                                     scrollable="true" scrollHeight="300"
+                                                     emptyMessage="#{msg.no_record_found}">
+
+                                            <p:column headerText="#{lbl.daire_kodu}" sortBy="daire.daireKodu">
+                                                <h:outputText value="#{c_daireBorcAlacak.daire.daireKodu}"
+                                                              style="font: bold"/>
+                                            </p:column>
+
+                                            <p:column headerText="#{lbl.ortak_aciklama}">
+                                                <h:outputText value="#{c_daireBorcAlacak.borc.odemeAciklama}"/>
+                                            </p:column>
+
+                                            <p:column headerText="#{lbl.odenen_tutar}">
+                                                <h:outputText value="#{c_daireBorcAlacak.borc.odenenTutar}"/>
+                                            </p:column>
+
+                                            <p:column headerText="#{lbl.son_odeme_tarihi}">
+                                                <h:outputText value="#{c_daireBorcAlacak.borc.odemeVadesi}">
+                                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                                </h:outputText>
+                                            </p:column>
+
+                                        </p:dataTable>
+
+                                    </h:panelGrid>
+
+                                    <div class="EmptyBox5"></div>
+
+                                    <p:commandButton value="#{lbl.ortak_onayla}"
+                                                     actionListener="#{odemeIslemleriMB.islemleriTamamla}"
+                                                     process="@this" styleClass="GreenButton"
+                                                     onsuccess="rc()">
+                                        <p:confirm header="Onay" message="#{msg.islemi_onayliyormusunuz}"/>
+                                        <p:remoteCommand name="rc" action="#{odemeIslemleriMB.redirectAfterWait}"
+                                                         onstart="PF('waitDialog').show()"
+                                                         oncomplete="PF('waitDialog').hide()" global="false"/>
+                                        <p:dialog widgetVar="waitDialog" resizable="false" width="400" closable="false"
+                                                  draggable="false"
+                                                  showEffect="fade" hideEffect="scale" modal="true">
+                                            <h:outputText value="#{msg.islem_basarili_yonlendirme}"
+                                                          styleClass="red"/>
+                                        </p:dialog></p:commandButton>
+
+                                </p:tab>
+
+                            </p:wizard>
+
+
+                        </div>
+                    </div>
+
+
+                </h:form>
+
+            </div>
+        </div>
+
+
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
 </ui:composition>
