@@ -10,10 +10,9 @@ package com.ronin.dao.api;
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.model.Rol;
-import com.ronin.common.model.Yetki;
 import com.ronin.model.constant.BildirimTipi;
 import com.ronin.model.kriter.BildirimTipiSorguKriteri;
-import com.ronin.model.kriter.RolSorguKriteri;
+import com.ronin.model.kriter.HedefKitle;
 
 import java.util.List;
 
@@ -30,6 +29,8 @@ public interface IBildirimDao {
     List<BildirimTipi> getList(BildirimTipi bildirimTipi);
 
     List<Rol> getRolListByBildirimTipi(BildirimTipi bildirimTipi , SessionInfo sessionInfo);
+
+    List<Kullanici> getKullaniciListForBildirim (HedefKitle hedefKitle , SessionInfo sessionInfo);
 
     List<BildirimTipi> getAllBildirimTipiList();
 

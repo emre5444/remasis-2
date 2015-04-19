@@ -8,10 +8,9 @@ package com.ronin.service;
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.model.Rol;
-import com.ronin.common.model.Yetki;
 import com.ronin.model.constant.BildirimTipi;
 import com.ronin.model.kriter.BildirimTipiSorguKriteri;
-import com.ronin.model.kriter.RolSorguKriteri;
+import com.ronin.model.kriter.HedefKitle;
 
 import java.util.List;
 
@@ -28,6 +27,8 @@ public interface IBildirimService {
     List<BildirimTipi> getList(BildirimTipi bildirimTipi);
 
     List<Rol> getRolListByBildirimTipi(BildirimTipi bildirimTipi , SessionInfo sessionInfo);
+
+    List<Kullanici> getKullaniciListForBildirim(HedefKitle hedefKitle , SessionInfo sessionInfo);
 
     List<BildirimTipi> getListCriteriaForPaging(int first, int pageSize, BildirimTipiSorguKriteri sorguKriteri , SessionInfo sessionInfo);
 
