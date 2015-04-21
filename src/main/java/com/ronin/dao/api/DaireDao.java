@@ -7,9 +7,11 @@
 package com.ronin.dao.api;
 
 import com.ronin.commmon.beans.SessionInfo;
+import com.ronin.common.model.Kullanici;
 import com.ronin.model.Borc;
 import com.ronin.model.Daire;
 import com.ronin.model.DaireBorc;
+import com.ronin.model.DaireSakin;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.criteria.DaireCriteria;
 import com.ronin.model.kriter.DaireSorguKriteri;
@@ -134,6 +136,30 @@ public class DaireDao implements IDaireDao {
         }
     }
 
+    public void daireSakinEkleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
+        Kullanici kullanici = daireSakin.getKullanici();
+        // kullanici kaydi olusturulur.
+        getSessionFactory().getCurrentSession().save(kullanici);
+        getSessionFactory().getCurrentSession().save(daireSakin);
+    }
+
+    public void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
+        getSessionFactory().getCurrentSession().update(daireSakin.getKullanici());
+    }
+
+    public void daireSakinSilme(DaireSakin daireSakin , SessionInfo sessionInfo) {
+        daireSakin.setDurum(Durum.getSilinmisObject());
+        getSessionFactory().getCurrentSession().update(daireSakin);
+    }
+
+    public List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici){
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("select ds from DaireSakin ds where ds.daire.id =? and ds.bagliKullanici.id =?")
+                .setParameter(0, daire.getId())
+                .setParameter(1, kullanici.getId())
+                .list();
+        return list;
+    }
 
     public void delete(Daire arac) {
         this.update(arac);

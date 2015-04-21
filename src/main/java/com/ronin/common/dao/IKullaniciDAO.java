@@ -37,7 +37,9 @@ public interface IKullaniciDAO {
 
     public List<KullaniciDaire> getKullaniciListByDaire(Daire daire);
 
-     List<KullaniciDaire> getKullaniciListByDaire(Daire daire , KullaniciTipi kullaniciTipi);
+    List<KullaniciDaire> getVarsayilanKullaniciListByDaire(Daire daire);
+
+    List<KullaniciDaire> getKullaniciListByDaire(Daire daire , KullaniciTipi kullaniciTipi);
 
     void addKullaniciSirket(KullaniciSirket kullaniciSirket);
 

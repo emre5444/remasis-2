@@ -7,9 +7,11 @@
 package com.ronin.dao.api;
 
 import com.ronin.commmon.beans.SessionInfo;
+import com.ronin.common.model.Kullanici;
 import com.ronin.model.Borc;
 import com.ronin.model.Daire;
 import com.ronin.model.DaireBorc;
+import com.ronin.model.DaireSakin;
 import com.ronin.model.kriter.DaireSorguKriteri;
 
 import java.util.List;
@@ -47,4 +49,12 @@ public interface IDaireDao {
     void delete(Daire arac);
 
     void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList);
+
+    void daireSakinEkleme(DaireSakin daireSakin , SessionInfo sessionInfo);
+
+    void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo);
+
+    void daireSakinSilme(DaireSakin daireSakin , SessionInfo sessionInfo);
+
+    List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici);
 }

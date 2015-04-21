@@ -7,6 +7,7 @@
 package com.ronin.common.dao;
 
 import com.ronin.commmon.beans.SessionInfo;
+import com.ronin.common.model.Il;
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.model.KullaniciRol;
 import com.ronin.common.model.Rol;
@@ -67,6 +68,10 @@ public class OrtakDao implements IOrtakDao {
     @Override
     public List<IAbstractEntity> getListByNamedQueryWithSirket(String namedQuery, SessionInfo sessionInfo) {
         return sessionFactory.getCurrentSession().getNamedQuery(namedQuery).setLong("sirketId", sessionInfo.getSirket().getId()).list();
+    }
+
+    public List<IAbstractEntity> getIlceListByNamedQueryWithIl(String namedQuery, Il il) {
+        return sessionFactory.getCurrentSession().getNamedQuery(namedQuery).setLong("ilId", il.getId()).list();
     }
 
     public List<Duyuru> getDuyuruListBySorguSonucu(int first, int pageSize, DuyuruSorguKriteri sorguKriteri, SessionInfo sessionInfo) {

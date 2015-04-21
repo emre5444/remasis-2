@@ -10,11 +10,10 @@ import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.common.dao.IKullaniciDAO;
 import com.ronin.common.model.Kullanici;
 import com.ronin.dao.api.IDaireDao;
-import com.ronin.model.Borc;
-import com.ronin.model.Daire;
-import com.ronin.model.DaireBorc;
-import com.ronin.model.KullaniciDaire;
+import com.ronin.model.*;
+import com.ronin.model.constant.Durum;
 import com.ronin.model.kriter.DaireSorguKriteri;
+import com.ronin.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -141,8 +140,13 @@ public class DaireService implements IDaireService {
 
     @Transactional(readOnly = false)
     public List<KullaniciDaire> getKullaniciListByDaire(Daire daire) {
-        List<Kullanici> kullaniciList = new ArrayList<>();
         List<KullaniciDaire> kullaniciDaireList = kullaniciDAO.getKullaniciListByDaire(daire);
+        return kullaniciDaireList;
+    }
+
+    @Transactional(readOnly = false)
+    public List<KullaniciDaire> getVarsayilanKullaniciListByDaire(Daire daire) {
+        List<KullaniciDaire> kullaniciDaireList = kullaniciDAO.getVarsayilanKullaniciListByDaire(daire);
         return kullaniciDaireList;
     }
 
@@ -190,6 +194,28 @@ public class DaireService implements IDaireService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList){
         iDaireDao.addDaireListToBlok(sessionInfo,daireList);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireSakinEkleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
+        daireSakin.getKullanici().setDurum(Durum.getPasifObject());
+        daireSakin.setTanitimZamani(DateUtils.getNow());
+        iDaireDao.daireSakinEkleme(daireSakin , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
+        iDaireDao.daireSakinGuncelleme(daireSakin , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireSakinSilme(DaireSakin daireSakin , SessionInfo sessionInfo) {
+        iDaireDao.daireSakinSilme(daireSakin , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici){
+        return iDaireDao.getDaireSakinListByDaire(daire , kullanici);
     }
 
     public IKullaniciDAO getKullaniciDAO() {
