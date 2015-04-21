@@ -81,6 +81,21 @@ public class Kullanici implements Serializable {
     @Column(name = "last_login")
     private Date lastLogin;
 
+    @Column(name = "yakinlik_derecesi")
+    private String yakinlikDerecesi;
+
+    @Column(name = "meslek")
+    private String meslek;
+
+    @Column(name = "dogum_tarihi")
+    private Date dogumTarihi;
+
+    @Column(name = "dogum_yeri")
+    private String dogumYeri;
+
+    @Transient
+    private Il il;
+
     @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "kullanici",fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
@@ -269,6 +284,46 @@ public class Kullanici implements Serializable {
 
     public void setLastLogin(Date lastLogin) {
         this.lastLogin = lastLogin;
+    }
+
+    public Date getDogumTarihi() {
+        return dogumTarihi;
+    }
+
+    public void setDogumTarihi(Date dogumTarihi) {
+        this.dogumTarihi = dogumTarihi;
+    }
+
+    public String getMeslek() {
+        return meslek;
+    }
+
+    public void setMeslek(String meslek) {
+        this.meslek = meslek;
+    }
+
+    public String getYakinlikDerecesi() {
+        return yakinlikDerecesi;
+    }
+
+    public void setYakinlikDerecesi(String yakinlikDerecesi) {
+        this.yakinlikDerecesi = yakinlikDerecesi;
+    }
+
+    public Il getIl() {
+        return il;
+    }
+
+    public void setIl(Il il) {
+        this.il = il;
+    }
+
+    public String getDogumYeri() {
+        return dogumYeri;
+    }
+
+    public void setDogumYeri(String dogumYeri) {
+        this.dogumYeri = dogumYeri;
     }
 
     @Override

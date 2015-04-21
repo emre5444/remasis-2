@@ -104,6 +104,7 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
 
     //kullanici daire islemleri
     private KullaniciDaireDataModel kullaniciDaireDataModel;
+    private DaireSakinDataModel daireSakinDataModel;
     private Kullanici selectedKullanici;
     private KullaniciDaire selectedKullaniciDaire;
 
@@ -215,6 +216,27 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         return "/pages/sitePaylasimIslemleri/duyuruEkleme.xhtml";
     }
 
+    public String kullaniciGuncelleme(Kullanici selectedKullanici) {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedKullaniciObject", selectedKullanici);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
+        return "/pages/sistemYonetimi/kullaniciGuncelleme.xhtml";
+    }
+
+    public String navigateToDaireSakinEkle() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedKullaniciObject", varsayilanKullaniciDaire.getKullanici());
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
+        return "sakinKullaniciEkle.xhtml";
+    }
+
+    public String navigateToDaireSakinGuncelle(DaireSakin daireSakin) {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedKullaniciObject", varsayilanKullaniciDaire.getKullanici());
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireSakinObject", daireSakin);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "daireGoruntuleme.xhtml");
+        return "sakinKullaniciGuncelleme.xhtml";
+    }
+
     public void onTabChange(TabChangeEvent event) {
         if (event.getTab().getId().equals("daire_detay")) {
             getDaireBilgileriTabInfos();
@@ -227,6 +249,25 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         } else if (event.getTab().getId().equals("daire_belgeler")) {
             getBelgelerTabInfos();
         }
+    }
+
+    public void onSubTabChange(TabChangeEvent event) {
+        if (event.getTab().getId().equals("temsilci_bilgileri")) {
+            getDaireBilgileriTabInfos();
+        } else if (event.getTab().getId().equals("daire_sakin_bilgileri")) {
+            getDaireSakinSubTabInfos();
+        } else if (event.getTab().getId().equals("arac_bilgileri")) {
+            getDuyuruTabInfos();
+        } else if (event.getTab().getId().equals("yardimci_bilgileri")) {
+            getTalepTabInfos();
+        } else if (event.getTab().getId().equals("hayvan_bilgileri")) {
+            getBelgelerTabInfos();
+        }
+    }
+
+    public void getDaireSakinSubTabInfos() {
+       List<DaireSakin> daireSakinList = daireService.getDaireSakinListByDaire(selected , varsayilanKullaniciDaire.getKullanici());
+        daireSakinDataModel = new DaireSakinDataModel(daireSakinList);
     }
 
     public void getTalepTabInfos() {
@@ -256,7 +297,7 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
     }
 
     public void getDaireBilgileriTabInfos() {
-        List<KullaniciDaire> dataList = daireService.getKullaniciListByDaire(selected);
+        List<KullaniciDaire> dataList = daireService.getVarsayilanKullaniciListByDaire(selected);
         kullaniciDaireDataModel = new KullaniciDaireDataModel(dataList);
         for(KullaniciDaire kullaniciDaire : dataList){
             if(kullaniciDaire.getVarsayilanMi().isEvetMi()) {
@@ -291,6 +332,12 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
         ortakService.deleteDuyuru(selectedDuyuru);
         getDuyuruTabInfos();
         JsfUtil.addSuccessMessage(message.getString("duyuru_silme_basarili"));
+    }
+
+    public void daireSakinSilme(DaireSakin selectedDaireSakin){
+        daireService.daireSakinSilme(selectedDaireSakin,sessionInfo);
+        getDaireSakinSubTabInfos();
+        JsfUtil.addSuccessMessage(message.getString("daire_ekleme_basarili"));
     }
 
     //belge islemleri
@@ -713,5 +760,13 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
 
     public void setVarsayilanKullaniciDaire(KullaniciDaire varsayilanKullaniciDaire) {
         this.varsayilanKullaniciDaire = varsayilanKullaniciDaire;
+    }
+
+    public DaireSakinDataModel getDaireSakinDataModel() {
+        return daireSakinDataModel;
+    }
+
+    public void setDaireSakinDataModel(DaireSakinDataModel daireSakinDataModel) {
+        this.daireSakinDataModel = daireSakinDataModel;
     }
 }

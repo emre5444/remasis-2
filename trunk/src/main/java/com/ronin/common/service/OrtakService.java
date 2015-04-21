@@ -8,6 +8,7 @@ package com.ronin.common.service;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.common.dao.IOrtakDao;
+import com.ronin.common.model.Il;
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.model.Rol;
 import com.ronin.model.*;
@@ -69,6 +70,11 @@ public class OrtakService implements IOrtakService {
     @Transactional(readOnly = false)
     public List<IAbstractEntity> getListByNamedQueryWithSirket(String namedQuery,SessionInfo sessionInfo) {
         return iOrtakDao.getListByNamedQueryWithSirket(namedQuery, sessionInfo);
+    }
+
+    @Transactional(readOnly = false)
+    public List<IAbstractEntity> getIlceListByNamedQueryWithIl(String namedQuery, Il il) {
+        return iOrtakDao.getIlceListByNamedQueryWithIl(namedQuery , il);
     }
 
     @Transactional(readOnly = false)

@@ -148,6 +148,19 @@ public class KullaniciDAO implements IKullaniciDAO {
         return null;
     }
 
+    public List<KullaniciDaire> getVarsayilanKullaniciListByDaire(Daire daire){
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("from KullaniciDaire kd where kd.daire=? and " +
+                                                            "kd.varsayilanMi.id = ?")
+                .setParameter(0, daire)
+                .setParameter(1, EvetHayir.getEvetObject().getId())
+                .list();
+        if(list.size()>0){
+            return (List<KullaniciDaire>) list;
+        }
+        return null;
+    }
+
     public List<KullaniciDaire> getKullaniciListByDaire(Daire daire , KullaniciTipi kullaniciTipi){
         List list = getSessionFactory().getCurrentSession()
                 .createQuery("from KullaniciDaire kd where kd.daire=? and kd.kullaniciTipi.id=?")

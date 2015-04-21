@@ -8,6 +8,7 @@ package com.ronin.common.dao;
 
 
 import com.ronin.commmon.beans.SessionInfo;
+import com.ronin.common.model.Il;
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.model.Rol;
 import com.ronin.model.*;
@@ -37,6 +38,8 @@ public interface IOrtakDao {
     List<IAbstractEntity> getListByNamedQuery(String namedQuery);
 
     List<IAbstractEntity> getListByNamedQueryWithSirket(String namedQuery,SessionInfo sessionInfo);
+
+    List<IAbstractEntity> getIlceListByNamedQueryWithIl(String namedQuery, Il il);
 
      Durum getSingleDurumEntity(Long id);
 

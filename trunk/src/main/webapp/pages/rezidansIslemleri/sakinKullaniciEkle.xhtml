@@ -1,0 +1,121 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ps="http://primefaces.org/sentinel"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{lbl.label_dairede_yasiyan_kisi_ekleme}"/>
+    </ui:define>
+
+    <ui:define name="content">
+
+        <div style="height:10px"></div>
+
+        <h:form id="main_form">
+            <div class="Container100">
+                <div class="ContainerIndent">
+                    <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
+                    <p:panel rendered="#{not empty belgeIslemleriMB.selectedDaire}">
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
+                                </div>
+                                <h:panelGrid id="showDaireDetailBilgileri" columns="2" cellpadding="5">
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText id="daire_no" value="#{daireBilgileriIslemleriMB.selectedDaire.daireNo}"/>
+
+                                    <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText id="blok_adi" value="#{daireBilgileriIslemleriMB.selectedDaire.blok.aciklama}"/>
+
+                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputText id="kat" value="#{daireBilgileriIslemleriMB.selectedDaire.kat}"/>
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
+
+                    <div class="EmptyBox10"></div>
+
+                    <p:panel>
+                        <div class="Container100 Responsive">
+                            <div class="ContainerIndent">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-user-outline orange"></i> #{lbl.label_dairede_yasiyan_kisi_ekleme}
+                                </div>
+                                <h:panelGrid columns="2" cellpadding="5">
+
+                                    <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="ad" value="#{daireBilgileriIslemleriMB.yeniKullanici.ad}" required="true"
+                                                 label="#{lbl.ad}"/>
+
+                                    <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="soyad" value="#{daireBilgileriIslemleriMB.yeniKullanici.soyad}"
+                                                 required="true"
+                                                 label="#{lbl.soyad}"/>
+
+                                    <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="email" value="#{daireBilgileriIslemleriMB.yeniKullanici.email}"
+                                                 label="#{lbl.kullanici_email}"/>
+
+                                    <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}"
+                                                   style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputMask id="telefon" value="#{daireBilgileriIslemleriMB.yeniKullanici.gsm}"
+                                                 label="#{lbl.kullanici_tlefon}" mask="(999) 999-99-99"/>
+
+                                    <h:outputLabel for="tcid" value="#{lbl.kullanici_tcid}" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="tcid" value="#{daireBilgileriIslemleriMB.yeniKullanici.tckimlik}"
+                                                 label="#{lbl.kullanici_tcid}"/>
+
+                                    <h:outputLabel for="yakinlik_derecesi" value="#{lbl.label_yakinlik_derecesi}" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="yakinlik_derecesi" value="#{daireBilgileriIslemleriMB.yeniKullanici.yakinlikDerecesi}"
+                                                 label="#{lbl.label_yakinlik_derecesi}"/>
+
+                                    <h:outputLabel for="meslek" value="#{lbl.label_meslek}" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="meslek" value="#{daireBilgileriIslemleriMB.yeniKullanici.meslek}"
+                                                 label="#{lbl.label_meslek}"/>
+
+                                    <h:outputLabel for="dogum_tarihi" value="#{lbl.label_dogum_tarihi}" style="font-weight:bold; color: #0b4170"/>
+                                    <p:calendar id="dogum_tarihi"
+                                                value="#{daireBilgileriIslemleriMB.yeniKullanici.dogumTarihi}" mask="true"
+                                                pattern="dd/MM/yyyy" required="true"
+                                                label="#{lbl.label_dogum_tarihi}"/>
+
+                                    <h:outputLabel for="dogum_yeri" value="#{lbl.label_dogum_yeri}" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputText id="dogum_yeri" value="#{daireBilgileriIslemleriMB.yeniKullanici.dogumYeri}"
+                                                 label="#{lbl.label_dogum_yeri}"/>
+
+                                    <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold; color: #0b4170"/>
+                                    <p:inputTextarea rows="6" cols="50"
+                                                     value="#{daireBilgileriIslemleriMB.yeniKullanici.adres}"
+                                                     id="adres"/>
+
+                                </h:panelGrid>
+                            </div>
+                        </div>
+                    </p:panel>
+                    <h:panelGrid columns="3">
+                        <p:commandButton id="btn_kullanici_sakin_kaydet" value="#{lbl.kaydet}"
+                                         action="#{daireBilgileriIslemleriMB.daireSakinYenikayit}">
+                            <p:confirm header="#{lbl.label_dairede_yasiyan_kisi_ekleme}" message="#{msg.islemi_onayliyormusunuz}" icon="ui-icon-alert"/>
+                        </p:commandButton>
+                        <p:commandButton value="#{lbl.ortak_geri_don}" immediate="true"
+                                         action="#{daireBilgileriIslemleriMB.geriDon}"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

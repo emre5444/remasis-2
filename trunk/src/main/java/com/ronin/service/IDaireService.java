@@ -7,10 +7,7 @@ package com.ronin.service;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.common.model.Kullanici;
-import com.ronin.model.Borc;
-import com.ronin.model.Daire;
-import com.ronin.model.DaireBorc;
-import com.ronin.model.KullaniciDaire;
+import com.ronin.model.*;
 import com.ronin.model.kriter.DaireSorguKriteri;
 
 import java.util.List;
@@ -39,6 +36,8 @@ public interface IDaireService {
 
     List<KullaniciDaire> getKullaniciListByDaire(Daire daire);
 
+    List<KullaniciDaire> getVarsayilanKullaniciListByDaire(Daire daire);
+
     Borc getBakiyeOfDaire(Daire daire);
     
     int getCount(Daire arac);
@@ -54,5 +53,13 @@ public interface IDaireService {
     List<Daire> deleteTempDaire(List<Daire> daireList, Daire daire);
 
     void addDaireListToBlok(SessionInfo sessionInfo, List<Daire> daireList);
+
+    void daireSakinEkleme(DaireSakin daireSakin , SessionInfo sessionInfo);
+
+    void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo);
+
+    void daireSakinSilme(DaireSakin daireSakin , SessionInfo sessionInfo);
+
+    List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici);
 
 }
