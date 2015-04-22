@@ -211,6 +211,13 @@ public class DaireService implements IDaireService {
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireYardimciEkleme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
+        daireYardimci.getKullanici().setDurum(Durum.getPasifObject());
+        daireYardimci.setTanitimZamani(DateUtils.getNow());
+        iDaireDao.daireYardimciEkleme(daireYardimci , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
         iDaireDao.daireSakinGuncelleme(daireSakin , sessionInfo);
     }
@@ -218,6 +225,11 @@ public class DaireService implements IDaireService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void daireAracGuncelleme(DaireArac daireArac , SessionInfo sessionInfo) {
         iDaireDao.daireAracGuncelleme(daireArac , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireYardimciGuncelleme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
+        iDaireDao.daireYardimciGuncelleme(daireYardimci , sessionInfo);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -231,6 +243,11 @@ public class DaireService implements IDaireService {
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireYardimciSilme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
+        iDaireDao.daireYardimciSilme(daireYardimci , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
         return iDaireDao.getDaireSakinListByDaire(daire , kullanici , sessionInfo);
     }
@@ -238,6 +255,11 @@ public class DaireService implements IDaireService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public List<DaireArac> getDaireAracListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
         return iDaireDao.getDaireAracListByDaire(daire , kullanici , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public List<DaireYardimci> getDaireYardimciListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
+        return iDaireDao.getDaireYardimciListByDaire(daire , kullanici , sessionInfo);
     }
 
     public IKullaniciDAO getKullaniciDAO() {
