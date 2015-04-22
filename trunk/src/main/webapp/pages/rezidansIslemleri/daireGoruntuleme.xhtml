@@ -26,10 +26,16 @@
                     action="#{daireGoruntuleMB.navigateToDaireSakinEkle()}">
         </p:menuitem>
 
-        <p:menuitem id="menu_sakin_ekleme"
+        <p:menuitem id="menu_arac_ekleme"
                     value="#{lbl.label_arac_ekleme}"
                     rendered="#{sessionInfo.isYetkili('daire_arac_ekleme')}"
                     action="#{daireGoruntuleMB.navigateToDaireAracEkle()}" >
+        </p:menuitem>
+
+        <p:menuitem id="menu_yardimci_ekleme"
+                    value="#{lbl.label_yardimci_ekleme}"
+                    rendered="#{sessionInfo.isYetkili('daire_yardimci_ekleme')}"
+                    action="#{daireGoruntuleMB.navigateToDaireYardimciEkle()}">
         </p:menuitem>
     </p:submenu>
 
@@ -489,7 +495,7 @@
 
                     <p:menuButton value="#{lbl.label_arac_islemleri}"
                                   styleClass="Fright">
-                        <p:menuitem id="sakin_ekleme"
+                        <p:menuitem id="arac_ekleme"
                                     value="#{lbl.label_arac_ekleme}"
                                     rendered="#{sessionInfo.isYetkili('daire_arac_ekleme')}"
                                     icon="ui-icon-disk"
@@ -553,7 +559,7 @@
 
                     <p:menuButton value="#{lbl.label_yardimci_islemleri}"
                                   styleClass="Fright">
-                        <p:menuitem id="sakin_ekleme"
+                        <p:menuitem id="yardimci_ekleme"
                                     value="#{lbl.label_yardimci_ekleme}"
                                     rendered="#{sessionInfo.isYetkili('daire_yardimci_ekleme')}"
                                     icon="ui-icon-disk"
