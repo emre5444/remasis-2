@@ -503,19 +503,19 @@
                              expandedRow="true"
                              emptyMessage="#{msg.no_record_found}">
 
-                    <p:column headerText="#{lbl.label_plaka}" sortBy="#{varDaireArac.arac.plaka}">
-                        <h:outputText value="#{varDaireArac.arac.plaka}"/>
+                    <p:column headerText="#{lbl.label_plaka}" sortBy="#{varDaireArac.plaka}">
+                        <h:outputText value="#{varDaireArac.plaka}"/>
                     </p:column>
-                    <p:column headerText="#{lbl.label_marka}" sortBy="#{varDaireArac.arac.marka}">
-                        <h:outputText value="#{varDaireArac.arac.marka}"/>
+                    <p:column headerText="#{lbl.label_marka}" sortBy="#{varDaireArac.marka}">
+                        <h:outputText value="#{varDaireArac.marka}"/>
                     </p:column>
                     <p:column headerText="#{lbl.label_model}"
-                              sortBy="#{varDaireArac.arac.model}">
-                        <h:outputText value="#{varDaireArac.arac.model}"/>
+                              sortBy="#{varDaireArac.model}">
+                        <h:outputText value="#{varDaireArac.model}"/>
                     </p:column>
                     <p:column headerText="#{lbl.label_renk}"
-                              sortBy="#{varDaireArac.arac.renk}">
-                        <h:outputText value="#{varDaireArac.arac.renk}"/>
+                              sortBy="#{varDaireArac.renk}">
+                        <h:outputText value="#{varDaireArac.renk}"/>
                     </p:column>
 
                     <p:column style="width:10%">
@@ -545,6 +545,79 @@
 
 <p:tab id="yardimci_bilgileri" title="#{lbl.label_tab_daire_yardimci}">
 
+    <p:panel id="pnl_daire_yardimci_list">
+        <div class="Container100 Responsive">
+            <div class="ContainerIndent">
+                <div class="Container100 Responsive Fs20 hardblue">
+                    <i class="icon-cab orange"></i> #{lbl.label_daire_yardimci_listesi}
+
+                    <p:menuButton value="#{lbl.label_yardimci_islemleri}"
+                                  styleClass="Fright">
+                        <p:menuitem id="sakin_ekleme"
+                                    value="#{lbl.label_yardimci_ekleme}"
+                                    rendered="#{sessionInfo.isYetkili('daire_yardimci_ekleme')}"
+                                    icon="ui-icon-disk"
+                                    action="#{daireGoruntuleMB.navigateToDaireYardimciEkle()}"
+                                >
+                        </p:menuitem>
+                    </p:menuButton>
+                </div>
+                <p:dataTable value="#{daireGoruntuleMB.daireYardimciDataModel}"
+                             var="varDaireYardimci" reflow="true"
+                             expandedRow="true"
+                             emptyMessage="#{msg.no_record_found}">
+
+                    <p:column headerText="#{lbl.label_yardimci_ad}" sortBy="#{varDaireYardimci.ad}">
+                        <h:outputText value="#{varDaireYardimci.ad}"/>
+                    </p:column>
+                    <p:column headerText="#{lbl.label_yardimci_soyad}" sortBy="#{varDaireYardimci.soyad}">
+                        <h:outputText value="#{varDaireYardimci.soyad}"/>
+                    </p:column>
+                    <p:column headerText="#{lbl.label_yardimci_gorevi}"
+                              sortBy="#{varDaireYardimci.gorev}">
+                        <h:outputText value="#{varDaireYardimci.gorev}"/>
+                    </p:column>
+                    <p:column headerText="#{lbl.label_yardimci_gunluk_calisma_suresi}"
+                              sortBy="#{varDaireYardimci.gunlukCalismaSuresi}">
+                        <h:outputText value="#{varDaireYardimci.gunlukCalismaSuresi}"/>
+                    </p:column>
+
+                    <p:column headerText="#{lbl.label_yardimci_goreve_baslangic}"
+                              sortBy="#{varDaireYardimci.gorevBaslamaTarihi}">
+                        <h:outputText value="#{varDaireYardimci.gorevBaslamaTarihi}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{lbl.label_yardimci_gorev_bitis}"
+                              sortBy="#{varDaireYardimci.gorevBitisTarihi}">
+                        <h:outputText value="#{varDaireYardimci.gorevBitisTarihi}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column style="width:10%">
+                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+
+                            <p:menuitem id="daire_yardimci_guncelle" value="#{lbl.ortak_guncelle}"
+                                        icon="ui-icon-wrench"
+                                        rendered="#{sessionInfo.isYetkili('daire_yardimci_guncelleme')}"
+                                        action="#{daireGoruntuleMB.navigateToDaireYardimciGuncelle(varDaireYardimci)}">
+                            </p:menuitem>
+
+                            <p:menuitem id="daire_yardimci_sil" value="#{lbl.ortak_sil}"
+                                        icon="fa fa-trash-o" immediate="true"
+                                        rendered="#{sessionInfo.isYetkili('daire_yardimci_silme')}"
+                                        action="#{daireGoruntuleMB.daireYardimciSilme(varDaireYardimci)}"
+                                        update="@([id$=pnl_daire_yardimci_list])"></p:menuitem>
+
+                        </p:menuButton>
+
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
+    </p:panel>
 
 </p:tab>
 
