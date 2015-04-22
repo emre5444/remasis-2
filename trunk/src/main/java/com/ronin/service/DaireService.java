@@ -204,8 +204,20 @@ public class DaireService implements IDaireService {
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireAracEkleme(DaireArac daireArac , SessionInfo sessionInfo) {
+        daireArac.getKullanici().setDurum(Durum.getPasifObject());
+        daireArac.setTanitimZamani(DateUtils.getNow());
+        iDaireDao.daireAracEkleme(daireArac , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
         iDaireDao.daireSakinGuncelleme(daireSakin , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireAracGuncelleme(DaireArac daireArac , SessionInfo sessionInfo) {
+        iDaireDao.daireAracGuncelleme(daireArac , sessionInfo);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -214,8 +226,18 @@ public class DaireService implements IDaireService {
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
-    public List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici){
-        return iDaireDao.getDaireSakinListByDaire(daire , kullanici);
+    public void daireAracSilme(DaireArac daireArac , SessionInfo sessionInfo) {
+        iDaireDao.daireAracSilme(daireArac , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
+        return iDaireDao.getDaireSakinListByDaire(daire , kullanici , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public List<DaireArac> getDaireAracListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
+        return iDaireDao.getDaireAracListByDaire(daire , kullanici , sessionInfo);
     }
 
     public IKullaniciDAO getKullaniciDAO() {

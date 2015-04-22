@@ -7,6 +7,7 @@ import com.ronin.common.model.Kullanici;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.DaireDataModel;
 import com.ronin.model.Daire;
+import com.ronin.model.DaireArac;
 import com.ronin.model.DaireSakin;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.kriter.DaireSorguKriteri;
@@ -48,6 +49,7 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
     private DaireSorguKriteri sorguKriteri = new DaireSorguKriteri();
 
     private DaireSakin daireSakin = new DaireSakin();
+    private DaireArac daireArac = new DaireArac();
     private Kullanici yeniKullanici = new Kullanici();
 
     //daire islemleri
@@ -66,6 +68,9 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
         DaireSakin ds = (DaireSakin) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireSakinObject");
         if(ds != null)
             daireSakin = ds;
+        DaireArac da = (DaireArac) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireAracObject");
+        if(da != null)
+            daireArac = da;
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
         selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireObject");
         selectedKullanici = (Kullanici) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedKullaniciObject");
@@ -93,6 +98,13 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
         return getBackPage();
     }
 
+    public String daireAracGuncelleme() {
+        daireService.daireAracGuncelleme(daireArac, sessionInfo);
+        storeFlashObjects();
+        JsfUtil.addSuccessMessage(message.getString("info_daire_arac_guncelleme_basarili"));
+        return getBackPage();
+    }
+
     public String daireSakinYenikayit() {
         daireSakin.setKullanici(yeniKullanici);
         daireSakin.setBagliKullanici(selectedKullanici);
@@ -100,6 +112,15 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
         daireService.daireSakinEkleme(daireSakin, sessionInfo);
         storeFlashObjects();
         JsfUtil.addSuccessMessage(message.getString("info_daire_sakin_ekleme_basarili"));
+        return getBackPage();
+    }
+
+    public String daireAracYenikayit() {
+        daireArac.setKullanici(yeniKullanici);
+        daireArac.setDaire(selectedDaire);
+        daireService.daireAracEkleme(daireArac, sessionInfo);
+        storeFlashObjects();
+        JsfUtil.addSuccessMessage(message.getString("info_daire_arac_ekleme_basarili"));
         return getBackPage();
     }
 
@@ -197,5 +218,13 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
 
     public void setYeniKullanici(Kullanici yeniKullanici) {
         this.yeniKullanici = yeniKullanici;
+    }
+
+    public DaireArac getDaireArac() {
+        return daireArac;
+    }
+
+    public void setDaireArac(DaireArac daireArac) {
+        this.daireArac = daireArac;
     }
 }
