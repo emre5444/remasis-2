@@ -104,6 +104,7 @@ INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (88,'Daire Yard?mc?/Çal??an Silme',1,'daire_yardimci_silme',71);
 
 
+
 ALTER TABLE `ilce`
 AUTO_INCREMENT = 1 ;
 
