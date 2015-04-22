@@ -6,10 +6,7 @@ import com.ronin.common.model.Ilce;
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.DaireDataModel;
-import com.ronin.model.Daire;
-import com.ronin.model.DaireArac;
-import com.ronin.model.DaireSakin;
-import com.ronin.model.DaireYardimci;
+import com.ronin.model.*;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.kriter.DaireSorguKriteri;
 import com.ronin.service.IDaireService;
@@ -52,6 +49,7 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
     private DaireSakin daireSakin = new DaireSakin();
     private DaireArac daireArac = new DaireArac();
     private DaireYardimci daireYardimci = new DaireYardimci();
+    private DaireHayvan daireHayvan = new DaireHayvan();
     private Kullanici yeniKullanici = new Kullanici();
 
     //daire islemleri
@@ -76,6 +74,9 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
         DaireYardimci dy = (DaireYardimci) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireYardimciObject");
         if(dy != null)
             daireYardimci = dy;
+        DaireHayvan dh = (DaireHayvan) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireHayvanObject");
+        if(dh != null)
+            daireHayvan = dh;
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
         selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireObject");
         selectedKullanici = (Kullanici) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedKullaniciObject");
@@ -110,6 +111,13 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
         return getBackPage();
     }
 
+    public String daireHayvanGuncelleme() {
+        daireService.daireHayvanGuncelleme(daireHayvan, sessionInfo);
+        storeFlashObjects();
+        JsfUtil.addSuccessMessage(message.getString("info_daire_hayvan_guncelleme_basarili"));
+        return getBackPage();
+    }
+
     public String daireYardimciGuncelleme() {
         daireService.daireYardimciGuncelleme(daireYardimci, sessionInfo);
         storeFlashObjects();
@@ -133,6 +141,15 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
         daireService.daireAracEkleme(daireArac, sessionInfo);
         storeFlashObjects();
         JsfUtil.addSuccessMessage(message.getString("info_daire_arac_ekleme_basarili"));
+        return getBackPage();
+    }
+
+    public String daireHayvanYenikayit() {
+        daireHayvan.setKullanici(yeniKullanici);
+        daireHayvan.setDaire(selectedDaire);
+        daireService.daireHayvanEkleme(daireHayvan, sessionInfo);
+        storeFlashObjects();
+        JsfUtil.addSuccessMessage(message.getString("info_daire_hayvan_ekleme_basarili"));
         return getBackPage();
     }
 
@@ -255,5 +272,13 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
 
     public void setDaireYardimci(DaireYardimci daireYardimci) {
         this.daireYardimci = daireYardimci;
+    }
+
+    public DaireHayvan getDaireHayvan() {
+        return daireHayvan;
+    }
+
+    public void setDaireHayvan(DaireHayvan daireHayvan) {
+        this.daireHayvan = daireHayvan;
     }
 }

@@ -102,6 +102,9 @@ INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (86,'Daire Yard?mc?/Çal??an Ekleme',1,'daire_yardimci_ekleme',71);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (87,'Daire Yard?mc?/Çal??an Güncelleme',1,'daire_yardimci_guncelleme',71);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (88,'Daire Yard?mc?/Çal??an Silme',1,'daire_yardimci_silme',71);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (89,'Daire Evcil Hayvan Ekleme',1,'daire_hayvan_ekleme',71);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (90,'Daire Evcil Hayvan Güncelleme',1,'daire_hayvan_guncelleme',71);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (91,'Daire Evcil Hayvan Silme',1,'daire_hayvan_silme',71);
 
 
 

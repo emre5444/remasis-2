@@ -51,17 +51,23 @@ public interface IDaireDao {
 
     void daireAracEkleme(DaireArac daireArac , SessionInfo sessionInfo);
 
+    void daireHayvanEkleme(DaireHayvan daireHayvan , SessionInfo sessionInfo);
+
     void daireYardimciEkleme(DaireYardimci daireYardimci , SessionInfo sessionInfo);
 
     void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo);
 
     void daireAracGuncelleme(DaireArac daireArac , SessionInfo sessionInfo);
 
+    void daireHayvanGuncelleme(DaireHayvan daireHayvan , SessionInfo sessionInfo);
+
     void daireYardimciGuncelleme(DaireYardimci daireYardimci , SessionInfo sessionInfo);
 
     void daireSakinSilme(DaireSakin daireSakin , SessionInfo sessionInfo);
 
     void daireAracSilme(DaireArac daireArac , SessionInfo sessionInfo);
+
+    void daireHayvanSilme(DaireHayvan daireHayvan , SessionInfo sessionInfo);
 
     void daireYardimciSilme(DaireYardimci daireYardimci , SessionInfo sessionInfo);
 
@@ -70,4 +76,6 @@ public interface IDaireDao {
     List<DaireArac> getDaireAracListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo);
 
     List<DaireYardimci> getDaireYardimciListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo);
+
+    List<DaireHayvan> getDaireHayvanListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo);
 }

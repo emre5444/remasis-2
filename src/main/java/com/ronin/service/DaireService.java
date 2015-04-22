@@ -211,6 +211,13 @@ public class DaireService implements IDaireService {
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireHayvanEkleme(DaireHayvan daireHayvan , SessionInfo sessionInfo) {
+        daireHayvan.getKullanici().setDurum(Durum.getPasifObject());
+        daireHayvan.setTanitimZamani(DateUtils.getNow());
+        iDaireDao.daireHayvanEkleme(daireHayvan , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void daireYardimciEkleme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
         daireYardimci.getKullanici().setDurum(Durum.getPasifObject());
         daireYardimci.setTanitimZamani(DateUtils.getNow());
@@ -228,6 +235,11 @@ public class DaireService implements IDaireService {
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireHayvanGuncelleme(DaireHayvan daireHayvan , SessionInfo sessionInfo) {
+        iDaireDao.daireHayvanGuncelleme(daireHayvan , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void daireYardimciGuncelleme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
         iDaireDao.daireYardimciGuncelleme(daireYardimci , sessionInfo);
     }
@@ -240,6 +252,11 @@ public class DaireService implements IDaireService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void daireAracSilme(DaireArac daireArac , SessionInfo sessionInfo) {
         iDaireDao.daireAracSilme(daireArac , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void daireHayvanSilme(DaireHayvan daireHayvan , SessionInfo sessionInfo) {
+        iDaireDao.daireHayvanSilme(daireHayvan , sessionInfo);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -260,6 +277,11 @@ public class DaireService implements IDaireService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public List<DaireYardimci> getDaireYardimciListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
         return iDaireDao.getDaireYardimciListByDaire(daire , kullanici , sessionInfo);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public List<DaireHayvan> getDaireHayvanListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
+        return iDaireDao.getDaireHayvanListByDaire(daire , kullanici , sessionInfo);
     }
 
     public IKullaniciDAO getKullaniciDAO() {
