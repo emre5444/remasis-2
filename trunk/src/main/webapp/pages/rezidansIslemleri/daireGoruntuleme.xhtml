@@ -42,6 +42,12 @@
                     rendered="#{sessionInfo.isYetkili('daire_yardimci_ekleme')}"
                     action="#{daireGoruntuleMB.navigateToDaireYardimciEkle()}">
         </p:menuitem>
+
+        <p:menuitem id="menu_hayvan_ekleme"
+                    value="#{lbl.label_hayvan_ekleme}"
+                    rendered="#{sessionInfo.isYetkili('daire_hayvan_ekleme')}"
+                    action="#{daireGoruntuleMB.navigateToDaireHayvanEkle()}">
+         </p:menuitem>
     </p:submenu>
 
     <p:submenu label="#{lbl.label_belge_islemleri}" icon="ui-icon-comment" style="width: auto">
@@ -634,6 +640,57 @@
 
 <p:tab id="hayvan_bilgileri" title="#{lbl.label_tab_evcil_hayvan}">
 
+    <p:panel id="pnl_daire_hayvan_list">
+        <div class="Container100 Responsive">
+            <div class="ContainerIndent">
+                <div class="Container100 Responsive Fs20 hardblue">
+                    <i class="icon-github-1 orange"></i> #{lbl.label_daire_hayvan_listesi}
+
+                    <p:menuButton value="#{lbl.label_hayvan_islemleri}"
+                                  styleClass="Fright">
+                        <p:menuitem id="hayvan_ekleme"
+                                    value="#{lbl.label_hayvan_ekleme}"
+                                    rendered="#{sessionInfo.isYetkili('daire_hayvan_ekleme')}"
+                                    icon="ui-icon-disk"
+                                    action="#{daireGoruntuleMB.navigateToDaireHayvanEkle()}"
+                                >
+                        </p:menuitem>
+                    </p:menuButton>
+                </div>
+                <p:dataTable value="#{daireGoruntuleMB.daireHayvanDataModel}"
+                             var="varDaireHayvan" reflow="true"
+                             expandedRow="true"
+                             emptyMessage="#{msg.no_record_found}">
+
+                    <p:column headerText="#{lbl.label_hayvan_cinsi}" sortBy="#{varDaireHayvan.plaka}">
+                        <h:outputText value="#{varDaireHayvan.cinsi}"/>
+                    </p:column>
+                    <p:column headerText="#{lbl.label_hayvan_sayisi}" sortBy="#{varDaireHayvan.marka}">
+                        <h:outputText value="#{varDaireHayvan.sayisi}"/>
+                    </p:column>
+
+                    <p:column style="width:10%">
+                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+
+                            <p:menuitem id="daire_arac_guncelle" value="#{lbl.ortak_guncelle}"
+                                        icon="ui-icon-wrench"
+                                        rendered="#{sessionInfo.isYetkili('daire_hayvan_guncelleme')}"
+                                        action="#{daireGoruntuleMB.navigateToDaireHayvanGuncelle(varDaireHayvan)}">
+                            </p:menuitem>
+
+                            <p:menuitem id="daire_arac_sil" value="#{lbl.ortak_sil}"
+                                        icon="fa fa-trash-o" immediate="true"
+                                        rendered="#{sessionInfo.isYetkili('daire_hayvan_silme')}"
+                                        action="#{daireGoruntuleMB.daireHayvanSilme(varDaireHayvan)}"
+                                        update="@([id$=pnl_daire_hayvan_list])"></p:menuitem>
+
+                        </p:menuButton>
+
+                    </p:column>
+                </p:dataTable>
+            </div>
+        </div>
+    </p:panel>
 
 </p:tab>
 

@@ -144,6 +144,10 @@ public class DaireDao implements IDaireDao {
         getSessionFactory().getCurrentSession().save(daireArac);
     }
 
+    public void daireHayvanEkleme(DaireHayvan daireHayvan , SessionInfo sessionInfo) {
+        getSessionFactory().getCurrentSession().save(daireHayvan);
+    }
+
     public void daireYardimciEkleme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
         getSessionFactory().getCurrentSession().save(daireYardimci);
     }
@@ -154,6 +158,10 @@ public class DaireDao implements IDaireDao {
 
     public void daireAracGuncelleme(DaireArac daireArac , SessionInfo sessionInfo) {
         getSessionFactory().getCurrentSession().update(daireArac);
+    }
+
+    public void daireHayvanGuncelleme(DaireHayvan daireHayvan , SessionInfo sessionInfo) {
+        getSessionFactory().getCurrentSession().update(daireHayvan);
     }
 
     public void daireYardimciGuncelleme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
@@ -168,6 +176,11 @@ public class DaireDao implements IDaireDao {
     public void daireAracSilme(DaireArac daireArac , SessionInfo sessionInfo) {
         daireArac.setDurum(Durum.getSilinmisObject());
         getSessionFactory().getCurrentSession().update(daireArac);
+    }
+
+    public void daireHayvanSilme(DaireHayvan daireHayvan , SessionInfo sessionInfo) {
+        daireHayvan.setDurum(Durum.getSilinmisObject());
+        getSessionFactory().getCurrentSession().update(daireHayvan);
     }
 
     public void daireYardimciSilme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
@@ -198,6 +211,16 @@ public class DaireDao implements IDaireDao {
     public List<DaireYardimci> getDaireYardimciListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
         List list = getSessionFactory().getCurrentSession()
                 .createQuery("select dy from DaireYardimci dy where dy.daire.id =? and dy.kullanici.id =? and dy.durum.id=?")
+                .setParameter(0, daire.getId())
+                .setParameter(1, kullanici.getId())
+                .setParameter(2, Durum.getAktifObject().getId())
+                .list();
+        return list;
+    }
+
+    public List<DaireHayvan> getDaireHayvanListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("select dh from DaireHayvan dh where dh.daire.id =? and dh.kullanici.id =? and dh.durum.id=?")
                 .setParameter(0, daire.getId())
                 .setParameter(1, kullanici.getId())
                 .setParameter(2, Durum.getAktifObject().getId())

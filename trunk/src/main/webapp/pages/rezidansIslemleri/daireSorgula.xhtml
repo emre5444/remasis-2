@@ -87,7 +87,7 @@
                                 </p:selectOneMenu>
 
                                 <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
-                                <p:inputText id="daire_no" value="#{daireMB.sorguKriteri.daireNo}"/>
+                                <p:inputMask id="daire_no" value="#{daireMB.sorguKriteri.daireNo}"  mask="999"/>
 
                                 <p:commandButton value="#{lbl.ortak_sorgula}"
                                                  actionListener="#{daireMB.getDaireListBySorguKriteri()}"
