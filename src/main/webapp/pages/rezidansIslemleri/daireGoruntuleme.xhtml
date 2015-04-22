@@ -246,9 +246,9 @@
 
 <div class="EmptyBox10"></div>
 
-<p:tabView dynamic="true" cache="true" >
+<p:tabView id="subTab" dynamic="true" cache="true" >
 <p:ajax event="tabChange" listener="#{daireGoruntuleMB.onSubTabChange}"
-        update="@([id$=tabChange])"/>
+        update="@([id$=pnl_daire_sakin_list]) ,@([id$=subTab])"/>
 
 <p:tab id="temsilci_bilgileri" title="#{lbl.label_tab_temsilci_bilgileri}">
 
@@ -379,32 +379,31 @@
                 <div class="EmptyBox5"></div>
                 <p:dataTable value="#{daireGoruntuleMB.daireSakinDataModel}"
                              var="varDaireSakin" reflow="true"
-                             expandedRow="true"
                              emptyMessage="#{msg.no_record_found}">
                     <p:column style="width:16px">
                         <p:rowToggler/>
                     </p:column>
-                    <p:column headerText="#{lbl.ad}" sortBy="#{varDaireSakin.kullanici.ad}">
-                        <h:outputText value="#{varDaireSakin.kullanici.ad}"/>
+                    <p:column headerText="#{lbl.ad}" sortBy="#{varDaireSakin.ad}">
+                        <h:outputText value="#{varDaireSakin.ad}"/>
                     </p:column>
-                    <p:column headerText="#{lbl.soyad}" sortBy="#{varDaireSakin.kullanici.soyad}">
-                        <h:outputText value="#{varDaireSakin.kullanici.soyad}"/>
+                    <p:column headerText="#{lbl.soyad}" sortBy="#{varDaireSakin.soyad}">
+                        <h:outputText value="#{varDaireSakin.soyad}"/>
                     </p:column>
                     <p:column headerText="#{lbl.label_yakinlik_derecesi}"
-                              sortBy="#{varDaireSakin.kullanici.yakinlikDerecesi}">
-                        <h:outputText value="#{varDaireSakin.kullanici.yakinlikDerecesi}"/>
+                              sortBy="#{varDaireSakin.yakinlikDerecesi}">
+                        <h:outputText value="#{varDaireSakin.yakinlikDerecesi}"/>
                     </p:column>
                     <p:column headerText="#{lbl.label_meslek}"
-                              sortBy="#{varDaireSakin.kullanici.meslek}">
-                        <h:outputText value="#{varDaireSakin.kullanici.meslek}"/>
+                              sortBy="#{varDaireSakin.meslek}">
+                        <h:outputText value="#{varDaireSakin.meslek}"/>
                     </p:column>
                     <p:column headerText="#{lbl.label_dogum_yeri}"
-                              sortBy="#{varDaireSakin.kullanici.dogumYeri}">
-                        <h:outputText value="#{varDaireSakin.kullanici.dogumYeri}"/>
+                              sortBy="#{varDaireSakin.dogumYeri}">
+                        <h:outputText value="#{varDaireSakin.dogumYeri}"/>
                     </p:column>
                     <p:column headerText="#{lbl.label_dogum_tarihi}"
-                              sortBy="#{varDaireSakin.kullanici.dogumTarihi}">
-                        <h:outputText value="#{varDaireSakin.kullanici.dogumTarihi}">
+                              sortBy="#{varDaireSakin.dogumTarihi}">
+                        <h:outputText value="#{varDaireSakin.dogumTarihi}">
                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                         </h:outputText>
                     </p:column>
@@ -419,54 +418,54 @@
                                 <h:outputLabel for="malik_ad" value="#{lbl.ad}"
                                                style="font-weight:bold; color: #0b4170"/>
                                 <h:outputText
-                                        value="#{varDaireSakin.kullanici.ad}"
+                                        value="#{varDaireSakin.ad}"
                                         id="malik_ad"/>
 
                                 <h:outputLabel for="malik_soyad" value="#{lbl.soyad}"
                                                style="font-weight:bold; color: #0b4170"/>
                                 <h:outputText rows="6" cols="33"
-                                              value="#{varDaireSakin.kullanici.soyad}"
+                                              value="#{varDaireSakin.soyad}"
                                               id="malik_soyad"
                                         />
 
                                 <h:outputLabel for="email" value="#{lbl.kullanici_email}"
                                                style="font-weight:bold; color: #0b4170"/>
-                                <p:outputLabel id="email" value="#{varDaireSakin.kullanici.email}"/>
+                                <p:outputLabel id="email" value="#{varDaireSakin.email}"/>
 
                                 <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}"
                                                style="font-weight:bold; color: #0b4170"/>
-                                <p:outputLabel id="telefon" value="#{varDaireSakin.kullanici.gsm}"/>
+                                <p:outputLabel id="telefon" value="#{varDaireSakin.gsm}"/>
 
                                 <h:outputLabel for="tcid" value="#{lbl.kullanici_tcid}"
                                                style="font-weight:bold; color: #0b4170"/>
-                                <p:outputLabel id="tcid" value="#{varDaireSakin.kullanici.tckimlik}"/>
+                                <p:outputLabel id="tcid" value="#{varDaireSakin.tckimlik}"/>
 
                                 <h:outputLabel for="yakinlik_derecesi" value="#{lbl.label_yakinlik_derecesi}"
                                                style="font-weight:bold; color: #0b4170"/>
                                 <p:outputLabel id="yakinlik_derecesi"
-                                               value="#{varDaireSakin.kullanici.yakinlikDerecesi}"
+                                               value="#{varDaireSakin.yakinlikDerecesi}"
                                                label="#{lbl.label_yakinlik_derecesi}"/>
 
                                 <h:outputLabel for="meslek" value="#{lbl.label_meslek}"
                                                style="font-weight:bold; color: #0b4170"/>
-                                <p:outputLabel id="meslek" value="#{varDaireSakin.kullanici.meslek}"
+                                <p:outputLabel id="meslek" value="#{varDaireSakin.meslek}"
                                                label="#{lbl.label_meslek}"/>
 
                                 <h:outputLabel for="dogum_tarihi" value="#{lbl.label_dogum_tarihi}"
                                                style="font-weight:bold; color: #0b4170"/>
-                                <p:outputLabel id="dogum_tarihi" value="#{varDaireSakin.kullanici.dogumTarihi}"
+                                <p:outputLabel id="dogum_tarihi" value="#{varDaireSakin.dogumTarihi}"
                                                label="#{lbl.label_meslek}">
                                     <f:convertDateTime pattern="dd/MM/yyyy"/>
                                 </p:outputLabel>
 
                                 <h:outputLabel for="dogum_yeri" value="#{lbl.label_dogum_yeri}"
                                                style="font-weight:bold; color: #0b4170"/>
-                                <p:outputLabel id="dogum_yeri" value="#{varDaireSakin.kullanici.dogumYeri}"
+                                <p:outputLabel id="dogum_yeri" value="#{varDaireSakin.dogumYeri}"
                                                label="#{lbl.label_dogum_yeri}"/>
 
                                 <h:outputLabel for="adres" value="#{lbl.kullanici_adres}"
                                                style="font-weight:bold; color: #0b4170"/>
-                                <p:outputLabel id="adres" value="#{varDaireSakin.kullanici.adres}"/>
+                                <p:outputLabel id="adres" value="#{varDaireSakin.adres}"/>
 
                             </h:panelGrid>
                         </p:panel>
@@ -520,7 +519,6 @@
                 <div class="EmptyBox5"></div>
                 <p:dataTable value="#{daireGoruntuleMB.daireAracDataModel}"
                              var="varDaireArac" reflow="true"
-                             expandedRow="true"
                              emptyMessage="#{msg.no_record_found}">
 
                     <p:column headerText="#{lbl.label_plaka}" sortBy="#{varDaireArac.plaka}">
@@ -585,7 +583,6 @@
                 <div class="EmptyBox5"></div>
                 <p:dataTable value="#{daireGoruntuleMB.daireYardimciDataModel}"
                              var="varDaireYardimci" reflow="true"
-                             expandedRow="true"
                              emptyMessage="#{msg.no_record_found}">
 
                     <p:column headerText="#{lbl.label_yardimci_ad}" sortBy="#{varDaireYardimci.ad}">
@@ -664,7 +661,6 @@
                 <div class="EmptyBox5"></div>
                 <p:dataTable value="#{daireGoruntuleMB.daireHayvanDataModel}"
                              var="varDaireHayvan" reflow="true"
-                             expandedRow="true"
                              emptyMessage="#{msg.no_record_found}">
 
                     <p:column headerText="#{lbl.label_hayvan_cinsi}" sortBy="#{varDaireHayvan.plaka}">

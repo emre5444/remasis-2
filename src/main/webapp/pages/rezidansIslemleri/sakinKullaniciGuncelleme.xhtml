@@ -75,7 +75,7 @@
                                                  label="#{lbl.kullanici_tcid}"/>
 
                                     <h:outputLabel for="yakinlik_derecesi" value="#{lbl.label_yakinlik_derecesi}" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="yakinlik_derecesi" value="#{daireBilgileriIslemleriMB.daireSakin.yakinlikDerecesi}"
+                                    <p:inputText id="yakinlik_derecesi" value="#{daireBilgileriIslemleriMB.daireSakin.yakinlikDerecesi}"  required="true"
                                                  label="#{lbl.label_yakinlik_derecesi}"/>
 
                                     <h:outputLabel for="meslek" value="#{lbl.label_meslek}" style="font-weight:bold; color: #0b4170"/>
@@ -85,7 +85,7 @@
                                     <h:outputLabel for="dogum_tarihi" value="#{lbl.label_dogum_tarihi}" style="font-weight:bold; color: #0b4170"/>
                                     <p:calendar id="dogum_tarihi"
                                                 value="#{daireBilgileriIslemleriMB.daireSakin.dogumTarihi}" mask="true"
-                                                pattern="dd/MM/yyyy" required="true"
+                                                pattern="dd/MM/yyyy"
                                                 label="#{lbl.label_dogum_tarihi}"/>
 
                                     <h:outputLabel for="dogum_yeri" value="#{lbl.label_dogum_yeri}" style="font-weight:bold; color: #0b4170"/>
