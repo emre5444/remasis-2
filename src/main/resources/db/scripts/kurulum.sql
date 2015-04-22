@@ -96,6 +96,9 @@ INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (80,'Daire Sakin Ekleme',1,'daire_sakin_ekleme',71);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (81,'Daire Sakin Güncelleme',1,'daire_sakin_guncelleme',71);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (82,'Daire Sakin Silme',1,'daire_sakin_silme',71);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (83,'Daire Araç Ekleme',1,'daire_arac_ekleme',71);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (84,'Daire Araç Güncelleme',1,'daire_arac_guncelleme',71);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (85,'Daire Araç Silme',1,'daire_arac_silme',71);
 
 
 ALTER TABLE `ilce`

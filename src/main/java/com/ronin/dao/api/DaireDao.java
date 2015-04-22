@@ -8,10 +8,7 @@ package com.ronin.dao.api;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.common.model.Kullanici;
-import com.ronin.model.Borc;
-import com.ronin.model.Daire;
-import com.ronin.model.DaireBorc;
-import com.ronin.model.DaireSakin;
+import com.ronin.model.*;
 import com.ronin.model.constant.Durum;
 import com.ronin.model.criteria.DaireCriteria;
 import com.ronin.model.kriter.DaireSorguKriteri;
@@ -143,8 +140,16 @@ public class DaireDao implements IDaireDao {
         getSessionFactory().getCurrentSession().save(daireSakin);
     }
 
+    public void daireAracEkleme(DaireArac daireArac , SessionInfo sessionInfo) {
+        getSessionFactory().getCurrentSession().save(daireArac);
+    }
+
     public void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
         getSessionFactory().getCurrentSession().update(daireSakin.getKullanici());
+    }
+
+    public void daireAracGuncelleme(DaireArac daireArac , SessionInfo sessionInfo) {
+        getSessionFactory().getCurrentSession().update(daireArac);
     }
 
     public void daireSakinSilme(DaireSakin daireSakin , SessionInfo sessionInfo) {
@@ -152,11 +157,27 @@ public class DaireDao implements IDaireDao {
         getSessionFactory().getCurrentSession().update(daireSakin);
     }
 
-    public List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici){
+    public void daireAracSilme(DaireArac daireArac , SessionInfo sessionInfo) {
+        daireArac.setDurum(Durum.getSilinmisObject());
+        getSessionFactory().getCurrentSession().update(daireArac);
+    }
+
+    public List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
         List list = getSessionFactory().getCurrentSession()
-                .createQuery("select ds from DaireSakin ds where ds.daire.id =? and ds.bagliKullanici.id =?")
+                .createQuery("select ds from DaireSakin ds where ds.daire.id =? and ds.bagliKullanici.id =? and ds.durum.id=?")
                 .setParameter(0, daire.getId())
                 .setParameter(1, kullanici.getId())
+                .setParameter(2, Durum.getAktifObject().getId())
+                .list();
+        return list;
+    }
+
+    public List<DaireArac> getDaireAracListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo){
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("select da from DaireArac da where da.daire.id =? and da.kullanici.id =? and da.durum.id=?")
+                .setParameter(0, daire.getId())
+                .setParameter(1, kullanici.getId())
+                .setParameter(2, Durum.getAktifObject().getId())
                 .list();
         return list;
     }

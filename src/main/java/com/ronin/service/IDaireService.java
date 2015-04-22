@@ -56,10 +56,18 @@ public interface IDaireService {
 
     void daireSakinEkleme(DaireSakin daireSakin , SessionInfo sessionInfo);
 
+    void daireAracEkleme(DaireArac daireArac , SessionInfo sessionInfo);
+
     void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo);
+
+    void daireAracGuncelleme(DaireArac daireArac , SessionInfo sessionInfo);
 
     void daireSakinSilme(DaireSakin daireSakin , SessionInfo sessionInfo);
 
-    List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici);
+    void daireAracSilme(DaireArac daireArac , SessionInfo sessionInfo);
+
+    List<DaireSakin> getDaireSakinListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo);
+
+    List<DaireArac> getDaireAracListByDaire(Daire daire , Kullanici kullanici , SessionInfo sessionInfo);
 
 }
