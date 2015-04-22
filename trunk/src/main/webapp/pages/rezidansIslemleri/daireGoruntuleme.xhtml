@@ -20,6 +20,11 @@
 <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 <p:menubar style="margin-top:20px">
     <p:submenu label="#{lbl.menu_daire_islemleri}" icon="ui-icon-comment" style="width: auto">
+        <p:menuitem id="menu_daire_temsilci_guncelle" value="#{lbl.label_daire_temsilci_guncelle}"
+                    rendered="#{sessionInfo.isYetkili('kullanici_guncelleme')}"
+                    action="#{daireGoruntuleMB.kullaniciGuncelleme(daireGoruntuleMB.varsayilanKullaniciDaire.kullanici)}">
+        </p:menuitem>
+
         <p:menuitem id="menu_sakin_ekleme"
                     value="#{lbl.label_daire_sakin_ekle}"
                     rendered="#{sessionInfo.isYetkili('daire_sakin_ekleme')}"
@@ -274,7 +279,7 @@
                             <p:menuitem id="viewButtonKullaniciGuncelle" value="#{lbl.ortak_guncelle}"
                                         icon="ui-icon-wrench"
                                         rendered="#{sessionInfo.isYetkili('kullanici_guncelleme')}"
-                                        action="#{daireGoruntuleMB.kullaniciGuncelleme(varKullanici.daire)}">
+                                        action="#{daireGoruntuleMB.kullaniciGuncelleme(varKullanici.kullanici)}">
                             </p:menuitem>
 
                         </p:menuButton>
