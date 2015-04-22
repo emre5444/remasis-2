@@ -134,9 +134,6 @@ public class DaireDao implements IDaireDao {
     }
 
     public void daireSakinEkleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
-        Kullanici kullanici = daireSakin.getKullanici();
-        // kullanici kaydi olusturulur.
-        getSessionFactory().getCurrentSession().save(kullanici);
         getSessionFactory().getCurrentSession().save(daireSakin);
     }
 
@@ -153,7 +150,7 @@ public class DaireDao implements IDaireDao {
     }
 
     public void daireSakinGuncelleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
-        getSessionFactory().getCurrentSession().update(daireSakin.getKullanici());
+        getSessionFactory().getCurrentSession().update(daireSakin);
     }
 
     public void daireAracGuncelleme(DaireArac daireArac , SessionInfo sessionInfo) {

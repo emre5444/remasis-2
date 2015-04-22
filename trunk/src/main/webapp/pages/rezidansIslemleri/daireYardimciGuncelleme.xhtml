@@ -6,6 +6,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ps="http://primefaces.org/sentinel"
+                xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/WEB-INF/template.xhtml">
 
     <ui:define name="title">
@@ -65,7 +66,7 @@
                                                  label="#{lbl.label_yardimci_gorevi}"/>
 
                                     <h:outputLabel for="calisma_sur" value="#{lbl.label_yardimci_gunluk_calisma_suresi} (*)" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText  id="calisma_sur" value="#{daireBilgileriIslemleriMB.daireYardimci.gunlukCalismaSuresi}" required="true"
+                                    <pe:inputNumber  id="calisma_sur" value="#{daireBilgileriIslemleriMB.daireYardimci.gunlukCalismaSuresi}" required="true" decimalPlaces="0"
                                                   label="#{lbl.label_yardimci_gunluk_calisma_suresi}"/>
 
                                     <h:outputLabel for="gor_bas_tarihi" value="#{lbl.label_yardimci_goreve_baslangic} (*)" style="font-weight:bold; color: #0b4170"/>

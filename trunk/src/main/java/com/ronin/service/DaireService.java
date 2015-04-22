@@ -198,8 +198,8 @@ public class DaireService implements IDaireService {
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void daireSakinEkleme(DaireSakin daireSakin , SessionInfo sessionInfo) {
-        daireSakin.getKullanici().setDurum(Durum.getPasifObject());
         daireSakin.setTanitimZamani(DateUtils.getNow());
+        daireSakin.setDurum(Durum.getAktifObject());
         iDaireDao.daireSakinEkleme(daireSakin , sessionInfo);
     }
 
@@ -207,6 +207,7 @@ public class DaireService implements IDaireService {
     public void daireAracEkleme(DaireArac daireArac , SessionInfo sessionInfo) {
         daireArac.getKullanici().setDurum(Durum.getPasifObject());
         daireArac.setTanitimZamani(DateUtils.getNow());
+        daireArac.setDurum(Durum.getAktifObject());
         iDaireDao.daireAracEkleme(daireArac , sessionInfo);
     }
 
@@ -214,6 +215,7 @@ public class DaireService implements IDaireService {
     public void daireHayvanEkleme(DaireHayvan daireHayvan , SessionInfo sessionInfo) {
         daireHayvan.getKullanici().setDurum(Durum.getPasifObject());
         daireHayvan.setTanitimZamani(DateUtils.getNow());
+        daireHayvan.setDurum(Durum.getAktifObject());
         iDaireDao.daireHayvanEkleme(daireHayvan , sessionInfo);
     }
 
@@ -221,6 +223,7 @@ public class DaireService implements IDaireService {
     public void daireYardimciEkleme(DaireYardimci daireYardimci , SessionInfo sessionInfo) {
         daireYardimci.getKullanici().setDurum(Durum.getPasifObject());
         daireYardimci.setTanitimZamani(DateUtils.getNow());
+        daireYardimci.setDurum(Durum.getAktifObject());
         iDaireDao.daireYardimciEkleme(daireYardimci , sessionInfo);
     }
 

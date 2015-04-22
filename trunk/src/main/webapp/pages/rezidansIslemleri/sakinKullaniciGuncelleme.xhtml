@@ -53,48 +53,48 @@
                                 <h:panelGrid columns="2" cellpadding="5">
 
                                     <h:outputLabel for="ad" value="#{lbl.ad} (*)" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="ad" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.ad}" required="true"
+                                    <p:inputText id="ad" value="#{daireBilgileriIslemleriMB.daireSakin.ad}" required="true"
                                                  label="#{lbl.ad}"/>
 
                                     <h:outputLabel for="soyad" value="#{lbl.soyad} (*)" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="soyad" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.soyad}"
+                                    <p:inputText id="soyad" value="#{daireBilgileriIslemleriMB.daireSakin.soyad}"
                                                  required="true"
                                                  label="#{lbl.soyad}"/>
 
                                     <h:outputLabel for="email" value="#{lbl.kullanici_email}" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="email" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.email}"
+                                    <p:inputText id="email" value="#{daireBilgileriIslemleriMB.daireSakin.email}"
                                                  label="#{lbl.kullanici_email}"/>
 
                                     <h:outputLabel for="telefon" value="#{lbl.kullanici_tlefon}"
                                                    style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputMask id="telefon" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.gsm}"
+                                    <p:inputMask id="telefon" value="#{daireBilgileriIslemleriMB.daireSakin.gsm}"
                                                  label="#{lbl.kullanici_tlefon}" mask="(999) 999-99-99"/>
 
                                     <h:outputLabel for="tcid" value="#{lbl.kullanici_tcid}" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="tcid" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.tckimlik}"
+                                    <p:inputText id="tcid" value="#{daireBilgileriIslemleriMB.daireSakin.tckimlik}"
                                                  label="#{lbl.kullanici_tcid}"/>
 
                                     <h:outputLabel for="yakinlik_derecesi" value="#{lbl.label_yakinlik_derecesi}" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="yakinlik_derecesi" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.yakinlikDerecesi}"
+                                    <p:inputText id="yakinlik_derecesi" value="#{daireBilgileriIslemleriMB.daireSakin.yakinlikDerecesi}"
                                                  label="#{lbl.label_yakinlik_derecesi}"/>
 
                                     <h:outputLabel for="meslek" value="#{lbl.label_meslek}" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="meslek" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.meslek}"
+                                    <p:inputText id="meslek" value="#{daireBilgileriIslemleriMB.daireSakin.meslek}"
                                                  label="#{lbl.label_meslek}"/>
 
                                     <h:outputLabel for="dogum_tarihi" value="#{lbl.label_dogum_tarihi}" style="font-weight:bold; color: #0b4170"/>
                                     <p:calendar id="dogum_tarihi"
-                                                value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.dogumTarihi}" mask="true"
+                                                value="#{daireBilgileriIslemleriMB.daireSakin.dogumTarihi}" mask="true"
                                                 pattern="dd/MM/yyyy" required="true"
                                                 label="#{lbl.label_dogum_tarihi}"/>
 
                                     <h:outputLabel for="dogum_yeri" value="#{lbl.label_dogum_yeri}" style="font-weight:bold; color: #0b4170"/>
-                                    <p:inputText id="dogum_yeri" value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.dogumYeri}"
+                                    <p:inputText id="dogum_yeri" value="#{daireBilgileriIslemleriMB.daireSakin.dogumYeri}"
                                                  label="#{lbl.label_dogum_yeri}"/>
 
                                     <h:outputLabel for="adres" value="#{lbl.kullanici_adres}" style="font-weight:bold; color: #0b4170"/>
                                     <p:inputTextarea rows="6" cols="50"
-                                                     value="#{daireBilgileriIslemleriMB.daireSakin.kullanici.adres}"
+                                                     value="#{daireBilgileriIslemleriMB.daireSakin.adres}"
                                                      id="adres"/>
 
                                 </h:panelGrid>
