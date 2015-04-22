@@ -52,7 +52,6 @@ public class Kullanici implements Serializable {
 
     @Basic(optional = false)
     @Column(name = "ad")
-
     private String ad;
 
     @Column(name = "soyad")

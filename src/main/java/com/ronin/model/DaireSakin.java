@@ -33,9 +33,35 @@ public class DaireSakin {
     @ManyToOne
     private Daire daire;
 
-    @JoinColumn(name = "kullanici_id", referencedColumnName = "id")
-    @ManyToOne
-    private Kullanici kullanici;
+    @Column(name = "ad")
+    private String ad;
+
+    @Column(name = "soyad")
+    private String soyad;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "gsm")
+    private String gsm;
+
+    @Column(name = "tckimlik")
+    private String tckimlik;
+
+    @Column(name = "yakinlik_derecesi")
+    private String yakinlikDerecesi;
+
+    @Column(name = "meslek")
+    private String meslek;
+
+    @Column(name = "dogum_tarihi")
+    private Date dogumTarihi;
+
+    @Column(name = "dogum_yeri")
+    private String dogumYeri;
+
+    @Column(name = "adres")
+    private String adres;
 
     @Column(name = "tanitim_zamani")
     private Date tanitimZamani;
@@ -68,14 +94,6 @@ public class DaireSakin {
         this.daire = daire;
     }
 
-    public Kullanici getKullanici() {
-        return kullanici;
-    }
-
-    public void setKullanici(Kullanici kullanici) {
-        this.kullanici = kullanici;
-    }
-
     public Date getTanitimZamani() {
         return tanitimZamani;
     }
@@ -90,5 +108,85 @@ public class DaireSakin {
 
     public void setDurum(Durum durum) {
         this.durum = durum;
+    }
+
+    public String getDogumYeri() {
+        return dogumYeri;
+    }
+
+    public void setDogumYeri(String dogumYeri) {
+        this.dogumYeri = dogumYeri;
+    }
+
+    public Date getDogumTarihi() {
+        return dogumTarihi;
+    }
+
+    public void setDogumTarihi(Date dogumTarihi) {
+        this.dogumTarihi = dogumTarihi;
+    }
+
+    public String getMeslek() {
+        return meslek;
+    }
+
+    public void setMeslek(String meslek) {
+        this.meslek = meslek;
+    }
+
+    public String getYakinlikDerecesi() {
+        return yakinlikDerecesi;
+    }
+
+    public void setYakinlikDerecesi(String yakinlikDerecesi) {
+        this.yakinlikDerecesi = yakinlikDerecesi;
+    }
+
+    public String getTckimlik() {
+        return tckimlik;
+    }
+
+    public void setTckimlik(String tckimlik) {
+        this.tckimlik = tckimlik;
+    }
+
+    public String getGsm() {
+        return gsm;
+    }
+
+    public void setGsm(String gsm) {
+        this.gsm = gsm;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getSoyad() {
+        return soyad;
+    }
+
+    public void setSoyad(String soyad) {
+        this.soyad = soyad;
+    }
+
+    public String getAd() {
+        return ad;
+    }
+
+    public void setAd(String ad) {
+        this.ad = ad;
+    }
+
+    public String getAdres() {
+        return adres;
+    }
+
+    public void setAdres(String adres) {
+        this.adres = adres;
     }
 }

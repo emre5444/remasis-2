@@ -50,7 +50,6 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
     private DaireArac daireArac = new DaireArac();
     private DaireYardimci daireYardimci = new DaireYardimci();
     private DaireHayvan daireHayvan = new DaireHayvan();
-    private Kullanici yeniKullanici = new Kullanici();
 
     //daire islemleri
     private Daire selectedDaire;
@@ -81,10 +80,6 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
         selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireObject");
         selectedKullanici = (Kullanici) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedKullaniciObject");
         sorguKriteri = (DaireSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
-    }
-
-    public void findIlceListByIl(){
-        ilceList = ortakService.getIlceListByNamedQueryWithIl("Ilce.findByIlId" , daireSakin.getKullanici().getIl());
     }
 
     public String geriDon() {
@@ -126,7 +121,6 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
     }
 
     public String daireSakinYenikayit() {
-        daireSakin.setKullanici(yeniKullanici);
         daireSakin.setBagliKullanici(selectedKullanici);
         daireSakin.setDaire(selectedDaire);
         daireService.daireSakinEkleme(daireSakin, sessionInfo);
@@ -136,7 +130,7 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
     }
 
     public String daireAracYenikayit() {
-        daireArac.setKullanici(yeniKullanici);
+        daireArac.setKullanici(selectedKullanici);
         daireArac.setDaire(selectedDaire);
         daireService.daireAracEkleme(daireArac, sessionInfo);
         storeFlashObjects();
@@ -145,7 +139,7 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
     }
 
     public String daireHayvanYenikayit() {
-        daireHayvan.setKullanici(yeniKullanici);
+        daireHayvan.setKullanici(selectedKullanici);
         daireHayvan.setDaire(selectedDaire);
         daireService.daireHayvanEkleme(daireHayvan, sessionInfo);
         storeFlashObjects();
@@ -154,7 +148,7 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
     }
 
     public String daireYardimciYenikayit() {
-        daireYardimci.setKullanici(yeniKullanici);
+        daireYardimci.setKullanici(selectedKullanici);
         daireYardimci.setDaire(selectedDaire);
         daireService.daireYardimciEkleme(daireYardimci, sessionInfo);
         storeFlashObjects();
@@ -248,14 +242,6 @@ public class DaireBilgileriIslemleriMB extends AbstractMB implements Serializabl
 
     public void setIlList(List<IAbstractEntity> ilList) {
         this.ilList = ilList;
-    }
-
-    public Kullanici getYeniKullanici() {
-        return yeniKullanici;
-    }
-
-    public void setYeniKullanici(Kullanici yeniKullanici) {
-        this.yeniKullanici = yeniKullanici;
     }
 
     public DaireArac getDaireArac() {
