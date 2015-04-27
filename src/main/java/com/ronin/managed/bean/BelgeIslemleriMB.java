@@ -22,8 +22,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import java.io.InputStream;
-import java.io.Serializable;
+import java.io.*;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -66,6 +65,9 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
     private Belge yeniBelge = new Belge();
     private boolean skip;
     private UploadedFile uploadedFile;
+    private  List<UploadedFile> uploadedFileList;
+
+    private String destination="C:\\rmsFileUploadDocument\\";
 
 
     @PostConstruct
@@ -139,9 +141,32 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
         }
         try {
             uploadedFile = event.getFile();
-            belgeKadet();
+            copyFile(event.getFile().getFileName(), event.getFile().getInputstream());
+            uploadedFileList.add(uploadedFile);
         } catch (Exception e) {
             JsfUtil.addSuccessMessage("error reading file " + e);
+        }
+    }
+
+    public void copyFile(String fileName, InputStream in) {
+        try {
+            // write the inputStream to a FileOutputStream
+            OutputStream out = new FileOutputStream(new File(destination + fileName));
+
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            while ((read = in.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+
+            in.close();
+            out.flush();
+            out.close();
+
+            System.out.println("New file created!");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -152,6 +177,7 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
             fileUploadService.belgeEkle(sessionInfo, uploadedFile, yeniBelge);
         }
         JsfUtil.addSuccessMessage(message.getString("belge_ekleme_basarili"));
+
         return geriDon();
     }
 
