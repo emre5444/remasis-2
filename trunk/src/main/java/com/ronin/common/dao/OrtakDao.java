@@ -163,6 +163,20 @@ public class OrtakDao implements IOrtakDao {
         return kullaniciList;
     }
 
+
+    public KullaniciSecim getKullaniciSecimByKey(Long id, String key) {
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("select ks from KullaniciSecim ks " +
+                        "where ks.kullaniciId = ? and ks.key = ?")
+                .setParameter(0, id)
+                .setParameter(1,key)
+                .list();
+        if(list.isEmpty()){
+            return null;
+        }
+        return (KullaniciSecim) list.get(0);
+    }
+
     public void yeniAnketEkle(Anket anket, List<AnketSecim> anketSecimList) {
         // anket kaydedilir
         getSessionFactory().getCurrentSession().save(anket);
@@ -352,6 +366,10 @@ public class OrtakDao implements IOrtakDao {
 
     public void update(Object object) {
         getSessionFactory().getCurrentSession().update(object);
+    }
+
+    public void save(Object object) {
+        getSessionFactory().getCurrentSession().save(object);
     }
 
     public List<IletisimBilgileri> getAllIletisimBilgileriBySirket(SessionInfo sessionInfo) {

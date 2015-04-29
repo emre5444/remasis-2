@@ -63,6 +63,8 @@ public interface IOrtakDao {
 
     List<Kullanici> getKullaniciByName(String name , SessionInfo sessionInfo);
 
+    KullaniciSecim getKullaniciSecimByKey(Long id,String key);
+
     void yeniAnketEkle(Anket anket , List<AnketSecim> anketSecimList);
 
     void anketGuncelle(Anket anket , List<AnketSecim> anketSecimList);
@@ -102,6 +104,8 @@ public interface IOrtakDao {
     List<Notification> getAllNotificationList(SessionInfo sessionInfo,int limit);
 
     void update(Object object);
+
+    void save(Object object);
 
     List<IletisimBilgileri> getAllIletisimBilgileriBySirket(SessionInfo sessionInfo);
 

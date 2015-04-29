@@ -1,11 +1,6 @@
 package com.ronin.model;
 
-import com.ronin.common.model.Kullanici;
-import org.hibernate.annotations.*;
-
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.util.Date;
 
 /**

@@ -105,6 +105,11 @@ INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (89,'Daire Evcil Hayvan Ekleme',1,'daire_hayvan_ekleme',71);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (90,'Daire Evcil Hayvan Güncelleme',1,'daire_hayvan_guncelleme',71);
 INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (91,'Daire Evcil Hayvan Silme',1,'daire_hayvan_silme',71);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (92,'Randevu Ýþlemleri',1,'randevu_yonetimi',9999);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (93,'Randevu Al',1,'randevu_al',92);
+INSERT INTO `yetki` (`id`,`ad`,`durum_id`,`link`,`BAGLI_OLDUGU_YETKI_ID`) VALUES (94,'Tenis Randevusu Onayý',1,'tenis_randevu_onayi',92);
+
+
 
 
 
@@ -1152,3 +1157,10 @@ INSERT INTO `ilce` (`il_id`,`ad_buyuk`) VALUES ('81','GÖLYAKA');
 INSERT INTO `ilce` (`il_id`,`ad_buyuk`) VALUES ('81','GÜMÜ?OVA');
 INSERT INTO `ilce` (`il_id`,`ad_buyuk`) VALUES ('81','KAYNA?LI');
 INSERT INTO `ilce` (`il_id`,`ad_buyuk`) VALUES ('81','YI?ILCA');
+
+
+
+insert into randevu_tipi values(1,'TENIS','','1');
+insert into onay_durumu values (1,'ONAYLANMADI','');
+insert into onay_durumu values (2,'ONAY_BEKLIYOR','');
+insert into onay_durumu values (3,'ONAYLANDI','');

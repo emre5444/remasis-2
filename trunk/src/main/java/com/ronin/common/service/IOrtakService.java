@@ -59,6 +59,8 @@ public interface IOrtakService {
 
     List<Kullanici> getKullaniciByName(String name , SessionInfo sessionInfo);
 
+    KullaniciSecim getKullaniciSecimByKey(Long id,String key);
+
     void yeniDuyuruEkle(SessionInfo sessionInfo ,Duyuru duyuru);
 
     void yeniAnketEkle(SessionInfo sessionInfo ,Anket anket , List<AnketSecim> anketSecimList);
@@ -104,6 +106,8 @@ public interface IOrtakService {
     List<Notification> getAllNotificationList(SessionInfo sessionInfo,int limit);
 
     void update(Object object);
+
+    void save(Object object);
 
     List<IletisimBilgileri> getAllIletisimBilgileriBySirket(SessionInfo sessionInfo);
 

@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="title">
+        <h:outputText value="#{lbl.labal_randevu_al}"/>
+    </ui:define>
+
+    <ui:define name="content">
+        <div class="Container100">
+            <div class="ContainerIndent">
+                <h:form id="randevuForm">
+                    <p:messages id="messages" showDetail="false" closable="true"/>
+
+                    <div class="Container70 Responsive">
+                        <div class="ContainerIndent">
+                            <p:schedule id="schedule" value="#{randevuMB.lazyEventModel}" locale="tr" timeZone="GMT+2"
+                                        allDaySlot="false" minTime="07:00:00" maxTime="23:00:00" slotDuration="00:30:00"
+                                        view="agendaWeek" axisFormat="H:mm" timeFormat="H:mm" tooltip="true"
+                                        resizable="false" draggable="false">
+
+                                <p:ajax event="dateSelect" listener="#{randevuMB.onDateSelect}"
+                                        update="eventDetails messages"/>
+                                <p:ajax event="eventSelect" listener="#{randevuMB.onEventSelect}"
+                                        update="eventDetails messages"/>
+
+                            </p:schedule>
+
+                        </div>
+                    </div>
+
+
+                    <div class="Container30 Responsive">
+                        <div class="ContainerIndent">
+                            <p:panel>
+                                <h:panelGrid columns="2" cellpadding="5">
+                                    <h:outputLabel for="randevu_tipi" value="#{lbl.label_randevu_tipi}"
+                                                   styleClass="green"/>
+                                    <p:selectOneMenu id="randevu_tipi" value="#{randevuMB.sorguKriteri.randevuTipi}">
+
+                                        <p:ajax event="valueChange" update="schedule,eventDetails"
+                                                listener="#{randevuMB.resetEventDetails()}"/>
+
+                                        <f:selectItems value="#{randevuMB.randevuTipiList}" var="randevuTipiList"
+                                                       itemValue="#{randevuTipiList}"
+                                                       itemLabel="#{randevuTipiList.aciklama}"/>
+                                        <f:converter binding="#{randevuTipiConverter}"/>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+
+                                <div class="EmptyBox20"/>
+
+                                <h:panelGrid id="eventDetails" columns="2" cellpadding="3">
+                                    <p:outputLabel for="title" value="#{lbl.label_randevu_kullanici}"/>
+                                    <p:inputText id="title" value="#{randevuMB.event.title}" required="true"/>
+
+                                    <p:outputLabel for="from" value="#{lbl.label_baslangic_zamani}"/>
+                                    <p:calendar id="from" value="#{randevuMB.event.startDate}"
+                                                pattern="dd/MM/yyyy HH:00:00"
+                                                timeZone="GMT+2" minHour="7" maxHour="22"
+                                                locale="tr" required="true"/>
+
+                                    <p:outputLabel for="to" value="#{lbl.label_bitis_zamani}"/>
+                                    <p:calendar id="to" value="#{randevuMB.event.endDate}" pattern="dd/MM/yyyy HH:00:00"
+                                                timeZone="GMT+2" minHour="8" maxHour="23"
+                                                locale="tr" required="true"/>
+
+                                    <h:outputText value="#{lbl.lbl_onay_durumu}"
+                                                  rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"/>
+                                    <p:selectBooleanCheckbox value="#{randevuMB.onaylandi}"
+                                                             rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"/>
+
+
+                                    <p:commandButton id="addButton" value="#{lbl.label_randevu_olustur}"
+                                                     actionListener="#{randevuMB.addEvent}"
+                                                     rendered="#{(randevuMB.selectedRandevu eq null) or (randevuMB.selectedRandevu.getKullanici() eq sessionInfo.getKullanici())}"
+                                                     update="schedule messages" styleClass="GreenButton"/>
+
+                                    <p:commandButton id="onayButton" value="#{lbl.label_randevu_onay}"
+                                                     rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi') and randevuMB.selectedRandevu.onayBekliyor and !randevuMB.yeniKayit}"
+                                                     actionListener="#{randevuMB.randevuOnayi}"
+                                                     update="schedule messages" styleClass="GreenButton"/>
+                                </h:panelGrid>
+                            </p:panel>
+
+                            <div class="EmptyBox40"/>
+
+                            <p:panel id="infoPnl" rendered="#{!randevuMB.tekrarGosterme}" styleClass="leaden-back">
+                                <h:panelGrid columns="1">
+                                    <i class=" icon-warning Fs23 Fleft Wid10 orange"></i>
+                                    <span class="FontBold Fs18 hardblue Fright">#{lbl.label_uyari}</span>
+                                </h:panelGrid>
+                                <ol>
+                                    <li>
+                                        <h:outputText value="#{msg.info_daire_listesi_birini_seciniz}"
+                                                      styleClass="red Fs16"/>
+                                    </li>
+                                    <li>
+                                        <h:outputText value="#{msg.info_daire_listesi_birini_seciniz_2}"
+                                                      styleClass="red Fs16"/>
+                                    </li>
+                                </ol>
+
+                                <h:panelGrid columns="3">
+                                    <h:outputText value="#{lbl.label_tekrar_gosterme}" styleClass="hardblue Fs17"/>
+                                    <p:selectBooleanCheckbox value="#{randevuMB.tekrarGosterme}"/>
+                                    <p:commandButton id="btn1" value="#{lbl.secimi_hatirla}"
+                                                     actionListener="#{randevuMB.spotLightSelectionSetter}"
+                                                     process="infoPnl" update="randevuForm"/>
+                                </h:panelGrid>
+                            </p:panel>
+
+                        </div>
+                    </div>
+
+
+                </h:form>
+
+            </div>
+        </div>
+    </ui:define>
+
+    <ui:define name="body">
+
+    </ui:define>
+</ui:composition>

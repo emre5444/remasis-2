@@ -251,6 +251,27 @@ img{ border:none; border:0px;}
   -ms-transition: none !important;
   transition: none !important;
 }
+
+.myEventOthers {
+    border-color: #c7acc9 !important;;
+    background-color: #c7acc9 !important;;
+    color: #fff !important;;
+}
+.myEvent {
+    border-color: #8ac985 !important;;
+    background-color: #8ac985 !important;;
+    color: #fff !important;;
+}
+.myEventOnayli {
+    border-color: #2dc915 !important;;
+    background-color: #2dc915 !important;;
+    color: #fff !important;;
+}
+.myEventRed {
+    border-color: #c93535 !important;;
+    background-color: #c93535 !important;;
+    color: #fff !important;;
+}
 /******************************************************************************************************************************** */
 
 /* MEDIA QUERIES **************************************************************************************************************** */
