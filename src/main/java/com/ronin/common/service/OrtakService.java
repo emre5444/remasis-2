@@ -74,7 +74,7 @@ public class OrtakService implements IOrtakService {
 
     @Transactional(readOnly = false)
     public List<IAbstractEntity> getIlceListByNamedQueryWithIl(String namedQuery, Il il) {
-        return iOrtakDao.getIlceListByNamedQueryWithIl(namedQuery , il);
+        return iOrtakDao.getIlceListByNamedQueryWithIl(namedQuery, il);
     }
 
     @Transactional(readOnly = false)
@@ -148,6 +148,11 @@ public class OrtakService implements IOrtakService {
         if (!StringUtils.isEmpty(name) && name.length() > 1)
             kulList = iOrtakDao.getKullaniciByName(name , sessionInfo);
         return kulList;
+    }
+
+    @Transactional(readOnly = false)
+    public KullaniciSecim getKullaniciSecimByKey(Long id, String key){
+        return iOrtakDao.getKullaniciSecimByKey(id, key);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
@@ -315,6 +320,11 @@ public class OrtakService implements IOrtakService {
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public void update(Object object) {
         iOrtakDao.update(object);
+    }
+
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+    public void save(Object object) {
+        iOrtakDao.save(object);
     }
 
     @Transactional(readOnly = false, propagation = Propagation.REQUIRED)

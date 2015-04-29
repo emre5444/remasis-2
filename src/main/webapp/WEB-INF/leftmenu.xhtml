@@ -142,6 +142,13 @@
 
             </p:submenu>
 
+            <p:submenu label="#{lbl.label_randevu_islemleri}" icon="icon-ticket"
+                       rendered="#{sessionInfo.isYetkili('randevu_yonetimi')}">
+                <p:menuitem value="#{lbl.labal_randevu_al}" url="/pages/randevuIslemleri/randevu.jsf"
+                            rendered="#{sessionInfo.isYetkili('randevu_al')}"/>
+
+            </p:submenu>
+
             <p:submenu label="#{lbl.raporlama_islemleri}" icon="icon-file-pdf"
                        rendered="#{sessionInfo.isYetkili('rapor_islemleri')}">
                 <p:menuitem value="#{lbl.menu_aida_botcu_olan_daireler_listesi}"
