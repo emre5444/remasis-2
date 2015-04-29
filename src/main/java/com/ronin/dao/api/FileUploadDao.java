@@ -27,6 +27,8 @@ import org.primefaces.model.UploadedFile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -49,68 +51,44 @@ public class FileUploadDao implements IFileUploadDao {
 
     public void belgeEkle(SessionInfo sessionInfo , UploadedFile uploadedFile , Belge belge){
         try {
-            InputStream inputStream = uploadedFile.getInputstream();
-
-            belge.setContent(Hibernate.getLobCreator(getSessionFactory().getCurrentSession()).createBlob(inputStream , uploadedFile.getSize()));
-            belge.setDataName(uploadedFile.getFileName());
-            belge.setKullanici(sessionInfo.getKullanici());
-            belge.setSize(uploadedFile.getSize());
-            belge.setIslemTarihi(new Date());
-            belge.setSirket(sessionInfo.getSirket());
-
-            getSessionFactory().getCurrentSession().save(belge);
-
+            saveFile(sessionInfo, uploadedFile, belge);
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
+    }
 
+    private Belge saveFile(SessionInfo sessionInfo, UploadedFile uploadedFile, Belge belge) throws FileNotFoundException {
+        InputStream inputStream = new FileInputStream("C:\\rmsFileUploadDocument\\" + uploadedFile.getFileName());
+        belge.setContent(Hibernate.getLobCreator(getSessionFactory().getCurrentSession()).createBlob(inputStream , uploadedFile.getSize()));
+        belge.setDataName(uploadedFile.getFileName());
+        belge.setKullanici(sessionInfo.getKullanici());
+        belge.setSize(uploadedFile.getSize());
+        belge.setIslemTarihi(new Date());
+        belge.setSirket(sessionInfo.getSirket());
+        getSessionFactory().getCurrentSession().save(belge);
+        return belge;
     }
 
     public void daireBelgeEkle(SessionInfo sessionInfo , Daire daire , UploadedFile uploadedFile , Belge belge){
         try {
-            InputStream inputStream = uploadedFile.getInputstream();
-
+            belge = saveFile(sessionInfo, uploadedFile, belge);
             DaireBelge daireBelge = new DaireBelge();
-
-            belge.setContent(Hibernate.getLobCreator(getSessionFactory().getCurrentSession()).createBlob(inputStream , uploadedFile.getSize()));
-           // belge.setDataName(uploadedFile.getFileName());
-            belge.setKullanici(sessionInfo.getKullanici());
-            belge.setSize(uploadedFile.getSize());
-            belge.setIslemTarihi(new Date());
-            belge.setSirket(sessionInfo.getSirket());
-            getSessionFactory().getCurrentSession().save(belge);
-
             daireBelge.setBelge(belge);
             daireBelge.setDaire(daire);
-
             getSessionFactory().getCurrentSession().save(daireBelge);
-
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
     }
 
     public void daireTalepBelgeEkle(SessionInfo sessionInfo , Daire daire , Talep talep , UploadedFile uploadedFile , Belge belge){
-
         try {
-            InputStream inputStream = uploadedFile.getInputstream();
-
+            belge = saveFile(sessionInfo, uploadedFile, belge);
             DaireBelge daireBelge = new DaireBelge();
-
-            belge.setContent(Hibernate.getLobCreator(getSessionFactory().getCurrentSession()).createBlob(inputStream , uploadedFile.getSize()));
-           // belge.setDataName(uploadedFile.getFileName());
-            belge.setKullanici(sessionInfo.getKullanici());
-            belge.setSize(uploadedFile.getSize());
-            belge.setIslemTarihi(new Date());
-            belge.setSirket(sessionInfo.getSirket());
-            getSessionFactory().getCurrentSession().save(belge);
-
             daireBelge.setBelge(belge);
             daireBelge.setDaire(daire);
             daireBelge.setTalep(talep);
-
             getSessionFactory().getCurrentSession().save(daireBelge);
-
         } catch (IOException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }

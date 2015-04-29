@@ -23,6 +23,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -65,9 +66,9 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
     private Belge yeniBelge = new Belge();
     private boolean skip;
     private UploadedFile uploadedFile;
-    private  List<UploadedFile> uploadedFileList;
+    private List<UploadedFile> uploadedFileList = new ArrayList<>();
 
-    private String destination="C:\\rmsFileUploadDocument\\";
+    private String destination = "C:\\rmsFileUploadDocument\\";
 
 
     @PostConstruct
@@ -171,14 +172,19 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
     }
 
     public String belgeKadet() {
-        if (selectedDaire != null) {
-            fileUploadService.daireBelgeEkle(sessionInfo, selectedDaire, uploadedFile, yeniBelge);
-        } else {
-            fileUploadService.belgeEkle(sessionInfo, uploadedFile, yeniBelge);
+        for (UploadedFile file : uploadedFileList) {
+            if (selectedDaire != null) {
+                fileUploadService.daireBelgeEkle(sessionInfo, selectedDaire, file, yeniBelge);
+            } else {
+                fileUploadService.belgeEkle(sessionInfo, file, yeniBelge);
+            }
         }
         JsfUtil.addSuccessMessage(message.getString("belge_ekleme_basarili"));
-
         return geriDon();
+    }
+
+    public void deleteTempBelgeList(UploadedFile selectedUploadedFile) {
+        uploadedFileList.remove(selectedUploadedFile);
     }
 
     public String geriDon() {
@@ -317,5 +323,13 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
 
     public void setUploadedFile(UploadedFile uploadedFile) {
         this.uploadedFile = uploadedFile;
+    }
+
+    public List<UploadedFile> getUploadedFileList() {
+        return uploadedFileList;
+    }
+
+    public void setUploadedFileList(List<UploadedFile> uploadedFileList) {
+        this.uploadedFileList = uploadedFileList;
     }
 }
