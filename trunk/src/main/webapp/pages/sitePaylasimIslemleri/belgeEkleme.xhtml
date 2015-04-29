@@ -92,8 +92,48 @@
                                                           fileUploadListener="#{belgeIslemleriMB.belgeUpload}"
                                                           mode="advanced" dragDropSupport="true" style="width:100%"
                                                           uploadLabel="#{lbl.yukle}" cancelLabel="#{lbl.iptal}"
-                                                          multiple="true"
+                                                          multiple="true" update="belgeEkleme"
                                                           sizeLimit="10000000" fileLimit="10"/>
+                                        </h:panelGrid>
+
+                                    </div>
+                                </div>
+                            </p:panel>
+                            <div class="EmptyBox10"></div>
+                            <p:panel>
+                                <div class="Container100 Responsive">
+                                    <div class="ContainerIndent">
+                                        <div class="Container100 Responsive Fs20 hardblue">
+                                            <i class="icon-file-pdf orange"></i> #{lbl.label_yuklenecek_belgeler}
+                                        </div>
+                                        <h:panelGrid columns="1" cellpadding="5">
+
+                                            <p:dataTable id="eklenecekBelgeList"
+                                                         value="#{belgeIslemleriMB.uploadedFileList}"
+                                                         var="varFile"
+                                                         emptyMessage="#{msg.no_record_found}"
+                                                         paginatorPosition="bottom"
+                                                         reflow="true" rows="3">
+                                                <p:column headerText="#{lbl.label_dosya_tipi}">
+                                                    <h:outputText value="#{varFile.contentType}"/>
+                                                </p:column>
+                                                <p:column headerText="#{lbl.label_dosya_adi}">
+                                                    <h:outputText value="#{varFile.fileName}"/>
+                                                </p:column>
+                                                <p:column headerText="#{lbl.label_dosya_boyut}">
+                                                    <h:outputText value="#{varFile.size}"/>
+                                                </p:column>
+                                                <p:column exportable="false">
+                                                    <p:commandButton id="deleteButton1"
+                                                                     value="#{lbl.lbl_listeden_cikar}"
+                                                                     immediate="true" styleClass="RedButton"
+                                                                     action="#{belgeIslemleriMB.deleteTempBelgeList(varFile)}"
+                                                                     update="@([id$=eklenecekBelgeList])">
+                                                    </p:commandButton>
+
+                                                </p:column>
+                                            </p:dataTable>
+
                                         </h:panelGrid>
 
                                     </div>
