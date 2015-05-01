@@ -39,8 +39,8 @@ public class RandevuService implements IRandevuService {
     }
 
     @Transactional(readOnly = false)
-    public Long hasAktifRandevu(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo){
-        return iRandevuDao.hasAktifRandevu(randevuTipi, startDate, endDate, sessionInfo);
+    public Long hasAktifRandevu(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo,Randevu randevu){
+        return iRandevuDao.hasAktifRandevu(randevuTipi, startDate, endDate, sessionInfo,randevu);
     }
 
 

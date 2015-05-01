@@ -16,6 +16,6 @@ public interface IRandevuService {
 
     List<Randevu> getRandevuList(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo);
 
-    Long hasAktifRandevu(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo);
+    Long hasAktifRandevu(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo,Randevu randevu);
 
 }

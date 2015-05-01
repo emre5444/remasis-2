@@ -1,6 +1,7 @@
 package com.ronin.model;
 
 import com.ronin.common.model.Kullanici;
+import com.ronin.model.constant.Durum;
 import com.ronin.model.constant.OnayDurumu;
 import com.ronin.model.constant.RandevuTipi;
 import org.hibernate.annotations.Fetch;
@@ -49,6 +50,16 @@ public class Randevu {
     @JoinColumn(name = "sirket_id", referencedColumnName = "id")
     @Fetch(FetchMode.SELECT)
     private Sirket sirket;
+
+    @Column(name = "iptal_kullanici_id", length = 5)
+    private Long iptalEdenKullaniciId;
+
+    @Column(name = "iptal_zamani")
+    private Date iptalZamani;
+
+    @JoinColumn(name = "durum_id", referencedColumnName = "id")
+    @ManyToOne
+    private Durum durum;
 
     public Long getId() {
         return id;
@@ -128,6 +139,30 @@ public class Randevu {
 
     public void setSirket(Sirket sirket) {
         this.sirket = sirket;
+    }
+
+    public Long getIptalEdenKullaniciId() {
+        return iptalEdenKullaniciId;
+    }
+
+    public void setIptalEdenKullaniciId(Long iptalEdenKullaniciId) {
+        this.iptalEdenKullaniciId = iptalEdenKullaniciId;
+    }
+
+    public Date getIptalZamani() {
+        return iptalZamani;
+    }
+
+    public void setIptalZamani(Date iptalZamani) {
+        this.iptalZamani = iptalZamani;
+    }
+
+    public Durum getDurum() {
+        return durum;
+    }
+
+    public void setDurum(Durum durum) {
+        this.durum = durum;
     }
 
     public boolean isOnayBekliyor(){

@@ -22,6 +22,9 @@
             <p:remoteCommand global="false" name="onload7" action="#{anasayfaMB.getAnketListBySorguKriteri()}"
                              autoRun="true"
                              update="@([id$=anasayfa_anket])"/>
+            <p:remoteCommand global="false" name="onload8" action="#{anasayfaMB.setRandevuLoaded(true)}"
+                             autoRun="true"
+                             update="@([id$=anasayfa_randevu])"/>
 
 
             <!-- SECTION 1 -->
@@ -150,16 +153,16 @@
                                         <div class="EmptyBox10"></div>
                                         <div class="Fs12 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.lbl_tutar}
                                             <br/><span
-                                                    class="Fs20 orange"><h:outputText value="#{ba.tutar}">
+                                                    class="Fs18 orange"><h:outputText value="#{ba.tutar}">
                                                 <f:convertNumber pattern="#,###,##0.00"/>
                                             </h:outputText></span></div>
                                         <div class="Fs12 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.lbl_alacak_borc_oran}
                                             <br/><span
-                                                    class="Fs20 orange">#{anasayfaMB.doubleFormatter(ba.rate)}</span>
+                                                    class="Fs18 orange">#{anasayfaMB.doubleFormatter(ba.rate)}</span>
                                         </div>
                                         <div class="Fs12 Fright leaden Wid33 TexAlCenter Responsive">#{lbl.ortak_aciklama}
                                             <br/><span
-                                                    class="Fs20 orange">#{ba.aciklama}</span></div>
+                                                    class="Fs18 orange">#{ba.aciklama}</span></div>
                                         <div class="EmptyBox10"></div>
                                     </ui:repeat>
 
@@ -625,6 +628,81 @@
                             </p:panel>
                         </div>
                     </div>
+
+                    <div class="Container50 Responsive">
+                        <div class="ContainerIndent">
+
+                            <p:panel id="anasayfa_randevu" style="min-height:400px;">
+                                <div class="EmptyBox10"></div>
+
+                                <h:panelGroup rendered="#{not anasayfaMB.randevuLoaded}">
+                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                         style="display:block;margin: 0 auto;" alt=""/>
+                                </h:panelGroup>
+
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-ticket orange"></i> #{lbl.lbl_randevu}
+
+                                    <p:selectOneMenu id="randevu_tipi" value="#{randevuMB.sorguKriteri.randevuTipi}"
+                                                     styleClass="Fright" rendered="#{anasayfaMB.randevuLoaded}">
+
+                                        <p:ajax event="valueChange" update="schedule"/>
+
+                                        <f:selectItem itemLabel="#{lbl.label_randevu_tipi}" itemValue="#{null}"/>
+                                        <f:selectItems value="#{randevuMB.randevuTipiList}" var="randevuTipiList"
+                                                       itemValue="#{randevuTipiList}"
+                                                       itemLabel="#{randevuTipiList.aciklama}"/>
+                                        <f:converter binding="#{randevuTipiConverter}"/>
+                                    </p:selectOneMenu>
+                                </div>
+
+                                <div class="EmptyBox10"></div>
+
+                                <h:panelGrid rendered="#{anasayfaMB.randevuLoaded}">
+                                    <p:panelGrid columns="5" layout="grid">
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEvent"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_bekleyen_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventOnayli"></div>
+                                            <span class="Fs18">#{lbl.lbl_onayli_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventOthers"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_diger_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventOthersOnayli"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_diger_onayli_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventRed"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_red_randevu}</span>
+                                        </p:panelGrid>
+
+                                    </p:panelGrid>
+                                    <p:schedule id="schedule" value="#{randevuMB.lazyEventModel}" locale="tr"
+                                                timeZone="GMT+3"
+                                                allDaySlot="false" minTime="07:00:00" maxTime="23:00:00"
+                                                slotDuration="00:30:00"
+                                                view="agendaWeek" axisFormat="H:mm" timeFormat="H:mm" tooltip="true"
+                                                resizable="false" draggable="false">
+
+                                    </p:schedule>
+                                    <div class="EmptyBox5"></div>
+                                    <p:separator styleClass="Wid100"></p:separator>
+                                    <a href="/pages/randevuIslemleri/randevu.xhtml" class="DispInlBlock Fs17 Fright MarRight10"><i class="icon-doc-1 green"> #{lbl.labal_randevu_al}</i></a>
+                                </h:panelGrid>
+                            </p:panel>
+                        </div>
+                    </div>
+
 
                 </div>
             </div>

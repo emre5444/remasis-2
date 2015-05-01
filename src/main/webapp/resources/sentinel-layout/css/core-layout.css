@@ -253,24 +253,35 @@ img{ border:none; border:0px;}
 }
 
 .myEventOthers {
-    border-color: #c7acc9 !important;;
-    background-color: #c7acc9 !important;;
-    color: #fff !important;;
+    border-color: #c7acc9 !important;
+    background-color: #c7acc9 !important;
+    color: #fff !important;
+}
+.myEventOthersOnayli {
+    border-color: #c9539c !important;
+    background-color: #c9539c !important;
+    color: #fff !important;
 }
 .myEvent {
-    border-color: #8ac985 !important;;
-    background-color: #8ac985 !important;;
-    color: #fff !important;;
+    border-color: #8ac985 !important;
+    background-color: #8ac985 !important;
+    color: #fff !important;
 }
 .myEventOnayli {
-    border-color: #2dc915 !important;;
-    background-color: #2dc915 !important;;
-    color: #fff !important;;
+    border-color: #2dc915 !important;
+    background-color: #2dc915 !important;
+    color: #fff !important;
 }
 .myEventRed {
-    border-color: #c93535 !important;;
-    background-color: #c93535 !important;;
-    color: #fff !important;;
+    border-color: #e90905 !important;
+    background-color: #e90905 !important;
+    color: #fff !important;
+}
+
+.circle {
+    border-radius: 50% !important;
+    width: 13px !important;
+    height: 13px !important;
 }
 /******************************************************************************************************************************** */
 

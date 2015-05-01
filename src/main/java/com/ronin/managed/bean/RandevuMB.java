@@ -6,11 +6,13 @@ import com.ronin.common.service.IOrtakService;
 import com.ronin.model.Interfaces.IAbstractEntity;
 import com.ronin.model.KullaniciSecim;
 import com.ronin.model.Randevu;
+import com.ronin.model.constant.Durum;
 import com.ronin.model.constant.OnayDurumu;
 import com.ronin.model.constant.RandevuTipi;
 import com.ronin.model.kriter.RandevuSorguKriteri;
 import com.ronin.service.IRandevuService;
 import com.ronin.utils.DateUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
@@ -61,6 +63,7 @@ public class RandevuMB extends AbstractMB implements Serializable {
     private boolean tekrarGosterme;
     private boolean onaylandi;
     private boolean yeniKayit;
+    private String onayRedButtonSecim;
 
     @PostConstruct
     public void init() {
@@ -82,6 +85,8 @@ public class RandevuMB extends AbstractMB implements Serializable {
                     } else {
                         if (randevu.isOnayBekliyor())
                             defaultScheduleEvent.setStyleClass("myEventOthers");
+                        else if (randevu.isOnaylandi())
+                            defaultScheduleEvent.setStyleClass("myEventOthersOnayli");
                         else if (randevu.isOnaylanmadi())
                             continue; // kisiler sadece kendi reddelien kayitlarini gorecekler
                     }
@@ -95,6 +100,7 @@ public class RandevuMB extends AbstractMB implements Serializable {
         randevuTipiList = ortakService.getListByNamedQueryWithSirket("RandevuTipi.findAllWithSirket", sessionInfo);
         kullaniciSecim = ortakService.getKullaniciSecimByKey(sessionInfo.getKullanici().getId(), kullaniciSecimKey);
         tekrarGosterme = kullaniciSecim != null && kullaniciSecim.getValue().equals("1");
+        yeniKayit = true;
     }
 
 
@@ -118,11 +124,20 @@ public class RandevuMB extends AbstractMB implements Serializable {
     public void onEventSelect(SelectEvent selectEvent) {
         if (!sessionInfo.getKullanici().equals(((Randevu) ((ScheduleEvent) selectEvent.getObject()).getData()).getKullanici()) && !sessionInfo.isYetkili("tenis_randevu_onayi")) {
             JsfUtil.addWarnMessage(message.getString("warning_yetki_yok"));
+            event = new DefaultScheduleEvent();
+            yeniKayit = true;
             return;
         }
         event = (ScheduleEvent) selectEvent.getObject();
-        selectedRandevu = (Randevu)event.getData();
+        selectedRandevu = (Randevu) event.getData();
         onaylandi = selectedRandevu.isOnaylandi();
+        if (selectedRandevu.isOnaylandi()) {
+            onayRedButtonSecim = "Onay";
+        } else if (selectedRandevu.isOnaylanmadi()) {
+            onayRedButtonSecim = "Red";
+        } else {
+            onayRedButtonSecim = "";
+        }
         yeniKayit = false;
     }
 
@@ -130,6 +145,8 @@ public class RandevuMB extends AbstractMB implements Serializable {
         selectedRandevu = null;
         event = new DefaultScheduleEvent(sessionInfo.getKullanici().getAdSoyad(), (Date) selectEvent.getObject(), DateUtils.addHours((Date) selectEvent.getObject(), 1));
         yeniKayit = true;
+        onaylandi = false;
+        onayRedButtonSecim = "";
     }
 
     public void addEvent() {
@@ -143,6 +160,7 @@ public class RandevuMB extends AbstractMB implements Serializable {
             randevu.setBitisZamani(event.getEndDate());
             randevu.setKullanici(sessionInfo.getKullanici());
             randevu.setRandevuTipi(sorguKriteri.getRandevuTipi());
+            randevu.setDurum(Durum.getAktifObject());
             if (onaylandi) {
                 randevu.setOnayDurumu(OnayDurumu.getOnaylandiObject());
             } else {
@@ -167,14 +185,18 @@ public class RandevuMB extends AbstractMB implements Serializable {
     }
 
     public void randevuOnayi() {
-        if (!onaylandi) {
-            JsfUtil.addWarnMessage(message.getString("warning_onay_durumu"));
-            return;
-        }
         Randevu randevu = selectedRandevu;
-        randevu.setOnayDurumu(OnayDurumu.getOnaylandiObject());
+        randevu.setOnayDurumu(onaylandi ? OnayDurumu.getOnaylandiObject() : OnayDurumu.getOnaylanmadiObject());
         randevu.setOnaylayanKullaniciId(sessionInfo.getKullanici().getId());
         randevu.setOnayZamani(DateUtils.getNow());
+        ortakService.update(randevu);
+    }
+
+    public void randevuIptali() {
+        Randevu randevu = selectedRandevu;
+        randevu.setDurum(Durum.getPasifObject());
+        randevu.setIptalEdenKullaniciId(sessionInfo.getKullanici().getId());
+        randevu.setIptalZamani(DateUtils.getNow());
         ortakService.update(randevu);
     }
 
@@ -262,14 +284,25 @@ public class RandevuMB extends AbstractMB implements Serializable {
         this.yeniKayit = yeniKayit;
     }
 
+    public String getOnayRedButtonSecim() {
+        return onayRedButtonSecim;
+    }
+
+    public void setOnayRedButtonSecim(String onayRedButtonSecim) {
+        this.onayRedButtonSecim = onayRedButtonSecim;
+        if (StringUtils.isNotEmpty(onayRedButtonSecim)) {
+            onaylandi = onayRedButtonSecim.equals("Onay");
+        }
+    }
+
     public boolean verify() {
         if (event.getStartDate().after(event.getEndDate()) || event.getStartDate().equals(event.getEndDate())) {
             JsfUtil.addWarnMessage(message.getString("warning_tarih_kontrol"));
             return false;
         }
 
-        Long aktifRandevuVarMı = randevuService.hasAktifRandevu(sorguKriteri.getRandevuTipi(), event.getStartDate(), event.getEndDate(), sessionInfo);
-        if (aktifRandevuVarMı > 0 && !sessionInfo.isYetkili("tenis_randevu_onayi")) {
+        Long aktifRandevuVarMı = randevuService.hasAktifRandevu(sorguKriteri.getRandevuTipi(), event.getStartDate(), event.getEndDate(), sessionInfo,selectedRandevu);
+        if (aktifRandevuVarMı > 0) {
             JsfUtil.addWarnMessage(message.getString("warning_aktif_randevu_var"));
             return false;
         }
