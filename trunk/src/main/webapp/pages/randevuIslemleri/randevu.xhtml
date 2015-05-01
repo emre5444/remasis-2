@@ -19,7 +19,35 @@
 
                     <div class="Container70 Responsive">
                         <div class="ContainerIndent">
-                            <p:schedule id="schedule" value="#{randevuMB.lazyEventModel}" locale="tr" timeZone="GMT+2"
+                            <p:panelGrid columns="5" layout="grid">
+
+                                <p:panelGrid>
+                                    <div class="circle Fleft myEvent"></div>
+                                    <span class="Fs18">#{lbl.lbl_onay_bekleyen_randevu}</span>
+                                </p:panelGrid>
+
+                                <p:panelGrid>
+                                    <div class="circle Fleft myEventOnayli"></div>
+                                    <span class="Fs18">#{lbl.lbl_onayli_randevu}</span>
+                                </p:panelGrid>
+
+                                <p:panelGrid>
+                                    <div class="circle Fleft myEventOthers"></div>
+                                    <span class="Fs18">#{lbl.lbl_onay_diger_randevu}</span>
+                                </p:panelGrid>
+
+                                <p:panelGrid>
+                                    <div class="circle Fleft myEventOthersOnayli"></div>
+                                    <span class="Fs18">#{lbl.lbl_onay_diger_onayli_randevu}</span>
+                                </p:panelGrid>
+
+                                <p:panelGrid>
+                                    <div class="circle Fleft myEventRed"></div>
+                                    <span class="Fs18">#{lbl.lbl_onay_red_randevu}</span>
+                                </p:panelGrid>
+
+                            </p:panelGrid>
+                            <p:schedule id="schedule" value="#{randevuMB.lazyEventModel}" locale="tr" timeZone="GMT+3"
                                         allDaySlot="false" minTime="07:00:00" maxTime="23:00:00" slotDuration="00:30:00"
                                         view="agendaWeek" axisFormat="H:mm" timeFormat="H:mm" tooltip="true"
                                         resizable="false" draggable="false">
@@ -38,6 +66,10 @@
                     <div class="Container30 Responsive">
                         <div class="ContainerIndent">
                             <p:panel>
+                                <h:panelGrid columns="1">
+                                    <i class=" icon-ticket Fs23 Fleft Wid10 orange"></i>
+                                    <span class="FontBold Fs18 hardblue Fright">#{lbl.lbl_randevu}</span>
+                                </h:panelGrid>
                                 <h:panelGrid columns="2" cellpadding="5">
                                     <h:outputLabel for="randevu_tipi" value="#{lbl.label_randevu_tipi}"
                                                    styleClass="green"/>
@@ -53,7 +85,7 @@
                                     </p:selectOneMenu>
                                 </h:panelGrid>
 
-                                <div class="EmptyBox20"/>
+                                <div class="EmptyBox10"/>
 
                                 <h:panelGrid id="eventDetails" columns="2" cellpadding="3">
                                     <p:outputLabel for="title" value="#{lbl.label_randevu_kullanici}"/>
@@ -62,33 +94,43 @@
                                     <p:outputLabel for="from" value="#{lbl.label_baslangic_zamani}"/>
                                     <p:calendar id="from" value="#{randevuMB.event.startDate}"
                                                 pattern="dd/MM/yyyy HH:00:00"
-                                                timeZone="GMT+2" minHour="7" maxHour="22"
-                                                locale="tr" required="true"/>
+                                                minHour="7" maxHour="22"
+                                                locale="tr" required="true" timeZone="GMT+3"/>
 
                                     <p:outputLabel for="to" value="#{lbl.label_bitis_zamani}"/>
                                     <p:calendar id="to" value="#{randevuMB.event.endDate}" pattern="dd/MM/yyyy HH:00:00"
-                                                timeZone="GMT+2" minHour="8" maxHour="23"
-                                                locale="tr" required="true"/>
+                                                minHour="8" maxHour="23"
+                                                locale="tr" required="true" timeZone="GMT+3"/>
 
                                     <h:outputText value="#{lbl.lbl_onay_durumu}"
-                                                  rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"/>
-                                    <p:selectBooleanCheckbox value="#{randevuMB.onaylandi}"
-                                                             rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"/>
-
+                                                  rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"
+                                                  required="#{sessionInfo.isYetkili('tenis_randevu_onayi') and !randevuMB.yeniKayit}"/>
+                                    <p:selectOneButton value="#{randevuMB.onayRedButtonSecim}"
+                                                       label="#{lbl.lbl_onay_durumu}"
+                                                       rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"
+                                                       required="#{sessionInfo.isYetkili('tenis_randevu_onayi') and !randevuMB.yeniKayit}">
+                                        <f:selectItem itemLabel="Onay" itemValue="Onay"/>
+                                        <f:selectItem itemLabel="Red" itemValue="Red"/>
+                                    </p:selectOneButton>
 
                                     <p:commandButton id="addButton" value="#{lbl.label_randevu_olustur}"
                                                      actionListener="#{randevuMB.addEvent}"
-                                                     rendered="#{(randevuMB.selectedRandevu eq null) or (randevuMB.selectedRandevu.getKullanici() eq sessionInfo.getKullanici())}"
-                                                     update="schedule messages" styleClass="GreenButton"/>
+                                                     rendered="#{(randevuMB.yeniKayit)}"
+                                                     update="schedule messages eventDetails" styleClass="GreenButton"/>
 
                                     <p:commandButton id="onayButton" value="#{lbl.label_randevu_onay}"
                                                      rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi') and randevuMB.selectedRandevu.onayBekliyor and !randevuMB.yeniKayit}"
                                                      actionListener="#{randevuMB.randevuOnayi}"
-                                                     update="schedule messages" styleClass="GreenButton"/>
+                                                     update="schedule messages eventDetails" styleClass="GreenButton"/>
+
+                                    <p:commandButton id="iptalButton" value="#{lbl.label_randevu_iptal}"
+                                                     rendered="#{!randevuMB.yeniKayit and (randevuMB.selectedRandevu.getKullanici() eq sessionInfo.getKullanici())}"
+                                                     actionListener="#{randevuMB.randevuIptali}"
+                                                     update="schedule messages eventDetails" styleClass="RedButton"/>
                                 </h:panelGrid>
                             </p:panel>
 
-                            <div class="EmptyBox40"/>
+                            <div class="EmptyBox20"/>
 
                             <p:panel id="infoPnl" rendered="#{!randevuMB.tekrarGosterme}" styleClass="leaden-back">
                                 <h:panelGrid columns="1">
@@ -97,12 +139,27 @@
                                 </h:panelGrid>
                                 <ol>
                                     <li>
-                                        <h:outputText value="#{msg.info_daire_listesi_birini_seciniz}"
-                                                      styleClass="red Fs16"/>
+                                        <h:outputText value="#{lbl.lbl_sayin_kullanici}"
+                                                      styleClass="Fs18 red"/>
                                     </li>
                                     <li>
-                                        <h:outputText value="#{msg.info_daire_listesi_birini_seciniz_2}"
-                                                      styleClass="red Fs16"/>
+                                        <h:outputText value="#{msg.info_ajanda_1}"
+                                                      styleClass="Fs16"/>
+                                    </li>
+                                    <li>
+                                        <h:outputText value="#{msg.info_ajanda_2}"
+                                                      styleClass="Fs16"/>
+                                    </li>
+                                    <li>
+                                        <div class="EmptyBox5"/>
+                                        <h:outputText value="#{lbl.lbl_sayin_yetkili}"
+                                                      rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"
+                                                      styleClass="Fs18 red"/>
+                                    </li>
+                                    <li>
+                                        <h:outputText value="#{msg.info_yetkili_kullanici_1}"
+                                                      styleClass="Fs16"
+                                                      rendered="#{sessionInfo.isYetkili('tenis_randevu_onayi')}"/>
                                     </li>
                                 </ol>
 

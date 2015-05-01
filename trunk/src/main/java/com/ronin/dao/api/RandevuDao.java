@@ -8,6 +8,8 @@ package com.ronin.dao.api;
 
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.model.Randevu;
+import com.ronin.model.constant.Durum;
+import com.ronin.model.constant.OnayDurumu;
 import com.ronin.model.constant.RandevuTipi;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,22 +31,25 @@ public class RandevuDao implements IRandevuDao {
 
     public List<Randevu> getRandevuList(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo) {
         List list = getSessionFactory().getCurrentSession()
-                .createQuery("from Randevu r where r.baslangicZamani >= ? and r.bitisZamani <= ? and r.randevuTipi.id = ? and r.sirket.id = ?")
+                .createQuery("from Randevu r where r.baslangicZamani >= ? and r.bitisZamani <= ? and r.randevuTipi.id = ? and r.sirket.id = ? and r.durum = ?")
                 .setParameter(0, startDate)
                 .setParameter(1, endDate)
                 .setParameter(2, randevuTipi.getId())
                 .setParameter(3, sessionInfo.getSirket().getId())
+                .setParameter(4, Durum.getAktifObject())
                 .list();
         return (List<Randevu>) list;
     }
 
-    public Long hasAktifRandevu(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo) {
+    public Long hasAktifRandevu(RandevuTipi randevuTipi, Date startDate, Date endDate, SessionInfo sessionInfo,Randevu randevu) {
         List list = getSessionFactory().getCurrentSession()
-                .createQuery("select count(r.id) from Randevu r where r.baslangicZamani >= ? and r.bitisZamani <= ? and r.randevuTipi.id = ? and r.sirket.id = ?")
+                .createQuery("select count(r.id) from Randevu r where r.baslangicZamani >= ? and r.bitisZamani <= ? and r.randevuTipi.id = ? and r.sirket.id = ? and r.durum = ? and r.onayDurumu <> ?")
                 .setParameter(0, startDate)
                 .setParameter(1, endDate)
                 .setParameter(2, randevuTipi.getId())
                 .setParameter(3, sessionInfo.getSirket().getId())
+                .setParameter(4, Durum.getAktifObject())
+                .setParameter(5, OnayDurumu.getOnaylanmadiObject())
                 .list();
         return  (Long)list.get(0);
     }

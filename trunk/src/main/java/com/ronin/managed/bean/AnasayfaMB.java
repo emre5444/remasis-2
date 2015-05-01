@@ -136,8 +136,7 @@ public class AnasayfaMB implements Serializable {
     boolean iletisimLoaded = false;
     boolean finansLoaded = false;
     boolean visitorsReportLoaded = false;
-
-
+    boolean randevuLoaded = false;
 
     @PostConstruct
     public void init() {
@@ -357,6 +356,7 @@ public class AnasayfaMB implements Serializable {
         iletisimLoaded = false;
         finansLoaded = false;
         visitorsReportLoaded = false;
+        randevuLoaded = false;
     }
 
     public void getDuyuruData() {
@@ -872,5 +872,13 @@ public class AnasayfaMB implements Serializable {
 
     public void setChartType(GChartType chartType) {
         this.chartType = chartType;
+    }
+
+    public boolean isRandevuLoaded() {
+        return randevuLoaded;
+    }
+
+    public void setRandevuLoaded(boolean randevuLoaded) {
+        this.randevuLoaded = randevuLoaded;
     }
 }
