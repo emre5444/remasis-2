@@ -76,19 +76,19 @@ body{background-color: #F6F8F8; margin:0px;}
 
 /* LOGIN PAGE */
 .login-back{background-image:url("#{resource['sentinel-layout:images/login-back.svg']}"); background-position:top left; background-repeat:no-repeat; background-size: 50%;}
-.error-back{background-image:url("#{resource['sentinel-layout:images/error-back.png']}"); background-position:right bottom; background-repeat:no-repeat; background-size: 900px; background-attachment: fixed;}
+.error-back{background-image:url("#{resource['sentinel-layout:images/error-back.svg']}"); background-position:right bottom; background-repeat:no-repeat; background-size: 900px; background-attachment: fixed;}
 
     #login-logo{width:auto; margin-bottom:-2px; padding:0px; margin:18px; line-height: 30px; display:inline-block;}
         #login-logo img{height:30px;}
                     
-    #login-box{min-height: 350px; margin-bottom: 20px; /* -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2); -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2); box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2); */ border: solid 1px #D1D3D4;}
+    #login-box{min-height: 350px; margin-bottom: 20px; /* -webkit-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2); -moz-box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2); box-shadow: 0px 1px 2px 0px rgba(0,0,0,0.2); */ border: solid 1px #C0C5C7;}
         .TabBtn{background-color:#F4F7F9; padding: 20px 0px; cursor:pointer; border-bottom: solid 1px #E6E8E8; color:#96A5AE; font-size: 22px;}
         .TabBtn:hover{color:#00AEEF;}
         .TabBtnActiveLeft{ background-color: #ffffff; cursor:auto; border-bottom:solid 1px #E6E8E8; color:#00AEEF; border-right:solid 1px #E6E8E8;}
         .TabBtnActiveRight{ background-color: #ffffff; cursor:auto; border-bottom:solid 1px #E6E8E8; color:#00AEEF; border-left:solid 1px #E6E8E8;}
         
         #login-box{font-size: 14px;}
-            #login-box input[type="text"],#login-box input[type="password"]{border: solid 1px #D1D3D4 !important; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center;}
+            #login-box input[type="text"],#login-box input[type="password"]{border: solid 1px #C0C5C7 !important; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center;}
             #login-box input[type="text"]:hover, #login-box input[type="text"]:focus,
             #login-box input[type="password"]:hover, #login-box input[type="password"]:focus{border:solid 1px #00AEEF !important;}
             #login-box .ui-button{border:none !important; box-shadow: none; width:85%;}
@@ -162,15 +162,15 @@ body{background-color: #F6F8F8; margin:0px;}
                         .slimmenu .layout-menubar-container{width:48px;}
                         .slimmenu .layout-menubarinner-box{width:48px;}
                             .slimmenu .layout-menubarinner-box input{display:none;}
-			.slimmenu .layout-menubar-container li{height:50px; overflow:hidden;}
-			#layout-menubar.slimmenu .layout-menubar-container li:hover{position:relative; width:330px; min-height:50px !important; height:auto;}
+			.slimmenu .layout-menubar-container>li{height:50px; overflow:hidden;}
+			#layout-menubar.slimmenu .layout-menubar-container>li:hover{position:relative; width:330px; min-height:50px !important; height:auto;}
                             .slimmenu li a{width:300px; border-bottom: 1px solid #4D4D4D;}
                             .slimmenu li a:hover{color:#FFD100; padding-left:25px;}
                             .slimmenu li:hover a{display:block; width:auto;}
                                 .slimmenu .layout-menubar-container li a .i{ margin-right:20px;}
 	
 	/* PORTLETS COVER */
-	#layout-portlets-cover{background-color: #ffffff; overflow-y:hidden; padding-top: 55px; color:#9FADB5; overflow-x: hidden;}
+	#layout-portlets-cover{background-color: #ffffff; overflow-y:hidden; padding-top: 55px; color:#72828B; overflow-x: hidden;}
 
     #sm-mobiletopmenu {
         display: none;
@@ -246,19 +246,19 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b1900b', end
 
 /* font colors */
 .gray{color:#5A5A5A;}
-.softgray{color:#CDCDCD;}
+.softgray{color:#909090;}
 .yellow{color:#FFD100;}
 .white{ color:#ffffff;}
 .red{color:#e90c45;}
 .orange{color:#F15A29;}
 .softblue{color:#C1E1F4;}
 .hardblue{color:#27AAE1;}
-.leaden{color:#9FADB5;}
+.leaden{color:#72828B;}
 .green{color:#54DB26;}
 
 /* bordered boxes */
-.GrayBorderedBox{ border:solid 1px #D1D3D4;}
-.BorBotGray{ border-bottom:solid 1px #D1D3D4;}
+.GrayBorderedBox{ border:solid 1px #C0C5C7;}
+.BorBotGray{ border-bottom:solid 1px #C0C5C7;}
 .BorBotLeaden{border-bottom: solid 1px #E4E9EC;}
 
 
@@ -411,6 +411,18 @@ small {
     display: block;
 }
 
+#sm-topmenu>li:focus,
+#sm-topmenu a:focus{background-color: #165686 !important;}
+
+#buttonArea > a:focus
+{-webkit-box-shadow: inset 0px 0px 0px 1px rgba(100,100,100,1);
+-moz-box-shadow: inset 0px 0px 0px 1px rgba(100,100,100,1);
+box-shadow: inset 0px 0px 0px 1px rgba(100,100,100,1);
+}
+
+#layout-menubar .layout-menubar-container li a:focus {color: #FFD100; padding-left: 20px;}
+
+
 /* MEDIA QUERIES **************************************************************************************************************** */
 @media (min-width: 1201px) {
     #layout-menubar {
@@ -457,8 +469,8 @@ small {
                         #layout-menubar .layout-menubar-container{width:48px;}
                         #layout-menubar .layout-menubarinner-box{width:48px;}
                             #layout-menubar .layout-menubarinner-box input{display:none;}
-			#layout-menubar .layout-menubar-container li{height:50px; overflow:hidden;}
-			#layout-menubar .layout-menubar-container li:hover{position:relative; width:330px; min-height:50px !important; height:auto;}
+			#layout-menubar .layout-menubar-container>li{height:50px; overflow:hidden;}
+			#layout-menubar .layout-menubar-container>li:hover{position:relative; width:330px; min-height:50px !important; height:auto;}
                             #layout-menubar li a{width:300px; border-bottom: 1px solid #4D4D4D;}
                             #layout-menubar li a:hover{color:#FFD100; padding-left:25px;}
                             #layout-menubar li:hover a{display:block; width:auto;}
@@ -503,7 +515,7 @@ small {
         #login-logo span{font-size: 26px !important;}
         #login-logo img{ height:26px;}
         .TabBtn{ font-size: 16px;}
-        #login-box input[type="text"]{border: solid 1px #D1D3D4; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 16px;}
+        #login-box input[type="text"]{border: solid 1px #C0C5C7; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 16px;}
         #login-box .ui-button{border:none !important; box-shadow: none; width:90%;}
             #login-box .ui-button .ui-button-text{padding:12px !important; font-size: 16px !important;}
             
@@ -537,7 +549,7 @@ small {
         #login-logo span{font-size: 20px !important;}
         #login-logo img{ height:20px;}
         .TabBtn{ font-size: 12px;}
-        #login-box input[type="text"]{border: solid 1px #D1D3D4 !important; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 14px !important;}
+        #login-box input[type="text"]{border: solid 1px #C0C5C7 !important; padding: 10px !important; box-shadow: none; color:#00AEEF !important; text-align: center; font-size: 14px !important;}
         #login-box .ui-button{border:none !important; box-shadow: none; width:90%;}
             #login-box .ui-button .ui-button-text{padding:12px !important; font-size: 14px !important;}
 }
