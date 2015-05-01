@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
+                xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/WEB-INF/template.xhtml">
 
     <style type="text/css">
@@ -297,24 +297,19 @@
                                         <p:messages showDetail="false"/>
                                         <h:panelGrid columns="2" cellspacing="5" cellpadding="5">
 
-                                            <h:outputLabel for="aciklama" value="#{lbl.ortak_aciklama}"
-                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputLabel for="aciklama" value="#{lbl.ortak_aciklama}"/>
                                             <p:inputText id="aciklama"
                                                          value="#{odemeIslemleriMB.yeniBorc.odemeAciklama}"/>
 
-                                            <h:outputLabel for="odenenTutar" value="#{lbl.odenen_tutar} (*)"
-                                                           style="font-weight:bold; color: #0b4170"/>
-                                            <p:inputText id="odenenTutar"
-                                                         value="#{odemeIslemleriMB.yeniBorc.odenenTutar}"
-                                                         required="true"
-                                                         label="#{lbl.odenen_tutar}"/>
+                                            <h:outputLabel for="odenenTutar" value="#{lbl.odenen_tutar} (*)"/>
+                                            <pe:inputNumber id="odenenTutar" value="#{odemeIslemleriMB.yeniBorc.odenenTutar}" required="true" label="#{lbl.odenen_tutar}" symbol=" TL"
+                                                            symbolPosition="s"  decimalSeparator="," thousandSeparator="."/>
 
-                                            <h:outputLabel for="odeme_tarihi" value="#{lbl.odeme_tarihi} (*)"
-                                                           style="font-weight:bold; color: #0b4170"/>
+                                            <h:outputLabel for="odeme_tarihi" value="#{lbl.odeme_tarihi} (*)"/>
                                             <p:calendar id="odeme_tarihi"
                                                         value="#{odemeIslemleriMB.yeniBorc.odemeVadesi}" mask="true"
                                                         pattern="dd/MM/yyyy" required="true"
-                                                        label="#{lbl.odeme_tarihi}"/>
+                                                        label="#{lbl.odeme_tarihi}" locale="tr"/>
 
 
                                         </h:panelGrid>
@@ -344,11 +339,13 @@
 
                                                 <p:column headerText="#{lbl.odenen_tutar}">
                                                     <p:inputText value="#{daireBorcAlacak.borc.odenenTutar}"/>
+                                                    <pe:inputNumber value="#{daireBorcAlacak.borc.odenenTutar}"  symbol=" TL"
+                                                                    symbolPosition="s"  decimalSeparator="," thousandSeparator="."/>
                                                 </p:column>
 
                                                 <p:column headerText="#{lbl.son_odeme_tarihi}">
                                                     <p:calendar value="#{daireBorcAlacak.borc.odemeVadesi}" mask="true"
-                                                                pattern="dd/MM/yyyy"/>
+                                                                pattern="dd/MM/yyyy" locale="tr"/>
                                                 </p:column>
 
                                             </p:dataTable>

@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:p="http://primefaces.org/ui"
+                xmlns:p="http://primefaces.org/ui" xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/WEB-INF/template.xhtml">
 
     <style type="text/css">
@@ -343,26 +343,25 @@
 
                                             <h:outputLabel for="borc" value="#{lbl.borc_tutari} (*)"
                                                            style="font-weight:bold"/>
-                                            <p:inputText id="borc" value="#{aidatIslemleriMB.yeniBorc.borc}"
-                                                         required="true" label="#{lbl.borc_tutari}"
-                                                    />
+                                            <pe:inputNumber id="borc" value="#{aidatIslemleriMB.yeniBorc.borc}" required="true" label="#{lbl.borc_tutari}" symbol=" TL"
+                                                            symbolPosition="s"  decimalSeparator="," thousandSeparator="."/>
 
                                             <h:outputLabel for="son_odeme_tarihi" value="#{lbl.son_odeme_tarihi} (*)"
                                                            style="font-weight:bold"/>
                                             <p:calendar id="son_odeme_tarihi"
                                                         value="#{aidatIslemleriMB.yeniBorc.sonOdemeTarihi}" mask="true"
                                                         pattern="dd/MM/yyyy" required="true"
-                                                        label="#{lbl.son_odeme_tarihi}"/>
+                                                        label="#{lbl.son_odeme_tarihi}" locale="tr"/>
 
                                             <h:outputLabel for="aidat_donemi" value="#{lbl.aidat_donemi} (*)"
                                                            style="font-weight:bold"/>
                                             <p:calendar id="aidat_donemi"
                                                         value="#{aidatIslemleriMB.yeniBorc.islemTarihi}" mask="true"
                                                         pattern="dd/MM/yyyy" required="true"
-                                                        label="#{lbl.aidat_donemi}"/>
+                                                        label="#{lbl.aidat_donemi}" locale="tr"/>
 
                                             <h:outputText value="#{lbl.borc_kalem_skip} "/>
-                                            <h:selectBooleanCheckbox value="#{aidatIslemleriMB.skip}"/>
+                                            <p:selectBooleanCheckbox value="#{aidatIslemleriMB.skip}"/>
 
                                         </h:panelGrid>
                                     </p:panel>
@@ -441,18 +440,19 @@
                                             </p:column>
 
                                             <p:column headerText="#{lbl.borc_tutari}">
-                                                <p:inputText value="#{daireBorcAlacak.borc.borc}"/>
+                                                <pe:inputNumber value="#{daireBorcAlacak.borc.borc}" symbol=" TL"
+                                                                symbolPosition="s"  decimalSeparator="," thousandSeparator="."/>
                                             </p:column>
 
                                             <p:column headerText="#{lbl.son_odeme_tarihi}">
                                                 <p:calendar value="#{daireBorcAlacak.borc.sonOdemeTarihi}"
                                                             mask="true"
-                                                            pattern="dd/MM/yyyy"/>
+                                                            pattern="dd/MM/yyyy" locale="tr"/>
                                             </p:column>
 
                                             <p:column headerText="#{lbl.aidat_donemi}">
                                                 <p:calendar value="#{daireBorcAlacak.borc.islemTarihi}" mask="true"
-                                                            pattern="dd/MM/yyyy"/>
+                                                            pattern="dd/MM/yyyy" locale="tr"/>
                                             </p:column>
 
                                             <p:column headerText="#{lbl.borc_kalem_combo}">

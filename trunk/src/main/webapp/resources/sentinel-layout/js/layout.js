@@ -5,14 +5,22 @@ var Sentinel = {
         this.menubarElement = this.menubar.get(0);
         this.menubarContainer = this.menubarContainer||this.menubar.children('ul.layout-menubar-container');
         this.content = $('#layout-portlets-cover');
+        this.topMenu = $('#sm-topmenu');
+        this.topMenuItems = this.topMenu.children('li');
+        this.focusedItem = null;
+        this.focusedTopItem = null;
+        
+        for(var i = 0; i < this.topMenuItems.length; i++) {
+            var topItem = this.topMenuItems.eq(i);
+            topItem.attr('tabindex', '0');
+        }
         
         this.bindEvents();
+        this.bindKeyEvents();
     },
             
     initTopMenu: function() {
         var $this = this;
-        this.topMenu = $('#sm-topmenu');
-        this.topMenuItems = this.topMenu.children('li');
 
         this.topMenuItems.on('mouseenter', function() {
             if($(window).width() < 640) {
@@ -56,6 +64,24 @@ var Sentinel = {
             else {
                 item.children('ul').toggle();
             }
+        }).on('focus', function() {
+            if($this.focusedTopItem) {
+                var itemChildren = $this.focusedTopItem.children('ul');
+                if(itemChildren.length && itemChildren.is(':visible')) {
+                    itemChildren.hide();
+                }
+            }
+            $this.focusedTopItem = $(this); 
+        }).on('keydown', function(e){ 
+            var keyCode = $.ui.keyCode,
+                key = e.which;
+            
+            if((key === keyCode.ENTER)|| (key === keyCode.NUMPAD_ENTER) || (key === keyCode.SPACE)) {
+                var childrenItem = $(this).children('ul');
+                if(childrenItem.length) {
+                    childrenItem.toggle();
+                }
+            }
         });
     },
     
@@ -67,12 +93,12 @@ var Sentinel = {
         if(this.menubar.hasClass('slimmenu')) {
             this.menubar.removeClass('slimmenu');
             $('#searchArea').removeClass('slimsearch');
-            PrimeFaces.setCookie('sentinel_menumode', 'large');
+            $.cookie('sentinel_menumode', 'large', {path:'/'});
         }
         else {
             this.menubar.addClass('slimmenu').removeClass('layout-menubar-open-fullscr');
             $('#searchArea').addClass('slimsearch');
-            PrimeFaces.setCookie('sentinel_menumode', 'slim');
+            $.cookie('sentinel_menumode', 'slim', {path:'/'});
         }
         
         this.menubar.addClass('OvHidden').scrollTop(0).removeClass('OvHidden');
@@ -114,27 +140,6 @@ var Sentinel = {
                 $('#sm-topmenu').addClass('DispBlock');              
             }
         });
-
-        // login
-        this.loginBox = $('#login-box');
-        if(this.loginBox.length) {
-            this.tabHeaders = this.loginBox.find('.TabBtn');
-            this.tabContents = this.loginBox.find('.TabContent');
-            this.tabHeaders.on('click', function(e) {
-                $this.tabHeaders.removeClass('TabBtnActiveLeft TabBtnActiveRight');
-                $this.tabContents.addClass('DispNone');
-
-                if($(this).hasClass('left')) {
-                    $(this).addClass('TabBtnActiveLeft');
-                    $('#TAB' + $(this).attr('role')).removeClass('DispNone');
-                } else {
-                    $(this).addClass('TabBtnActiveRight');
-                    $('#TAB' + $(this).attr('role')).removeClass('DispNone');
-                }
-                
-                e.preventDefault();
-            });
-        }      
         
         //remove transitions on IOS
         if(this.isIOS()) {
@@ -149,6 +154,50 @@ var Sentinel = {
         }
     },
     
+    bindKeyEvents: function() {
+        var $this = this;
+        
+        //keyboard events for ButtonArea on Left Menu
+        $('#buttonArea').children('a').on('focus', function() {
+            if($(this).is(':visible')) {
+                $this.focusedItem = $(this);
+            }
+            
+            if($this.focusedTopItem) {
+                $this.hideTopMenuItem($this.focusedTopItem);
+                $this.focusedTopItem = null;
+            }
+        });
+        
+        //keyboard events for menu container on Left Menu
+        this.menubarContainer.find('a').on('focus', function() {
+            $this.focusedItem = $(this);
+        })
+        .on('keydown', function(e){ 
+            if(!$this.focusedItem) {
+                return;
+            }
+            
+            var keyCode = $.ui.keyCode;
+            
+            switch(e.which) {
+                case keyCode.LEFT:
+                    var currentSubMenu = $this.focusedItem.next();
+                    if(currentSubMenu.length && currentSubMenu.is(':visible')) {
+                        $this.toggleSubMenu(this);
+                    }
+                break;
+                
+                case keyCode.RIGHT: 
+                    var currentSubMenu = $this.focusedItem.next(); 
+                    if(currentSubMenu.length && currentSubMenu.is(':visible')) {   
+                        $this.toggleSubMenu(this);
+                    }
+                break;
+            }
+        });        
+    },
+    
     //backward compatibilitys
     openSubMenu: function(element) {
         this.toggleSubMenu(element);
@@ -157,9 +206,10 @@ var Sentinel = {
     toggleSubMenu: function(element) {
         var link = $(element),
         menuitem = link.closest('li'),
-        subMenuContainer = menuitem.children('ul.layout-menubar-submenu-container');
+        subMenuContainer = menuitem.children('ul.layout-menubar-submenu-container'),
+        isRootItem = menuitem.parent().is(this.menubarContainer);
 
-        if(menuitem.parent().is(this.menubarContainer)) {
+        if(isRootItem) {
             this.menubarContainer.find('> li.layout-menubar-active').removeClass('layout-menubar-active');
             menuitem.addClass('layout-menubar-active');
         }
@@ -167,12 +217,23 @@ var Sentinel = {
         if(subMenuContainer.length) {
             if(subMenuContainer.is(':visible')) {
                 subMenuContainer.hide();
-                menuitem.removeClass('layout-menubar-active');
-                this.clearMenuState();
+                
+                if(isRootItem) {
+                    menuitem.removeClass('layout-menubar-active');
+                    this.activeMenuitemId = undefined;
+                    $.removeCookie('sentinel_activemenuitem', {path:'/'});
+                }
+                else {
+                    this.activeMenuitemId = menuitem.closest('ul').parent().attr('id');
+                    this.saveMenuState();
+                }
             }
             else {
                 subMenuContainer.slideDown(300);
-                menuitem.siblings().find('ul').slideUp(300);
+                if(this.menubar.width() > 50 || isRootItem) {
+                    menuitem.siblings().find('ul:visible').slideUp(300);
+                }
+                
                 this.activeMenuitemId = menuitem.attr('id');
                 this.saveMenuState();
             }
@@ -194,11 +255,11 @@ var Sentinel = {
     },
             
     restoreMenuState: function() {
-        this.activeMenuitemId = PrimeFaces.getCookie('sentinel_activemenuitem');
+        this.activeMenuitemId = $.cookie('sentinel_activemenuitem');
         this.menubar = $('#layout-menubar');
         this.menubarContainer = this.menubar.children('ul.layout-menubar-container');
-        
-        if(PrimeFaces.getCookie('sentinel_menumode') === 'slim') {
+                
+        if($.cookie('sentinel_menumode') === 'slim') {
             this.menubar.addClass('slimmenu');
             $('#searchArea').addClass('slimsearch');
         }
@@ -218,18 +279,18 @@ var Sentinel = {
             this.restoreMenuitem(menuitem.parent().parent());
         }
         else {
-            menuitem.addClass('layout-menubar-active')
+            menuitem.addClass('layout-menubar-active');
         }
     },
     
     saveMenuState: function() {
-        PrimeFaces.setCookie('sentinel_activemenuitem', this.activeMenuitemId);
-        PrimeFaces.setCookie('sentinel_menumode', this.menubar.hasClass('slimmenu') ? 'slim' : 'large');
+        $.cookie('sentinel_activemenuitem', this.activeMenuitemId, {path:'/'});
+        $.cookie('sentinel_menumode', this.menubar.hasClass('slimmenu') ? 'slim' : 'large', {path:'/'});
     },
     
     clearMenuState: function() {
-        PrimeFaces.setCookie('sentinel_activemenuitem', null);
-        PrimeFaces.setCookie('sentinel_menumode', null);
+        $.removeCookie('sentinel_activemenuitem', {path:'/'});
+        $.removeCookie('sentinel_menumode', {path:'/'});
     },
     
     isIOS: function() {
@@ -241,3 +302,118 @@ var Sentinel = {
 $(function() {
     Sentinel.init();
 });
+
+/*!
+ * jQuery Cookie Plugin v1.4.1
+ * https://github.com/carhartl/jquery-cookie
+ *
+ * Copyright 2006, 2014 Klaus Hartl
+ * Released under the MIT license
+ */
+(function (factory) {
+	if (typeof define === 'function' && define.amd) {
+		// AMD (Register as an anonymous module)
+		define(['jquery'], factory);
+	} else if (typeof exports === 'object') {
+		// Node/CommonJS
+		module.exports = factory(require('jquery'));
+	} else {
+		// Browser globals
+		factory(jQuery);
+	}
+}(function ($) {
+
+	var pluses = /\+/g;
+
+	function encode(s) {
+		return config.raw ? s : encodeURIComponent(s);
+	}
+
+	function decode(s) {
+		return config.raw ? s : decodeURIComponent(s);
+	}
+
+	function stringifyCookieValue(value) {
+		return encode(config.json ? JSON.stringify(value) : String(value));
+	}
+
+	function parseCookieValue(s) {
+		if (s.indexOf('"') === 0) {
+			// This is a quoted cookie as according to RFC2068, unescape...
+			s = s.slice(1, -1).replace(/\\"/g, '"').replace(/\\\\/g, '\\');
+		}
+
+		try {
+			// Replace server-side written pluses with spaces.
+			// If we can't decode the cookie, ignore it, it's unusable.
+			// If we can't parse the cookie, ignore it, it's unusable.
+			s = decodeURIComponent(s.replace(pluses, ' '));
+			return config.json ? JSON.parse(s) : s;
+		} catch(e) {}
+	}
+
+	function read(s, converter) {
+		var value = config.raw ? s : parseCookieValue(s);
+		return $.isFunction(converter) ? converter(value) : value;
+	}
+
+	var config = $.cookie = function (key, value, options) {
+
+		// Write
+
+		if (arguments.length > 1 && !$.isFunction(value)) {
+			options = $.extend({}, config.defaults, options);
+
+			if (typeof options.expires === 'number') {
+				var days = options.expires, t = options.expires = new Date();
+				t.setMilliseconds(t.getMilliseconds() + days * 864e+5);
+			}
+
+			return (document.cookie = [
+				encode(key), '=', stringifyCookieValue(value),
+				options.expires ? '; expires=' + options.expires.toUTCString() : '', // use expires attribute, max-age is not supported by IE
+				options.path    ? '; path=' + options.path : '',
+				options.domain  ? '; domain=' + options.domain : '',
+				options.secure  ? '; secure' : ''
+			].join(''));
+		}
+
+		// Read
+
+		var result = key ? undefined : {},
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling $.cookie().
+			cookies = document.cookie ? document.cookie.split('; ') : [],
+			i = 0,
+			l = cookies.length;
+
+		for (; i < l; i++) {
+			var parts = cookies[i].split('='),
+				name = decode(parts.shift()),
+				cookie = parts.join('=');
+
+			if (key === name) {
+				// If second argument (value) is a function it's a converter...
+				result = read(cookie, value);
+				break;
+			}
+
+			// Prevent storing a cookie that we couldn't decode.
+			if (!key && (cookie = read(cookie)) !== undefined) {
+				result[name] = cookie;
+			}
+		}
+
+		return result;
+	};
+
+	config.defaults = {};
+
+	$.removeCookie = function (key, options) {
+		// Must not alter options, thus extending a fresh object...
+		$.cookie(key, '', $.extend({}, options, { expires: -1 }));
+		return !$.cookie(key);
+	};
+
+}));
