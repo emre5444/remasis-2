@@ -709,6 +709,10 @@
 
         </h:form>
 
+        <p:socket channel="/notifyRandevu" >
+            <p:ajax event="message" update="@([id$=schedule])"/>
+        </p:socket>
+
         <ui:include src="pages/sistemYonetimi/iletisimEkleme.xhtml">
             <ui:param name="entityMB" value="#{anasayfaMB}"/>
             <ui:param name="formName" value="anasayfa_iletisim"/>
