@@ -178,6 +178,11 @@
 
                 </h:form>
 
+                <p:socket channel="/notifyRandevu" >
+                    <p:ajax event="message" update="randevuForm:schedule" />
+                </p:socket>
+
+
             </div>
         </div>
     </ui:define>

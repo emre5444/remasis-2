@@ -19,6 +19,8 @@ import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
+import org.primefaces.push.PushContext;
+import org.primefaces.push.PushContextFactory;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -168,6 +170,10 @@ public class RandevuMB extends AbstractMB implements Serializable {
             }
             randevu.setSirket(sessionInfo.getSirket());
             ortakService.save(randevu);
+            //primefaces push
+            //toDo yeni hali eventBus ancak onla calismadi. Daha sonra bakilacak
+            PushContext pushContext = PushContextFactory.getDefault().getPushContext();
+            pushContext.push("/notifyRandevu", "new randevu registered");
         } else {
             Randevu randevu = (Randevu) event.getData();
             randevu.setAciklama(event.getTitle());
@@ -301,8 +307,8 @@ public class RandevuMB extends AbstractMB implements Serializable {
             return false;
         }
 
-        Long aktifRandevuVarMý = randevuService.hasAktifRandevu(sorguKriteri.getRandevuTipi(), event.getStartDate(), event.getEndDate(), sessionInfo,selectedRandevu);
-        if (aktifRandevuVarMý > 0) {
+        Long aktifRandevuVarMi = randevuService.hasAktifRandevu(sorguKriteri.getRandevuTipi(), event.getStartDate(), event.getEndDate(), sessionInfo, selectedRandevu);
+        if (aktifRandevuVarMi > 0) {
             JsfUtil.addWarnMessage(message.getString("warning_aktif_randevu_var"));
             return false;
         }
@@ -318,7 +324,7 @@ public class RandevuMB extends AbstractMB implements Serializable {
     }
 
     public void spotLightSelectionSetter() {
-        if(!tekrarGosterme){
+        if (!tekrarGosterme) {
             JsfUtil.addWarnMessage(message.getString("warning_secim_yapilmali"));
             return;
         }
