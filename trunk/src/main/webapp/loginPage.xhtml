@@ -50,10 +50,10 @@
                             class="icon-key-1"></i> #{lbl.label_sifremi_unuttum} </div>
                 </div>
 
-                <h:form id="loginForm"
-                        prependId="false">
 
-                    <div class="Container90 Fnone MarAuto TexAlCenter TabContent" id="TAB1">
+                <div class="Container90 Fnone MarAuto TexAlCenter TabContent" id="TAB1">
+                    <h:form id="loginForm"
+                            prependId="false">
 
                         <div class="EmptyBox30"></div>
                         <p:messages id="hataliDenemeMsg" closable="true" showIcon="false"/>
@@ -81,12 +81,14 @@
                                 update=":hataliDenemeMsg"/>
 
                         <div class="EmptyBox50"></div>
-                    </div>
-                </h:form>
+                    </h:form>
 
-                <h:form id="sifreForm"
-                        prependId="false">
-                    <div class="Container90 Fnone MarAuto DispNone TexAlCenter TabContent" id="TAB2">
+                </div>
+
+
+                <div class="Container90 Fnone MarAuto DispNone TexAlCenter TabContent" id="TAB2">
+                    <h:form id="sifreForm"
+                            prependId="false">
 
                         <div class="EmptyBox30"></div>
                         <p:messages id="hataliDenemeMsgS" closable="true" showIcon="false"/>
@@ -101,8 +103,9 @@
                                          actionListener="#{loginMB.sifreHatirlatmaIstekGonder()}"/>
 
                         <div class="EmptyBox50"></div>
-                    </div>
-                </h:form>
+                    </h:form>
+
+                </div>
             </div>
         </div>
         <!-- LOGIN BOX COVER END -->
