@@ -125,6 +125,24 @@ public class RolDao implements IRolDao {
 
     }
 
+    public List<Rol> getRolListByKullanici(Kullanici kullanici) {
+        List<Rol> rolList = new ArrayList<>();
+        List list = getSessionFactory().getCurrentSession()
+                .createQuery("select kr " +
+                        "from KullaniciRol kr " +
+                        "join fetch kr.rol r " +
+                        "where kr.kullanici = ? ")
+                .setParameter(0, kullanici)
+                .list();
+
+        for (KullaniciRol kullaniciRol : (List<KullaniciRol>) list) {
+            rolList.add(kullaniciRol.getRol());
+        }
+
+        return rolList;
+
+    }
+
     public void updateKullaniciRol(List<Rol> rolList, Kullanici kullanici) {
         //kullanicinin eski rolleri silinir
         Query query = getSessionFactory().getCurrentSession().createQuery("delete KullaniciRol kr where kr.kullanici.id = :id");

@@ -39,6 +39,8 @@ public interface IRolDao {
 
     void updateRolYetki(List<Yetki> yetkiList , Rol rol);
 
+    List<Rol> getRolListByKullanici(Kullanici kullanici);
+
     void updateKullaniciRol(List<Rol> rolList , Kullanici kullanici);
     
     int getCount(Rol rol);

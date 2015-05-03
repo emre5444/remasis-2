@@ -28,6 +28,8 @@ public interface IRolService {
     List<Rol> getList(Rol rol);
 
     List<Rol> getRolListByKullanici(Kullanici kullanici , SessionInfo sessionInfo);
+
+    List<Rol> getRolListByKullanici(Kullanici kullanici);
     
     List<Rol> getListByNamedQuery(String namedQuery, Object... parameters);
 

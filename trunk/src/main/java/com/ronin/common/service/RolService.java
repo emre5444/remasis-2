@@ -56,6 +56,11 @@ public class RolService implements IRolService {
     }
 
     @Transactional(readOnly = false)
+    public List<Rol> getRolListByKullanici(Kullanici kullanici){
+        return iRolDao.getRolListByKullanici(kullanici);
+    }
+
+    @Transactional(readOnly = false)
     public List<Rol> getListByNamedQuery(String namedQuery,Object... parameters) {
         return iRolDao.getListByNamedQuery(namedQuery,parameters);
     }

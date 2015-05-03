@@ -95,7 +95,7 @@ public class Kullanici implements Serializable {
     @Transient
     private Il il;
 
-    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "kullanici",fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REFRESH, mappedBy = "kullanici",fetch = FetchType.LAZY)
     @Fetch(FetchMode.SELECT)
     @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
     private Set<KullaniciRol> kullaniciRolList;
