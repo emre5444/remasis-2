@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 @ManagedBean(name = "talepIslemMB")
@@ -106,7 +107,9 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
         selectedBorc = (DaireBorc) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedBorc");
         selected = (TalepDaire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedTalepDaireObject");
         selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaire");
-        sorguKriteri = (TalepSorguKriteri) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        Object sk = FacesContext.getCurrentInstance().getExternalContext().getFlash().get("sorguKriteri");
+        if (sk instanceof TalepSorguKriteri)
+            sorguKriteri = (TalepSorguKriteri) sk;
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
     }
 
@@ -119,7 +122,7 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
 
 
     public List<Kullanici> completePlayer(String query) {
-        List<Kullanici> suggestions = ortakService.getKullaniciByName(query , sessionInfo);
+        List<Kullanici> suggestions = ortakService.getKullaniciByName(query, sessionInfo);
         return suggestions;
     }
 
@@ -177,32 +180,32 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
             ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_onaylama_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isSikayetTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.SIKAYET;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_onaylama_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isBelgeTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.BELGE_TALEBI;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_onaylama_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         }
     }
 
     public void bildirimGonderForRet() {
         if (selected.getTalep().getTalepTipi().isArizaTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.ARIZA;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("ariza_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isItirazTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.AIDAT_ITIRAZ;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("itiraz_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isSikayetTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.SIKAYET;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("sikayet_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         } else if (selected.getTalep().getTalepTipi().isBelgeTalebiMi()) {
             bildirimTipi = BildirimTipi.ENUM.BELGE_TALEBI;
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim") ,selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim") ,selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+            ortakService.bildirimIstekOlustur(sessionInfo, kullaniciService.getKullaniciByUsername(selected.getTalep().getKullanici().getUsername()), bildirimTipi, selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim"), selected.getTalep().getId() + message.getString("belge_talebi_reddetme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         }
     }
 
@@ -219,19 +222,6 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
         return null;
     }
 
-    public void daireTalepBelgeYukleme(FileUploadEvent event) {
-        if (event.getFile().equals(null)) {
-            JsfUtil.addSuccessMessage("file is null");
-        }
-        try {
-            UploadedFile uploadedFile = event.getFile();
-            fileUploadService.daireTalepBelgeEkle(sessionInfo, selected.getDaire(), selected.getTalep(), uploadedFile , yeniBelge);
-            getBelgeListByTalep();
-        } catch (Exception e) {
-            JsfUtil.addSuccessMessage("error reading file " + e);
-        }
-    }
-
     public void deleteBelge() {
         try {
             fileUploadService.belgeSil(selectedDaireBelge);
@@ -242,25 +232,29 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
         }
     }
 
-    public void clearBelgeYuklemeObject(){
+    public void clearBelgeYuklemeObject() {
         yeniBelge = new Belge();
     }
 
+    public String navigateToBelgeEkle() {
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireTalep", selected);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/talepIslemleri/talepOnaylama.xhtml");
+        return "/pages/sitePaylasimIslemleri/belgeEkleme.xhtml";
+    }
 
     public String onFlowProcess(FlowEvent event) {
-        if(skip) {
+        if (skip) {
             skip = false;   //reset in case user goes back
             return "confirm";
-        }
-        else {
+        } else {
             return event.getNewStep();
         }
     }
 
     public String yeniArizaTalebiEkleme() {
         talepService.arizaTalebiEkleme(selectedDaire, yeniArizaTalep, sessionInfo);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.ARIZA, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("ariza_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         storeFlashObjects();
         JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
         return getBackPage();
@@ -268,8 +262,8 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
 
     public String yeniItirazTalebiEkleme() {
         talepService.itirazTalebiEkleme(selectedDaire, yeniItiraz, sessionInfo, selectedBorc);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.AIDAT_ITIRAZ, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("itiraz_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         storeFlashObjects();
         JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
         return getBackPage();
@@ -277,8 +271,8 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
 
     public String yeniSikayetTalebiEkleme() {
         talepService.sikayetTalebiEkleme(selectedDaire, yeniSikayetTalebi, sessionInfo);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.SIKAYET, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("sikayet_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         storeFlashObjects();
         JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
         return getBackPage();
@@ -286,8 +280,8 @@ public class TalepIslemMB extends AbstractMB implements Serializable {
 
     public String yeniBelgeTalebiEkleme() {
         talepService.belgeTalebiEkleme(selectedDaire, yeniBelgeTalebi, sessionInfo);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Email);
-        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"),BilgilendirmeTipi.ENUM.Notification);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Email);
+        ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.BELGE_TALEBI, selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), selectedDaire.getBlok().getAciklama() + " " + selectedDaire.getDaireNo() + message.getString("belge_talebi_gonderme_bildirim"), BilgilendirmeTipi.ENUM.Notification);
         storeFlashObjects();
         JsfUtil.addSuccessMessage(message.getString("talep_ekleme_basarili"));
         return getBackPage();

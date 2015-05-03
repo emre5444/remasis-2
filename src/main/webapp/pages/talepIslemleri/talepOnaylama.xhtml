@@ -17,6 +17,7 @@
             <div class="Container100">
                 <div class="ContainerIndent">
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
+
                     <h3>  #{lbl.talep_ortak_onaylama} </h3>
                     <p:panel>
                         <div class="Container100 Responsive">
@@ -92,24 +93,21 @@
                                 <div class="Container100 Responsive Fs20 hardblue">
                                     <i class="icon-plus-outline orange"></i> #{lbl.talep_ek_bilgileri}
                                 </div>
-                                <h:panelGrid id="showBelgeTalepEkBilgileri" columns="2" cellpadding="5"
+                                <h:panelGrid id="showBelgeTalepEkBilgileri" columns="1" cellpadding="5"
                                              rendered="#{talepIslemMB.selected.talep.talepTipi.belgeTalebiMi}">
 
                                     <p:commandButton id="yeniBelgeEkleme" value="#{lbl.label_belge_ekle}"
                                                      icon="ui-icon-search"
-                                                     rendered="#{sessionInfo.isYetkili('belge_ekleme')}"
-                                                     update="@([id$=belgeEkleme])" immediate="true"
-                                                     action="#{talepIslemMB.clearBelgeYuklemeObject}"
-                                                     oncomplete="belge_yukle.loadStep(belge_yukle.cfg.steps[0], true);PF('belgeEklePopup').show()"/>
+                                                     rendered="#{sessionInfo.isYetkili('belge_ekleme')}" immediate="true"
+                                                     action="#{talepIslemMB.navigateToBelgeEkle}" />
 
-                                    <h:panelGroup></h:panelGroup>
-
-                                    <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}"
-                                                   style="font-weight:bold; color: #0b4170"/>
-                                    <h:outputText id="belge_tipi"
-                                                  value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
-
-                                    <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge"  reflow="true"
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}"
+                                                       style="font-weight:bold; color: #0b4170"/>
+                                        <h:outputText id="belge_tipi"
+                                                      value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
+                                    </h:panelGrid>
+                                    <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge" reflow="true"
                                                  rows="20" emptyMessage="#{msg.no_record_found}">
 
                                         <p:column headerText="#{lbl.label_belge_adi}" sortBy="belge.dataName"
@@ -132,7 +130,7 @@
                                             </h:outputText>
                                         </p:column>
 
-                                        <p:column style="width:10%">
+                                        <p:column>
                                             <p:menuButton value="islemler">
                                                 <p:menuitem id="downloadLink" value="indir" icon="icon-download-outline"
                                                             update="@([id$=talepOnaylama])">
@@ -297,8 +295,6 @@
                 </div>
             </div>
         </h:form>
-
-        <ui:include src="talepBelgeEkleme.xhtml"/>
     </ui:define>
 
     <ui:define name="body">

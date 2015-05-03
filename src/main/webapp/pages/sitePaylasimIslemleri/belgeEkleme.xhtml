@@ -94,6 +94,7 @@
                                                           uploadLabel="#{lbl.yukle}" cancelLabel="#{lbl.iptal}"
                                                           multiple="true" update="belgeEkleme"
                                                           sizeLimit="10000000" fileLimit="10"/>
+                                            <h:outputText value="(*) #{msg.info_yuklemek_istediginiz_belgeleri_seciniz}" style="font-weight:bold; color:#FF4000;"/>
                                         </h:panelGrid>
 
                                     </div>
@@ -133,7 +134,7 @@
 
                                                 </p:column>
                                             </p:dataTable>
-
+                                            <h:outputText value="(*) #{msg.info_belgeyi_yukleme_islemini_sonlandir}" style="font-weight:bold; color:#FF4000;"/>
                                         </h:panelGrid>
 
                                     </div>
