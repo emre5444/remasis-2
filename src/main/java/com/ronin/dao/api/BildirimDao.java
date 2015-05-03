@@ -90,16 +90,15 @@ public class BildirimDao implements IBildirimDao {
 
         List<Kullanici> kullaniciList = new ArrayList<>();
         List list = getSessionFactory().getCurrentSession()
-                .createQuery("from KullaniciDaire kd where kd.daire.blok = ? and kd.durum = ? and kd.kullanici.durum = ?")
-                .setParameter(0, hedefKitle.getBlok())
-                .setParameter(1, Durum.getAktifObject())
-                .setParameter(2, Durum.getAktifObject()).list();
+                .createQuery("from KullaniciDaire kd where kd.daire.blok IN (:bloks) and kd.durum = :durum and kd.kullanici.durum = :kullaniciDurum")
+                .setParameterList("bloks", hedefKitle.getBlokList())
+                .setParameter("durum", Durum.getAktifObject())
+                .setParameter("kullaniciDurum", Durum.getAktifObject()).list();
         for (KullaniciDaire kullaniciDaire : (List<KullaniciDaire>) list) {
             kullaniciList.add(kullaniciDaire.getKullanici());
         }
 
         return kullaniciList;
-
     }
 
     public void updateBldirimTipiRol(List<Rol> rolList, BildirimTipi bildirimTipi, SessionInfo sessionInfo) {
