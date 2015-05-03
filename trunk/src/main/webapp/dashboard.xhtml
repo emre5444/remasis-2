@@ -55,7 +55,7 @@
                                 <div class="EmptyBox10"></div>
                                 <div class="Fs16 Fright">
 
-                                    <p:commandLink styleClass="DispInlBlock Fleft Fs16 MarRight20 icon-home hardblue"
+                                    <p:commandLink styleClass="DispInlBlock Fleft Fs16 MarRight20 icon-home redimportant"
                                                    value="#{lbl.label_daireme_git}"
                                                    action="#{anasayfaMB.dairemeGit()}">
                                     </p:commandLink>
@@ -188,8 +188,6 @@
                         </div>
                     </div>
 
-
-                    <div class="EmptyBox10"></div>
                 </div>
             </div>
             <!-- SECTION 1 -->
@@ -229,7 +227,7 @@
                                                  selection="#{anasayfaMB.selectedBelge}"
                                                  emptyMessage="#{msg.no_record_found}" rows="5" paginator="true"
                                                  pageLinks="5"
-                                                 rendered="#{anasayfaMB.belgeLoaded}" reflow="true">
+                                                 rendered="#{anasayfaMB.belgeLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                                         <p:column headerText="#{lbl.belge_talebi_konusu}"
                                                   sortBy="#{varBelge.belgeTipi.aciklama}">
@@ -316,7 +314,7 @@
                                                  value="#{anasayfaMB.iletisimBilgiList}"
                                                  rows="5" paginator="true" pageLinks="5"
                                                  editable="#{sessionInfo.adminMi}"
-                                                 rendered="#{anasayfaMB.iletisimLoaded}" reflow="true">
+                                                 rendered="#{anasayfaMB.iletisimLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                                         <p:ajax event="rowEdit"
                                                 listener="#{anasayfaMB.onIletisimBilgileriRowEdit}"/>
@@ -401,7 +399,7 @@
                                     <p:dataTable id="anasayfaDuyuruListesi" value="#{anasayfaMB.duyuruDataModel}"
                                                  var="varDuyuru" rows="5" paginator="true" pageLinks="5"
                                                  selection="#{anasayfaMB.selected}"
-                                                 emptyMessage="#{msg.no_record_found}" reflow="true">
+                                                 emptyMessage="#{msg.no_record_found}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                                         <p:column sortBy="#{varDuyuru.kullanici.adSoyad}">
                                             <f:facet name="header">
@@ -487,7 +485,7 @@
                                                  rows="5" paginator="true" pageLinks="5"
                                                  selection="#{anasayfaMB.selected}"
                                                  emptyMessage="#{msg.no_record_found}"
-                                                 rendered="#{anasayfaMB.ilanLoaded}" reflow="true">
+                                                 rendered="#{anasayfaMB.ilanLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                                         <p:column sortBy="#{varDuyuru.kullanici.adSoyad}">
                                             <f:facet name="header">
@@ -572,7 +570,7 @@
                                     <p:dataTable value="#{anasayfaMB.anketDataModel}" var="varAnket"
                                                  emptyMessage="#{msg.no_record_found}"
                                                  rows="5" paginator="true" pageLinks="5"
-                                                 rendered="#{anasayfaMB.anketLoaded}" reflow="true">
+                                                 rendered="#{anasayfaMB.anketLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
                                         <p:column sortBy="#{varAnket.tanitimZamani}">
                                             <f:facet name="header">

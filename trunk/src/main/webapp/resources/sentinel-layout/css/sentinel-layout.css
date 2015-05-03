@@ -255,6 +255,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b1900b', end
 .hardblue{color:#27AAE1;}
 .leaden{color:#72828B;}
 .green{color:#54DB26;}
+.redimportant{color:#e90c45!important;}
 
 /* bordered boxes */
 .GrayBorderedBox{ border:solid 1px #C0C5C7;}
