@@ -9,19 +9,19 @@ package com.ronin.model.kriter;
 import com.ronin.model.constant.Blok;
 
 import java.io.Serializable;
+import java.util.List;
 
-/**
- * @author msevim
- */
+
 public class HedefKitle implements Serializable {
 
-    private Blok blok;
+    private List<Blok> blokList;
 
-    public Blok getBlok() {
-        return blok;
+    public List<Blok> getBlokList() {
+        return blokList;
     }
 
-    public void setBlok(Blok blok) {
-        this.blok = blok;
+    public void setBlokList(List<Blok> blokList) {
+        this.blokList = blokList;
     }
+
 }

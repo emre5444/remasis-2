@@ -71,43 +71,69 @@
                         </div>
                     </p:panel>
 
+
                     <div class="EmptyBox10"></div>
+
 
                     <p:panel id="bilgPnl">
 
-                        <h:panelGrid columns="2" cellpadding="3">
-                            <h:outputText value="#{lbl.bilgilendirme_var}" styleClass="red"/>
-                            <p:selectBooleanCheckbox value="#{duyuruIslemleriMB.bilgilendirmeVarMi}">
-                                <p:ajax update="@([id$=bilgPnl])"/>
-                            </p:selectBooleanCheckbox>
-                        </h:panelGrid>
+                        <div class="Container100 Responsive Fs18 red">
+                            #{msg.info_hedef_kitle_pnl}
+                        </div>
 
-                        <h:panelGrid rendered="#{duyuruIslemleriMB.bilgilendirmeVarMi}">
+                        <div class="EmptyBox10"/>
+                        <div class="Container30 Responsive">
+                            <div class="ContainerIndent">
 
-                            <div class="Container100 Responsive Fs20 hardblue">
-                                Hedef kitle
-                            </div>
+                                <h:panelGrid columns="4" cellpadding="5">
+                                    <h:outputText value="#{lbl.mail_gonderilecek}" styleClass="Fs17"/>
+                                    <p:selectBooleanCheckbox value="#{duyuruIslemleriMB.mailGonderilecekMi}">
+                                            <p:ajax update="blok"/>
+                                    </p:selectBooleanCheckbox>
 
-                            <div class="EmptyBox5"/>
+                                    <h:outputText value="#{lbl.notification_var}" styleClass="Fs17"/>
+                                    <p:selectBooleanCheckbox
+                                            value="#{duyuruIslemleriMB.notificationOlusacakMi}">
+                                            <p:ajax update="blok"/>
+                                    </p:selectBooleanCheckbox>
+                                </h:panelGrid>
 
-                            <h:panelGrid columns="2" cellpadding="3">
+                                <div class="EmptyBox10"/>
 
-                                <h:outputLabel for="blok_adi" value="#{lbl.blok_ad}"
-                                               style="font-weight:bold; color: #0b4170"/>
-                                <p:selectOneMenu id="blok"
-                                                 value="#{duyuruIslemleriMB.bildirimHedefKitle.blok}"
-                                                 style="font-weight:bold; color: #0b4170">
-                                    <f:selectItem itemLabel="#{lbl.seciniz}" itemValue="#{null}"/>
+                                <p:selectCheckboxMenu id="blok" required="#{duyuruIslemleriMB.notificationOlusacakMi or duyuruIslemleriMB.mailGonderilecekMi}"
+                                                      value="#{duyuruIslemleriMB.bildirimHedefKitle.blokList}"
+                                                      filter="true" filterMatchMode="startsWith"
+                                                      panelStyle="width:250px" label="#{lbl.blok_seciniz}">
                                     <f:selectItems value="#{duyuruIslemleriMB.blokList}" var="blokList"
                                                    itemValue="#{blokList}"
                                                    itemLabel="#{blokList.aciklama}"/>
                                     <f:converter binding="#{blokConverter}"/>
-                                </p:selectOneMenu>
+                                    <p:ajax update="display"/>
+                                    <p:ajax event="toggleSelect" update="display"/>
+                                </p:selectCheckboxMenu>
 
-                            </h:panelGrid>
-                        </h:panelGrid>
+                            </div>
+                        </div>
+
+                        <div class="Container30 Responsive">
+                            <div class="ContainerIndent">
+                                <h:panelGrid>
+                                    <div class="Container100 Responsive Fs15">
+                                        <span class="hardblue"> #{msg.bilfirim_tipi}</span>  #{msg.bildirim_yapilacak_liste}
+                                    </div>
+
+                                    <p:outputPanel id="display" style="width:250px;margin-top:10px">
+                                        <p:dataList value="#{duyuruIslemleriMB.bildirimHedefKitle.blokList}"
+                                                    var="blok" emptyMessage="#{msg.blok_secilmedi}">
+                                            #{blok}
+                                        </p:dataList>
+                                    </p:outputPanel>
+                                </h:panelGrid>
+                            </div>
+                        </div>
 
                     </p:panel>
+
 
                     <div class="EmptyBox5"/>
 

@@ -130,4 +130,9 @@ public class Blok implements IAbstractEntity {
     public void setDurum(Durum durum) {
         this.durum = durum;
     }
+
+    @Override
+    public String toString() {
+        return aciklama;
+    }
 }

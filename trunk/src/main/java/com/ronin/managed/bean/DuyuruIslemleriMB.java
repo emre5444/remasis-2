@@ -3,7 +3,6 @@ package com.ronin.managed.bean;
 import com.ronin.commmon.beans.SessionInfo;
 import com.ronin.commmon.beans.util.JsfUtil;
 import com.ronin.common.model.Kullanici;
-import com.ronin.common.service.IKullaniciService;
 import com.ronin.common.service.IOrtakService;
 import com.ronin.managed.bean.lazydatamodel.DuyuruDataModel;
 import com.ronin.model.Daire;
@@ -17,7 +16,6 @@ import com.ronin.model.kriter.DuyuruSorguKriteri;
 import com.ronin.model.kriter.HedefKitle;
 import com.ronin.service.IBildirimService;
 import org.apache.log4j.Logger;
-import org.primefaces.context.RequestContext;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -62,7 +60,8 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
 
     private Daire selectedDaire;
 
-    private boolean bilgilendirmeVarMi;
+    private boolean mailGonderilecekMi;
+    private boolean notificationOlusacakMi;
 
     //combos
     private List<IAbstractEntity> blokList;
@@ -107,7 +106,7 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
         }
     }
 
-   public String duyuruKaydiYarat() {
+    public String duyuruKaydiYarat() {
         if (selectedDaire != null) {
             return yeniIlanEkle();
         } else {
@@ -115,7 +114,7 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
         }
     }
 
-   public String yeniDuyuruEkle() {
+    public String yeniDuyuruEkle() {
         yeniDuyuru.setIlanMi(EvetHayir.getHayirObject());
         yeniDuyuru.setKullanici(sessionInfo.getKullanici());
         yeniDuyuru.setTanitimZamani(new Date());
@@ -127,18 +126,23 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
     }
 
     private void bilgilendirmeIslemi() {
-        if (!bilgilendirmeVarMi) {
+        if (!(mailGonderilecekMi || notificationOlusacakMi)) {
             return;
         }
-        if (bildirimHedefKitle.getBlok() == null) {
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
+        //hedef kitle yoksa herkes bilgilendirilecek
+        if (bildirimHedefKitle.getBlokList().isEmpty()) {
+            if (mailGonderilecekMi)
+                ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
+            if (notificationOlusacakMi)
+                ortakService.bildirimIstekOlustur(sessionInfo, null, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
             return;
         }
         List<Kullanici> kullaniciList = bildirimService.getKullaniciListForBildirim(bildirimHedefKitle, sessionInfo);
         for (Kullanici k : kullaniciList) {
-            ortakService.bildirimIstekOlustur(sessionInfo, k, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
-            ortakService.bildirimIstekOlustur(sessionInfo, k, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
+            if (mailGonderilecekMi)
+                ortakService.bildirimIstekOlustur(sessionInfo, k, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Email);
+            if (notificationOlusacakMi)
+                ortakService.bildirimIstekOlustur(sessionInfo, k, BildirimTipi.ENUM.DUYURU, yeniDuyuru.getAciklama(), yeniDuyuru.getKisaAciklama(), BilgilendirmeTipi.ENUM.Notification);
         }
     }
 
@@ -244,12 +248,20 @@ public class DuyuruIslemleriMB extends AbstractMB implements Serializable {
         this.selectedDaire = selectedDaire;
     }
 
-    public boolean isBilgilendirmeVarMi() {
-        return bilgilendirmeVarMi;
+    public boolean isMailGonderilecekMi() {
+        return mailGonderilecekMi;
     }
 
-    public void setBilgilendirmeVarMi(boolean bilgilendirmeVarMi) {
-        this.bilgilendirmeVarMi = bilgilendirmeVarMi;
+    public void setMailGonderilecekMi(boolean mailGonderilecekMi) {
+        this.mailGonderilecekMi = mailGonderilecekMi;
+    }
+
+    public boolean isNotificationOlusacakMi() {
+        return notificationOlusacakMi;
+    }
+
+    public void setNotificationOlusacakMi(boolean notificationOlusacakMi) {
+        this.notificationOlusacakMi = notificationOlusacakMi;
     }
 
     public List<IAbstractEntity> getBlokList() {
