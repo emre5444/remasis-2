@@ -3,11 +3,13 @@ package com.ronin.commmon.beans;
 import com.ronin.common.model.*;
 import com.ronin.common.service.IKullaniciService;
 import com.ronin.common.service.IOrtakService;
+import com.ronin.common.service.IRolService;
 import com.ronin.model.Sirket;
 import com.ronin.utils.DateUtils;
 import org.primefaces.context.RequestContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
@@ -34,6 +36,9 @@ public class SessionInfo implements Serializable {
     @ManagedProperty("#{ortakService}")
     private IOrtakService ortakService;
 
+    @ManagedProperty("#{rolService}")
+    private IRolService rolService;
+
     private Date lastLoginDate;
 
     @PostConstruct
@@ -42,16 +47,13 @@ public class SessionInfo implements Serializable {
         user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         kullanici = kullaniciService.getKullaniciByUsername(user.getUsername());
         lastLoginTimeSetter(kullanici);
+
         rolList = getRolList();
         yetkiList = getYetkiList();
     }
 
     public List<Rol> getRolList() {
-        List<Rol> rolList = new ArrayList<Rol>();
-        Set<KullaniciRol> kullaniciRols = kullanici.getKullaniciRolList();
-        for (KullaniciRol kr : kullaniciRols) {
-            rolList.add(kr.getRol());
-        }
+        List<Rol> rolList = rolService.getRolListByKullanici(kullanici);
         return rolList;
     }
 
@@ -145,5 +147,13 @@ public class SessionInfo implements Serializable {
 
     public void setLastLoginDate(Date lastLoginDate) {
         this.lastLoginDate = lastLoginDate;
+    }
+
+    public IRolService getRolService() {
+        return rolService;
+    }
+
+    public void setRolService(IRolService rolService) {
+        this.rolService = rolService;
     }
 }

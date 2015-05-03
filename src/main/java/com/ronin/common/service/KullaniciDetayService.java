@@ -6,6 +6,7 @@ package com.ronin.common.service;
 
 import com.ronin.common.model.Kullanici;
 import com.ronin.common.model.KullaniciRol;
+import com.ronin.common.model.Rol;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.MessageSource;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.log4testng.Logger;
 
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 import java.util.*;
 
@@ -35,6 +37,9 @@ public class KullaniciDetayService implements UserDetailsService {
 
     @Autowired
     private IOrtakService ortakService;
+
+    @Autowired
+    private IRolService rolService;
 
     @Autowired
     @Qualifier("labels")
@@ -85,14 +90,14 @@ public class KullaniciDetayService implements UserDetailsService {
     }
 
     public Collection<? extends GrantedAuthority> getAuthorities(Kullanici kullanici) {
-        Set<GrantedAuthority> authList = getGrantedAuthorities(kullanici.getKullaniciRolList());
+        Set<GrantedAuthority> authList = getGrantedAuthorities(rolService.getRolListByKullanici(kullanici));
         return authList;
     }
 
-    public static Set<GrantedAuthority> getGrantedAuthorities(Set<KullaniciRol> kullaniciRolList) {
+    public static Set<GrantedAuthority> getGrantedAuthorities(List<Rol> rolList) {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (KullaniciRol kullaniciRol : kullaniciRolList) {
-            authorities.add(new SimpleGrantedAuthority(kullaniciRol.getRol().getAd()));
+        for (Rol rol : rolList) {
+            authorities.add(new SimpleGrantedAuthority(rol.getAd()));
         }
         return new HashSet<GrantedAuthority>(authorities);
     }
