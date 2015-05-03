@@ -198,179 +198,6 @@
                     <div class="Container50 Responsive">
                         <div class="ContainerIndent">
 
-                            <p:panel id="anasayfa_belgeler" style="min-height:400px;">
-                                <div class="Container100 Responsive Fs20 hardblue">
-                                    <i class="icon-doc-text orange"></i> #{lbl.label_belge_list}
-
-                                    <p:menuButton value="#{lbl.label_belge_islemleri}"
-                                                  styleClass="Fright">
-                                        <p:menuitem id="belgeEkleme"
-                                                    rendered="#{sessionInfo.isYetkili('belge_ekleme') and sessionInfo.adminMi}"
-                                                    value="#{lbl.label_belge_ekle}"
-                                                    icon="ui-icon-disk"
-                                                    action="#{anasayfaMB.navigateToBelgeEkle}"
-                                                >
-                                        </p:menuitem>
-
-                                    </p:menuButton>
-                                </div>
-
-                                <div class="EmptyBox10"></div>
-
-                                <h:panelGroup rendered="#{not anasayfaMB.belgeLoaded}">
-                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                         style="display:block;margin: 0 auto;" alt=""/>
-                                </h:panelGroup>
-
-                                <h:panelGroup rendered="#{anasayfaMB.belgeLoaded}">
-                                    <p:dataTable value="#{anasayfaMB.belgeDataModel}" var="varBelge"
-                                                 selection="#{anasayfaMB.selectedBelge}"
-                                                 emptyMessage="#{msg.no_record_found}" rows="5" paginator="true"
-                                                 pageLinks="5"
-                                                 rendered="#{anasayfaMB.belgeLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-
-                                        <p:column headerText="#{lbl.belge_talebi_konusu}"
-                                                  sortBy="#{varBelge.belgeTipi.aciklama}">
-                                            <h:outputText value="#{varBelge.belgeTipi.aciklama}"/>
-                                        </p:column>
-
-                                        <p:column headerText="#{lbl.label_belge_adi}" sortBy="#{varBelge.dataName}">
-                                            <h:outputText value="#{varBelge.dataName}"/>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.label_belge_tarihi}"
-                                                  sortBy="#{varBelge.islemTarihi}">
-                                            <h:outputText value="#{varBelge.islemTarihi}">
-                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                            </h:outputText>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.ortak_aciklama}" sortBy="#{varBelge.aciklama}">
-                                            <h:outputText value="#{varBelge.aciklama}"/>
-                                        </p:column>
-
-                                        <p:column>
-                                            <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
-
-                                                <p:menuitem id="downloadLink" value="#{lbl.indir}"
-                                                            rendered="#{sessionInfo.isYetkili('belge_indirme')}"
-                                                            icon="fa fa-thumbs-o-up" ajax="false">
-                                                    <f:setPropertyActionListener value="#{varBelge}"
-                                                                                 target="#{anasayfaMB.selectedBelge}"/>
-                                                    <p:fileDownload value="#{anasayfaMB.download}"/>
-
-                                                </p:menuitem>
-
-                                                <p:menuitem id="deleteBelge1" value="#{lbl.sil}"
-                                                            icon="fa fa-trash-o" immediate="true"
-                                                            rendered="#{sessionInfo.adminMi ? sessionInfo.isYetkili('belge_silme') : sessionInfo.isYetkili('belge_silme') and varBelge.kullanici.id == sessionInfo.kullanici.id}"
-                                                            action="#{anasayfaMB.deleteBelge}"
-                                                            update="@([id$=anasayfa_belgeler])">
-                                                    <f:setPropertyActionListener value="#{varBelge}"
-                                                                                 target="#{anasayfaMB.selectedBelge}"/>
-                                                </p:menuitem>
-
-                                            </p:menuButton>
-
-                                        </p:column>
-
-                                    </p:dataTable>
-
-                                </h:panelGroup>
-
-                            </p:panel>
-
-
-                        </div>
-                    </div>
-
-                    <div class="Container50 Responsive">
-                        <div class="ContainerIndent">
-
-                            <p:panel id="anasayfa_iletisim" style="min-height:400px;">
-                                <div class="Container100 Responsive Fs20 hardblue">
-                                    <i class="icon-phone orange"></i> #{lbl.label_iletisim_bilgileri}
-
-                                    <p:menuButton value="#{lbl.label_iletisim_islemleri}"
-                                                  styleClass="Fright">
-                                        <p:menuitem id="yeniIletisimEkleme"
-                                                    value="#{lbl.label_iletisim_bilgisi_ekleme}"
-                                                    icon="ui-icon-plus"
-                                                    rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_ekleme')}"
-                                                    update="@([id$=iletisimBilgisiEkleme])"
-                                                    oncomplete="PF('iletisimBilgisiEklePopup').show()">
-                                        </p:menuitem>
-
-                                    </p:menuButton>
-                                </div>
-
-                                <div class="EmptyBox10"></div>
-
-                                <h:panelGroup rendered="#{not anasayfaMB.iletisimLoaded}">
-                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                         style="display:block;margin: 0 auto;" alt=""/>
-                                </h:panelGroup>
-
-                                <h:panelGroup rendered="#{anasayfaMB.iletisimLoaded}">
-                                    <p:dataTable id="iletisimBilgi" var="iletisim"
-                                                 value="#{anasayfaMB.iletisimBilgiList}"
-                                                 rows="5" paginator="true" pageLinks="5"
-                                                 editable="#{sessionInfo.adminMi}"
-                                                 rendered="#{anasayfaMB.iletisimLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
-
-                                        <p:ajax event="rowEdit"
-                                                listener="#{anasayfaMB.onIletisimBilgileriRowEdit}"/>
-                                        <p:ajax event="rowEditCancel"
-                                                listener="#{anasayfaMB.onIletisimBilgileriRowCancel}"/>
-
-                                        <p:column headerText="#{lbl.label_gorevli_ismi}"
-                                                  sortBy="#{iletisim.bilgiTipi}">
-                                            <p:cellEditor>
-                                                <f:facet name="output"><h:outputText
-                                                        value="#{iletisim.bilgiTipi}"/></f:facet>
-                                                <f:facet name="input"><p:inputText id="bilgiTipi"
-                                                                                   value="#{iletisim.bilgiTipi}"/></f:facet>
-                                            </p:cellEditor>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.label_gorevli_unvan}"
-                                                  sortBy="#{iletisim.bilgiTipiAck}">
-                                            <p:cellEditor>
-                                                <f:facet name="output"><h:outputText
-                                                        value="#{iletisim.bilgiTipiAck}"/></f:facet>
-                                                <f:facet name="input"><p:inputText id="bilgiTipiAck"
-                                                                                   value="#{iletisim.bilgiTipiAck}"/></f:facet>
-                                            </p:cellEditor>
-                                        </p:column>
-                                        <p:column headerText="#{lbl.label_iletisim_bilgisi}"
-                                                  sortBy="#{iletisim.iletisimBilgisi}">
-                                            <p:cellEditor>
-                                                <f:facet name="output"><h:outputText
-                                                        value="#{iletisim.iletisimBilgisi}"/></f:facet>
-                                                <f:facet name="input"><p:inputText id="iletisim_aciklama"
-                                                                                   value="#{iletisim.iletisimBilgisi}"/></f:facet>
-                                            </p:cellEditor>
-                                        </p:column>
-                                        <p:column
-                                                rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_guncelleme')}">
-                                            <p:rowEditor/>
-                                        </p:column>
-                                    </p:dataTable>
-                                </h:panelGroup>
-
-                            </p:panel>
-
-                        </div>
-                    </div>
-
-
-                    <div class="EmptyBox10"></div>
-                </div>
-            </div>
-
-            <div class="Container100">
-                <div class="ContainerIndent">
-
-                    <div class="Container50 Responsive">
-                        <div class="ContainerIndent">
-
                             <p:panel id="anasayfa_duyurular1" style="min-height:400px;">
                                 <div class="Container100 Responsive Fs20 hardblue">
                                     <i class="icon-bell-alt orange"></i> #{lbl.daire_duyurular}
@@ -458,6 +285,173 @@
                                 </h:panelGroup>
 
                             </p:panel>
+
+                        </div>
+                    </div>
+
+                    <div class="Container50 Responsive">
+                        <div class="ContainerIndent">
+
+                            <p:panel id="anasayfa_randevu" style="min-height:400px;">
+                                <div class="EmptyBox10"></div>
+
+                                <h:panelGroup rendered="#{not anasayfaMB.randevuLoaded}">
+                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                         style="display:block;margin: 0 auto;" alt=""/>
+                                </h:panelGroup>
+
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-ticket orange"></i> #{lbl.lbl_randevu}
+
+                                    <p:selectOneMenu id="randevu_tipi" value="#{randevuMB.sorguKriteri.randevuTipi}"
+                                                     styleClass="Fright" rendered="#{anasayfaMB.randevuLoaded}">
+
+                                        <p:ajax event="valueChange" update="schedule"/>
+
+                                        <f:selectItems value="#{randevuMB.randevuTipiList}" var="randevuTipiList"
+                                                       itemValue="#{randevuTipiList}"
+                                                       itemLabel="#{randevuTipiList.aciklama}"/>
+                                        <f:converter binding="#{randevuTipiConverter}"/>
+                                    </p:selectOneMenu>
+                                </div>
+
+                                <div class="EmptyBox10"></div>
+
+                                <h:panelGrid rendered="#{anasayfaMB.randevuLoaded}">
+                                    <p:panelGrid columns="5" layout="grid">
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEvent"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_bekleyen_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventOnayli"></div>
+                                            <span class="Fs18">#{lbl.lbl_onayli_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventOthers"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_diger_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventOthersOnayli"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_diger_onayli_randevu}</span>
+                                        </p:panelGrid>
+
+                                        <p:panelGrid>
+                                            <div class="circle Fleft myEventRed"></div>
+                                            <span class="Fs18">#{lbl.lbl_onay_red_randevu}</span>
+                                        </p:panelGrid>
+
+                                    </p:panelGrid>
+                                    <p:schedule id="schedule" value="#{randevuMB.lazyEventModel}" locale="tr"
+                                                timeZone="GMT+3"
+                                                allDaySlot="false" minTime="07:00:00" maxTime="23:00:00"
+                                                slotDuration="00:30:00"
+                                                view="agendaWeek" axisFormat="H:mm" timeFormat="H:mm" tooltip="true"
+                                                resizable="false" draggable="false">
+
+                                    </p:schedule>
+                                    <div class="EmptyBox5"></div>
+                                    <p:separator styleClass="Wid100"></p:separator>
+                                    <a href="/pages/randevuIslemleri/randevu.xhtml" class="DispInlBlock Fs17 Fright MarRight10"><i class="icon-doc-1 green"> #{lbl.labal_randevu_al}</i></a>
+                                </h:panelGrid>
+                            </p:panel>
+                        </div>
+                    </div>
+
+                    <div class="EmptyBox10"></div>
+                </div>
+            </div>
+
+            <div class="Container100">
+                <div class="ContainerIndent">
+
+                    <div class="Container50 Responsive">
+                        <div class="ContainerIndent">
+
+                            <p:panel id="anasayfa_belgeler" style="min-height:400px;">
+                                <div class="Container100 Responsive Fs20 hardblue">
+                                    <i class="icon-doc-text orange"></i> #{lbl.label_belge_list}
+
+                                    <p:menuButton value="#{lbl.label_belge_islemleri}"
+                                                  styleClass="Fright">
+                                        <p:menuitem id="belgeEkleme"
+                                                    rendered="#{sessionInfo.isYetkili('belge_ekleme') and sessionInfo.adminMi}"
+                                                    value="#{lbl.label_belge_ekle}"
+                                                    icon="ui-icon-disk"
+                                                    action="#{anasayfaMB.navigateToBelgeEkle}"
+                                                >
+                                        </p:menuitem>
+
+                                    </p:menuButton>
+                                </div>
+
+                                <div class="EmptyBox10"></div>
+
+                                <h:panelGroup rendered="#{not anasayfaMB.belgeLoaded}">
+                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                         style="display:block;margin: 0 auto;" alt=""/>
+                                </h:panelGroup>
+
+                                <h:panelGroup rendered="#{anasayfaMB.belgeLoaded}">
+                                    <p:dataTable value="#{anasayfaMB.belgeDataModel}" var="varBelge"
+                                                 selection="#{anasayfaMB.selectedBelge}"
+                                                 emptyMessage="#{msg.no_record_found}" rows="5" paginator="true"
+                                                 pageLinks="5"
+                                                 rendered="#{anasayfaMB.belgeLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+
+                                        <p:column headerText="#{lbl.belge_talebi_konusu}"
+                                                  sortBy="#{varBelge.belgeTipi.aciklama}">
+                                            <h:outputText value="#{varBelge.belgeTipi.aciklama}"/>
+                                        </p:column>
+
+                                        <p:column headerText="#{lbl.label_belge_adi}" sortBy="#{varBelge.dataName}">
+                                            <h:outputText value="#{varBelge.dataName}"/>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.label_belge_tarihi}"
+                                                  sortBy="#{varBelge.islemTarihi}">
+                                            <h:outputText value="#{varBelge.islemTarihi}">
+                                                <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.ortak_aciklama}" sortBy="#{varBelge.aciklama}">
+                                            <h:outputText value="#{varBelge.aciklama}"/>
+                                        </p:column>
+
+                                        <p:column>
+                                            <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
+
+                                                <p:menuitem id="downloadLink" value="#{lbl.indir}"
+                                                            rendered="#{sessionInfo.isYetkili('belge_indirme')}"
+                                                            icon="fa fa-thumbs-o-up" ajax="false">
+                                                    <f:setPropertyActionListener value="#{varBelge}"
+                                                                                 target="#{anasayfaMB.selectedBelge}"/>
+                                                    <p:fileDownload value="#{anasayfaMB.download}"/>
+
+                                                </p:menuitem>
+
+                                                <p:menuitem id="deleteBelge1" value="#{lbl.sil}"
+                                                            icon="fa fa-trash-o" immediate="true"
+                                                            rendered="#{sessionInfo.adminMi ? sessionInfo.isYetkili('belge_silme') : sessionInfo.isYetkili('belge_silme') and varBelge.kullanici.id == sessionInfo.kullanici.id}"
+                                                            action="#{anasayfaMB.deleteBelge}"
+                                                            update="@([id$=anasayfa_belgeler])">
+                                                    <f:setPropertyActionListener value="#{varBelge}"
+                                                                                 target="#{anasayfaMB.selectedBelge}"/>
+                                                </p:menuitem>
+
+                                            </p:menuButton>
+
+                                        </p:column>
+
+                                    </p:dataTable>
+
+                                </h:panelGroup>
+
+                            </p:panel>
+
 
                         </div>
                     </div>
@@ -630,73 +624,78 @@
                     <div class="Container50 Responsive">
                         <div class="ContainerIndent">
 
-                            <p:panel id="anasayfa_randevu" style="min-height:400px;">
-                                <div class="EmptyBox10"></div>
-
-                                <h:panelGroup rendered="#{not anasayfaMB.randevuLoaded}">
-                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
-                                         style="display:block;margin: 0 auto;" alt=""/>
-                                </h:panelGroup>
-
+                            <p:panel id="anasayfa_iletisim" style="min-height:400px;">
                                 <div class="Container100 Responsive Fs20 hardblue">
-                                    <i class="icon-ticket orange"></i> #{lbl.lbl_randevu}
+                                    <i class="icon-phone orange"></i> #{lbl.label_iletisim_bilgileri}
 
-                                    <p:selectOneMenu id="randevu_tipi" value="#{randevuMB.sorguKriteri.randevuTipi}"
-                                                     styleClass="Fright" rendered="#{anasayfaMB.randevuLoaded}">
+                                    <p:menuButton value="#{lbl.label_iletisim_islemleri}"
+                                                  styleClass="Fright">
+                                        <p:menuitem id="yeniIletisimEkleme"
+                                                    value="#{lbl.label_iletisim_bilgisi_ekleme}"
+                                                    icon="ui-icon-plus"
+                                                    rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_ekleme')}"
+                                                    update="@([id$=iletisimBilgisiEkleme])"
+                                                    oncomplete="PF('iletisimBilgisiEklePopup').show()">
+                                        </p:menuitem>
 
-                                        <p:ajax event="valueChange" update="schedule"/>
-
-                                        <f:selectItems value="#{randevuMB.randevuTipiList}" var="randevuTipiList"
-                                                       itemValue="#{randevuTipiList}"
-                                                       itemLabel="#{randevuTipiList.aciklama}"/>
-                                        <f:converter binding="#{randevuTipiConverter}"/>
-                                    </p:selectOneMenu>
+                                    </p:menuButton>
                                 </div>
 
                                 <div class="EmptyBox10"></div>
 
-                                <h:panelGrid rendered="#{anasayfaMB.randevuLoaded}">
-                                    <p:panelGrid columns="5" layout="grid">
+                                <h:panelGroup rendered="#{not anasayfaMB.iletisimLoaded}">
+                                    <img src="#{request.contextPath}/images/ajax_loader_blue_48.gif"
+                                         style="display:block;margin: 0 auto;" alt=""/>
+                                </h:panelGroup>
 
-                                        <p:panelGrid>
-                                            <div class="circle Fleft myEvent"></div>
-                                            <span class="Fs18">#{lbl.lbl_onay_bekleyen_randevu}</span>
-                                        </p:panelGrid>
+                                <h:panelGroup rendered="#{anasayfaMB.iletisimLoaded}">
+                                    <p:dataTable id="iletisimBilgi" var="iletisim"
+                                                 value="#{anasayfaMB.iletisimBilgiList}"
+                                                 rows="5" paginator="true" pageLinks="5"
+                                                 editable="#{sessionInfo.adminMi}"
+                                                 rendered="#{anasayfaMB.iletisimLoaded}" reflow="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
 
-                                        <p:panelGrid>
-                                            <div class="circle Fleft myEventOnayli"></div>
-                                            <span class="Fs18">#{lbl.lbl_onayli_randevu}</span>
-                                        </p:panelGrid>
+                                        <p:ajax event="rowEdit"
+                                                listener="#{anasayfaMB.onIletisimBilgileriRowEdit}"/>
+                                        <p:ajax event="rowEditCancel"
+                                                listener="#{anasayfaMB.onIletisimBilgileriRowCancel}"/>
 
-                                        <p:panelGrid>
-                                            <div class="circle Fleft myEventOthers"></div>
-                                            <span class="Fs18">#{lbl.lbl_onay_diger_randevu}</span>
-                                        </p:panelGrid>
+                                        <p:column headerText="#{lbl.label_gorevli_ismi}"
+                                                  sortBy="#{iletisim.bilgiTipi}">
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText
+                                                        value="#{iletisim.bilgiTipi}"/></f:facet>
+                                                <f:facet name="input"><p:inputText id="bilgiTipi"
+                                                                                   value="#{iletisim.bilgiTipi}"/></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.label_gorevli_unvan}"
+                                                  sortBy="#{iletisim.bilgiTipiAck}">
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText
+                                                        value="#{iletisim.bilgiTipiAck}"/></f:facet>
+                                                <f:facet name="input"><p:inputText id="bilgiTipiAck"
+                                                                                   value="#{iletisim.bilgiTipiAck}"/></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column headerText="#{lbl.label_iletisim_bilgisi}"
+                                                  sortBy="#{iletisim.iletisimBilgisi}">
+                                            <p:cellEditor>
+                                                <f:facet name="output"><h:outputText
+                                                        value="#{iletisim.iletisimBilgisi}"/></f:facet>
+                                                <f:facet name="input"><p:inputText id="iletisim_aciklama"
+                                                                                   value="#{iletisim.iletisimBilgisi}"/></f:facet>
+                                            </p:cellEditor>
+                                        </p:column>
+                                        <p:column
+                                                rendered="#{sessionInfo.isYetkili('iletisim_bilgisi_guncelleme')}">
+                                            <p:rowEditor/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </h:panelGroup>
 
-                                        <p:panelGrid>
-                                            <div class="circle Fleft myEventOthersOnayli"></div>
-                                            <span class="Fs18">#{lbl.lbl_onay_diger_onayli_randevu}</span>
-                                        </p:panelGrid>
-
-                                        <p:panelGrid>
-                                            <div class="circle Fleft myEventRed"></div>
-                                            <span class="Fs18">#{lbl.lbl_onay_red_randevu}</span>
-                                        </p:panelGrid>
-
-                                    </p:panelGrid>
-                                    <p:schedule id="schedule" value="#{randevuMB.lazyEventModel}" locale="tr"
-                                                timeZone="GMT+3"
-                                                allDaySlot="false" minTime="07:00:00" maxTime="23:00:00"
-                                                slotDuration="00:30:00"
-                                                view="agendaWeek" axisFormat="H:mm" timeFormat="H:mm" tooltip="true"
-                                                resizable="false" draggable="false">
-
-                                    </p:schedule>
-                                    <div class="EmptyBox5"></div>
-                                    <p:separator styleClass="Wid100"></p:separator>
-                                    <a href="/pages/randevuIslemleri/randevu.xhtml" class="DispInlBlock Fs17 Fright MarRight10"><i class="icon-doc-1 green"> #{lbl.labal_randevu_al}</i></a>
-                                </h:panelGrid>
                             </p:panel>
+
                         </div>
                     </div>
 
