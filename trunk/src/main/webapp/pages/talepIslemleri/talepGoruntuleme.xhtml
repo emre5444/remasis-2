@@ -23,14 +23,16 @@
                                     <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
                                 </div>
                                 <h:panelGrid id="showDaireDetailBilgileri" columns="2" cellpadding="5">
-                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="daire_no" value="#{lbl.daire_no}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="daire_no" value="#{talepIslemMB.selected.daire.daireNo}"/>
 
                                     <h:outputLabel for="blok_adi" value="#{lbl.daire_blokAdi}"
                                                    style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="blok_adi" value="#{talepIslemMB.selected.daire.blok.aciklama}"/>
 
-                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="kat" value="#{lbl.daire_kat}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="kat" value="#{talepIslemMB.selected.daire.kat}"/>
                                 </h:panelGrid>
                             </div>
@@ -47,10 +49,12 @@
                                 </div>
                                 <h:panelGrid id="showTalepDetailTalepBilgileri" columns="2" cellpadding="5">
 
-                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="talep_no" value="#{lbl.talep_no}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_no" value="#{talepIslemMB.selected.talep.id}"/>
 
-                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}" style="font-weight:bold; color: #0b4170"/>
+                                    <h:outputLabel for="talep_tipi" value="#{lbl.talep_tipi}"
+                                                   style="font-weight:bold; color: #0b4170"/>
                                     <h:outputText id="talep_tipi"
                                                   value="#{talepIslemMB.selected.talep.talepTipi.aciklama}"/>
 
@@ -119,16 +123,17 @@
                                 <div class="Container100 Responsive Fs20 hardblue">
                                     <i class="icon-plus-outline orange"></i> #{lbl.talep_ek_bilgileri}
                                 </div>
-                                <h:panelGrid id="showBelgeTalepEkBilgileri" columns="2" cellpadding="5"
+                                <h:panelGrid id="showBelgeTalepEkBilgileri" columns="1" cellpadding="5"
                                              rendered="#{talepIslemMB.selected.talep.talepTipi.belgeTalebiMi}">
 
-                                    <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}"
-                                                   style="font-weight:bold; color: #0b4170"/>
-                                    <h:outputText id="belge_tipi"
-                                                  value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
+                                    <h:panelGrid columns="2">
+                                        <h:outputLabel for="belge_tipi" value="#{lbl.belge_talebi_konusu}"
+                                                       style="font-weight:bold; color: #0b4170"/>
+                                        <h:outputText id="belge_tipi"
+                                                      value="#{talepIslemMB.selected.talep.belgeTipi.aciklama}"/>
+                                    </h:panelGrid>
 
-
-                                    <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge"  reflow="true"
+                                    <p:dataTable value="#{talepIslemMB.belgeDataModel}" var="varBelge" reflow="true"
                                                  rows="20" emptyMessage="#{msg.no_record_found}">
 
                                         <p:column headerText="#{lbl.label_belge_adi}" sortBy="belge.dataName"
@@ -151,28 +156,28 @@
                                             </h:outputText>
                                         </p:column>
 
-                                        <p:column style="width:4%">
-                                            <h:panelGrid columns="4">
-                                                <p:commandLink
-                                                        id="downloadLink"
-                                                        >
-                                                    <p:graphicImage value="/images/download_icon.png"/>
+                                        <p:column>
+                                            <p:menuButton value="islemler">
+                                                <p:menuitem id="downloadLink" value="indir" icon="icon-download-outline"
+                                                            update="@([id$=talepOnaylama])">
+
                                                     <f:setPropertyActionListener value="#{varBelge}"
                                                                                  target="#{talepIslemMB.selectedDaireBelge}"/>
                                                     <p:fileDownload value="#{talepIslemMB.download}"/>
-                                                </p:commandLink>
-                                                <p:commandButton id="deleteBelge1" immediate="true" icon="ui-icon-trash"
-                                                                 rendered="#{sessionInfo.adminMi and talepIslemMB.selected.talep.talepOnayDurumu.talepYapildiMi.evetMi}"
-                                                                 action="#{talepIslemMB.deleteBelge}"
-                                                        >
+                                                </p:menuitem>
+                                                <p:menuitem id="deleteBelge1"
+                                                            action="#{talepIslemMB.deleteBelge}"
+                                                            value="#{lbl.ortak_sil}"
+                                                            icon="ui-icon-close"
+                                                            immediate="true"
+                                                            rendered="#{sessionInfo.adminMi and talepIslemMB.selected.talep.talepOnayDurumu.talepYapildiMi.evetMi}"
+                                                            update="@([id$=talepOnaylama])">
 
                                                     <f:setPropertyActionListener value="#{varBelge}"
                                                                                  target="#{talepIslemMB.selectedDaireBelge}"/>
-                                                    <p:confirm header="#{lbl.label_belge_silme}"
-                                                               message="#{msg.islemi_onayliyormusunuz}"/>
-                                                </p:commandButton>
-                                            </h:panelGrid>
 
+                                                </p:menuitem>
+                                            </p:menuButton>
                                         </p:column>
                                     </p:dataTable>
 

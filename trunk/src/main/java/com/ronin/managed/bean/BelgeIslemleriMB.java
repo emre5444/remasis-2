@@ -7,6 +7,8 @@ import com.ronin.managed.bean.lazydatamodel.DaireBelgeDataModel;
 import com.ronin.model.Daire;
 import com.ronin.model.DaireBelge;
 import com.ronin.model.Interfaces.IAbstractEntity;
+import com.ronin.model.Talep;
+import com.ronin.model.TalepDaire;
 import com.ronin.model.constant.Belge;
 import com.ronin.model.kriter.BelgeSorguKriteri;
 import com.ronin.service.IFileUploadService;
@@ -54,6 +56,7 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
 
     private DaireBelgeDataModel dataModel;
     private Daire selectedDaire;
+    private TalepDaire selectedDaireTalep;
 
     //combolar
     private List<IAbstractEntity> belgeTipiList;
@@ -80,6 +83,7 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
     public void getFlushObjects() {
         setBackPage((String) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("backPage"));
         selectedDaire = (Daire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaire");
+        selectedDaireTalep = (TalepDaire) FacesContext.getCurrentInstance().getExternalContext().getFlash().get("selectedDaireTalep");
     }
 
     public void getBelgeListBySorguKriteri() {
@@ -175,6 +179,8 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
         for (UploadedFile file : uploadedFileList) {
             if (selectedDaire != null) {
                 fileUploadService.daireBelgeEkle(sessionInfo, selectedDaire, file, yeniBelge);
+            } if (selectedDaireTalep != null) {
+                fileUploadService.daireTalepBelgeEkle(sessionInfo, selectedDaireTalep.getDaire(), selectedDaireTalep.getTalep(), uploadedFile , yeniBelge);
             } else {
                 fileUploadService.belgeEkle(sessionInfo, file, yeniBelge);
             }
@@ -194,6 +200,8 @@ public class BelgeIslemleriMB extends AbstractMB implements Serializable {
 
     public void storeFlashObjects() {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selectedDaire);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaire", selectedDaireTalep != null ? selectedDaireTalep.getDaire() : null);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedTalepDaireObject", selectedDaireTalep);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("sorguKriteri", sorguKriteri);
     }
 

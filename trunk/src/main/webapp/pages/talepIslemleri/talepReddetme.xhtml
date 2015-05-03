@@ -120,29 +120,28 @@
                                             </h:outputText>
                                         </p:column>
 
-                                        <p:column style="width:4%">
-                                            <h:panelGrid columns="4">
-                                                <p:commandLink ajax="false" update="@([id$=talepReddetme])"
-                                                               id="downloadLink"
-                                                        >
-                                                    <p:graphicImage value="/images/download_icon.png"/>
+                                        <p:column>
+                                            <p:menuButton value="islemler">
+                                                <p:menuitem id="downloadLink" value="indir" icon="icon-download-outline"
+                                                            update="@([id$=talepOnaylama])">
+
                                                     <f:setPropertyActionListener value="#{varBelge}"
                                                                                  target="#{talepIslemMB.selectedDaireBelge}"/>
                                                     <p:fileDownload value="#{talepIslemMB.download}"/>
-                                                </p:commandLink>
-                                                <p:commandButton id="deleteBelge1" immediate="true" icon="ui-icon-trash"
-                                                                 rendered="#{sessionInfo.adminMi and talepIslemMB.selected.talep.talepOnayDurumu.talepYapildiMi.evetMi}"
-                                                                 action="#{talepIslemMB.deleteBelge}"
-                                                                 update="@([id$=talepReddetme])"
-                                                        >
+                                                </p:menuitem>
+                                                <p:menuitem id="deleteBelge1"
+                                                            action="#{talepIslemMB.deleteBelge}"
+                                                            value="#{lbl.ortak_sil}"
+                                                            icon="ui-icon-close"
+                                                            immediate="true"
+                                                            rendered="#{sessionInfo.adminMi and talepIslemMB.selected.talep.talepOnayDurumu.talepYapildiMi.evetMi}"
+                                                            update="@([id$=talepOnaylama])">
 
                                                     <f:setPropertyActionListener value="#{varBelge}"
                                                                                  target="#{talepIslemMB.selectedDaireBelge}"/>
-                                                    <p:confirm header="#{lbl.label_belge_silme}"
-                                                               message="#{msg.islemi_onayliyormusunuz}"/>
-                                                </p:commandButton>
-                                            </h:panelGrid>
 
+                                                </p:menuitem>
+                                            </p:menuButton>
                                         </p:column>
                                     </p:dataTable>
                                 </h:panelGrid>
