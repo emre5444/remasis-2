@@ -74,6 +74,8 @@ public class RandevuMB extends AbstractMB implements Serializable {
 
             @Override
             public void loadEvents(Date start, Date end) {
+                if(randevuTipiList == null || randevuTipiList.size() == 0)
+                    return;
                 List<Randevu> randevuList = randevuService.getRandevuList(sorguKriteri.getRandevuTipi() != null ? sorguKriteri.getRandevuTipi() : (RandevuTipi) randevuTipiList.get(0), start, end, sessionInfo);
                 for (Randevu randevu : randevuList) {
                     DefaultScheduleEvent defaultScheduleEvent = new DefaultScheduleEvent(randevu.getAciklama(), randevu.getBaslangicZamani(), randevu.getBitisZamani(), randevu);

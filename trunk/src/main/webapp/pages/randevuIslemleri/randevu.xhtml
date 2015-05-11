@@ -73,7 +73,7 @@
                                 <h:panelGrid columns="2" cellpadding="5">
                                     <h:outputLabel for="randevu_tipi" value="#{lbl.label_randevu_tipi}"
                                                    styleClass="green"/>
-                                    <p:selectOneMenu id="randevu_tipi" value="#{randevuMB.sorguKriteri.randevuTipi}">
+                                    <p:selectOneMenu id="randevu_tipi" value="#{randevuMB.sorguKriteri.randevuTipi}" required="true" label="#{lbl.label_randevu_tipi}">
 
                                         <p:ajax event="valueChange" update="schedule,eventDetails"
                                                 listener="#{randevuMB.resetEventDetails()}"/>

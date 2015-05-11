@@ -55,6 +55,13 @@ public class Belge {
     @ManyToOne
     private Sirket sirket;
 
+    public String getKisaBelgeAdi(){
+        if (aciklama != null && aciklama.length() > 50) {
+            return aciklama.substring(0, 50) + "...";
+        }
+        return aciklama;
+    }
+
 
     public Long getId() {
         return id;
