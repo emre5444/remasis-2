@@ -22,12 +22,34 @@
             // Load the Visualization API and the piechart package.
             google.load('visualization', '1.0', {'packages':['corechart']});
         </script>
+        <!--Start of Zopim Live Chat Script-->
+        <script type="text/javascript">
+            window.$zopim||(function(d,s){var z=$zopim=function(c){z._.push(c)},$=z.s=
+                    d.createElement(s),e=d.getElementsByTagName(s)[0];z.set=function(o){z.set.
+                    _.push(o)};z._=[];z.set._=[];$.async=!0;$.setAttribute("charset","utf-8");
+                $.src="//v2.zopim.com/?30XEQl241Ty3eT1an7uCnOWb7b1DwrNU";z.t=+new Date;$.
+                        type="text/javascript";e.parentNode.insertBefore($,e)})(document,"script");
+
+            $zopim(function() {
+                $zopim.livechat.setName('#{sessionInfo.kullanici.getAdSoyad()}');
+                $zopim.livechat.setEmail('#{sessionInfo.kullanici.email}');
+            });
+        </script>
+        <!--End of Zopim Live Chat Script-->
         <ui:insert name="head" />
     </h:head>
 
     <h:body>
 
-        <p:ajaxStatus onstart="PF('statusDialog').show();" onsuccess="PF('statusDialog').hide();"/>
+        <p:ajaxStatus style="width:32px; height:32px; position:fixed; left:12px; bottom:10px">
+            <f:facet name="start">
+                <p:graphicImage name="images/preloader.gif" library="sentinel-layout"/>
+            </f:facet>
+
+            <f:facet name="complete">
+                <h:outputText value="" />
+            </f:facet>
+        </p:ajaxStatus>
 
         <p:dialog modal="true" appendTo="@(body)" widgetVar="statusDialog"
                   header="#{lbl.mesaj_lutfen_bekleyiniz}"
