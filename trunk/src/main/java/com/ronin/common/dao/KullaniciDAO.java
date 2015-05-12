@@ -130,8 +130,10 @@ public class KullaniciDAO implements IKullaniciDAO {
 
     public List<KullaniciDaire> getDaireListByKullanici(Kullanici kullanici){
         List list = getSessionFactory().getCurrentSession()
-                .createQuery("from KullaniciDaire kd where kd.kullanici=?")
-                .setParameter(0, kullanici).list();
+                .createQuery("from KullaniciDaire kd where kd.kullanici=? and kd.durum.id = ?")
+                .setParameter(0, kullanici)
+                .setParameter(1, Durum.getAktifObject().getId())
+                .list();
         if(list.size()>0){
             return (List<KullaniciDaire>) list;
         }
