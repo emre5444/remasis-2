@@ -23,9 +23,9 @@
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
                     <p:panel>
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-building-filled orange"></i> #{lbl.blok_islemleri}
                                 </div>
                                 <h:panelGrid columns="2" cellpadding="5">
@@ -46,9 +46,9 @@
                     <div class="EmptyBox10"></div>
 
                     <p:panel rendered="#{not empty blokMB.dataModel.wrappedData}">
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
                                 </div>
                                 <p:dataTable value="#{blokMB.dataModel}" var="varBlok" paginatorPosition="bottom"
@@ -60,8 +60,8 @@
                                         <h:outputText value="#{varBlok.aciklama}"/>
                                     </p:column>
 
-                                    <p:column style="width:10%">
-                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
+                                    <p:column>
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="Fright GreenButton">
                                             <p:menuitem id="viewButtonBlokGuncelle" value="#{lbl.blok_guncelleme}"
                                                         icon="ui-icon-wrench"
                                                         rendered="#{sessionInfo.isYetkili('blok_guncelleme')}"

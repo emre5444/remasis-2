@@ -18,10 +18,10 @@
 
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                    <div class="Container100 Responsive">
+                    <div class="Container100">
                         <div class="ContainerIndent">
                             <p:panel>
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-briefcase orange"></i> #{lbl.label_ilan_sorgulama}
                                 </div>
 
@@ -97,7 +97,7 @@
                             <div class="EmptyBox10"/>
 
                             <p:panel rendered="#{not empty ilanMB.dataModel.wrappedData}">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-list-alt orange"></i> #{lbl.sorgu_sonucu}
                                 </div>
 
@@ -148,7 +148,7 @@
 
                                     <p:column>
 
-                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="Fright OrangeButton">
 
                                             <p:menuitem id="deleteButton1" value="#{lbl.sil}"
                                                         icon="fa fa-trash-o" immediate="true"
@@ -162,7 +162,7 @@
 
                                     <p:rowExpansion>
                                         <div class="EmptyBox5"></div>
-                                        <div class="Container60 Responsive">
+                                        <div class="Container60">
                                             <div class="ContainerIndent">
                                                 <div class="EmptyBox5"></div>
                                                 <p:panelGrid id="showIlanDetail" columns="2">

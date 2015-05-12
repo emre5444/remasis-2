@@ -20,9 +20,9 @@
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
                     <p:panel>
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-lock-open-1 orange"></i> #{lbl.rol_islemleri}
                                 </div>
                                 <div class="EmptyBox10"></div>
@@ -47,7 +47,7 @@
                     <div class="EmptyBox10"></div>
 
                     <p:panel rendered="#{not empty rolController.dataModel.wrappedData}">
-                        <div class="Container100 Responsive Fs20 hardblue">
+                        <div class="Container100 Fs20 hardblue">
                             <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
                         </div>
                         <div class="EmptyBox5"></div>
@@ -68,7 +68,7 @@
 
                             <p:column>
 
-                                <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                                <p:menuButton value="#{lbl.label_islemler}" styleClass="Fright OrangeButton">
                                     <p:menuitem id="viewButtonYetkiGoruntule" value="#{lbl.yetki_goruntule}"
                                                 icon="ui-icon-search"
                                                 action="#{rolController.rolGoruntuleme(varRol)}">

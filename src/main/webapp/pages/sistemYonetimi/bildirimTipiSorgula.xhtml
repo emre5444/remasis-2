@@ -22,11 +22,11 @@
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
                     <p:panel>
-                        <div class="Container100 Responsive Fs20 hardblue">
+                        <div class="Container100 Fs20 hardblue">
                             <i class="icon-mail orange"></i> #{lbl.menu_bildirim_tipi_islemleri}
                         </div>
 
-                        <div class="fontRegular  Container100 Responsive">
+                        <div class="fontRegular  Container100">
                             <div class="ContainerIndent">
                                 <h:panelGrid columns="2" cellpadding="5">
                                     <h:outputLabel for="bildirimTipi" value="#{lbl.label_bildirim_tipi}"
@@ -52,9 +52,9 @@
                     <div style="height:10px"></div>
 
                     <p:panel rendered="#{not empty bildirimMB.bildirimTipiDataModel.wrappedData}">
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
                                 </div>
                                 <p:dataTable value="#{bildirimMB.bildirimTipiDataModel}" var="varBildirimTipi"
@@ -77,9 +77,9 @@
 
                                     <p:rowExpansion>
                                         <p:panel id="rich_hedefKitle">
-                                            <div class="Container100 Responsive">
+                                            <div class="Container100">
                                                 <div class="ContainerIndent">
-                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                    <div class="Container100 Fs20 hardblue">
                                                         <i class="icon-lock-1 orange"></i> #{lbl.label_hedef_kitle}
                                                     </div>
                                                     <div class="EmptyBox5"></div>
@@ -102,9 +102,9 @@
                                         </p:panel>
                                     </p:rowExpansion>
 
-                                    <p:column style="width: 10%;">
+                                    <p:column>
 
-                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="Fright OrangeButton">
 
                                             <p:menuitem id="viewButtonBildirimTipiRol"
                                                         value="#{lbl.label_hedef_kitle_belirle}"
