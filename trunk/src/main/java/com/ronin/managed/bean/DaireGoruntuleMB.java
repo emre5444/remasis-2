@@ -221,6 +221,7 @@ public class DaireGoruntuleMB extends AbstractMB implements Serializable {
 
     public String kullaniciGuncelleme(Kullanici selectedKullanici) {
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedKullaniciObject", selectedKullanici);
+        FacesContext.getCurrentInstance().getExternalContext().getFlash().put("selectedDaireObject", selected);
         FacesContext.getCurrentInstance().getExternalContext().getFlash().put("backPage", "/pages/rezidansIslemleri/daireGoruntuleme.xhtml");
         return "/pages/sistemYonetimi/kullaniciGuncelleme.xhtml";
     }

@@ -21,7 +21,7 @@
 
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                    <div class="Container100 Responsive">
+                    <div class="Container100">
                         <div class="ContainerIndent">
                             <p:panel>
                                 <i class="icon-list-alt orange"></i> <h:outputText value=" #{lbl.label_anket_sorgulama}"
@@ -68,7 +68,7 @@
 
                     <div class="EmptyBox10"></div>
 
-                    <div class="Container100 Responsive">
+                    <div class="Container100">
                         <div class="ContainerIndent">
                             <p:panel id="sorguSonucu" rendered="#{not empty anketMB.dataModel.wrappedData}">
                                 <i class="icon-list-alt orange"></i> <h:outputText value=" #{lbl.sorgu_sonucu}"
@@ -121,7 +121,7 @@
 
                                     <p:column>
 
-                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="Fright OrangeButton">
 
                                             <p:menuitem value="#{lbl.katil}"
                                                         action="#{anketMB.goruntule(varAnket)}"

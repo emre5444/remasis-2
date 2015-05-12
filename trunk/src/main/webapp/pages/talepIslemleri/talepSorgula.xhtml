@@ -23,11 +23,11 @@
 <div class="Container100">
 <div class="ContainerIndent">
 <p:panel id="sorguPannel">
-    <div class="Container100 Responsive">
+    <div class="Container100">
         <div class="ContainerIndent">
             <div class="Container100">
                 <div class="ContainerIndent">
-                    <div class="Container100 Responsive Fs20 hardblue">
+                    <div class="Container100 Fs20 hardblue">
                         <i class="icon-cubes orange"></i>  <h:outputText value="#{lbl.talep_sorgulama}"
                                                                           styleClass="FontBold Fs18 hardblue"></h:outputText>
 
@@ -116,9 +116,9 @@
 <div class="EmptyBox10"></div>
 
 <p:panel id="sorguSonucuPanel">
-    <div class="Container100 Responsive">
+    <div class="Container100">
         <div class="ContainerIndent">
-            <div class="Container100 Responsive Fs20 hardblue">
+            <div class="Container100 Fs20 hardblue">
                 <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
             </div>
 
@@ -164,9 +164,9 @@
                     <h:outputText id="daire_no1" value="#{varTalep.daire.daireNo}"/>
                 </p:column>
 
-                <p:column style="width:10%">
+                <p:column>
 
-                    <p:menuButton value="#{lbl.label_islemler}" styleClass="GreenButton">
+                    <p:menuButton value="#{lbl.label_islemler}" styleClass="Fright GreenButton">
                         <p:menuitem id="viewButtonTalepGoruntule" value="#{lbl.label_talep_detay_goruntule}"
                                     icon="ui-icon-search"
                                     action="#{talepMB.talepGoruntuleme(varTalep)}">
@@ -193,9 +193,9 @@
                 <p:rowExpansion>
 
                     <p:panel>
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-th-1 orange"></i> #{lbl.talep_bilgileri}
                                 </div>
                                 <h:panelGrid id="showTalepDetailTalepBilgileri" columns="2" cellpadding="5">
@@ -232,9 +232,9 @@
                     <div class="EmptyBox10"></div>
 
                     <p:panel>
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
                                 </div>
                                 <h:panelGrid id="showDaireDetailBilgileri" columns="2" cellpadding="5">
@@ -255,9 +255,9 @@
                     <div class="EmptyBox10"></div>
 
                     <p:panel>
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-ok-1 orange"></i> #{lbl.talep_onay_red_bilgileri}
                                 </div>
                                 <h:panelGrid id="showTalepORDetailTalepBilgileri" columns="2" cellpadding="5">

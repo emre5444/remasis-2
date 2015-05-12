@@ -18,10 +18,10 @@
 
                     <p:messages id="messages" showDetail="false" autoUpdate="true" closable="true"/>
 
-                    <div class="Container100 Responsive">
+                    <div class="Container100">
                         <div class="ContainerIndent">
                             <p:panel>
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-briefcase orange"></i> #{lbl.label_belge_sorgulama}
                                 </div>
 
@@ -107,7 +107,7 @@
                             <div class="EmptyBox10"/>
 
                             <p:panel rendered="#{not empty belgeMB.dataModel.wrappedData}">
-                                <div class="Container100 Responsive Fs20 hardblue">
+                                <div class="Container100 Fs20 hardblue">
                                     <i class="icon-list-alt orange"></i> #{lbl.sorgu_sonucu}
                                 </div>
                                 <div class="EmptyBox5"/>
@@ -142,7 +142,7 @@
                                         <h:outputText value="#{varDaireBelge.belge.aciklama}"/>
                                     </p:column>
                                     <p:column>
-                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                                        <p:menuButton value="#{lbl.label_islemler}" styleClass="Fright OrangeButton">
 
                                             <p:menuitem id="downloadLink" value="#{lbl.indir}"
                                                         icon="fa fa-thumbs-o-up" ajax="false">

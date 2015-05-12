@@ -21,12 +21,12 @@
             <div class="Container100">
                 <div class="ContainerIndent">
                     <p:panel>
-                        <div class="Container100 Responsive">
+                        <div class="Container100">
                             <div class="ContainerIndent">
 
                                 <div class="Container100">
                                     <div class="ContainerIndent">
-                                        <div class="Container100 Responsive Fs20 hardblue">
+                                        <div class="Container100 Fs20 hardblue">
                                             <i class="icon-user-1 orange"></i> <h:outputText
                                                 value="#{lbl.kullanici_islemleri}"
                                                 styleClass="FontBold Fs18 hardblue"></h:outputText>
@@ -133,10 +133,10 @@
             </div>
 
             <div class="EmptyBox10"></div>
-            <div class="Container100 Responsive">
+            <div class="Container100">
                 <div class="ContainerIndent">
                     <p:panel rendered="#{not empty kullaniciController.dataModel.wrappedData}">
-                        <div class="Container100 Responsive Fs20 hardblue">
+                        <div class="Container100 Fs20 hardblue">
                             <i class="icon-list orange"></i> #{lbl.sorgu_sonucu}
                         </div>
                         <div class="EmptyBox5"></div>
@@ -168,7 +168,7 @@
 
                             <p:rowExpansion>
                                 <p:panel styleClass="softGrayBack">
-                                    <div class="Container100 Responsive Fs20 hardblue">
+                                    <div class="Container100 Fs20 hardblue">
                                         <i class="icon-home orange"></i> #{lbl.daire_bilgileri}
                                     </div>
                                     <div class="EmptyBox5"></div>
@@ -195,8 +195,8 @@
                                 </p:panel>
                             </p:rowExpansion>
 
-                            <p:column style="width:10%">
-                                <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton">
+                            <p:column>
+                                <p:menuButton value="#{lbl.label_islemler}" styleClass="OrangeButton Fright">
                                     <p:menuitem id="viewButtonKullaniciGoruntule" value="#{lbl.label_goruntule}"
                                                 icon="ui-icon-search"
                                                 rendered="#{sessionInfo.isYetkili('kullanici_goruntuleme')}"

@@ -109,9 +109,9 @@
                                 <p:separator styleClass="Wid100"></p:separator>
 
 
-                                <div class="Container100 Responsive">
+                                <div class="Container100">
                                     <div class="ContainerIndent">
-                                        <div class="Container100 Responsive Fs20 hardblue">
+                                        <div class="Container100 Fs20 hardblue">
                                             <i class="icon-home-1 orange"></i> #{lbl.daire_bilgileri}
                                         </div>
                                         <h:panelGrid columns="2" width="100%">
@@ -207,9 +207,9 @@
                                 <p:tab id="daire_detay" title="#{lbl.daire_detaylari}">
 
                                     <p:panel>
-                                        <div class="Container100 Responsive">
+                                        <div class="Container100">
                                             <div class="ContainerIndent">
-                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                <div class="Container100 Fs20 hardblue">
                                                     <i class="icon-home-1 orange"></i> #{lbl.daire_bilgileri}
                                                 </div>
                                                 <h:panelGrid columns="4" width="100%">
@@ -256,9 +256,9 @@
                                         <p:tab id="temsilci_bilgileri" title="#{lbl.label_tab_temsilci_bilgileri}">
 
                                             <p:panel id="pnl_sakin_list">
-                                                <div class="Container100 Responsive">
+                                                <div class="Container100">
                                                     <div class="ContainerIndent">
-                                                        <div class="Container100 Responsive Fs20 hardblue">
+                                                        <div class="Container100 Fs20 hardblue">
                                                             <i class="icon-users-2 orange"></i> #{lbl.label_aile_temsilcisi}
                                                         </div>
                                                         <p:dataTable value="#{daireGoruntuleMB.kullaniciDaireDataModel}"
@@ -286,9 +286,9 @@
                                                                         value="#{varKullanici.kullaniciTipi.aciklama}"/>
                                                             </p:column>
 
-                                                            <p:column style="width:10%">
+                                                            <p:column>
                                                                 <p:menuButton value="#{lbl.label_islemler}"
-                                                                              styleClass="OrangeButton">
+                                                                              styleClass="Fright OrangeButton">
 
                                                                     <p:menuitem id="viewButtonKullaniciGuncelle"
                                                                                 value="#{lbl.ortak_guncelle}"
@@ -304,7 +304,7 @@
                                                             <p:rowExpansion>
                                                                 <p:panel id="rich_daireKullanici"
                                                                          styleClass="softGrayBack">
-                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <div class="Container100 Fs20 hardblue">
                                                                         <i class="icon-user-outline orange"></i> #{lbl.sakin_listesi}
                                                                     </div>
                                                                     <h:panelGrid id="showDuyuruDetailForKullanici"
@@ -379,9 +379,9 @@
                                         <p:tab id="daire_sakin_bilgileri" title="#{lbl.label_tab_daire_sakinleri}">
 
                                             <p:panel id="pnl_daire_sakin_list">
-                                                <div class="Container100 Responsive">
+                                                <div class="Container100">
                                                     <div class="ContainerIndent">
-                                                        <div class="Container100 Responsive Fs20 hardblue">
+                                                        <div class="Container100 Fs20 hardblue">
                                                             <i class="icon-users-2 orange"></i> #{lbl.label_dairede_yasayanlar}
 
                                                             <p:menuButton value="#{lbl.label_daire_sakin_islemleri}"
@@ -433,7 +433,7 @@
                                                             <p:rowExpansion>
                                                                 <p:panel id="rich_daireKullanici"
                                                                          styleClass="softGrayBack">
-                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <div class="Container100 Fs20 hardblue">
                                                                         <i class="icon-user-outline orange"></i> #{lbl.sakin_listesi}
                                                                     </div>
                                                                     <h:panelGrid id="showDuyuruDetailForKullanici"
@@ -514,7 +514,7 @@
 
                                                             <p:column>
                                                                 <p:menuButton value="#{lbl.label_islemler}"
-                                                                              styleClass="OrangeButton">
+                                                                              styleClass="Fright OrangeButton">
 
                                                                     <p:menuitem id="daire_sakin_guncelle"
                                                                                 value="#{lbl.ortak_guncelle}"
@@ -543,9 +543,9 @@
                                         <p:tab id="arac_bilgileri" title="#{lbl.label_tab_araclar}">
 
                                             <p:panel id="pnl_daire_arac_list">
-                                                <div class="Container100 Responsive">
+                                                <div class="Container100">
                                                     <div class="ContainerIndent">
-                                                        <div class="Container100 Responsive Fs20 hardblue">
+                                                        <div class="Container100 Fs20 hardblue">
                                                             <i class="icon-cab orange"></i> #{lbl.label_daireye_ait_aras_listesi}
 
                                                             <p:menuButton value="#{lbl.label_arac_islemleri}"
@@ -583,7 +583,7 @@
 
                                                             <p:column>
                                                                 <p:menuButton value="#{lbl.label_islemler}"
-                                                                              styleClass="OrangeButton">
+                                                                              styleClass="Fright OrangeButton">
 
                                                                     <p:menuitem id="daire_arac_guncelle"
                                                                                 value="#{lbl.ortak_guncelle}"
@@ -612,9 +612,9 @@
                                         <p:tab id="yardimci_bilgileri" title="#{lbl.label_tab_daire_yardimci}">
 
                                             <p:panel id="pnl_daire_yardimci_list">
-                                                <div class="Container100 Responsive">
+                                                <div class="Container100">
                                                     <div class="ContainerIndent">
-                                                        <div class="Container100 Responsive Fs20 hardblue">
+                                                        <div class="Container100 Fs20 hardblue">
                                                             <i class="icon-stopwatch-1 orange"></i> #{lbl.label_daire_yardimci_listesi}
 
                                                             <p:menuButton value="#{lbl.label_yardimci_islemleri}"
@@ -671,7 +671,7 @@
 
                                                             <p:column>
                                                                 <p:menuButton value="#{lbl.label_islemler}"
-                                                                              styleClass="OrangeButton">
+                                                                              styleClass="Fright OrangeButton">
 
                                                                     <p:menuitem id="daire_yardimci_guncelle"
                                                                                 value="#{lbl.ortak_guncelle}"
@@ -700,9 +700,9 @@
                                         <p:tab id="hayvan_bilgileri" title="#{lbl.label_tab_evcil_hayvan}">
 
                                             <p:panel id="pnl_daire_hayvan_list">
-                                                <div class="Container100 Responsive">
+                                                <div class="Container100">
                                                     <div class="ContainerIndent">
-                                                        <div class="Container100 Responsive Fs20 hardblue">
+                                                        <div class="Container100 Fs20 hardblue">
                                                             <i class="icon-github-1 orange"></i> #{lbl.label_daire_hayvan_listesi}
 
                                                             <p:menuButton value="#{lbl.label_hayvan_islemleri}"
@@ -732,7 +732,7 @@
 
                                                             <p:column>
                                                                 <p:menuButton value="#{lbl.label_islemler}"
-                                                                              styleClass="OrangeButton">
+                                                                              styleClass="Fright OrangeButton">
 
                                                                     <p:menuitem id="daire_arac_guncelle"
                                                                                 value="#{lbl.ortak_guncelle}"
@@ -765,10 +765,10 @@
                                     <p:panel id="pnl_aidat_listesi">
 
 
-                                        <div class="Container100 Responsive">
+                                        <div class="Container100">
                                             <div class="ContainerIndent">
 
-                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                <div class="Container100 Fs20 hardblue">
                                                     <i class="icon-try orange"></i> <h:outputText
                                                         value="#{lbl.aidat_listesi}"
                                                         styleClass="FontBold Fs18 hardblue"></h:outputText>
@@ -867,7 +867,7 @@
 
                                                     <p:column>
                                                         <p:menuButton value="#{lbl.label_islemler}"
-                                                                      styleClass="GreenButton">
+                                                                      styleClass="Fright GreenButton">
                                                             <p:menuitem id="aidatDetayGoruntule"
                                                                         value="#{lbl.label_aidat_detayi}"
                                                                         icon="ui-icon-search"
@@ -886,9 +886,9 @@
 
                                                     <p:rowExpansion>
                                                         <p:panel>
-                                                            <div class="Container100 Responsive">
+                                                            <div class="Container100">
                                                                 <div class="ContainerIndent">
-                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <div class="Container100 Fs20 hardblue">
                                                                         <i class="icon-try orange"></i> #{lbl.daire_aidat_detay_bilgileri}
                                                                     </div>
                                                                     <h:panelGrid columns="2" cellpadding="5">
@@ -959,9 +959,9 @@
 
                                                         <p:panel
                                                                 rendered="#{varBorc.borc.islemTipi.isBorcDekontuMu()}">
-                                                            <div class="Container100 Responsive">
+                                                            <div class="Container100">
                                                                 <div class="ContainerIndent">
-                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <div class="Container100 Fs20 hardblue">
                                                                         <i class="icon-list orange"></i> #{lbl.daire_aidat_detay_listesi}
                                                                     </div>
                                                                     <h:panelGrid id="aidatDetayDetailPanel" columns="1"
@@ -1015,9 +1015,9 @@
 
                                 <p:tab id="daire_belgeler" title="#{lbl.daire_belgeler}">
                                     <p:panel id="pnl_belgeler">
-                                        <div class="Container100 Responsive">
+                                        <div class="Container100">
                                             <div class="ContainerIndent">
-                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                <div class="Container100 Fs20 hardblue">
                                                     <i class="icon-doc orange"></i> #{lbl.label_belge_list}
 
                                                     <p:menuButton value="#{lbl.label_belge_islemleri}"
@@ -1077,9 +1077,9 @@
                                                               style="width:20%">
                                                         <h:outputText value="#{varDaireBelge.belge.aciklama}"/>
                                                     </p:column>
-                                                    <p:column style="width:10%">
+                                                    <p:column>
                                                         <p:menuButton value="#{lbl.label_islemler}"
-                                                                      styleClass="GreenButton">
+                                                                      styleClass="Fright GreenButton">
                                                             <p:menuitem id="downloadLink" value="#{lbl.indir}"
                                                                         rendered="#{sessionInfo.isYetkili('belge_indirme')}"
                                                                         icon="fa fa-thumbs-o-up" ajax="false">
@@ -1105,9 +1105,9 @@
 
                                 <p:tab id="daire_duyurular" title="#{lbl.daire_ilanlar}">
                                     <p:panel id="pnl_ilanlar">
-                                        <div class="Container100 Responsive">
+                                        <div class="Container100">
                                             <div class="ContainerIndent">
-                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                <div class="Container100 Fs20 hardblue">
                                                     <i class="icon-th-list-2 orange"></i> #{lbl.ilan_listesi}
 
                                                     <p:menuButton value="#{lbl.label_ilan_sorgulama}"
@@ -1152,9 +1152,9 @@
                                                         <h:outputText value="#{varDuyuru.tanitimZamani}"/>
                                                     </p:column>
 
-                                                    <p:column style="width:10%">
+                                                    <p:column>
                                                         <p:menuButton value="#{lbl.label_islemler}"
-                                                                      styleClass="GreenButton">
+                                                                      styleClass="Fright GreenButton">
                                                             <p:menuitem id="ilanGoruntuleme"
                                                                         value="#{lbl.ilan_goruntuleme}"
                                                                         rendered="#{sessionInfo.isYetkili('ilan_goruntuleme')}"
@@ -1180,9 +1180,9 @@
                                 <p:tab id="daire_talepler" title="#{lbl.talepler}">
 
                                     <p:panel id="sorguSonucuPanel">
-                                        <div class="Container100 Responsive">
+                                        <div class="Container100">
                                             <div class="ContainerIndent">
-                                                <div class="Container100 Responsive Fs20 hardblue">
+                                                <div class="Container100 Fs20 hardblue">
                                                     <i class="icon-list orange"></i> #{lbl.talep_daire_listesi}
                                                 </div>
                                                 <p:dataTable id="talepSorguSonucu"
@@ -1235,9 +1235,9 @@
                                                     <p:rowExpansion>
 
                                                         <p:panel>
-                                                            <div class="Container100 Responsive">
+                                                            <div class="Container100">
                                                                 <div class="ContainerIndent">
-                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <div class="Container100 Fs20 hardblue">
                                                                         <i class="icon-th-1 orange"></i> #{lbl.talep_bilgileri}
                                                                     </div>
                                                                     <h:panelGrid id="showTalepDetailTalepBilgileri"
@@ -1288,9 +1288,9 @@
                                                         <div class="EmptyBox10"></div>
 
                                                         <p:panel>
-                                                            <div class="Container100 Responsive">
+                                                            <div class="Container100">
                                                                 <div class="ContainerIndent">
-                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <div class="Container100 Fs20 hardblue">
                                                                         <i class="icon-home-outline orange"></i> #{lbl.daire_bilgileri}
                                                                     </div>
                                                                     <h:panelGrid id="showDaireDetailBilgileri"
@@ -1320,9 +1320,9 @@
                                                         <div class="EmptyBox10"></div>
 
                                                         <p:panel>
-                                                            <div class="Container100 Responsive">
+                                                            <div class="Container100">
                                                                 <div class="ContainerIndent">
-                                                                    <div class="Container100 Responsive Fs20 hardblue">
+                                                                    <div class="Container100 Fs20 hardblue">
                                                                         <i class="icon-ok-1 orange"></i> #{lbl.talep_onay_red_bilgileri}
                                                                     </div>
                                                                     <h:panelGrid id="showTalepORDetailTalepBilgileri"
@@ -1363,7 +1363,7 @@
 
                                 <p:tab id="daire_randevu" title="#{lbl.lbl_randevu}">
 
-                                    <div class="Container100 Responsive Fs20 hardblue">
+                                    <div class="Container100 Fs20 hardblue">
                                         <a href="/pages/randevuIslemleri/randevu.xhtml"
                                            class="DispInlBlock Fs17 Fright MarRight10"><i
                                                 class="icon-doc-1 green"> #{lbl.labal_randevu_al}</i></a>
