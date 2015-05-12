@@ -129,55 +129,57 @@ public class FinansalIslemlerDao implements IFinansalIslemlerDao {
             List<KullaniciDaire> kullaniciDaireList = getiKullaniciDAO().getDaireListByKullanici(sessionInfo.getKullanici());
             Double borc = 0.0;
             Double alacak = 0.0;
-            for (KullaniciDaire kd : kullaniciDaireList) {
-                String sql = "";
-                List list = null;
-                if (dateWitoutTime != null) {
-                    sql = "from DaireBorc db " +
-                            "join fetch db.daire d " +
-                            "join fetch db.borc bb " +
-                            "join fetch d.blok b " +
-                            "where d.id = ? " +
-                            "and b.sirket.id = ? " +
-                            "and bb.islemTarihi >= ? " +
-                            "and bb.durum = ?";
+            if (kullaniciDaireList != null) {
+                for (KullaniciDaire kd : kullaniciDaireList) {
+                    String sql = "";
+                    List list = null;
+                    if (dateWitoutTime != null) {
+                        sql = "from DaireBorc db " +
+                                "join fetch db.daire d " +
+                                "join fetch db.borc bb " +
+                                "join fetch d.blok b " +
+                                "where d.id = ? " +
+                                "and b.sirket.id = ? " +
+                                "and bb.islemTarihi >= ? " +
+                                "and bb.durum = ?";
 
-                    list = getSessionFactory().getCurrentSession()
-                            .createQuery(sql)
-                            .setParameter(0, kd.getDaire().getId())
-                            .setParameter(1, sessionInfo.getSirket().getId())
-                            .setParameter(2, dateWitoutTime)
-                            .setParameter(3,Durum.getAktifObject())
-                            .list();
-                } else {
-                    sql = "from DaireBorc db " +
-                            "join fetch db.daire d " +
-                            "join fetch d.blok b " +
-                            "join fetch db.borc bb " +
-                            "where d.id = ? " +
-                            "and b.sirket.id = ? " +
-                            "and bb.durum = ?";
+                        list = getSessionFactory().getCurrentSession()
+                                .createQuery(sql)
+                                .setParameter(0, kd.getDaire().getId())
+                                .setParameter(1, sessionInfo.getSirket().getId())
+                                .setParameter(2, dateWitoutTime)
+                                .setParameter(3, Durum.getAktifObject())
+                                .list();
+                    } else {
+                        sql = "from DaireBorc db " +
+                                "join fetch db.daire d " +
+                                "join fetch d.blok b " +
+                                "join fetch db.borc bb " +
+                                "where d.id = ? " +
+                                "and b.sirket.id = ? " +
+                                "and bb.durum = ?";
 
-                    list = getSessionFactory().getCurrentSession()
-                            .createQuery(sql)
-                            .setParameter(0, kd.getDaire().getId())
-                            .setParameter(1, sessionInfo.getSirket().getId())
-                            .setParameter(2, Durum.getAktifObject())
-                            .list();
-                }
+                        list = getSessionFactory().getCurrentSession()
+                                .createQuery(sql)
+                                .setParameter(0, kd.getDaire().getId())
+                                .setParameter(1, sessionInfo.getSirket().getId())
+                                .setParameter(2, Durum.getAktifObject())
+                                .list();
+                    }
 
-                for (DaireBorc db : (List<DaireBorc>) list) {
-                    if (db!=null && db.getBorc() != null) {
-                        borc += db.getBorc().getBorc() != null ? db.getBorc().getBorc() : 0.0;
-                        alacak += db.getBorc().getOdenenTutar() != null ? db.getBorc().getOdenenTutar() : 0.0;
+                    for (DaireBorc db : (List<DaireBorc>) list) {
+                        if (db != null && db.getBorc() != null) {
+                            borc += db.getBorc().getBorc() != null ? db.getBorc().getBorc() : 0.0;
+                            alacak += db.getBorc().getOdenenTutar() != null ? db.getBorc().getOdenenTutar() : 0.0;
+                        }
                     }
                 }
+                Double toplam = borc + alacak;
+                Double borcRate = (borc / toplam) * 100;
+                Double alacakRate = (alacak / toplam) * 100;
+                borcAlacakList.add(new BorcAlacakViewBean(new BorcTipi(BorcTipi.ENUM.BORC), borc, borcRate));
+                borcAlacakList.add(new BorcAlacakViewBean(new BorcTipi(BorcTipi.ENUM.ALACAK), alacak, alacakRate));
             }
-            Double toplam = borc + alacak;
-            Double borcRate = (borc / toplam) * 100;
-            Double alacakRate = (alacak / toplam) * 100;
-            borcAlacakList.add(new BorcAlacakViewBean(new BorcTipi(BorcTipi.ENUM.BORC), borc, borcRate));
-            borcAlacakList.add(new BorcAlacakViewBean(new BorcTipi(BorcTipi.ENUM.ALACAK), alacak, alacakRate));
         }
         return borcAlacakList;
     }
